@@ -43,6 +43,10 @@
     width: 100%;
 }
 
+.app-content {
+    width: 100%;
+}
+
 .grid_12.full_block,
 .grid_12 {
     background: transparent;
@@ -105,4 +109,9 @@
 .login_container,
 #login_page {
     background: var(--app-bg);
+}
+
+#header,
+#left_bar {
+    display: none;
 }

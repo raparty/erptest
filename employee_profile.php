@@ -1,110 +1,6 @@
-<!DOCTYPE html>
-<html lang="en">
-<head>
-    <meta charset="utf-8">
-    <meta http-equiv="refresh" content="0; url=employee_profile.php">
-    <title>Redirecting...</title>
-</head>
-<body>
-    <p>This page has moved. <a href="employee_profile.php">Continue</a>.</p>
-</body>
-</html>
-<!DOCTYPE HTML>
-<html>
-<head>
-<meta http-equiv="Content-Type" content="text/html; charset=utf-8">
-<meta name="viewport" content="width=device-width"/>
-<title>Schoolerp</title>
-<link href="file://///RAM-PC/school-erp/schoolerp/css/reset.css" rel="stylesheet" type="text/css" media="screen">
-<link href="file://///RAM-PC/school-erp/schoolerp/css/layout.css" rel="stylesheet" type="text/css" media="screen">
-<link href="file://///RAM-PC/school-erp/schoolerp/css/themes.css" rel="stylesheet" type="text/css" media="screen">
-<link href="file://///RAM-PC/school-erp/schoolerp/css/typography.css" rel="stylesheet" type="text/css" media="screen">
-<link href="file://///RAM-PC/school-erp/schoolerp/css/styles.css" rel="stylesheet" type="text/css" media="screen">
-<link href="file://///RAM-PC/school-erp/schoolerp/css/shCore.css" rel="stylesheet" type="text/css" media="screen">
-<link href="file://///RAM-PC/school-erp/schoolerp/css/bootstrap.css" rel="stylesheet" type="text/css" media="screen">
-<link href="file://///RAM-PC/school-erp/schoolerp/css/jquery.jqplot.css" rel="stylesheet" type="text/css" media="screen">
-<link href="file://///RAM-PC/school-erp/schoolerp/css/jquery-ui-1.8.18.custom.css" rel="stylesheet" type="text/css" media="screen">
-<link href="file://///RAM-PC/school-erp/schoolerp/css/data-table.css" rel="stylesheet" type="text/css" media="screen">
-<link href="file://///RAM-PC/school-erp/schoolerp/css/form.css" rel="stylesheet" type="text/css" media="screen">
-<link href="file://///RAM-PC/school-erp/schoolerp/css/ui-elements.css" rel="stylesheet" type="text/css" media="screen">
-<link href="file://///RAM-PC/school-erp/schoolerp/css/wizard.css" rel="stylesheet" type="text/css" media="screen">
-<link href="file://///RAM-PC/school-erp/schoolerp/css/sprite.css" rel="stylesheet" type="text/css" media="screen">
-<link href="file://///RAM-PC/school-erp/schoolerp/css/gradient.css" rel="stylesheet" type="text/css" media="screen">
-<!--[if IE 7]>
-<link rel="stylesheet" type="text/css" href="css/ie/ie7.css" />
-<![endif]-->
-<!--[if IE 8]>
-<link rel="stylesheet" type="text/css" href="css/ie/ie8.css" />
-<![endif]-->
-<!--[if IE 9]>
-<link rel="stylesheet" type="text/css" href="css/ie/ie9.css" />
-<![endif]-->
-<!-- Jquery -->
-<script src="file://///RAM-PC/school-erp/schoolerp/js/jquery-1.7.1.min.js"></script>
-<script src="file://///RAM-PC/school-erp/schoolerp/js/jquery-ui-1.8.18.custom.min.js"></script>
-<script src="file://///RAM-PC/school-erp/schoolerp/js/chosen.jquery.js"></script>
-<script src="file://///RAM-PC/school-erp/schoolerp/js/uniform.jquery.js"></script>
-<script src="file://///RAM-PC/school-erp/schoolerp/js/bootstrap-dropdown.js"></script>
-<script src="file://///RAM-PC/school-erp/schoolerp/js/bootstrap-colorpicker.js"></script>
-<script src="file://///RAM-PC/school-erp/schoolerp/js/sticky.full.js"></script>
-<script src="file://///RAM-PC/school-erp/schoolerp/js/jquery.noty.js"></script>
-<script src="file://///RAM-PC/school-erp/schoolerp/js/selectToUISlider.jQuery.js"></script>
-<script src="file://///RAM-PC/school-erp/schoolerp/js/fg.menu.js"></script>
-<script src="file://///RAM-PC/school-erp/schoolerp/js/jquery.tagsinput.js"></script>
-<script src="file://///RAM-PC/school-erp/schoolerp/js/jquery.cleditor.js"></script>
-<script src="file://///RAM-PC/school-erp/schoolerp/js/jquery.tipsy.js"></script>
-<script src="file://///RAM-PC/school-erp/schoolerp/js/jquery.peity.js"></script>
-<script src="file://///RAM-PC/school-erp/schoolerp/js/jquery.simplemodal.js"></script>
-<script src="file://///RAM-PC/school-erp/schoolerp/js/jquery.jBreadCrumb.1.1.js"></script>
-<script src="file://///RAM-PC/school-erp/schoolerp/js/jquery.colorbox-min.js"></script>
-<script src="file://///RAM-PC/school-erp/schoolerp/js/jquery.idTabs.min.js"></script>
-<script src="file://///RAM-PC/school-erp/schoolerp/js/jquery.multiFieldExtender.min.js"></script>
-<script src="file://///RAM-PC/school-erp/schoolerp/js/jquery.confirm.js"></script>
-<script src="file://///RAM-PC/school-erp/schoolerp/js/elfinder.min.js"></script>
-<script src="file://///RAM-PC/school-erp/schoolerp/js/accordion.jquery.js"></script>
-<script src="file://///RAM-PC/school-erp/schoolerp/js/autogrow.jquery.js"></script>
-<script src="file://///RAM-PC/school-erp/schoolerp/js/check-all.jquery.js"></script>
-
-<script src="file://///RAM-PC/school-erp/schoolerp/js/ZeroClipboard.js"></script>
-
-<script src="file://///RAM-PC/school-erp/schoolerp/js/jeditable.jquery.js"></script>
-<script src="file://///RAM-PC/school-erp/schoolerp/js/duallist.jquery.js"></script>
-<script src="file://///RAM-PC/school-erp/schoolerp/js/easing.jquery.js"></script>
-<script src="file://///RAM-PC/school-erp/schoolerp/js/full-calendar.jquery.js"></script>
-<script src="file://///RAM-PC/school-erp/schoolerp/js/input-limiter.jquery.js"></script>
-<script src="file://///RAM-PC/school-erp/schoolerp/js/inputmask.jquery.js"></script>
-<script src="file://///RAM-PC/school-erp/schoolerp/js/iphone-style-checkbox.jquery.js"></script>
-<script src="file://///RAM-PC/school-erp/schoolerp/js/meta-data.jquery.js"></script>
-<script src="file://///RAM-PC/school-erp/schoolerp/js/quicksand.jquery.js"></script>
-<script src="file://///RAM-PC/school-erp/schoolerp/js/raty.jquery.js"></script>
-<script src="file://///RAM-PC/school-erp/schoolerp/js/smart-wizard.jquery.js"></script>
-<script src="file://///RAM-PC/school-erp/schoolerp/js/stepy.jquery.js"></script>
-<script src="file://///RAM-PC/school-erp/schoolerp/js/treeview.jquery.js"></script>
-<script src="file://///RAM-PC/school-erp/schoolerp/js/ui-accordion.jquery.js"></script>
-<script src="file://///RAM-PC/school-erp/schoolerp/js/vaidation.jquery.js"></script>
-<script src="file://///RAM-PC/school-erp/schoolerp/js/mosaic.1.0.1.min.js"></script>
-<script src="file://///RAM-PC/school-erp/schoolerp/js/jquery.collapse.js"></script>
-<script src="file://///RAM-PC/school-erp/schoolerp/js/jquery.cookie.js"></script>
-<script src="file://///RAM-PC/school-erp/schoolerp/js/jquery.autocomplete.min.js"></script>
-<script src="file://///RAM-PC/school-erp/schoolerp/js/localdata.js"></script>
-<script src="file://///RAM-PC/school-erp/schoolerp/js/excanvas.min.js"></script>
-<script src="file://///RAM-PC/school-erp/schoolerp/js/jquery.jqplot.min.js"></script>
-<script src="file://///RAM-PC/school-erp/schoolerp/js/chart-plugins/jqplot.dateAxisRenderer.min.js"></script>
-<script src="file://///RAM-PC/school-erp/schoolerp/js/chart-plugins/jqplot.cursor.min.js"></script>
-<script src="file://///RAM-PC/school-erp/schoolerp/js/chart-plugins/jqplot.logAxisRenderer.min.js"></script>
-<script src="file://///RAM-PC/school-erp/schoolerp/js/chart-plugins/jqplot.canvasTextRenderer.min.js"></script>
-<script src="file://///RAM-PC/school-erp/schoolerp/js/chart-plugins/jqplot.canvasAxisTickRenderer.min.js"></script>
-<script src="file://///RAM-PC/school-erp/schoolerp/js/chart-plugins/jqplot.highlighter.min.js"></script>
-<script src="file://///RAM-PC/school-erp/schoolerp/js/chart-plugins/jqplot.pieRenderer.min.js"></script>
-<script src="file://///RAM-PC/school-erp/schoolerp/js/chart-plugins/jqplot.barRenderer.min.js"></script>
-<script src="file://///RAM-PC/school-erp/schoolerp/js/chart-plugins/jqplot.categoryAxisRenderer.min.js"></script>
-<script src="file://///RAM-PC/school-erp/schoolerp/js/chart-plugins/jqplot.pointLabels.min.js"></script>
-<script src="file://///RAM-PC/school-erp/schoolerp/js/chart-plugins/jqplot.meterGaugeRenderer.min.js"></script>
-<script src="file://///RAM-PC/school-erp/schoolerp/js/custom-scripts.js"></script>
-
-    <link rel="stylesheet" href="css/enterprise.css">
-</head>
-<body id="theme-default" class="full_block">
+<?php include_once("includes/header.php"); ?>
+<?php include_once("includes/sidebar.php"); ?>
+<main class="app-content">
 <div id="header" class="blue_lin">
 		<div class="header_left">
 			<div class="logo">
@@ -454,5 +350,5 @@
 		<span class="clear"></span>
 	</div>
 </div>
-</body>
-</html>
+</main>
+<?php include_once("includes/footer.php"); ?>
