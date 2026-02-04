@@ -103,6 +103,7 @@ $(function(){
 	$(window).resize();
 });
 </script>
+    <link rel="stylesheet" href="css/enterprise.css">
 </head>
 <body id="theme-default" class="full_block">
 <div id="login_page">
