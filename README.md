@@ -18,6 +18,9 @@ Modern configuration (PHP 8+):
 - `ERP_DB_PASS` (default: empty)
 - `APP_TIMEZONE` (default: UTC)
 - `ERP_SESSION_NAME` (default: school_erp_session)
+- `ERP_SESSION_LIFETIME` (default: 0)
+- `ERP_SESSION_SAMESITE` (default: Lax)
+- `ERP_SESSION_SECURE` (default: empty/false)
 
 
 

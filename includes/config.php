@@ -19,9 +19,9 @@ return [
     ],
     'session' => [
         'name' => getenv('ERP_SESSION_NAME') ?: 'school_erp_session',
-        'lifetime' => 0,
+        'lifetime' => (int) (getenv('ERP_SESSION_LIFETIME') ?: 0),
         'secure' => (bool) getenv('ERP_SESSION_SECURE'),
         'httponly' => true,
-        'samesite' => 'Lax',
+        'samesite' => getenv('ERP_SESSION_SAMESITE') ?: 'Lax',
     ],
 ];
