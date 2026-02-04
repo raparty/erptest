@@ -1,4 +1,5 @@
 <?php include_once("includes/header.php");?>
+<?php include_once("includes/sidebar.php"); ?>
 <?php 
 if(isset($_POST['submit']))
 {

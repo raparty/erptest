@@ -1,10 +1,11 @@
-<?php 
-include_once("config/config.inc.php");
+<?php
+declare(strict_types=1); 
+require_once("config/config.inc.php");
 ob_start();
-$sid=$_GET['sid'];
-if(isset($_GET['sid']))
+$sid = (int)($_GET['sid'] ?? 0);
+if ($sid > 0)
 {
-	$delete_detail="delete from section where section_id='".$_GET['sid']."'";
+	$delete_detail="delete from section where section_id='".$sid."'";
 	mysql_query($delete_detail);
 	header("Location:section.php?msg=2");
 	
