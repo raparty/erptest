@@ -2,6 +2,10 @@
 
 declare(strict_types=1);
 
+if (version_compare(PHP_VERSION, '8.4.0', '<')) {
+    throw new RuntimeException('School ERP requires PHP 8.4 or newer.');
+}
+
 $config = require __DIR__ . '/config.php';
 
 if (!headers_sent()) {

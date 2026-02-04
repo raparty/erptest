@@ -8,9 +8,9 @@ Introduction: School ERP System is a large database system which can be used for
 
 
 Installation instruction: The basic requirements for installtion are as follows:
-An operating system Anything that runs the following software; although the choice will most likely depend on the performance you need and the skills you have available. Linux and Windows are the most common choices. A web server, primarily Apache, PHP 8.2+ and a database MySQL 8+ install in the system.
+An operating system Anything that runs the following software; although the choice will most likely depend on the performance you need and the skills you have available. Linux and Windows are the most common choices. A web server, primarily Apache, PHP 8.4+ and a database MySQL 8.4+ install in the system.
 
-Modern configuration (PHP 8+):
+Modern configuration (PHP 8.4+):
 - `ERP_DB_HOST` (default: 127.0.0.1)
 - `ERP_DB_PORT` (default: 3306)
 - `ERP_DB_NAME` (default: school_erp)
