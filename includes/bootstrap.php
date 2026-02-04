@@ -13,13 +13,22 @@ if (!headers_sent()) {
 date_default_timezone_set($config['app']['timezone']);
 
 ini_set('session.cookie_httponly', $config['session']['httponly'] ? '1' : '0');
+ini_set('session.use_only_cookies', '1');
 ini_set('session.use_strict_mode', '1');
 ini_set('session.cookie_samesite', $config['session']['samesite']);
+ini_set('session.gc_maxlifetime', (string) $config['session']['lifetime']);
 if ($config['session']['secure']) {
     ini_set('session.cookie_secure', '1');
 }
 
 session_name($config['session']['name']);
+session_set_cookie_params([
+    'lifetime' => $config['session']['lifetime'],
+    'path' => '/',
+    'secure' => $config['session']['secure'],
+    'httponly' => $config['session']['httponly'],
+    'samesite' => $config['session']['samesite'],
+]);
 if (session_status() !== PHP_SESSION_ACTIVE) {
     session_start();
 }
