@@ -1,4 +1,5 @@
 <?php include_once("includes/header.php");?>
+<?php include_once("includes/sidebar.php"); ?>
 <div class="page_title">
 	<!--	<span class="title_icon"><span class="computer_imac"></span></span>
 		<h3>Dashboard</h3>-->
@@ -54,5 +55,4 @@
 	
 	
 </div>
-</body>
-</html>
+<?php include_once("includes/footer.php"); ?>

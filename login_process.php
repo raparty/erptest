@@ -1,14 +1,16 @@
-<?php 
+<?php
+declare(strict_types=1);
+
 ob_start();
-session_start();
+
 include_once("config/config.inc.php");
 
 if(isset($_POST['login']))
 { 
    
-	$username=$_POST['username'];
-	$password=$_POST['password'];
-	  $query="SELECT * FROM admin WHERE username='".$username."'";
+	$username=trim($_POST['username'] ?? '');
+	$password=trim($_POST['password'] ?? '');
+	  $query="SELECT * FROM admin WHERE username='".mysql_real_escape_string($username)."'";
 	 
 	 $result=mysql_query($query);
 	 $row=mysql_fetch_array($result);

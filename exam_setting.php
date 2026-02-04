@@ -1,4 +1,5 @@
 <?php include_once("includes/header.php");?>
+<?php include_once("includes/sidebar.php"); ?>
 
 <div class="page_title">
 	<!--	<span class="title_icon"><span class="computer_imac"></span></span>
@@ -58,5 +59,4 @@
 		  <h6 align="center" >Copyright © 2013 </h6>
 	</div>
 </div>
-</body>
-</html>
+<?php include_once("includes/footer.php"); ?>
