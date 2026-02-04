@@ -106,6 +106,15 @@ if (!function_exists('mysql_num_rows')) {
     }
 }
 
+if (!function_exists('mysql_affected_rows')) {
+    function mysql_affected_rows($linkIdentifier = null): int
+    {
+        $connection = $linkIdentifier instanceof mysqli ? $linkIdentifier : LegacyMysql::connection();
+
+        return $connection->affected_rows;
+    }
+}
+
 if (!function_exists('mysql_fetch_array')) {
     function mysql_fetch_array($result, int $resultType = MYSQL_BOTH)
     {
@@ -125,6 +134,17 @@ if (!function_exists('mysql_fetch_array')) {
     }
 }
 
+if (!function_exists('mysql_fetch_row')) {
+    function mysql_fetch_row($result)
+    {
+        if (!$result instanceof mysqli_result) {
+            return null;
+        }
+
+        return $result->fetch_row();
+    }
+}
+
 if (!function_exists('mysql_fetch_assoc')) {
     function mysql_fetch_assoc($result)
     {
@@ -133,6 +153,30 @@ if (!function_exists('mysql_fetch_assoc')) {
         }
 
         return $result->fetch_assoc();
+    }
+}
+
+if (!function_exists('mysql_data_seek')) {
+    function mysql_data_seek($result, int $rowNumber): bool
+    {
+        if (!$result instanceof mysqli_result) {
+            return false;
+        }
+
+        return $result->data_seek($rowNumber);
+    }
+}
+
+if (!function_exists('mysql_free_result')) {
+    function mysql_free_result($result): bool
+    {
+        if (!$result instanceof mysqli_result) {
+            return false;
+        }
+
+        $result->free();
+
+        return true;
     }
 }
 
@@ -145,12 +189,30 @@ if (!function_exists('mysql_real_escape_string')) {
     }
 }
 
+if (!function_exists('mysql_errno')) {
+    function mysql_errno($linkIdentifier = null): int
+    {
+        $connection = $linkIdentifier instanceof mysqli ? $linkIdentifier : LegacyMysql::connection();
+
+        return $connection->errno;
+    }
+}
+
 if (!function_exists('mysql_error')) {
     function mysql_error($linkIdentifier = null): string
     {
         $connection = $linkIdentifier instanceof mysqli ? $linkIdentifier : LegacyMysql::connection();
 
         return $connection->error;
+    }
+}
+
+if (!function_exists('mysql_close')) {
+    function mysql_close($linkIdentifier = null): bool
+    {
+        $connection = $linkIdentifier instanceof mysqli ? $linkIdentifier : LegacyMysql::connection();
+
+        return $connection->close();
     }
 }
 
