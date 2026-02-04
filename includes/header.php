@@ -5,6 +5,8 @@ declare(strict_types=1);
 require_once __DIR__ . '/bootstrap.php';
 
 $appName = app_config('name', 'School ERP');
+$mysqlServerInfo = LegacyMysql::connection()->server_info;
+$mysqlServerInfoSafe = htmlspecialchars($mysqlServerInfo, ENT_QUOTES, 'UTF-8');
 ?>
 <!DOCTYPE html>
 <html lang="en">
@@ -36,6 +38,9 @@ $appName = app_config('name', 'School ERP');
                     <span class="badge bg-primary">Active</span>
                     <span class="ms-2">Welcome<?php echo isset($_SESSION['username']) ? ', ' . htmlspecialchars($_SESSION['username'], ENT_QUOTES, 'UTF-8') : ''; ?></span>
                 </div>
+                <span class="runtime-badge" data-runtime-badge="true" data-php-version="<?php echo PHP_VERSION; ?>" data-mysql-version="<?php echo $mysqlServerInfoSafe; ?>">
+                    PHP <?php echo PHP_VERSION; ?> · MySQL <?php echo $mysqlServerInfoSafe; ?>
+                </span>
             </div>
         </div>
     </header>

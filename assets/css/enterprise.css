@@ -47,6 +47,19 @@ body.app-body {
     min-width: 220px;
 }
 
+.runtime-badge {
+    display: inline-flex;
+    align-items: center;
+    gap: 6px;
+    padding: 6px 10px;
+    border-radius: 999px;
+    background: var(--app-accent);
+    color: var(--app-primary-dark);
+    font-size: 0.75rem;
+    font-weight: 600;
+    border: 1px solid rgba(31, 74, 168, 0.2);
+}
+
 .app-shell {
     display: grid;
     grid-template-columns: 260px 1fr;
