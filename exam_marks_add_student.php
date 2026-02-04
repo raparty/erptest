@@ -1,4 +1,5 @@
 <?php include_once("includes/header.php");?>
+<?php include_once("includes/sidebar.php"); ?>
 <?php 
 $msgs='';
 $get_term=$_GET['term_id'];
@@ -342,5 +343,4 @@ $row_value=mysql_fetch_array(mysql_query($studentinfo));
 		<span class="clear"></span>
 	</div>
 </div>
-</body>
-</html>
+<?php include_once("includes/footer.php"); ?>

@@ -1,4 +1,7 @@
 <?php
+declare(strict_types=1);
+
+require_once("config/config.inc.php");
 	/*
 		Place code to connect to your DB here.
 	*/
@@ -18,12 +21,12 @@
 	 $query = "SELECT COUNT(*) as num FROM $tbl_name  where session='".$_SESSION['session']."'";
                                
 	$total_pages = mysql_fetch_array(mysql_query($query));
-	$total_pages = $total_pages[num];
+	$total_pages = $total_pages['num'];
 	
 	/* Setup vars for query. */
 	$targetpage = $_SERVER['PHP_SELF']; 	//your file name  (the name of this file)
 	$limit =10; 								//how many items to show per page
-	$page = $_GET['page'];
+	$page = (int)($_GET['page'] ?? 0);
 	if($page) 
 		$start = ($page - 1) * $limit; 			//first item to display on this page
 	else

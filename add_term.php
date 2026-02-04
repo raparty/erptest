@@ -1,21 +1,24 @@
-<?php include_once("includes/header.php");?>
+<?php
+declare(strict_types=1);
+include_once("includes/header.php");?>
 <?php 
 if(isset($_POST['submit']))
 {
-	 $term_name = $_POST['term_name'];
+	 $term_name = trim((string)($_POST['term_name'] ?? ''));
+	 $term_name_safe = mysql_real_escape_string($term_name);
 	 //$class_id = $_POST['class_id'];
 	//$school_logo = $_POST['school_logo'];
 	
-	 $sql1="SELECT * FROM fees_term where term_name='".$term_name."' ";
+	 $sql1="SELECT * FROM fees_term where term_name='".$term_name_safe."' ";
 	$res1=mysql_query($sql1) or die("Error : " . mysql_error());
 	$num=mysql_num_rows($res1);
 	if($num==0)
 	{
 		
 		
-		if($_POST['term_name']!="")
+		if($term_name_safe!="")
 		{
-		 $sql3="INSERT INTO fees_term(term_name) VALUES ('".$term_name."')";
+		 $sql3="INSERT INTO fees_term(term_name) VALUES ('".$term_name_safe."')";
 		$res3=mysql_query($sql3) or die("Error : " . mysql_error());
 		header("Location:term_manager.php?msg=1");
 		}else

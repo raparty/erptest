@@ -1,3 +1,6 @@
+<?php
+declare(strict_types=1);
+?>
 <script>
 function getXMLHTTP() 
 { //fuction to return the xml http object

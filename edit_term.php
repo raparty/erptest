@@ -1,33 +1,38 @@
-<?php include_once("includes/header.php");?>
-<?php 
+<?php
+declare(strict_types=1);
+include_once("includes/header.php");?>
+<?php
+$sid = (int)($_GET['sid'] ?? 0);
+ 
 if(isset($_POST['submit']))
 {
-	$term_name = $_POST['term_name'];
+	$term_name = trim((string)($_POST['term_name'] ?? ''));
+	$term_name_safe = mysql_real_escape_string($term_name);
 	// $class_id = $_POST['class_id'];
 	
-		$sql1="SELECT * FROM fees_term where term_name='".$term_name."' and fees_term_id!='".$_GET['sid']."'";
+		$sql1="SELECT * FROM fees_term where term_name='".$term_name_safe."' and fees_term_id!='".$sid."'";
 	$res1=mysql_query($sql1) or die("Error : " . mysql_error());
 	$num=mysql_num_rows($res1);
 	if($num==0)
 	{
-	  $sql3="UPDATE fees_term SET term_name='".$term_name."'  where fees_term_id='".$_GET['sid']."'";
+	  $sql3="UPDATE fees_term SET term_name='".$term_name_safe."'  where fees_term_id='".$sid."'";
 	$res3=mysql_query($sql3) or die("Error : " . mysql_error());
 	header("Location:term_manager.php?msg=3");
 	}else
 	{
-		header("Location:edit_term.php?error=2&&sid=".$_GET['sid']);
+		header("Location:edit_term.php?error=2&&sid=".$sid);
 	}
 }
 
 
-if($_GET['error']==2)
+if(($_GET['error'] ?? null)==2)
 	{
 		$msg = "<span style='color:#FF0000;'><h4>Term Detail Already Exists  </h4></span>";
 	}
 
 	
 		
-	$sql2="SELECT * FROM fees_term WHERE `fees_term_id` = '" . $_GET['sid'] . "';";
+	$sql2="SELECT * FROM fees_term WHERE `fees_term_id` = '" . $sid . "';";
 	$res2=mysql_query($sql2);	
 	$row2=mysql_fetch_array($res2);
 		

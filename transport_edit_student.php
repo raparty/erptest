@@ -1,4 +1,5 @@
 <?php include_once("includes/header.php");?>
+<?php include_once("includes/sidebar.php"); ?>
 <?php 
 if(isset($_POST['submit']))
 {
@@ -343,5 +344,4 @@ xmlhttp.send();
 		<span class="clear"></span>
 	</div>
 </div>
-</body>
-</html>
+<?php include_once("includes/footer.php"); ?>

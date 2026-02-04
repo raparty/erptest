@@ -1,7 +1,9 @@
-<?php 
-include_once("config/config.inc.php");
-$registration_no=$_GET['registration_no'];
- $sql1="SELECT * FROM rte_student_info where registration_no='".$registration_no."'";
+<?php
+declare(strict_types=1); 
+require_once("config/config.inc.php");
+$registration_no = trim((string)($_GET['registration_no'] ?? ''));
+$registration_no_safe = mysql_real_escape_string($registration_no);
+ $sql1="SELECT * FROM rte_student_info where registration_no='".$registration_no_safe."'";
 	$res1=mysql_query($sql1) or die("Error : " . mysql_error());
 	$num=mysql_num_rows($res1);
 	if($num>0)
