@@ -1,4 +1,7 @@
-<?php include_once("include/header.php");?>
+<?php
+declare(strict_types=1);
+include_once("includes/header.php");?>
+<?php include_once("includes/sidebar.php"); ?>
 	<div id="content">
 	
 		<div class="content-top"></div>
@@ -195,6 +198,4 @@ background-color:#EAF2D3;
 		</div>
 	</div>
 </div>
-
-</body>
-</html>
+<?php include_once("includes/footer.php"); ?>
