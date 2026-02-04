@@ -1,8 +1,14 @@
-<?php include_once("config/config.inc.php");ob_start();
+<?php
+declare(strict_types=1);
 
-$class_id=$_GET['class_id'];
-$stream_id=$_GET['stream_id'];
- $sql2="SELECT * FROM class where class_id='".$class_id."'";
+require_once("config/config.inc.php");
+ob_start();
+
+$class_id = (int)($_GET['class_id'] ?? 0);
+$stream_id = (int)($_GET['stream_id'] ?? 0);
+$class_id_safe = mysql_real_escape_string((string)$class_id);
+$stream_id_safe = mysql_real_escape_string((string)$stream_id);
+ $sql2="SELECT * FROM class where class_id='".$class_id_safe."'";
 					$class=mysql_fetch_array(mysql_query($sql2));
 					if($class['class_name']!=""&&$stream_id=="")
 					{
@@ -18,7 +24,7 @@ if($class['class_name']!=""&&$stream_id==""&&$class['stream_status']==1)
 										<option value="">---select stream---</option>
                                         	 <?php 
 						$i=1;
-					$sql="SELECT * FROM allocate_class_stream where class_id='".$class_id."' ";
+					$sql="SELECT * FROM allocate_class_stream where class_id='".$class_id_safe."' ";
 					$res=mysql_query($sql);
 				
 							while($row=mysql_fetch_array($res))
@@ -44,7 +50,7 @@ if($class['class_name']!=""&&$stream_id==""&&$class['stream_status']==1)
                                 <li>
                                 
                                     <?php
-							 $sql="SELECT * FROM allocate_class_subject where class_id='".$class_id."'";
+							 $sql="SELECT * FROM allocate_class_subject where class_id='".$class_id_safe."'";
 					       $res=mysql_query($sql);?>
 								<div class="form_grid_12 multiline">
 									<label class="field_title"> Subject  Name</label>
@@ -83,7 +89,7 @@ if($class['class_name']!=""&&$stream_id==""&&$class['stream_status']==1)
                                 <?php }else{ ?>  <li>
                                 
                                     <?php
-							 $sql="SELECT * FROM allocate_class_subject where class_id='".$class_id."'";
+							 $sql="SELECT * FROM allocate_class_subject where class_id='".$class_id_safe."'";
 					       $res=mysql_query($sql);?>
 								<div class="form_grid_12 multiline">
 									<label class="field_title"> Subject  Name</label>
@@ -122,7 +128,7 @@ if($class['class_name']!=""&&$stream_id==""&&$class['stream_status']==1)
 								
                                 
                                 
-                             <?php    if($class['class_id']!=""&&$stream_id!="")
+                             <?php    if($class['class_id']!=""&&$stream_id_safe!="")
 {
 ?>
 
@@ -135,7 +141,7 @@ if($class['class_name']!=""&&$stream_id==""&&$class['stream_status']==1)
 										<option value="">---select stream---</option>
                                         	 <?php 
 						$i=1;
-					$sql="SELECT * FROM allocate_class_stream where class_id='".$class_id."' ";
+					$sql="SELECT * FROM allocate_class_stream where class_id='".$class_id_safe."' ";
 					$res=mysql_query($sql);
 				
 							while($row=mysql_fetch_array($res))
@@ -160,7 +166,7 @@ if($class['class_name']!=""&&$stream_id==""&&$class['stream_status']==1)
 								</div></li>
                  
                  <?php
-							 $sql="SELECT * FROM allocate_class_subject where class_id='".$class_id."' and stream_id='".$stream_id."' ";
+							 $sql="SELECT * FROM allocate_class_subject where class_id='".$class_id_safe."' and stream_id='".$stream_id_safe."' ";
 					       $res=mysql_query($sql);?>
 							<li>	<div class="form_grid_12 multiline">
 									<label class="field_title"> Subject  Name</label>

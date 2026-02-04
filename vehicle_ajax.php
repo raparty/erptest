@@ -1,5 +1,9 @@
-<?php include_once("config/config.inc.php");?>
-<?php $route_id=$_GET['route_id'];
+<?php
+declare(strict_types=1);
+require_once("config/config.inc.php");
+?>
+<?php $route_id = (int)($_GET['route_id'] ?? 0);
+$route_id_safe = mysql_real_escape_string((string)$route_id);
 											 $sql="select * from transport_add_vechile where find_in_set('".$route_id."',route_id)";
 											$ro=mysql_query($sql);?>
                               <div class="form_grid_12">

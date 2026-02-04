@@ -165,5 +165,4 @@ OR <span style="color:#F00"> *</span>
 		<span class="clear"></span>
 	</div>
 </div>
-</body>
-</html>
+<?php include_once("includes/footer.php"); ?>

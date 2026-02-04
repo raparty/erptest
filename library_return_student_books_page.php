@@ -1,12 +1,13 @@
-<?php 
-include_once("config/config.inc.php");
+<?php
+declare(strict_types=1); 
+require_once("config/config.inc.php");
 ob_start();
-$sid=$_GET['sid'];
-if(isset($_GET['sid']))
+$sid = (int)($_GET['sid'] ?? 0);
+if ($sid > 0)
 {
 		//$issue_date=$_POST['issue_date'];
 		
-		  $sql3="UPDATE student_books_detail set booking_status='0'   where issue_id='".$_GET['sid']."'";
+		  $sql3="UPDATE student_books_detail set booking_status='0'   where issue_id='".$sid."'";
 		$res3=mysql_query($sql3) or die("Error : " . mysql_error());
 		header("Location:library_student_return_books.php");
 		
@@ -20,7 +21,7 @@ $row_fine_days=$row_fine['no_of_days']-1;
 $row_fine_rate=$row_fine['fine_rate'];
 
 
-	 $sql="SELECT * FROM student_books_detail where issue_id='".$_GET['sid']."'";
+	 $sql="SELECT * FROM student_books_detail where issue_id='".$sid."'";
 					$res=mysql_query($sql);
 					  
 							

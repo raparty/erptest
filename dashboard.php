@@ -1,8 +1,10 @@
-<?php include_once("includes/header.php");?>
+<?php
+declare(strict_types=1);
+include_once("includes/header.php");?>
 <?php 
-if($_POST['session']!="")
+if (!empty($_POST['session']))
 {
-	 $_SESSION['session']=$_POST['session'];
+	 $_SESSION['session']=trim((string)$_POST['session']);
 }
 
 ?>

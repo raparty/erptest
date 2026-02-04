@@ -1,22 +1,34 @@
-<?php include_once("includes/header.php");?>
+<?php
+declare(strict_types=1);
+include_once("includes/header.php");?>
 <?php 
 if(isset($_POST['submit']))
 {
 	// $package_name = $_POST['package_name'];
 	 //$class_id = $_POST['class_id'];
 	//$school_logo = $_POST['school_logo'];
-	if($_POST['pending_amount']>=$_POST['fees_amount'])
+	$registration_no = trim((string)($_POST['registration_no'] ?? ''));
+	$fees_term = trim((string)($_POST['fees_term'] ?? ''));
+	$fees_amount = trim((string)($_POST['fees_amount'] ?? ''));
+	$pending_amount = (float)($_POST['pending_amount'] ?? 0);
+	$fees_amount_value = (float)($fees_amount !== '' ? $fees_amount : 0);
+
+	$registration_no_safe = mysql_real_escape_string($registration_no);
+	$fees_term_safe = mysql_real_escape_string($fees_term);
+	$fees_amount_safe = mysql_real_escape_string($fees_amount);
+
+	if($pending_amount >= $fees_amount_value)
 	{
-	 $sql1="SELECT * FROM student_fees_detail where registration_no='".$_POST['registration_no']."' and fees_term='".$_POST['fees_term']."' and session='".$_SESSION['session']."'";
+	 $sql1="SELECT * FROM student_fees_detail where registration_no='".$registration_no_safe."' and fees_term='".$fees_term_safe."' and session='".$_SESSION['session']."'";
 	$res1=mysql_query($sql1) or die("Error : " . mysql_error());
 	$num=mysql_num_rows($res1);
 	if($num==0)
 	{
 		
 		
-		if($_POST['registration_no']!=""&&$_POST['fees_term']!=""&&$_POST['fees_amount']!="")
+		if($registration_no_safe!=""&&$fees_term_safe!=""&&$fees_amount_safe!="")
 		{
-		 $sql3="INSERT INTO student_fees_detail(registration_no,fees_term,fees_amount,session) VALUES ('".$_POST['registration_no']."','".$_POST['fees_term']."','".$_POST['fees_amount']."','".$_SESSION['session']."')";
+		 $sql3="INSERT INTO student_fees_detail(registration_no,fees_term,fees_amount,session) VALUES ('".$registration_no_safe."','".$fees_term_safe."','".$fees_amount_safe."','".$_SESSION['session']."')";
 		$res3=mysql_query($sql3) or die("Error : " . mysql_error());
 		header("Location:fees_manager.php?msg=1");
 		}else

@@ -1,7 +1,12 @@
-<?php include_once("config/config.inc.php");ob_start();
+<?php
+declare(strict_types=1);
 
-$class_id=$_GET['class_id'];
-$sql2="SELECT * FROM class where class_id='".$class_id."' and stream_status='1'";
+require_once("config/config.inc.php");
+ob_start();
+
+$class_id = (int)($_GET['class_id'] ?? 0);
+$class_id_safe = mysql_real_escape_string((string)$class_id);
+$sql2="SELECT * FROM class where class_id='".$class_id_safe."' and stream_status='1'";
 					$class=mysql_fetch_array(mysql_query($sql2));
 if($class['class_name']!="")
 {

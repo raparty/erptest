@@ -1,6 +1,12 @@
-<?php include_once("config/config.inc.php");ob_start();?><?php 
-$registration_no=$_GET['registration_no'];
-$fees_term=$_GET['fees_term'];
+<?php
+declare(strict_types=1);
+
+require_once("config/config.inc.php");
+ob_start(); 
+$registration_no = trim((string)($_GET['registration_no'] ?? ''));
+$fees_term = trim((string)($_GET['fees_term'] ?? ''));
+$registration_no = mysql_real_escape_string($registration_no);
+$fees_term = mysql_real_escape_string($fees_term);
 
  $studentinfo="select * from student_info where student_admission_no='".$registration_no."' and session='".$_SESSION['session']."'";
 $row=mysql_fetch_array(mysql_query($studentinfo));
