@@ -45,6 +45,16 @@ final class LegacyMysql
             throw new RuntimeException('Failed to set charset: ' . $connection->error);
         }
 
+        $serverInfo = $connection->server_info;
+        if (stripos($serverInfo, 'mariadb') === false) {
+            if (preg_match('/\d+(?:\.\d+){1,2}/', $serverInfo, $matches)) {
+                $serverVersion = $matches[0];
+                if (version_compare($serverVersion, '8.4.0', '<')) {
+                    throw new RuntimeException('MySQL 8.4 or newer is required. Detected: ' . $serverVersion);
+                }
+            }
+        }
+
         self::$connection = $connection;
     }
 

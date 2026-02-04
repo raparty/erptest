@@ -2,7 +2,7 @@
     <footer class="app-footer">
         <div class="container-fluid d-flex flex-wrap justify-content-between align-items-center py-3">
             <div>© <?php echo date('Y'); ?> School ERP. All rights reserved.</div>
-            <div class="text-muted">Built for PHP <?php echo PHP_VERSION; ?></div>
+            <div class="text-muted">Built for PHP <?php echo PHP_VERSION; ?> · MySQL 8.4+</div>
         </div>
     </footer>
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js"></script>
