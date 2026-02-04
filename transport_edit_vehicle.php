@@ -1,4 +1,5 @@
 <?php include_once("includes/header.php");?>
+<?php include_once("includes/sidebar.php"); ?>
 <?php 
 if(isset($_POST['submit']))
 {
@@ -179,5 +180,4 @@ echo $sql1="SELECT * FROM transport_add_vechile where vechile_id='".$_GET['sid']
 		<span class="clear"></span>
 	</div>
 </div>
-</body>
-</html>
+<?php include_once("includes/footer.php"); ?>
