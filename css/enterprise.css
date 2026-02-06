@@ -1,5 +1,5 @@
 :root {
-  color-scheme: light;
+  color-scheme: light dark;
   --brand-50: #f5f7ff;
   --brand-100: #e0e7ff;
   --brand-500: #3b82f6;
@@ -25,7 +25,25 @@
   --font-sans: "Inter", "Segoe UI", "Helvetica Neue", Arial, sans-serif;
 }
 
+@media (prefers-color-scheme: dark) {
+  :root {
+    color-scheme: dark;
+    --neutral-0: #0f172a;
+    --neutral-50: #1e293b;
+    --neutral-100: #334155;
+    --neutral-900: #f1f5f9;
+    --neutral-700: #e2e8f0;
+  }
+}
+
 * {
+  box-sizing: border-box;
+  margin: 0;
+  padding: 0;
+}
+
+*::before,
+*::after {
   box-sizing: border-box;
 }
 
@@ -35,6 +53,8 @@ body {
   color: var(--neutral-900);
   background: var(--neutral-50);
   line-height: 1.5;
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
 }
 
 a {
@@ -83,6 +103,14 @@ textarea:focus {
   box-shadow: 0 0 0 3px rgba(59, 130, 246, 0.2);
 }
 
+input:focus-visible,
+select:focus-visible,
+textarea:focus-visible,
+button:focus-visible {
+  outline: 2px solid var(--brand-500);
+  outline-offset: 2px;
+}
+
 button,
 input[type="submit"],
 input[type="button"] {
@@ -110,6 +138,17 @@ input[type="button"]:disabled {
   background: var(--neutral-300);
   cursor: not-allowed;
   box-shadow: none;
+  transform: none;
+}
+
+@media (prefers-reduced-motion: reduce) {
+  *,
+  *::before,
+  *::after {
+    animation-duration: 0.01ms !important;
+    animation-iteration-count: 1 !important;
+    transition-duration: 0.01ms !important;
+  }
 }
 
 .card,
