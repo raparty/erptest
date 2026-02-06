@@ -75,10 +75,10 @@ color:#ffffff;
 				
 //$registration_no=$_SESSION['registration_no'];
 			  $id=$_SESSION['registration_no'];
-			    $names="select * from student_info where registration_no='".$_SESSION['registration_no']."' and session='".(isset($_SESSION['session']) ? $_SESSION['session'] : '')."' ";
+			    $names="select * from student_info where registration_no='".db_escape($_SESSION['registration_no'])."' and session='".(isset($_SESSION['session']) ? db_escape($_SESSION['session']) : '')."' ";
 			  if(isset($_SESSION['stream_id']) && $_SESSION['stream_id']!="")
 			  {
-				  $names.="and stream='".$_SESSION['stream_id']."'";
+				  $names.="and stream='".db_escape($_SESSION['stream_id'])."'";
 				  }
 				// echo $names;
 			   $values=db_query($names);
