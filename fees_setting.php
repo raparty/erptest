@@ -5,7 +5,7 @@ include_once("includes/header.php");?>
 <?php include_once("includes/sidebar.php"); ?>
 	<div class="page_title">
 		<span class="title_icon"><span class="computer_imac"></span></span>
-		<h3>Dashboard</h3>
+		<h3>Fees Settings</h3>
 		<div class="top_search">
 			<form action="#" method="post">
 				<ul id="search_box">
@@ -28,36 +28,11 @@ include_once("includes/header.php");?>
 			<div class="grid_12 full_block">
 				<div class="widget_wrap">
 					<div class="widget_content">
-                    <div class="switch_bar">
-		<ul>
-			
-			
-            <li><a href="fees_package.php"><span class="stats_icon administrative_docs_sl"></span><span class="label">Package  Manager</span></a></li>
-          
-			<li><a href="term_manager.php"><span class="stats_icon administrative_docs_sl"></span><span class="label">Term Manager</span></a></li>
-          
-           <li><a href="fees_manager.php"><span class="stats_icon administrative_docs_sl"></span><span class="label">Fees Manager</span></a></li>
-          
-          <li><a href="student_transport_fees.php"><span class="stats_icon administrative_docs_sl"></span><span class="label">Bus Fees Manager</span></a></li>
-          
-            <li ><a href="student_pending_fees_detail.php"><span class="stats_icon archives_sl"></span><span class="label">Pending Fees </span></a>
-			
-			</li>
-           
-             <li ><a href="student_transport_pending_fees_detail.php"><span class="stats_icon archives_sl"></span><span class="label">Pending Bus Fees</span></a>
-			
-			</li>
-			
-						
-            
-			</ul>
-	</div>
-						
+						<h2 style="padding:20px; text-align:center;">Fees Settings Dashboard</h2>
+						<p style="padding:20px; text-align:center;">Use the navigation above to manage fees packages, terms, and fee collections.</p>
 					</div>
-                   
 				</div>
 			</div>
-			 
 		</div>
        <h1>&nbsp;</h1>
 		  <h6 align="center" >Copyright © 2013 </h6>

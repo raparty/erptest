@@ -1,9 +1,9 @@
 <?php include_once("includes/header.php");?>
 <?php include_once("includes/sidebar.php"); ?>
 <div class="page_title">
-	<!--	<span class="title_icon"><span class="computer_imac"></span></span>
-		<h3>Dashboard</h3>-->
-		<div class="top_search">
+	<span class="title_icon"><span class="computer_imac"></span></span>
+	<h3>Transport Settings</h3>
+	<div class="top_search">
 			<form action="#" method="post">
 				<ul id="search_box">
 					<li>
@@ -24,30 +24,11 @@
 			<div class="grid_12 full_block">
 				<div class="widget_wrap">
 					<div class="widget_content">
-                    <div class="switch_bar">
-		<ul>
-			
-			
-            <li><a href="transport_route_detail.php"><span class="stats_icon administrative_docs_sl"></span><span class="label">Set Routes details</span></a></li>
-          
-			<li><a href="transport_vechile_detail.php"><span class="stats_icon administrative_docs_sl"></span><span class="label">Vehicle details</span></a></li>
-          
-           <li><a href="transport_student_detail.php"><span class="stats_icon administrative_docs_sl"></span><span class="label">Student detail</span></a></li>
-          
-          
-           
-             
-			
-						
-            
-			</ul>
-	</div>
-						
+						<h2 style="padding:20px; text-align:center;">Transport Settings Dashboard</h2>
+						<p style="padding:20px; text-align:center;">Use the navigation above to manage transport routes, vehicles, and student transport details.</p>
 					</div>
-                   
 				</div>
 			</div>
-			 
 		</div>
        <h1>&nbsp;</h1>
 		  <h6 align="center" >Copyright © 2013 </h6>
