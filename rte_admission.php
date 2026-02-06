@@ -1,6 +1,7 @@
 <?php
 declare(strict_types=1);
 include_once("includes/header.php");?>
+<?php include_once("includes/sidebar.php");?>
     <div class="page_title">
 	<!--	<span class="title_icon"><span class="computer_imac"></span></span>
 		<h3>Dashboard</h3>-->
@@ -18,7 +19,6 @@ include_once("includes/header.php");?>
 		</div>
 	</div>
 
-<?php include_once("includes/sidebar.php");?>
 
 <?php 
 if(isset($_POST['submit']))

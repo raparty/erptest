@@ -3,7 +3,7 @@
 declare(strict_types=1);
 include_once("includes/header.php");?>
 <?php include_once("includes/sidebar.php"); ?>
-
+<?php
 if(isset($_POST['category_type']) && $_POST['category_type']!="")
 {
 	$_SESSION['category_type']=$_POST['category_type'];
