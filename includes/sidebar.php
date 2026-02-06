@@ -2,10 +2,12 @@
     <nav class="nav flex-column gap-1">
         <a class="nav-link" href="dashboard.php">Dashboard</a>
         <div class="nav-section">Admissions</div>
+        <a class="nav-link" href="admission.php">Admission</a>
         <a class="nav-link" href="rte_admission.php">RTE Admission</a>
         <a class="nav-link" href="student_detail.php">Student Details</a>
         <a class="nav-link" href="student_tc.php">Transfer Certificates</a>
         <div class="nav-section">Academics</div>
+        <a class="nav-link" href="school_setting.php">School Settings</a>
         <a class="nav-link" href="class.php">Classes</a>
         <a class="nav-link" href="section.php">Sections</a>
         <a class="nav-link" href="stream.php">Streams</a>
@@ -22,6 +24,7 @@
         <a class="nav-link" href="transport_setting.php">Transport</a>
         <a class="nav-link" href="library_setting.php">Library</a>
         <a class="nav-link" href="staff_setting.php">Staff</a>
+        <a class="nav-link" href="Attendance.php">Attendance</a>
     </nav>
 </aside>
 <div class="app-content">
