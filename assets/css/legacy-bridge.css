@@ -279,6 +279,18 @@ button[type="submit"]:hover {
     transform: translateY(-1px);
 }
 
+/* Ensure button text (including spans) inherits button color */
+button span,
+.btn_small span,
+.btn_medium span,
+.btn_large span,
+.btn_blue span,
+.btn_orange span,
+.btn_red span,
+.btn_green span {
+    color: inherit;
+}
+
 /* Form elements */
 .form_grid_12,
 .form_grid_5,

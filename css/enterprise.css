@@ -141,6 +141,12 @@ input[type="button"]:disabled {
   transform: none;
 }
 
+button span,
+input[type="submit"] span,
+input[type="button"] span {
+  color: inherit;
+}
+
 @media (prefers-reduced-motion: reduce) {
   *,
   *::before,
