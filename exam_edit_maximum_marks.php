@@ -13,7 +13,7 @@ if(isset($_POST['submit']))
 		{
 			
 	 $sql3="update exam_add_maximum_marks set class_id='".$_POST['class_id']."', stream_id='".$_POST['stream']."', subject_id='".$_POST['subject_id']."',term_id='".$_POST['term_id']."',max_marks='".$_POST['marks']."',session='".$_SESSION['session']."' where exam_max_marks_id='$id_get'";
-		$res3=mysql_query($sql3) or die("Error : " . mysql_error());
+		$res3=db_query($sql3) or die("Error : " . db_error());
 	//header("Location:exam_show_maximum_marks.php?msg=1");
 			
 		}
@@ -25,8 +25,8 @@ if(isset($_POST['submit']))
 		
 	}
 $sql_maximum="select * from exam_add_maximum_marks where exam_max_marks_id='$id_get'";
-$sql_max=mysql_query($sql_maximum);
-$row_max=mysql_fetch_array($sql_max);
+$sql_max=db_query($sql_maximum);
+$row_max=db_fetch_array($sql_max);
 
 ?>
 <div class="page_title">
@@ -78,8 +78,8 @@ $row_max=mysql_fetch_array($sql_max);
 								<option value="" selected="selected"> - Select Class - </option>
 							<?php
 							 $sql="SELECT * FROM class ";
-	                           $res=mysql_query($sql);
-								while($row=mysql_fetch_array($res))
+	                           $res=db_query($sql);
+								while($row=db_fetch_array($res))
 								{   
 								if($row['class_id']==$row_max['class_id'])                    {
 									 $class='selected="selected"';
@@ -117,8 +117,8 @@ $row_max=mysql_fetch_array($sql_max);
 											<select name="stream_id" >
 										<?php
 							 $sql="SELECT * FROM stream";
-	                           $res=mysql_query($sql);
-								while($row=mysql_fetch_array($res))
+	                           $res=db_query($sql);
+								while($row=db_fetch_array($res))
 								{   
 								if($row['stream_id']==$row_max['stream_id'])   
 								{
@@ -158,8 +158,8 @@ $row_max=mysql_fetch_array($sql_max);
 								<option value="" selected="selected"> - Select Subject - </option>
 							<?php
 							 $sql="SELECT * FROM subject  ";
-	                           $res=mysql_query($sql);
-								while($row=mysql_fetch_array($res))
+	                           $res=db_query($sql);
+								while($row=db_fetch_array($res))
 								{   
 								if($row['subject_id']==$row_max['subject_id'])                    {
 									 $subject='selected="selected"';
@@ -197,8 +197,8 @@ $row_max=mysql_fetch_array($sql_max);
 								<option value="" selected="selected"> - Select Term - </option>
 							<?php
 							 $sqls1="SELECT * FROM exam_nuber_of_term";
-	                           $ress=mysql_query($sqls1);
-								while($row22=mysql_fetch_array($ress))
+	                           $ress=db_query($sqls1);
+								while($row22=db_fetch_array($ress))
 								{
 									if($row22['term_id']==$row_max['term_id'])
 									{

@@ -11,7 +11,7 @@ if(isset($_POST['submit']))
 		if($_POST['destination']!="")
 		{
 		echo $sql3="update transport_add_route set route_name='".$_POST['destination']."',cost='".$_POST['cost']."' where route_id='".$_GET['sid']."'";
-		$res3=mysql_query($sql3) or die("Error : " . mysql_error());
+		$res3=db_query($sql3) or die("Error : " . db_error());
 		header("Location:transport_route_detail.php?msg=1");
 		}else
 		{    header("location:transport_route_edit.php?error=2");
@@ -43,8 +43,8 @@ else
 	}
 }
 echo $sql1="SELECT * FROM transport_add_route where route_id='".$_GET['sid']."'";
-	$res1=mysql_query($sql1);
-		$row=mysql_fetch_array($res1);
+	$res1=db_query($sql1);
+		$row=db_fetch_array($res1);
 		
 	
 

@@ -54,8 +54,8 @@
 											<option value="" selected="selected"> - Select fees term - </option>
 							<?php
 							 $sql="SELECT * FROM fees_term ";
-	                           $res=mysql_query($sql);
-								while($row=mysql_fetch_array($res))
+	                           $res=db_query($sql);
+								while($row=db_fetch_array($res))
 								{
 									?>
 									<option value="<?php echo $row['fees_term_id']; ?>"><?php echo $row['term_name']; ?></option>
@@ -74,8 +74,8 @@
 											<option value="" selected="selected"> - Select Class - </option>
 							<?php
 							 $sql="SELECT * FROM class ";
-	                           $res=mysql_query($sql);
-								while($row=mysql_fetch_array($res))
+	                           $res=db_query($sql);
+								while($row=db_fetch_array($res))
 								{
 									?>
 									<option value="<?php echo $row['class_id']; ?>"><?php echo $row['class_name']; ?></option>

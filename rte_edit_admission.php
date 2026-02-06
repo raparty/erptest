@@ -64,12 +64,12 @@ if(isset($_POST['submit']))
 					$previous_class_certificate=$_POST['previous_class_certificate'];
 					
 					 $sql1="SELECT * FROM student_info where registration_no='".$registration_no."' and student_id!='".$_GET['student_id']."' ";
-	$res1=mysql_query($sql1) or die("Error : " . mysql_error());
-	$num=mysql_num_rows($res1);
+	$res1=db_query($sql1) or die("Error : " . db_error());
+	$num=db_num_rows($res1);
 	if($num==0)
 	{
 		 $sql_update_q="update student_info set caste_certificate='".$caste_certificate."',income_certificate='".$income_certificate."',previous_class_certificate='".$previous_class_certificate."',bonafied_cetificate='".$bonafied_cetificate."', name='".$name."',dob='".$dob."',class='".$class."',stream='".$stream."',student_type='".$student_type."',admission_fee='".$admission_fee."',category='".$category."',gender='".$gender."',image='".$image."',s_address='".$s_address."',country='".$country."',state='".$state."',city='".$city."',pin_code='".$pin_code."',s_mobile_no='".$s_mobile_no."',s_email='".$s_email."',f_name='".$f_name."',m_name='".$m_name."',f_address='".$f_address."',f_mobile_no='".$f_mobile_no."',f_email='".$f_email."' where student_id='".$_GET['student_id']."' ";
-	mysql_query($sql_update_q);
+	db_query($sql_update_q);
 	header('location:rte_edit_admission.php?msg=1&&student_id='.$_GET['student_id']);
 	}else
 	{ 
@@ -97,7 +97,7 @@ if(isset($_POST['submit']))
 	
 	
 	$sql10="SELECT * FROM student_info where student_id='".$_GET['student_id']."' ";
-	$row_value=mysql_fetch_array(mysql_query($sql10));
+	$row_value=db_fetch_array(db_query($sql10));
 
 ?>
 <div id="container">
@@ -260,8 +260,8 @@ Admission Date <span style="color:#F00"> *</span>
 											<option value="" selected="selected"> - Select Class - </option>
 							<?php
 							 $sql="SELECT * FROM class ";
-	                           $res=mysql_query($sql);
-								while($row=mysql_fetch_array($res))
+	                           $res=db_query($sql);
+								while($row=db_fetch_array($res))
 								{
 									if($row['class_id']==$row_value['class'])
 									{
@@ -289,8 +289,8 @@ Admission Date <span style="color:#F00"> *</span>
 										<option value="">---select stream---</option>
                                         	<?php
 							 $sql="SELECT * FROM stream ";
-	                           $res=mysql_query($sql);
-								while($row=mysql_fetch_array($res))
+	                           $res=db_query($sql);
+								while($row=db_fetch_array($res))
 								{
 									if($row['stream_id']==$row_value['stream'])
 									{
@@ -317,8 +317,8 @@ Admission Date <span style="color:#F00"> *</span>
 											<option value="" selected="selected"> - Select Studnet Type - </option>
 							<?php
 							 $sql="SELECT * FROM student_type ";
-	                           $res=mysql_query($sql);
-								while($row=mysql_fetch_array($res))
+	                           $res=db_query($sql);
+								while($row=db_fetch_array($res))
 								{
 									if($row_value['student_type']==$row[0]){
 										$student_type_select='selected="selected"';
@@ -344,8 +344,8 @@ Admission Date <span style="color:#F00"> *</span>
 											<option value="" selected="selected"> - Select Class - </option>
 							<?php
 							 $sql="SELECT * FROM fees_package ";
-	                           $res=mysql_query($sql);
-								while($row=mysql_fetch_array($res))
+	                           $res=db_query($sql);
+								while($row=db_fetch_array($res))
 								{
 									if($row[0]==$row_value['admission_fee'])
 									{
@@ -372,8 +372,8 @@ Admission Date <span style="color:#F00"> *</span>
                                         <option value="">---select category---</option>
 											<?php
 							 $sql="SELECT * FROM category ";
-	                           $res=mysql_query($sql);
-								while($row=mysql_fetch_array($res))
+	                           $res=db_query($sql);
+								while($row=db_fetch_array($res))
 								{
 									
 									if($row['cat_id']==$row_value['category'])

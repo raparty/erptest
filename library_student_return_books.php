@@ -96,7 +96,7 @@ include_once("includes/header.php");?>
 							}
 					
 					$sql="SELECT * FROM student_books_detail where session='".$_SESSION['session']."' and registration_no='".$_SESSION['registration_no']."' and booking_status='1'";
-					$res=mysql_query($sql);
+					$res=db_query($sql);
 					    //  $mytablename="student_fees_detail";
 				          //include_once("fees_manager_pagination.php");
 						  	$i=1;
@@ -107,12 +107,12 @@ include_once("includes/header.php");?>
 								}
 								
 								$i=($_GET['page']-1)*$limit+1;*/
-							while($row=mysql_fetch_array($res))
+							while($row=db_fetch_array($res))
 							{
 								
 								$select_fine_days="select * from library_fine_manager where session='".$_SESSION['session']."'";
-$res_select=mysql_query($select_fine_days);
-$row_fine=mysql_fetch_array($res_select);
+$res_select=db_query($select_fine_days);
+$row_fine=db_fetch_array($res_select);
 
 $row_fine_days=$row_fine['no_of_days']-1;
 $row_fine_rate=$row_fine['fine_rate'];
@@ -134,12 +134,12 @@ $now = time(); // or your date as well
 				}
 								
 								$sql="SELECT * FROM student_info where registration_no='".$row[1]."' ";
-	                           $student_info=mysql_fetch_array(mysql_query($sql));
+	                           $student_info=db_fetch_array(db_query($sql));
 							   
 							   $sql1="SELECT * FROM class where class_id='".$student_info['class']."'";
-					$class=mysql_fetch_array(mysql_query($sql1));
+					$class=db_fetch_array(db_query($sql1));
 							   $sql1="SELECT * FROM book_manager where book_number='".$row['book_number']."' ";
-	                           $book_detail=mysql_fetch_array(mysql_query($sql1));
+	                           $book_detail=db_fetch_array(db_query($sql1));
 								
 								
 								?>

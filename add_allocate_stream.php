@@ -11,8 +11,8 @@ if(isset($_POST['submit']))
 	//$school_logo = $_POST['school_logo'];
 	
 	 $sql1="SELECT * FROM allocate_class_stream where stream_id='".$stream_id."'  and class_id='".$class_id."'";
-	$res1=mysql_query($sql1) or die("Error : " . mysql_error());
-	$num=mysql_num_rows($res1);
+	$res1=db_query($sql1) or die("Error : " . db_error());
+	$num=db_num_rows($res1);
 	if($num==0)
 	{
 		
@@ -20,7 +20,7 @@ if(isset($_POST['submit']))
 		if($_POST['class_id']!=""&&$_POST['stream_id']!="")
 		{
 		 $sql3="INSERT INTO allocate_class_stream(class_id,stream_id) VALUES ('".$class_id."','".$stream_id."')";
-		$res3=mysql_query($sql3) or die("Error : " . mysql_error());
+		$res3=db_query($sql3) or die("Error : " . db_error());
 		header("Location:allocate_stream.php?msg=1");
 		}else
 		{    header("location:add_allocate_stream.php?error=2");
@@ -101,8 +101,8 @@ else
 								<option value="" selected="selected"> - Select Class - </option>
 							<?php
 							 $sql="SELECT * FROM class where stream_status='1' ";
-	                           $res=mysql_query($sql);
-								while($row=mysql_fetch_array($res))
+	                           $res=db_query($sql);
+								while($row=db_fetch_array($res))
 								{
 									?>
 									<option value="<?php echo $row['class_id']; ?>"><?php echo $row['class_name']; ?></option>
@@ -133,8 +133,8 @@ else
 								<option value="" selected="selected"> - Select Stream - </option>
 							<?php
 							 $sql="SELECT * FROM stream ";
-	                           $res=mysql_query($sql);
-								while($row=mysql_fetch_array($res))
+	                           $res=db_query($sql);
+								while($row=db_fetch_array($res))
 								{
 									?>
 									<option value="<?php echo $row['stream_id']; ?>"><?php echo $row['stream_name']; ?></option>

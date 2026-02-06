@@ -22,7 +22,7 @@ include_once("includes/header.php");?>
 <?php include_once("includes/transport_setting_sidebar.php");
 if($_GET['sid']!='')
 {
-mysql_query("delete from transport_add_route where route_id='".$_GET['sid']."'");	
+db_query("delete from transport_add_route where route_id='".$_GET['sid']."'");	
 }
 
 ?>
@@ -76,8 +76,8 @@ mysql_query("delete from transport_add_route where route_id='".$_GET['sid']."'")
 						<?php 
 						$i=0;
 						$sql="select * from transport_add_route";
-						$sql_value=mysql_query($sql);
-						while($sql_row=mysql_fetch_array($sql_value)){
+						$sql_value=db_query($sql);
+						while($sql_row=db_fetch_array($sql_value)){
 						$i++;?>
                         <tr>
                         

@@ -102,25 +102,25 @@ include_once("includes/header.php");?>
 						 include_once('config/config.inc.php');
 				
 					$sql="select * from staff_employee";
-					$res=mysql_query($sql);
-				while($row=mysql_fetch_array($res))
+					$res=db_query($sql);
+				while($row=db_fetch_array($res))
 				{
 					 $staff="select * from staff_department where staff_department_id='".$row['staff_department_id']."'";
-					$staff_sel=mysql_query($staff);
-					$staff_sel_row=mysql_fetch_array($staff_sel);
+					$staff_sel=db_query($staff);
+					$staff_sel_row=db_fetch_array($staff_sel);
 					
 					
 					 $staff_cat="select * from staff_category where staff_cat_id='".$row['staff_cat_id']."'";
-					$staff_cat_sel=mysql_query($staff_cat);
-					$staff_sel_cat=mysql_fetch_array($staff_cat_sel);
+					$staff_cat_sel=db_query($staff_cat);
+					$staff_sel_cat=db_fetch_array($staff_cat_sel);
 					
 					 $staff_pos="select * from staff_position where staff_pos_id='".$row['staff_pos_id']."'";
-					$staff_pos_sel=mysql_query($staff_pos);
-					$staff_sel_pos=mysql_fetch_array($staff_pos_sel);
+					$staff_pos_sel=db_query($staff_pos);
+					$staff_sel_pos=db_fetch_array($staff_pos_sel);
 					
 					 $staff_qua="select * from staff_qualification where staff_qualification_id='".$row['staff_qualification_id']."'";
-					$staff_qua_sel=mysql_query($staff_qua);
-					$staff_sel_qua=mysql_fetch_array($staff_qua_sel);
+					$staff_qua_sel=db_query($staff_qua);
+					$staff_sel_qua=db_fetch_array($staff_qua_sel);
 					
 					
 					

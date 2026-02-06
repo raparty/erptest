@@ -61,8 +61,8 @@ include_once("includes/header.php");?>
 											<option value="" selected="selected"> - Select Registration No - </option>
 							<?php
 							 $sql="SELECT * FROM student_info";
-	                           $res=mysql_query($sql);
-								while($row=mysql_fetch_array($res))
+	                           $res=db_query($sql);
+								while($row=db_fetch_array($res))
 								{
 									?>
 									<option value="<?php echo $row['registration_no']; ?>"><?php echo $row['registration_no']; ?></option>
@@ -106,8 +106,8 @@ include_once("includes/header.php");?>
 			   $id=$_GET['id'];
 			   $id1=$_GET['id1'];
 			   $names="select * from student_info where registration_no='$id'";
-			   $values=mysql_query($names);
-			   $rows=mysql_fetch_array($values);
+			   $values=db_query($names);
+			   $rows=db_fetch_array($values);
 			   
 			    ?>
                
@@ -165,14 +165,14 @@ include_once("includes/header.php");?>
 					   $mytablename="student_info";
 						   //$sql10="SELECT * FROM student_info";
 						include("student_detail_pagination.php");
-						//$res=mysql_query($sql10);
-						 $num=mysql_num_rows($result_res);
+						//$res=db_query($sql10);
+						 $num=db_num_rows($result_res);
 						if($total_pages!=0)
 						{
-						while($row_value=mysql_fetch_array($result_res))
+						while($row_value=db_fetch_array($result_res))
 						{
 							$sql1="SELECT * FROM class where class_id='".$row_value['class']."'";
-					$class=mysql_fetch_array(mysql_query($sql1));
+					$class=db_fetch_array(db_query($sql1));
 						
 						?>
 						<tr>

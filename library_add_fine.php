@@ -12,15 +12,15 @@ if(isset($_POST['submit']))
 	//$school_logo = $_POST['school_logo'];
 	
 	 $sql1="SELECT * FROM library_fine_manager where session='".$_SESSION['session']."' ";
-	$res1=mysql_query($sql1) or die("Error : " . mysql_error());
-	$num=mysql_num_rows($res1);
+	$res1=db_query($sql1) or die("Error : " . db_error());
+	$num=db_num_rows($res1);
 	if($num==0)
 	{
 		
 		
 		
 		 $sql3="INSERT INTO library_fine_manager(fine_rate,no_of_days,session) VALUES ('".$fine_rate."','".$no_of_days."','".$_SESSION['session']."')";
-		$res3=mysql_query($sql3) or die("Error : " . mysql_error());
+		$res3=db_query($sql3) or die("Error : " . db_error());
 		header("Location:library_fine_manager.php?msg=1");
 		
 		

@@ -16,8 +16,8 @@ if(isset($_POST['submit']))
 	}
 	
 	
-	$res1=mysql_query($sql1) or die("Error : " . mysql_error());
-	$num=mysql_num_rows($res1);
+	$res1=db_query($sql1) or die("Error : " . db_error());
+	$num=db_num_rows($res1);
 	
 	$student_detail="select * from student_info where registration_no='".$_POST['registration_no']."' and class='".$_POST['class_id']."' and session='".$_SESSION['session']."'";
 	if($_POST['stream_id']!="")
@@ -26,13 +26,13 @@ if(isset($_POST['submit']))
 		$student_detail.="and stream='".$_POST['stream_id']."'";
 		
 	}
-	$admission_no=mysql_fetch_array(mysql_query($student_detail));
+	$admission_no=db_fetch_array(db_query($student_detail));
 	if($num==0)
 	{
 		$route_id=$_POST['route_id'];
 		
 		 $sql3="INSERT INTO transport_student_detail(registration_no,class_id,stream_id,vechile_id,route_id,session) VALUES ('".$admission_no['student_admission_no']."','".$_POST['class_id']."','".$_POST['stream_id']."','".$route_id."','".$_POST['vechile_id']."','".$_SESSION['session']."')";
-		$res3=mysql_query($sql3) or die("Error : " . mysql_error());
+		$res3=db_query($sql3) or die("Error : " . db_error());
 		header("Location:transport_add_student.php?msg=1");
 		
 		
@@ -128,7 +128,7 @@ xmlhttp.send();
 //$registration_no=$_GET['registration_no'];
 //$fees_term=$_GET['fees_term'];
  $studentinfo="select * from student_info where registration_no='".$registration_no."' and session='".$_SESSION['session']."'";
-$row_value=mysql_fetch_array(mysql_query($studentinfo));
+$row_value=db_fetch_array(db_query($studentinfo));
 ?>
 
 <div id="container">
@@ -192,8 +192,8 @@ $row_value=mysql_fetch_array(mysql_query($studentinfo));
 								<option value="" selected="selected"> - Select Class - </option>
 							<?php
 							 $sql="SELECT * FROM class ";
-	                           $res=mysql_query($sql);
-								while($row=mysql_fetch_array($res))
+	                           $res=db_query($sql);
+								while($row=db_fetch_array($res))
 								{
 									if($row_value['class']==$row['class_id'])
 									{
@@ -234,9 +234,9 @@ $row_value=mysql_fetch_array(mysql_query($studentinfo));
                                         	 <?php 
 						$i=1;
 					$sql="SELECT * FROM allocate_class_stream where class_id='".$row_value['class']."' ";
-					$res=mysql_query($sql);
+					$res=db_query($sql);
 				
-							while($row=mysql_fetch_array($res))
+							while($row=db_fetch_array($res))
 							{
 								if($row_value['stream']==$row['stream_id'])
 								{
@@ -247,7 +247,7 @@ $row_value=mysql_fetch_array(mysql_query($studentinfo));
 										}
 								
 						$sql2="SELECT * FROM stream where stream_id='".$row['stream_id']."'";
-					$stream=mysql_fetch_array(mysql_query($sql2));
+					$stream=db_fetch_array(db_query($sql2));
 					?>			<option <?php echo $stream_sel;?> value="<?php echo $row['stream_id']; ?>"><?php echo $stream['stream_name']; ?></option>
 									<?php
 								}
@@ -267,8 +267,8 @@ $row_value=mysql_fetch_array(mysql_query($studentinfo));
 											<option value=""></option>
 											<?php 
 											$sql="select * from transport_add_route";
-											$ro=mysql_query($sql);
-											while($row=mysql_fetch_array($ro)){
+											$ro=db_query($sql);
+											while($row=db_fetch_array($ro)){
 											
 											?>
                                             											<option value="<?php echo $row['route_id'];?>"><?php echo $row['route_name'];?></option><?php }?>

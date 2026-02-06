@@ -11,8 +11,8 @@ if(isset($_POST['submit']))
 		
 	
 	 $sql1="SELECT * FROM transport_student_detail where registration_no='".$_POST['registration_no']."' and class_id='".$_POST['class_id']."' and  stream_id='".$_POST['stream_id']."' and transport_id!='".$_GET['sid']."' and session='".$_SESSION['session']."'";
-	$res1=mysql_query($sql1) or die("Error : " . mysql_error());
-	$num=mysql_num_rows($res1);
+	$res1=db_query($sql1) or die("Error : " . db_error());
+	$num=db_num_rows($res1);
 	$student_detail="select * from student_info where registration_no='".$_POST['registration_no']."' and class='".$_POST['class_id']."' and session='".$_SESSION['session']."'";
 	if($_POST['stream_id']!="")
 	{
@@ -20,12 +20,12 @@ if(isset($_POST['submit']))
 		$student_detail.="and stream='".$_POST['stream_id']."'";
 		
 	}
-	$admission_no=mysql_fetch_array(mysql_query($student_detail));
+	$admission_no=db_fetch_array(db_query($student_detail));
 	if($num==0)
 	{
 		$route_id=$_POST['route_id'];
 	   $sql3="update transport_student_detail set registration_no='".$admission_no['student_admission_no']."', class_id='".$_POST['class_id']."' , stream_id='".$_POST['stream_id']."', vechile_id='".$_POST['vechile_id']."',route_id='".$route_id."' where transport_id='".$_GET['sid']."'";
-		$res3=mysql_query($sql3) or die("Error : " . mysql_error());
+		$res3=db_query($sql3) or die("Error : " . db_error());
 		header("Location:transport_student_detail.php?msg=1");
 	}
 	else
@@ -58,8 +58,8 @@ else
 	}
 }
  $sql1="SELECT * FROM transport_student_detail where transport_id='".$_GET['sid']."'";
-	$res1=mysql_query($sql1);
-		$row123=mysql_fetch_array($res1);
+	$res1=db_query($sql1);
+		$row123=db_fetch_array($res1);
 		
 	
 
@@ -150,8 +150,8 @@ xmlhttp.send();
                                             <select name="registration_no"   onChange="getForm('ajax_stream_code2.php?class_id='+this.value)">
 				<option value="" selected="selected"> - Select Roll number - </option>
                 			<?php 
-	                           $res=mysql_query($sql1);
-								while($row=mysql_fetch_array($res))
+	                           $res=db_query($sql1);
+								while($row=db_fetch_array($res))
 								{
 									if($row123['registration_no']==$row[0])
 									{
@@ -190,8 +190,8 @@ xmlhttp.send();
 								<option value="" selected="selected"> - Select Class - </option>
 							<?php
 							 $sql="SELECT * FROM class ";
-	                           $res=mysql_query($sql);
-								while($row=mysql_fetch_array($res))
+	                           $res=db_query($sql);
+								while($row=db_fetch_array($res))
 								{
 									if($row123['class_id']==$row['class_id'])
 									{
@@ -232,9 +232,9 @@ xmlhttp.send();
                                         	 <?php 
 						$i=1;
 					$sql="SELECT * FROM allocate_class_stream where class_id='".$_SESSION['class_id']."' ";
-					$res=mysql_query($sql);
+					$res=db_query($sql);
 				
-							while($row=mysql_fetch_array($res))
+							while($row=db_fetch_array($res))
 							{
 								if($row123['stream_id']==$row['stream_id'])
 								{
@@ -245,7 +245,7 @@ xmlhttp.send();
 										}
 								
 						$sql2="SELECT * FROM stream where stream_id='".$row['stream_id']."'";
-					$stream=mysql_fetch_array(mysql_query($sql2));
+					$stream=db_fetch_array(db_query($sql2));
 					?>			<option <?php echo $stream_sel;?> value="<?php echo $row['stream_id']; ?>"><?php echo $stream['stream_name']; ?></option>
 									<?php
 								}
@@ -264,8 +264,8 @@ xmlhttp.send();
 											<option value=""></option>
 											<?php 
 											$sql="select * from transport_add_route";
-											$ro=mysql_query($sql);
-											while($row=mysql_fetch_array($ro)){
+											$ro=db_query($sql);
+											while($row=db_fetch_array($ro)){
 												
 												if($row123['route_id']==$row['route_id'])
 								{
@@ -288,14 +288,14 @@ xmlhttp.send();
 								  <?php 
 								// echo $row123['vechile_id'];
 								   $sql="select * from transport_add_vechile where find_in_set('".$row123['route_id']."',route_id)";
-											$ro=mysql_query($sql);?>
+											$ro=db_query($sql);?>
                               <div class="form_grid_12">
 									<label class="field_title">Select Vehicle</label>
 									<div class="form_input">
 										<select name="vechile_id" style=" width:300px; height:30px;"  class="chzn-select" tabindex="20">
 											<option value="">--select vehicle--</option>
 											<?php 
-											while($row=mysql_fetch_array($ro)){
+											while($row=db_fetch_array($ro)){
 												
 												
 												if($row123['vechile_id']==$row[0])

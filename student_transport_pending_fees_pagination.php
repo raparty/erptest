@@ -29,7 +29,7 @@ require_once("config/config.inc.php");
 								}
 								 $query.="and session='".$_SESSION['session']."'";
 							                      
-	$total_pages = mysql_fetch_array(mysql_query($query));
+	$total_pages = db_fetch_array(db_query($query));
 	$total_pages = $total_pages['num'];
 	
 	/* Setup vars for query. */
@@ -56,8 +56,8 @@ require_once("config/config.inc.php");
 								$sql10.=" and name like '%".$_POST['name']."%'";
 								}
 							 $sql10.="and session='".$_SESSION['session']."' LIMIT $start, $limit";
-	$student_info11 = mysql_query($sql10);
-	//$row_value=mysql_fetch_array($result);
+	$student_info11 = db_query($sql10);
+	//$row_value=db_fetch_array($result);
 	//print_r($row_value);
 	
 	/* Setup page vars for display. */

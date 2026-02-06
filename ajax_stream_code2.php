@@ -6,10 +6,10 @@ ob_start();
 
 $class_id = (int)($_GET['class_id'] ?? 0);
 $stream_id = (int)($_GET['stream_id'] ?? 0);
-$class_id_safe = mysql_real_escape_string((string)$class_id);
-$stream_id_safe = mysql_real_escape_string((string)$stream_id);
+$class_id_safe = db_escape((string)$class_id);
+$stream_id_safe = db_escape((string)$stream_id);
  $sql2="SELECT * FROM class where class_id='".$class_id_safe."'";
-					$class=mysql_fetch_array(mysql_query($sql2));
+					$class=db_fetch_array(db_query($sql2));
 					if($class['class_name']!=""&&$stream_id=="")
 					{
 if($class['class_name']!=""&&$stream_id==""&&$class['stream_status']==1)
@@ -25,9 +25,9 @@ if($class['class_name']!=""&&$stream_id==""&&$class['stream_status']==1)
                                         	 <?php 
 						$i=1;
 					$sql="SELECT * FROM allocate_class_stream where class_id='".$class_id_safe."' ";
-					$res=mysql_query($sql);
+					$res=db_query($sql);
 				
-							while($row=mysql_fetch_array($res))
+							while($row=db_fetch_array($res))
 							{
 								if($stream_id==$row['stream_id'])
 								{
@@ -38,7 +38,7 @@ if($class['class_name']!=""&&$stream_id==""&&$class['stream_status']==1)
 										}
 								
 						$sql2="SELECT * FROM stream where stream_id='".$row['stream_id']."'";
-					$stream=mysql_fetch_array(mysql_query($sql2));
+					$stream=db_fetch_array(db_query($sql2));
 					?>			<option <?php echo $stream_sel;?> value="<?php echo $row['stream_id']; ?>"><?php echo $stream['stream_name']; ?></option>
 									<?php
 								}
@@ -51,7 +51,7 @@ if($class['class_name']!=""&&$stream_id==""&&$class['stream_status']==1)
                                 
                                     <?php
 							 $sql="SELECT * FROM allocate_class_subject where class_id='".$class_id_safe."'";
-					       $res=mysql_query($sql);?>
+					       $res=db_query($sql);?>
 								<div class="form_grid_12 multiline">
 									<label class="field_title"> Subject  Name</label>
                                     <div class="form_input">
@@ -60,11 +60,11 @@ if($class['class_name']!=""&&$stream_id==""&&$class['stream_status']==1)
 								<option value="" selected="selected"> - Select Subject - </option>
 							<?php 
 				
-							while($row=mysql_fetch_array($res))
+							while($row=db_fetch_array($res))
 							{
 								
 								$sql3="SELECT * FROM subject where subject_id='".$row['subject_id']."'";
-					$subject=mysql_fetch_array(mysql_query($sql3));
+					$subject=db_fetch_array(db_query($sql3));
 									?>
 									<option value="<?php echo $row['subject_id']; ?>"><?php echo $subject['subject_name']; ?></option>
 									<?php
@@ -90,7 +90,7 @@ if($class['class_name']!=""&&$stream_id==""&&$class['stream_status']==1)
                                 
                                     <?php
 							 $sql="SELECT * FROM allocate_class_subject where class_id='".$class_id_safe."'";
-					       $res=mysql_query($sql);?>
+					       $res=db_query($sql);?>
 								<div class="form_grid_12 multiline">
 									<label class="field_title"> Subject  Name</label>
                                     <div class="form_input">
@@ -99,11 +99,11 @@ if($class['class_name']!=""&&$stream_id==""&&$class['stream_status']==1)
 								<option value="" selected="selected"> - Select Subject - </option>
 							<?php 
 				
-							while($row=mysql_fetch_array($res))
+							while($row=db_fetch_array($res))
 							{
 								
 								$sql3="SELECT * FROM subject where subject_id='".$row['subject_id']."'";
-					$subject=mysql_fetch_array(mysql_query($sql3));
+					$subject=db_fetch_array(db_query($sql3));
 									?>
 									<option value="<?php echo $row['subject_id']; ?>"><?php echo $subject['subject_name']; ?></option>
 									<?php
@@ -142,9 +142,9 @@ if($class['class_name']!=""&&$stream_id==""&&$class['stream_status']==1)
                                         	 <?php 
 						$i=1;
 					$sql="SELECT * FROM allocate_class_stream where class_id='".$class_id_safe."' ";
-					$res=mysql_query($sql);
+					$res=db_query($sql);
 				
-							while($row=mysql_fetch_array($res))
+							while($row=db_fetch_array($res))
 							{
 								if($stream_id==$row['stream_id'])
 								{
@@ -155,7 +155,7 @@ if($class['class_name']!=""&&$stream_id==""&&$class['stream_status']==1)
 										}
 								
 						$sql2="SELECT * FROM stream where stream_id='".$row['stream_id']."'";
-					$stream=mysql_fetch_array(mysql_query($sql2));
+					$stream=db_fetch_array(db_query($sql2));
 					?>			<option <?php echo $stream_sel;?> value="<?php echo $row['stream_id']; ?>"><?php echo $stream['stream_name']; ?></option>
 									<?php
 								}
@@ -167,7 +167,7 @@ if($class['class_name']!=""&&$stream_id==""&&$class['stream_status']==1)
                  
                  <?php
 							 $sql="SELECT * FROM allocate_class_subject where class_id='".$class_id_safe."' and stream_id='".$stream_id_safe."' ";
-					       $res=mysql_query($sql);?>
+					       $res=db_query($sql);?>
 							<li>	<div class="form_grid_12 multiline">
 									<label class="field_title"> Subject  Name</label>
                                     <div class="form_input">
@@ -176,11 +176,11 @@ if($class['class_name']!=""&&$stream_id==""&&$class['stream_status']==1)
 								<option value="" selected="selected"> - Select Subject - </option>
 							<?php 
 				
-							while($row=mysql_fetch_array($res))
+							while($row=db_fetch_array($res))
 							{
 								
 								$sql3="SELECT * FROM subject where subject_id='".$row['subject_id']."'";
-					$subject=mysql_fetch_array(mysql_query($sql3));
+					$subject=db_fetch_array(db_query($sql3));
 									?>
 									<option value="<?php echo $row['subject_id']; ?>"><?php echo $subject['subject_name']; ?></option>
 									<?php

@@ -37,8 +37,8 @@ if (session_status() !== PHP_SESSION_ACTIVE) {
     session_start();
 }
 
-require_once __DIR__ . '/legacy_mysql.php';
-LegacyMysql::init($config['db']);
+require_once __DIR__ . '/database.php';
+Database::init($config['db']);
 
 function app_config(string $key, mixed $default = null): mixed
 {

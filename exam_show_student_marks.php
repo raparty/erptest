@@ -25,7 +25,7 @@ include_once("includes/header.php");?>
 	<?php 
 	if(isset($_GET['sid']))
 	{
-	mysql_query("delete from exam_add_maximum_marks where exam_max_marks_id='".$_GET['sid']."'");	
+	db_query("delete from exam_add_maximum_marks where exam_max_marks_id='".$_GET['sid']."'");	
 		
 	}
 	?>
@@ -98,31 +98,31 @@ include_once("includes/header.php");?>
                         <?php 
 						$i=1;
 				 $sql="SELECT * FROM  exam_subject_marks where session='".$_SESSION['session']."'";
-					$res=mysql_query($sql);
+					$res=db_query($sql);
 				
-							while($row=mysql_fetch_array($res))
+							while($row=db_fetch_array($res))
 							{
 								 $class_student="select * from student_info where registration_no='".$row['registration_no']."'";
-								$values_=mysql_query($class_student);
-								$row_student=mysql_fetch_array($values_);
+								$values_=db_query($class_student);
+								$row_student=db_fetch_array($values_);
 								
 								
 								
 								 $class="select * from class where class_id='".$row['class_id']."'";
-								$values=mysql_query($class);
-								$rows=mysql_fetch_array($values);
+								$values=db_query($class);
+								$rows=db_fetch_array($values);
 								
 								$class1="select * from stream where stream_id='".$row['stream_id']."'";
-								$values1=mysql_query($class1);
-								$rows1=mysql_fetch_array($values1);
+								$values1=db_query($class1);
+								$rows1=db_fetch_array($values1);
 								
 								$class2="select * from subject where subject_id='".$row['subject_id']."'";
-								$values2=mysql_query($class2);
-								$rows2=mysql_fetch_array($values2);
+								$values2=db_query($class2);
+								$rows2=db_fetch_array($values2);
 								
 								$class3="select * from exam_nuber_of_term where term_id='".$row['term_id']."'";
-								$values3=mysql_query($class3);
-								$rows3=mysql_fetch_array($values3);
+								$values3=db_query($class3);
+								$rows3=db_fetch_array($values3);
 								
 								?>		
 						<tr>

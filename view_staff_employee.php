@@ -80,14 +80,14 @@ include_once("includes/header.php");?>
 
 					
 					$sql1="SELECT * FROM staff_employee where email='".$email."' and staff_id!='".$get."'";
-	$res1=mysql_query($sql1) or die("Error : " . mysql_error());
-	$num=mysql_num_rows($res1);
+	$res1=db_query($sql1) or die("Error : " . db_error());
+	$num=db_num_rows($res1);
 	if($num==0)
 	{
 					
 					
 				 $sql="update  staff_employee set emp_id='".$emp_id."',first='".$first."',last='".$last."',email='".$email."',gender='".$gender."',staff_cat_id='".$category."',staff_pos_id='".$position."',staff_qualification_id='".$qualification."',staff_department_id='".$department."',job_title='".$job."',exp='".$exp."',marritial_status='".$marritial."',father_name='".$father."',mother_name='".$mother."',blood_group='".$blood_group."',nationality='".$nationality."',address1='".$address1."',address2='".$address2."',image='".$image."'  where staff_id='".$get."'";
-					$query=mysql_query($sql);
+					$query=db_query($sql);
 					$msg = "<span style='color:#009900;'><h4> Employee Detail Updated Successfully </h4></span>";
 					
 	}else
@@ -98,8 +98,8 @@ include_once("includes/header.php");?>
 					
 					}
 					$sql="select * from staff_employee where staff_id='".$get."'";
-					$res=mysql_query($sql);
-				$row=mysql_fetch_array($res);
+					$res=db_query($sql);
+				$row=db_fetch_array($res);
 				
 					
 					
@@ -107,21 +107,21 @@ include_once("includes/header.php");?>
 					
 					
  $staff="select * from staff_department where staff_department_id='".$row['staff_department_id']."'";
-					$staff_sel=mysql_query($staff);
-					$staff_sel_row=mysql_fetch_array($staff_sel);
+					$staff_sel=db_query($staff);
+					$staff_sel_row=db_fetch_array($staff_sel);
 					
 					
 					 $staff_cat="select * from staff_category where staff_cat_id='".$row['staff_cat_id']."'";
-					$staff_cat_sel=mysql_query($staff_cat);
-					$staff_sel_cat=mysql_fetch_array($staff_cat_sel);
+					$staff_cat_sel=db_query($staff_cat);
+					$staff_sel_cat=db_fetch_array($staff_cat_sel);
 					
 					 $staff_pos="select * from staff_position where staff_pos_id='".$row['staff_pos_id']."'";
-					$staff_pos_sel=mysql_query($staff_pos);
-					$staff_sel_pos=mysql_fetch_array($staff_pos_sel);
+					$staff_pos_sel=db_query($staff_pos);
+					$staff_sel_pos=db_fetch_array($staff_pos_sel);
 					
 					 $staff_qua="select * from staff_qualification where staff_qualification_id='".$row['staff_qualification_id']."'";
-					$staff_qua_sel=mysql_query($staff_qua);
-					$staff_sel_qua=mysql_fetch_array($staff_qua_sel);
+					$staff_qua_sel=db_query($staff_qua);
+					$staff_sel_qua=db_fetch_array($staff_qua_sel);
 					
 					?>
                 <?php if($msg!=""){echo $msg; } ?>

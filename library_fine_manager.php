@@ -70,7 +70,7 @@ include_once("includes/header.php");?>
                         <?php 
 					
 					$sql="SELECT * FROM library_fine_manager where session='".$_SESSION['session']."'";
-					$res=mysql_query($sql);
+					$res=db_query($sql);
 					      //$mytablename="student_fees_detail";
 				          //include_once("fees_manager_pagination.php");
 						  	$i=1;
@@ -81,16 +81,16 @@ include_once("includes/header.php");?>
 								}
 								*/
 								//$i=($_GET['page']-1)*$limit+1;
-							while($row=mysql_fetch_array($res))
+							while($row=db_fetch_array($res))
 							{
 								
 								/*$sql="SELECT * FROM student_info where registration_no='".$row[1]."' ";
-	                           $student_info=mysql_fetch_array(mysql_query($sql));
+	                           $student_info=db_fetch_array(db_query($sql));
 							   
 							   $sql1="SELECT * FROM class where class_id='".$student_info['class']."'";
-					$class=mysql_fetch_array(mysql_query($sql1));*/
+					$class=db_fetch_array(db_query($sql1));*/
 							  /* $sql1="SELECT * FROM library_category where library_category_id ='".$row['book_category_id']."' ";
-	                           $book_category_name=mysql_fetch_array(mysql_query($sql1));*/
+	                           $book_category_name=db_fetch_array(db_query($sql1));*/
 								
 								
 								?>

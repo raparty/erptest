@@ -13,12 +13,12 @@ if(isset($_POST['submit']))
 		if($_POST['pending_amount']>=$_POST['fees_amount'])
 	{
 	 $sql1="SELECT * FROM student_fees_detail where registration_no='".$_POST['registration_no']."' and fees_term='".$_POST['fees_term']."' and session='".$_SESSION['session']."' and student_fees_id!='".$_GET['sid']."'";
-	$res1=mysql_query($sql1) or die("Error : " . mysql_error());
-	$num=mysql_num_rows($res1);
+	$res1=db_query($sql1) or die("Error : " . db_error());
+	$num=db_num_rows($res1);
 	if($num==0)
 	{
 	  $sql3="UPDATE student_fees_detail SET registration_no='".$_POST['registration_no']."',fees_term='".$_POST['fees_term']."',fees_amount='".$_POST['fees_amount']."' where student_fees_id='".$_GET['sid']."'";
-	$res3=mysql_query($sql3) or die("Error : " . mysql_error());
+	$res3=db_query($sql3) or die("Error : " . db_error());
 	header("Location:fees_manager.php?msg=3");
 	}else
 	{
@@ -43,15 +43,15 @@ if($_GET['error']==3)
 	
 		
 	$sql2="SELECT * FROM student_fees_detail WHERE `student_fees_id` = '" . $_GET['sid'] . "';";
-	$res2=mysql_query($sql2);	
-	$row2=mysql_fetch_array($res2);
+	$res2=db_query($sql2);	
+	$row2=db_fetch_array($res2);
 		
 		
 		 $studentinfo="select * from student_info where registration_no='".$row2['registration_no']."' and session='".$_SESSION['session']."'";
-$row=mysql_fetch_array(mysql_query($studentinfo));
+$row=db_fetch_array(db_query($studentinfo));
 
  $sql_pending="select sum(fees_amount) from student_fees_detail where registration_no='".$row2['registration_no']."'  and session='".$_SESSION['session']."'";
-	$deposit_amount=mysql_fetch_array(mysql_query($sql_pending));
+	$deposit_amount=db_fetch_array(db_query($sql_pending));
 
   ?>
 <div class="page_title">
@@ -136,8 +136,8 @@ $row=mysql_fetch_array(mysql_query($studentinfo));
 											
 							<?php
 							 $sql="SELECT * FROM class  where class_id='".$row['class']."'";
-	                           $res=mysql_query($sql);
-								while($row1=mysql_fetch_array($res))
+	                           $res=db_query($sql);
+								while($row1=db_fetch_array($res))
 								{
 									?>
 									<option value="<?php echo $row1['class_id']; ?>"><?php echo $row1['class_name']; ?></option>
@@ -157,8 +157,8 @@ $row=mysql_fetch_array(mysql_query($studentinfo));
 										
                                         	<?php
 							 $sql="SELECT * FROM stream where stream_id='".$row['stream']."' ";
-	                           $res=mysql_query($sql);
-								while($row2=mysql_fetch_array($res))
+	                           $res=db_query($sql);
+								while($row2=db_fetch_array($res))
 								{
 									?>
 									<option value="<?php echo $row2['stream_id']; ?>"><?php echo $row2['stream_name']; ?></option>
@@ -178,8 +178,8 @@ $row=mysql_fetch_array(mysql_query($studentinfo));
 										<div class="form_grid_5 alpha">
                                         <?php
 							 $sql="SELECT * FROM fees_package where package_id='".$row['admission_fee']."' ";
-	                           $res=mysql_query($sql);
-								$row3=mysql_fetch_array($res);?>
+	                           $res=db_query($sql);
+								$row3=db_fetch_array($res);?>
 											<input name="fees_amount" type="text" value="<?php echo $row2['fees_amount'];?>"/>
 											<span class=" label_intro" style="color:#F00;">pending fees amount is:<?php echo $pending_amount=$row3['package_fees']-$deposit_amount[0];?> <input name="pending_amount" type="hidden" value="<?php echo $pending_amount=$row3['package_fees']-$deposit_amount[0];?>"/></span>
 										</div>
@@ -204,8 +204,8 @@ $row=mysql_fetch_array(mysql_query($studentinfo));
 											<option value="" selected="selected"> - Select fees term  - </option>
 							<?php
 							 $sql="SELECT * FROM fees_term ";
-	                           $res=mysql_query($sql);
-								while($row1=mysql_fetch_array($res))
+	                           $res=db_query($sql);
+								while($row1=db_fetch_array($res))
 								{
 									if($row2['fees_term']==$row1[0])
 									{ 

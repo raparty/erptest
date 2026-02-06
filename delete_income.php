@@ -6,7 +6,7 @@ $sid = (int)($_GET['sid'] ?? 0);
 if ($sid > 0)
 {
 	$delete_detail="delete from account_exp_income_detail where txn_id='".$sid."'";
-	mysql_query($delete_detail);
+	db_query($delete_detail);
 	header("Location:income_manager.php?msg=2");
 	
 	}

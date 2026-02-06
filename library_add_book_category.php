@@ -10,8 +10,8 @@ if(isset($_POST['submit']))
 	
 	
 	 $sql1="SELECT * FROM library_category where category_name='".$category_name."' ";
-	$res1=mysql_query($sql1) or die("Error : " . mysql_error());
-	$num=mysql_num_rows($res1);
+	$res1=db_query($sql1) or die("Error : " . db_error());
+	$num=db_num_rows($res1);
 	if($num==0)
 	{
 		
@@ -19,7 +19,7 @@ if(isset($_POST['submit']))
 		if($_POST['category_name']!="")
 		{
 		 $sql3="INSERT INTO library_category(category_name) VALUES ('".$category_name."')";
-		$res3=mysql_query($sql3) or die("Error : " . mysql_error());
+		$res3=db_query($sql3) or die("Error : " . db_error());
 		header("Location:library_book_category.php?msg=1");
 		}else
 		{    header("location:library_add_book_category.php?error=2");

@@ -25,7 +25,7 @@ include_once("includes/header.php");?>
 	<?php 
 	if(isset($_GET['sid']))
 	{
-	mysql_query("delete from exam_time_table where time_table_id='".$_GET['sid']."'");	
+	db_query("delete from exam_time_table where time_table_id='".$_GET['sid']."'");	
 		
 	}
 	?>
@@ -101,22 +101,22 @@ include_once("includes/header.php");?>
 						 <?php 
 						$i=0;
 			 $sql="SELECT * FROM  exam_time_table where session='".$_SESSION['session']."'";
-					$res=mysql_query($sql);
+					$res=db_query($sql);
 				
-							while($row=mysql_fetch_array($res))
+							while($row=db_fetch_array($res))
 							{
 								$i++;
 						 $class="select * from class where class_id='".$row['class_id']."'";
-								$values=mysql_query($class);
-								$rows=mysql_fetch_array($values);
+								$values=db_query($class);
+								$rows=db_fetch_array($values);
 							
 					 $class1="select * from stream where stream_id='".$row['stream_id']."'";
-								$values1=mysql_query($class1);
-								$rows_stream=mysql_fetch_array($values1);
+								$values1=db_query($class1);
+								$rows_stream=db_fetch_array($values1);
 								
 						 $class_subject="select * from subject where subject_id='".$row['subject_id']."'";
-								$values_subject=mysql_query($class_subject);
-								$rows_subject=mysql_fetch_array($values_subject);
+								$values_subject=db_query($class_subject);
+								$rows_subject=db_fetch_array($values_subject);
 								
 								
 								?>		

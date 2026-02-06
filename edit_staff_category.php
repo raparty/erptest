@@ -42,11 +42,11 @@ include_once("includes/header.php");?>
 					$staff=$_POST['staff_category'];
 			   
                 $sql="update staff_category set staff_category='".$staff."' where staff_cat_id='".$get."'";
-				$res=mysql_query($sql);
+				$res=db_query($sql);
 				}
 			$select_sql="select * from staff_category where staff_cat_id='".$get."'";	
-			$select_res=mysql_query($select_sql);
-		$row=mysql_fetch_array($select_res)
+			$select_res=db_query($select_sql);
+		$row=db_fetch_array($select_res)
 		
 			
 				

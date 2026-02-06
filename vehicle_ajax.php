@@ -3,16 +3,16 @@ declare(strict_types=1);
 require_once("config/config.inc.php");
 ?>
 <?php $route_id = (int)($_GET['route_id'] ?? 0);
-$route_id_safe = mysql_real_escape_string((string)$route_id);
+$route_id_safe = db_escape((string)$route_id);
 											 $sql="select * from transport_add_vechile where find_in_set('".$route_id."',route_id)";
-											$ro=mysql_query($sql);?>
+											$ro=db_query($sql);?>
                               <div class="form_grid_12">
 									<label class="field_title">Select Vehicle</label>
 									<div class="form_input">
 										<select name="vechile_id" style=" width:300px; height:30px;"  class="chzn-select" tabindex="20">
 											<option value="">--select vehicle--</option>
 											<?php 
-											while($row=mysql_fetch_array($ro)){
+											while($row=db_fetch_array($ro)){
 												
 												
 												

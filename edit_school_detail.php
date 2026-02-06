@@ -29,15 +29,15 @@ if(isset($_POST['submit']))
 				}
 		
 	  $sql3="UPDATE school_detail SET `school_name` = '".$school_name."',`school_address` = '".$school_address."',`school_logo` = '".$school_logo."' where id='".$_GET['sid']."'";
-	$res3=mysql_query($sql3) or die("Error : " . mysql_error());
+	$res3=db_query($sql3) or die("Error : " . db_error());
 	header("Location:school_detail.php?msg=3");
 }
 
 	
 		
 	$sql2="SELECT * FROM school_detail WHERE `id` = '" . $_GET['sid'] . "';";
-	$res2=mysql_query($sql2);	
-	$row2=mysql_fetch_array($res2);
+	$res2=db_query($sql2);	
+	$row2=db_fetch_array($res2);
 		
   ?>
 <div class="page_title">

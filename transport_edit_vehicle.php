@@ -11,13 +11,13 @@ if(isset($_POST['submit']))
 		
 	
 	 $sql1="SELECT * FROM transport_add_vechile where vechile_number='".$_POST['vechile_number']."' and vechile_id!='".$_GET['sid']."'";
-	$res1=mysql_query($sql1) or die("Error : " . mysql_error());
-	$num=mysql_num_rows($res1);
+	$res1=db_query($sql1) or die("Error : " . db_error());
+	$num=db_num_rows($res1);
 	if($num==0)
 	{
 		$route_id=implode(",",$_POST['route_id']);
 	   $sql3="update transport_add_vechile set vechile_number='".$_POST['vechile_number']."',route_id='".$route_id."' where vechile_id='".$_GET['sid']."'";
-		$res3=mysql_query($sql3) or die("Error : " . mysql_error());
+		$res3=db_query($sql3) or die("Error : " . db_error());
 		header("Location:transport_vechile_detail.php?msg=1");
 	}
 	else
@@ -50,8 +50,8 @@ else
 	}
 }
 echo $sql1="SELECT * FROM transport_add_vechile where vechile_id='".$_GET['sid']."'";
-	$res1=mysql_query($sql1);
-		$row=mysql_fetch_array($res1);
+	$res1=db_query($sql1);
+		$row=db_fetch_array($res1);
 		
 	
 
@@ -114,8 +114,8 @@ echo $sql1="SELECT * FROM transport_add_vechile where vechile_id='".$_GET['sid']
 											<?php 
 											$route_id=explode(",",$row['route_id']);
 											$sql="select * from transport_add_route";
-											$ro=mysql_query($sql);
-											while($row12=mysql_fetch_array($ro)){
+											$ro=db_query($sql);
+											while($row12=db_fetch_array($ro)){
 											if(strstr($row12['route_id'],$row['route_id']))
 											{
 												$selected_route='selected="selected"';

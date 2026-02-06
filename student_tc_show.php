@@ -72,19 +72,19 @@ color:#ffffff;
 				  $names.="and stream='".$_SESSION['stream_id']."'";
 				  }
 				// echo $names;
-			   $values=mysql_query($names);
-			   $rows=mysql_fetch_array($values);
+			   $values=db_query($names);
+			   $rows=db_fetch_array($values);
 			   
 			   $ArrOtherDetails=$_POST['other_details'];
 			   $sql="SELECT * FROM school_detail";
-					$res=mysql_query($sql);
+					$res=db_query($sql);
 				
-						$school_detail=mysql_fetch_array($res);
+						$school_detail=db_fetch_array($res);
 						
 						$sql1="SELECT * FROM class where class_id='".$rows['class']."'";
-					$class=mysql_fetch_array(mysql_query($sql1));
+					$class=db_fetch_array(db_query($sql1));
 					$sql2="SELECT * FROM stream where stream_id='".$rows['stream']."'";
-					$stream=mysql_fetch_array(mysql_query($sql2));
+					$stream=db_fetch_array(db_query($sql2));
 			    ?>
 <table width="100%"id="student" cellpadding="0" cellspacing="0">
 

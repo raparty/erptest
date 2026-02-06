@@ -80,14 +80,14 @@ include_once("includes/header.php");?>
 
 					
 					$sql1="SELECT * FROM staff_employee where email='".$email."' and staff_id!='".$get."'";
-	$res1=mysql_query($sql1) or die("Error : " . mysql_error());
-	$num=mysql_num_rows($res1);
+	$res1=db_query($sql1) or die("Error : " . db_error());
+	$num=db_num_rows($res1);
 	if($num==0)
 	{
 					
 					
 				 $sql="update  staff_employee set emp_id='".$emp_id."',first='".$first."',last='".$last."',email='".$email."',gender='".$gender."',staff_cat_id='".$category."',staff_pos_id='".$position."',staff_qualification_id='".$qualification."',staff_department_id='".$department."',job_title='".$job."',exp='".$exp."',marritial_status='".$marritial."',father_name='".$father."',mother_name='".$mother."',blood_group='".$blood_group."',nationality='".$nationality."',address1='".$address1."',address2='".$address2."',image='".$image."'  where staff_id='".$get."'";
-					$query=mysql_query($sql);
+					$query=db_query($sql);
 					$msg = "<span style='color:#009900;'><h4> Employee Detail Updated Successfully </h4></span>";
 					
 	}else
@@ -98,8 +98,8 @@ include_once("includes/header.php");?>
 					
 					}
 					$sql="select * from staff_employee where staff_id='".$get."'";
-					$res=mysql_query($sql);
-				while($row=mysql_fetch_array($res))
+					$res=db_query($sql);
+				while($row=db_fetch_array($res))
 				{
 					
 					
@@ -245,8 +245,8 @@ include_once("includes/header.php");?>
 										<select style=" width:300px" class="chzn-select" tabindex="13" name="staff_department">
 											 <?php
                      $category="select * from staff_department";
-				 $value=mysql_query($category);
-					 while($dep=mysql_fetch_array($value))
+				 $value=db_query($category);
+					 while($dep=db_fetch_array($value))
 					 {
 			?>
 											
@@ -264,8 +264,8 @@ include_once("includes/header.php");?>
 										<select style=" width:300px" class="chzn-select" tabindex="13" name="staff_category">
                                          <?php
                      $cat="select * from staff_category";
-				 $val=mysql_query($cat);
-					 while($staff_category=mysql_fetch_array($val))
+				 $val=db_query($cat);
+					 while($staff_category=db_fetch_array($val))
 					 {
 			?>
 											
@@ -281,8 +281,8 @@ include_once("includes/header.php");?>
 										<select style=" width:300px" class="chzn-select" tabindex="13" name="staff_position">
                                          <?php
                      $cate="select * from staff_position";
-				 $val1=mysql_query($cate);
-					 while($pos=mysql_fetch_array($val1))
+				 $val1=db_query($cate);
+					 while($pos=db_fetch_array($val1))
 					 {
 			?>
 											
@@ -299,8 +299,8 @@ include_once("includes/header.php");?>
 										<select style=" width:300px" class="chzn-select" tabindex="13" name="staff_qualification">
                                          <?php
                      $categ="select * from staff_qualification";
-				 $value1=mysql_query($categ);
-					 while($qua=mysql_fetch_array($value1))
+				 $value1=db_query($categ);
+					 while($qua=db_fetch_array($value1))
 					 {
 			?>
 								<option value="<?php echo $qua['staff_qualification_id'];?>" selected="selected"><?php echo $qua['staff_qualification'];?></option><?php }?>

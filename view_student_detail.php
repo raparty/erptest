@@ -22,7 +22,7 @@ include_once("includes/header.php");?>
 
 <?php	
 	$sql10="SELECT * FROM student_info where student_id='".$_GET['student_id']."' ";
-	$row_value=mysql_fetch_array(mysql_query($sql10));
+	$row_value=db_fetch_array(db_query($sql10));
 
 ?>
 <div id="container">
@@ -145,7 +145,7 @@ Admission Date <span style="color:#F00"> *</span>
 										
 							<?php
 							 $sql="SELECT * FROM class where class_id='".$row_value['class']."' ";
-	                           $class=mysql_fetch_array(mysql_query($sql));
+	                           $class=db_fetch_array(db_query($sql));
 							   echo $class['class_name'];
 								?>
 									</div>
@@ -158,7 +158,7 @@ Admission Date <span style="color:#F00"> *</span>
 									<div class="form_input">
 										<?php
 							 $sql="SELECT * FROM fees_package where package_id='".$row_value['admission_fee']."' ";
-	                           $admission_fee=mysql_fetch_array(mysql_query($sql));
+	                           $admission_fee=db_fetch_array(db_query($sql));
 							   echo $admission_fee['package_fees'];
 								?>
 									</div>
@@ -171,7 +171,7 @@ Admission Date <span style="color:#F00"> *</span>
 									<div class="form_input">
 										<?php
 							 $sql="SELECT * FROM stream where stream_id='".$row_value['stream']."' ";
-	                           $stream=mysql_fetch_array(mysql_query($sql));
+	                           $stream=db_fetch_array(db_query($sql));
 							   echo $stream['stream_name'];
 								?>
 									</div>
@@ -184,7 +184,7 @@ Admission Date <span style="color:#F00"> *</span>
 										
 							<?php
 							 $sql="SELECT * FROM subject where subject_id='".$row_value['subject']."' ";
-	                           $class=mysql_fetch_array(mysql_query($sql));
+	                           $class=db_fetch_array(db_query($sql));
 							   echo $class['subject_name'];
 								?>
 									</div>
@@ -197,7 +197,7 @@ Admission Date <span style="color:#F00"> *</span>
 									<div class="form_input">
                                     <?php
 							 $sql="SELECT * FROM category where cat_id='".$row_value['category']."' ";
-	                           $category=mysql_fetch_array(mysql_query($sql));
+	                           $category=db_fetch_array(db_query($sql));
 							   echo $category['category'];
 								?>
 										

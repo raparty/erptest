@@ -5,15 +5,15 @@ require_once("config/config.inc.php");
 ob_start(); 
 $registration_no = trim((string)($_GET['registration_no'] ?? ''));
 $fees_term = trim((string)($_GET['fees_term'] ?? ''));
-$registration_no = mysql_real_escape_string($registration_no);
-$fees_term = mysql_real_escape_string($fees_term);
+$registration_no = db_escape($registration_no);
+$fees_term = db_escape($fees_term);
 
  $studentinfo="select * from student_info where student_admission_no='".$registration_no."' and session='".$_SESSION['session']."'";
-$row=mysql_fetch_array(mysql_query($studentinfo));
+$row=db_fetch_array(db_query($studentinfo));
 
 
 	      $sql_pending="select sum(fees_amount) from student_transport_fees_detail where registration_no='".$registration_no."'  and session='".$_SESSION['session']."'";
-	$deposit_amount=mysql_fetch_array(mysql_query($sql_pending));
+	$deposit_amount=db_fetch_array(db_query($sql_pending));
 	
 	
 
@@ -50,8 +50,8 @@ $row=mysql_fetch_array(mysql_query($studentinfo));
 											
 							<?php
 							 $sql="SELECT * FROM class  where class_id='".$row['class']."'";
-	                           $res=mysql_query($sql);
-								while($row1=mysql_fetch_array($res))
+	                           $res=db_query($sql);
+								while($row1=db_fetch_array($res))
 								{
 									?>
 									<option value="<?php echo $row1['class_id']; ?>"><?php echo $row1['class_name']; ?></option>
@@ -71,8 +71,8 @@ $row=mysql_fetch_array(mysql_query($studentinfo));
 										
                                         	<?php
 							 $sql="SELECT * FROM stream where stream_id='".$row['stream']."' ";
-	                           $res=mysql_query($sql);
-								while($row2=mysql_fetch_array($res))
+	                           $res=db_query($sql);
+								while($row2=db_fetch_array($res))
 								{
 									?>
 									<option value="<?php echo $row2['stream_id']; ?>"><?php echo $row2['stream_name']; ?></option>
@@ -88,12 +88,12 @@ $row=mysql_fetch_array(mysql_query($studentinfo));
 								<li>
                                 <?php
 							 $sql="SELECT * FROM transport_student_detail where registration_no='".$row['registration_no']."' and session='".$_SESSION['session']."' ";
-	                           $res=mysql_query($sql);
-								$row3=mysql_fetch_array($res);
+	                           $res=db_query($sql);
+								$row3=db_fetch_array($res);
 								
 								 $sql_route="select * from transport_add_route where route_id='".$row3['route_id']."'";
-						$sql_value_route=mysql_query($sql_route);
-						$sql_transport_row=mysql_fetch_array($sql_value_route);
+						$sql_value_route=db_query($sql_route);
+						$sql_transport_row=db_fetch_array($sql_value_route);
 								?>
 								<div class="form_grid_12 multiline">
 									<label class="field_title">  Fees Amount</label>

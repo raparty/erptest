@@ -60,12 +60,12 @@ if(isset($_POST['submit']))
 					$previous_class_certificate=$_POST['previous_class_certificate'];
 					
 		 $sql1="SELECT * FROM rte_student_info where registration_no='".$registration_no."'";
-	$res1=mysql_query($sql1) or die("Error : " . mysql_error());
-	$num=mysql_num_rows($res1);
+	$res1=db_query($sql1) or die("Error : " . db_error());
+	$num=db_num_rows($res1);
 	if($num==0)
 	{
 		$sql_insert_q="insert into rte_student_info(registration_no,student_admission_no,addmission_date,name,dob,class,stream,admission_fee,category,gender,image,s_address,country,state,city,pin_code,s_mobile_no,s_email,f_name,m_name,f_address,f_mobile_no,f_email,caste_certificate,bonafied_cetificate,income_certificate,previous_class_certificate,session)values('".$registration_no."','".$student_admission_no."','".$addmission_date."','".$name."','".$dob."','".$class."','".$stream."','".$admission_fee."','".$category."','".$gender."','".$image."','".$s_address."','".$country."','".$state."','".$city."','".$pin_code."','".$s_mobile_no."','".$s_email."','".$f_name."','".$m_name."','".$f_address."','".$f_mobile_no."','".$f_email."','".$caste_certificate."','".$bonafied_cetificate."','".$income_certificate."','".$previous_class_certificate."','".$_SESSION['session']."')";
-	mysql_query($sql_insert_q);
+	db_query($sql_insert_q);
 	header('location:rte_admission.php?msg=1');
 	
 	}
@@ -89,12 +89,12 @@ if(isset($_POST['submit']))
 	
 	
 	$sql10="SELECT max(registration_no) FROM rte_student_info where session='".$_SESSION['session']."'";
-	$registration_no_res=mysql_fetch_array(mysql_query($sql10));
+	$registration_no_res=db_fetch_array(db_query($sql10));
 	
 	if($registration_no_res[0]=="")
 	{
 		$select_counter="select * from registration_counter where session='".$_SESSION['session']."'";
-		$select_counter_row=mysql_fetch_array(mysql_query($select_counter));
+		$select_counter_row=db_fetch_array(db_query($select_counter));
 		
 			$registration_no10=$select_counter_row['counter_value'];
 	}else
@@ -230,8 +230,8 @@ Admission Date <span style="color:#F00"> *</span>
 											<option value="" selected="selected"> - Select Class - </option>
 							<?php
 							 $sql="SELECT * FROM class ";
-	                           $res=mysql_query($sql);
-								while($row=mysql_fetch_array($res))
+	                           $res=db_query($sql);
+								while($row=db_fetch_array($res))
 								{
 									?>
 									<option value="<?php echo $row['class_id']; ?>"><?php echo $row['class_name']; ?></option>
@@ -251,8 +251,8 @@ Admission Date <span style="color:#F00"> *</span>
 										<option value="">---select stream---</option>
                                         	<?php
 							 $sql="SELECT * FROM stream ";
-	                           $res=mysql_query($sql);
-								while($row=mysql_fetch_array($res))
+	                           $res=db_query($sql);
+								while($row=db_fetch_array($res))
 								{
 									?>
 									<option value="<?php echo $row['stream_id']; ?>"><?php echo $row['stream_name']; ?></option>
@@ -270,8 +270,8 @@ Admission Date <span style="color:#F00"> *</span>
 											<option value="" selected="selected"> - Select Fees - </option>
 							<?php
 							 $sql="SELECT * FROM fees_package ";
-	                           $res=mysql_query($sql);
-								while($row=mysql_fetch_array($res))
+	                           $res=db_query($sql);
+								while($row=db_fetch_array($res))
 								{
 									?>
 									<option value="<?php echo $row[0]; ?>"><?php echo $row['package_name']; ?></option>
@@ -290,8 +290,8 @@ Admission Date <span style="color:#F00"> *</span>
                                         <option value="">---select category---</option>
 											<?php
 							 $sql="SELECT * FROM category ";
-	                           $res=mysql_query($sql);
-								while($row=mysql_fetch_array($res))
+	                           $res=db_query($sql);
+								while($row=db_fetch_array($res))
 								{
 									?>
 									<option value="<?php echo $row['cat_id']; ?>"><?php echo $row['category']; ?></option>

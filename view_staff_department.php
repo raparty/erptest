@@ -70,8 +70,8 @@ include_once("includes/header.php");?>
                 <?php $i=1;
 				
                $sql="select * from staff_department order by staff_department desc";
-				$res=mysql_query($sql);
-				while($row=mysql_fetch_array($res))
+				$res=db_query($sql);
+				while($row=db_fetch_array($res))
 				
 				{
 				?>

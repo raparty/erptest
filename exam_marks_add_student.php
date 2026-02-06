@@ -15,8 +15,8 @@ if(isset($_POST['submit']))
 		
 		$sql1.="and stream_id='".$_POST['stream']."'";
 		}
-	$res1=mysql_query($sql1) or die("Error : " . mysql_error());
-	echo $num=mysql_num_rows($res1);
+	$res1=db_query($sql1) or die("Error : " . db_error());
+	echo $num=db_num_rows($res1);
 	if($num==0)
 	{
 		$subject_id=$_POST['subject_id'];
@@ -25,7 +25,7 @@ if(isset($_POST['submit']))
 			for($i=0;$i<$no_of_subject;$i++)
 			{
                 $sql3="INSERT INTO  exam_subject_marks(registration_no,class_id,stream_id,subject_id,term_id,marks,session) VALUES ('".$_POST['registration_no']."','".$_POST['class_id']."','".$_POST['stream']."', '".$subject_id[$i]."','".$_POST['term_id']."','".$marks[$i]."','".$_SESSION['session']."')";
-		        $res3=mysql_query($sql3) or die("Error : " . mysql_error());
+		        $res3=db_query($sql3) or die("Error : " . db_error());
 		      
 			}
 			
@@ -87,7 +87,7 @@ $registration_no=$_SESSION['registration_no'];
 //$registration_no=$_GET['registration_no'];
 //$fees_term=$_GET['fees_term'];
  $studentinfo="select * from student_info si left join subject sub on sub.subject_id =si.subject where registration_no='".$registration_no."' and session='".$_SESSION['session']."'";
-$row_value=mysql_fetch_array(mysql_query($studentinfo));
+$row_value=db_fetch_array(db_query($studentinfo));
 ?>
                       
 
@@ -151,8 +151,8 @@ $row_value=mysql_fetch_array(mysql_query($studentinfo));
 								<option value="" selected="selected"> - Select Class - </option>
 							<?php
 							 $sql="SELECT * FROM class ";
-	                           $res=mysql_query($sql);
-								while($row=mysql_fetch_array($res))
+	                           $res=db_query($sql);
+								while($row=db_fetch_array($res))
 								{
 									if($row_value['class']==$row['class_id'])
 									{
@@ -193,9 +193,9 @@ $row_value=mysql_fetch_array(mysql_query($studentinfo));
                                         	 <?php 
 						$i=1;
 					$sql="SELECT * FROM allocate_class_stream where class_id='".$row_value['class']."' ";
-					$res=mysql_query($sql);
+					$res=db_query($sql);
 				
-							while($row=mysql_fetch_array($res))
+							while($row=db_fetch_array($res))
 							{
 								if($row_value['stream']==$row['stream_id'])
 								{
@@ -206,7 +206,7 @@ $row_value=mysql_fetch_array(mysql_query($studentinfo));
 										}
 								
 						$sql2="SELECT * FROM stream where stream_id='".$row['stream_id']."'";
-					$stream=mysql_fetch_array(mysql_query($sql2));
+					$stream=db_fetch_array(db_query($sql2));
 					?>			<option <?php echo $stream_sel;?> value="<?php echo $row['stream_id']; ?>"><?php echo $stream['stream_name']; ?></option>
 									<?php
 								}
@@ -225,8 +225,8 @@ $row_value=mysql_fetch_array(mysql_query($studentinfo));
 								<option value=""> - Select term - </option>
 							<?php
 							 $sqls1="SELECT * FROM exam_nuber_of_term";
-	                           $ress=mysql_query($sqls1);
-								while($row22=mysql_fetch_array($ress))
+	                           $ress=db_query($sqls1);
+								while($row22=db_fetch_array($ress))
 								{
 									if($_SESSION['term_id']==$row22['term_id'])
 									{
@@ -278,14 +278,14 @@ $row_value=mysql_fetch_array(mysql_query($studentinfo));
 			
 					 
 					 }
-					 $res=mysql_query($sql);?>
+					 $res=db_query($sql);?>
                      <?php 
 				
-							while($row=mysql_fetch_array($res))
+							while($row=db_fetch_array($res))
 							{
 								
 								$sql3="SELECT * FROM subject where subject_id='".$row['subject_id']."'";
-					$subject=mysql_fetch_array(mysql_query($sql3));
+					$subject=db_fetch_array(db_query($sql3));
 									?>
 							<li>	<div class="form_grid_12 multiline">
 									<label class="field_title"> <?php echo ucfirst($subject['subject_name']); ?></label>

@@ -9,7 +9,7 @@ if ($staff <= 0) {
     exit;
 }
 $sql="delete  from  staff_qualification where staff_qualification_id='".$staff."'";
-$res=mysql_query($sql);
+$res=db_query($sql);
 header('location:view_staff_qualification.php');
 die();
 

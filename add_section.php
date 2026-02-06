@@ -11,8 +11,8 @@ if(isset($_POST['submit']))
 	//$school_logo = $_POST['school_logo'];
 	
 	 $sql1="SELECT * FROM section where section_name='".$section_name."' ";
-	$res1=mysql_query($sql1) or die("Error : " . mysql_error());
-	$num=mysql_num_rows($res1);
+	$res1=db_query($sql1) or die("Error : " . db_error());
+	$num=db_num_rows($res1);
 	if($num==0)
 	{
 		
@@ -20,7 +20,7 @@ if(isset($_POST['submit']))
 		if($_POST['section_name']!="")
 		{
 		 $sql3="INSERT INTO section(section_name) VALUES ('".$section_name."')";
-		$res3=mysql_query($sql3) or die("Error : " . mysql_error());
+		$res3=db_query($sql3) or die("Error : " . db_error());
 		header("Location:section.php?msg=1");
 		}else
 		{    header("location:add_section.php?error=2");

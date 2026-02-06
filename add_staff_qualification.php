@@ -39,11 +39,11 @@ include_once("includes/header.php");?>
 				if(isset($_POST['submit']))
 				{
 					 $insert_check="select * from staff_qualification  where staff_qualification='".$_POST['staff_qualification']."'"; 
-	 $num=mysql_fetch_array(mysql_query($insert_check));
+	 $num=db_fetch_array(db_query($insert_check));
 			if($num==0)
 			{   
                 $sql="insert into staff_qualification(staff_qualification) values('".$_POST['staff_qualification']."')";
-				$res=mysql_query($sql);
+				$res=db_query($sql);
 				$msg = "<span style='color:#009900;'><h4> Staff Qualification Detail Added Successfully </h4></span>";
 				}
 				else

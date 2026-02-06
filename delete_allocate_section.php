@@ -6,7 +6,7 @@ $sid = (int)($_GET['sid'] ?? 0);
 if ($sid > 0)
 {
 	$delete_detail="delete from allocate_class_section where allocate_id='".$sid."'";
-	mysql_query($delete_detail);
+	db_query($delete_detail);
 	header("Location:allocate_section.php?msg=2");
 	
 	}

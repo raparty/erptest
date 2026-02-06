@@ -22,7 +22,7 @@ include_once("includes/header.php");?>
 <?php include_once("includes/transport_setting_sidebar.php");
 if($_GET['sid']!='')
 {
-mysql_query("delete from transport_student_detail where transport_id='".$_GET['sid']."'");	
+db_query("delete from transport_student_detail where transport_id='".$_GET['sid']."'");	
 }
 
 ?>
@@ -66,8 +66,8 @@ mysql_query("delete from transport_student_detail where transport_id='".$_GET['s
 											<option value="" selected="selected"> - Select Class - </option>
 							<?php
 							 $sql="SELECT * FROM class ";
-	                           $res=mysql_query($sql);
-								while($row=mysql_fetch_array($res))
+	                           $res=db_query($sql);
+								while($row=db_fetch_array($res))
 								{
 									?>
 									<option value="<?php echo $row['class_id']; ?>"><?php echo $row['class_name']; ?></option>
@@ -90,8 +90,8 @@ mysql_query("delete from transport_student_detail where transport_id='".$_GET['s
 											<option value=""></option>
 											<?php 
 											$sql="select * from transport_add_route";
-											$ro=mysql_query($sql);
-											while($row=mysql_fetch_array($ro)){
+											$ro=db_query($sql);
+											while($row=db_fetch_array($ro)){
 											
 											?>
                                             											<option value="<?php echo $row['route_id'];?>"><?php echo $row['route_name'];?></option><?php }?>
@@ -179,24 +179,24 @@ mysql_query("delete from transport_student_detail where transport_id='".$_GET['s
 						//echo $strng=implode(",",$arr);
 						$i=0;
 						$sql="select * from transport_student_detail where session='".$_SESSION['session']."'";
-						$sql_value=mysql_query($sql);
-						while($sql_row=mysql_fetch_array($sql_value)){
+						$sql_value=db_query($sql);
+						while($sql_row=db_fetch_array($sql_value)){
 						$i++;
                        $qq="select * from student_info where registration_no='".$sql_row['registration_no']."'  and session='".$_SESSION['session']."'";
-						$student_info=mysql_fetch_array(mysql_query($qq));
+						$student_info=db_fetch_array(db_query($qq));
 						
 						$sql_route="select * from transport_add_route where route_id='".$sql_row['route_id']."'";
-						$sql_value_route=mysql_query($sql_route);
-						$sql_transport_row=mysql_fetch_array($sql_value_route);
+						$sql_value_route=db_query($sql_route);
+						$sql_transport_row=db_fetch_array($sql_value_route);
 						
 						$sql_vechile_id="select * from transport_add_vechile where vechile_id='".$sql_row['vechile_id']."'";
-						$sql_value_vechile_id=mysql_query($sql_vechile_id);
-						$sql_vechile_id_row=mysql_fetch_array($sql_value_vechile_id);
+						$sql_value_vechile_id=db_query($sql_vechile_id);
+						$sql_vechile_id_row=db_fetch_array($sql_value_vechile_id);
 						
 								$sql1="SELECT * FROM class where class_id='".$sql_row['class_id']."'";
-					$class=mysql_fetch_array(mysql_query($sql1));
+					$class=db_fetch_array(db_query($sql1));
 						$sql2="SELECT * FROM stream where stream_id='".$sql_row['stream_id']."'";
-					$stream=mysql_fetch_array(mysql_query($sql2));
+					$stream=db_fetch_array(db_query($sql2));
 						
 						?>
                         <tr>

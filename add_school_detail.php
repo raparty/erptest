@@ -11,8 +11,8 @@ if(isset($_POST['submit']))
 	//$school_logo = $_POST['school_logo'];
 	
 	 $sql1="SELECT * FROM school_detail ";
-	$res1=mysql_query($sql1) or die("Error : " . mysql_error());
-	$num=mysql_num_rows($res1);
+	$res1=db_query($sql1) or die("Error : " . db_error());
+	$num=db_num_rows($res1);
 	if($num==0)
 	{
 		if(isset($_FILES['school_logo']['name'])&&$_FILES['school_logo']['name']!="")
@@ -26,7 +26,7 @@ if(isset($_POST['submit']))
 		if($_POST['school_name']!=""&&$_POST['school_address']!=""&&$school_logo!="")
 		{
 		 $sql3="INSERT INTO school_detail(school_name,school_address, school_logo) VALUES ('".$school_name."','".$school_address."', '".$school_logo."')";
-		$res3=mysql_query($sql3) or die("Error : " . mysql_error());
+		$res3=db_query($sql3) or die("Error : " . db_error());
 		header("Location:school_detail.php?msg=1");
 		}else
 		{    header("location:add_school_detail.php?error=2");

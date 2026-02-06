@@ -5,13 +5,13 @@ include_once("includes/header.php");?>
 if(isset($_POST['submit']))
 {
 	 $package_name = trim((string)($_POST['package_name'] ?? ''));
-	 $package_name_safe = mysql_real_escape_string($package_name);
+	 $package_name_safe = db_escape($package_name);
 	 //$class_id = $_POST['class_id'];
 	//$school_logo = $_POST['school_logo'];
 	
 	 $sql1="SELECT * FROM fees_package where package_name='".$package_name_safe."'";
-	$res1=mysql_query($sql1) or die("Error : " . mysql_error());
-	$num=mysql_num_rows($res1);
+	$res1=db_query($sql1) or die("Error : " . db_error());
+	$num=db_num_rows($res1);
 	if($num==0)
 	{
 		
@@ -19,7 +19,7 @@ if(isset($_POST['submit']))
 		if($package_name_safe!=""&&$_POST['package_fees']!="")
 		{
 		 $sql3="INSERT INTO fees_package(package_name,package_fees) VALUES ('".$package_name_safe."','".$_POST['package_fees']."')";
-		$res3=mysql_query($sql3) or die("Error : " . mysql_error());
+		$res3=db_query($sql3) or die("Error : " . db_error());
 		header("Location:fees_package.php?msg=1");
 		}else
 		{    header("location:add_fees_package.php?error=2");

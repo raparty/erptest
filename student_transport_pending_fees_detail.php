@@ -57,8 +57,8 @@ include_once("includes/header.php");?>
 											<option value="" selected="selected"> - Select fees month - </option>
 							<?php
 							 $sql="SELECT * FROM month ";
-	                           $res=mysql_query($sql);
-								while($row=mysql_fetch_array($res))
+	                           $res=db_query($sql);
+								while($row=db_fetch_array($res))
 								{
 									?>
 									<option value="<?php echo $row[0]; ?>"><?php echo $row['month_name']; ?></option>
@@ -77,8 +77,8 @@ include_once("includes/header.php");?>
 											<option value="" selected="selected"> - Select Class - </option>
 							<?php
 							 $sql="SELECT * FROM class ";
-	                           $res=mysql_query($sql);
-								while($row=mysql_fetch_array($res))
+	                           $res=db_query($sql);
+								while($row=db_fetch_array($res))
 								{
 									?>
 									<option value="<?php echo $row['class_id']; ?>"><?php echo $row['class_name']; ?></option>
@@ -177,34 +177,34 @@ include_once("includes/header.php");?>
 							
 							}
 							
-	                           $student_info11=mysql_query($sql);*/
+	                           $student_info11=db_query($sql);*/
 							   $mytablename="student_info";
 							   include_once("student_transport_pending_fees_pagination.php");
 					
 					$i=1;
-					$num=mysql_num_rows($student_info11);
+					$num=db_num_rows($student_info11);
 					        if($num!=0)
 							{
 							
 					
-							while($row=mysql_fetch_array($student_info11))
+							while($row=db_fetch_array($student_info11))
 							{
 								
 								$sql="SELECT * FROM student_info where registration_no='".$row[1]."' ";
-	                           $student_info=mysql_fetch_array(mysql_query($sql));
+	                           $student_info=db_fetch_array(db_query($sql));
 							   
 							    $sql_pending="select sum(fees_amount) from student_fees_detail where registration_no='".$student_info['registration_no']."'  and session='".$_SESSION['session']."'";
-	$deposit_amount=mysql_fetch_array(mysql_query($sql_pending));
+	$deposit_amount=db_fetch_array(db_query($sql_pending));
 							   
 							   
 							   $sql="SELECT * FROM fees_package where package_id='".$row['admission_fee']."' ";
-	                           $res=mysql_query($sql);
-								$row3=mysql_fetch_array($res);
+	                           $res=db_query($sql);
+								$row3=db_fetch_array($res);
 								
 							   $sql1="SELECT * FROM class where class_id='".$student_info['class']."'";
-					$class=mysql_fetch_array(mysql_query($sql1));
+					$class=db_fetch_array(db_query($sql1));
 							   $sql1="SELECT * FROM month where month_id='".$_POST['fees_term']."' ";
-	                           $fees_term=mysql_fetch_array(mysql_query($sql1));
+	                           $fees_term=db_fetch_array(db_query($sql1));
 								
 								
 								?>

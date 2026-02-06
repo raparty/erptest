@@ -70,15 +70,15 @@ include_once("includes/header.php");?>
                         <?php 
 						$i=1;
 					$sql="SELECT * FROM allocate_class_section order by class_id";
-					$res=mysql_query($sql);
+					$res=db_query($sql);
 				
-							while($row=mysql_fetch_array($res))
+							while($row=db_fetch_array($res))
 							{
 								
 								$sql1="SELECT * FROM class where class_id='".$row['class_id']."'";
-					$class=mysql_fetch_array(mysql_query($sql1));
+					$class=db_fetch_array(db_query($sql1));
 						$sql2="SELECT * FROM section where section_id='".$row['section_id']."'";
-					$section=mysql_fetch_array(mysql_query($sql2));
+					$section=db_fetch_array(db_query($sql2));
 					?>		
 						<tr>
 							

@@ -8,8 +8,8 @@ if(isset($_POST['submit']))
 {
 	
 	 $sql1="SELECT * FROM transport_add_route where route_name='".$_POST['destination']."'";
-	$res1=mysql_query($sql1) or die("Error : " . mysql_error());
-	$num=mysql_num_rows($res1);
+	$res1=db_query($sql1) or die("Error : " . db_error());
+	$num=db_num_rows($res1);
 	if($num==0)
 	{
 		
@@ -17,7 +17,7 @@ if(isset($_POST['submit']))
 		if($_POST['destination']!="")
 		{
 		 $sql3="INSERT INTO transport_add_route(route_name,cost) VALUES ('".$_POST['destination']."','".$_POST['cost']."')";
-		$res3=mysql_query($sql3) or die("Error : " . mysql_error());
+		$res3=db_query($sql3) or die("Error : " . db_error());
 		header("Location:transport_add_route.php?msg=1");
 		}else
 		{    header("location:transport_add_route.php?error=2");

@@ -80,22 +80,22 @@ color:#ffffff;
 			    $names="select * from student_info where registration_no='".$_SESSION['registration_no']."' and session='".$_SESSION['session']."' ";
 			 
 				// echo $names;
-			   $values=mysql_query($names);
-			   $rows=mysql_fetch_array($values);
+			   $values=db_query($names);
+			   $rows=db_fetch_array($values);
 			   
 			   
 			   $sql="SELECT * FROM school_detail";
-					$res=mysql_query($sql);
+					$res=db_query($sql);
 				
-						$school_detail=mysql_fetch_array($res);
+						$school_detail=db_fetch_array($res);
 						
 						//$sql1="SELECT * FROM class where class_id='".$rows['class']."'";
-//					$class=mysql_fetch_array(mysql_query($sql1));
+//					$class=db_fetch_array(db_query($sql1));
 //					$sql2="SELECT * FROM stream where stream_id='".$rows['stream']."'";
-//					$stream=mysql_fetch_array(mysql_query($sql2));
+//					$stream=db_fetch_array(db_query($sql2));
 					$reciept_no='';
-					 $select_fees_detail123=mysql_query("select * from student_fees_detail where registration_no='".$rows['registration_no']."' and session='".$_SESSION['session']."' order by student_fees_id	 ASC");
-					while($st_result=mysql_fetch_array($select_fees_detail123))
+					 $select_fees_detail123=db_query("select * from student_fees_detail where registration_no='".$rows['registration_no']."' and session='".$_SESSION['session']."' order by student_fees_id	 ASC");
+					while($st_result=db_fetch_array($select_fees_detail123))
 					{
 						$reciept_no.=$st_result[0];
 						}		
@@ -141,9 +141,9 @@ color:#ffffff;
 						$sql.=" and DATE(sfd.deposit_date) <='".$newToDate."'";
 					}
 					$sql.=" group by sfd.student_fees_id ";
-					$res=mysql_query($sql);
+					$res=db_query($sql);
 				$total_collected_fees=0;
-							while($rows=mysql_fetch_array($res))
+							while($rows=db_fetch_array($res))
 							{
 								
 								?>
@@ -176,23 +176,23 @@ color:#ffffff;
 <?php 
                          $registration_no=$rows['registration_no'];
 	
-$select_fees_detail=mysql_query("select * from student_fees_detail where registration_no='".$rows['registration_no']."' and session='".$_SESSION['session']."' order by fees_term ASC");
-//							while($row=mysql_fetch_array($select_fees_detail))
+$select_fees_detail=db_query("select * from student_fees_detail where registration_no='".$rows['registration_no']."' and session='".$_SESSION['session']."' order by fees_term ASC");
+//							while($row=db_fetch_array($select_fees_detail))
 //							{
 //								
 //								/*$sql1="SELECT * FROM class where class_id='".$row['class_id']."'";
-//					            $class=mysql_fetch_array(mysql_query($sql1));
+//					            $class=db_fetch_array(db_query($sql1));
 //						        $sql2="SELECT * FROM stream where stream_id='".$row['stream_id']."'";
-//					            $stream=mysql_fetch_array(mysql_query($sql2));
+//					            $stream=db_fetch_array(db_query($sql2));
 //								$sql3="SELECT * FROM subject where subject_id='".$row['subject_id']."'";
-//								$subject=mysql_fetch_array(mysql_query($sql3));
+//								$subject=db_fetch_array(db_query($sql3));
 //					
 //					          $sql12="SELECT * FROM exam_nuber_of_term ";
-//	                           $res12=mysql_query($sql12);*/
+//	                           $res12=db_query($sql12);*/
 //							   
 //							    $sql="SELECT * FROM fees_term where fees_term_id='".$row['fees_term']."' ";			
-// 	                            $res=mysql_query($sql);
-//								$month=mysql_fetch_array($res);						  
+// 	                            $res=db_query($sql);
+//								$month=db_fetch_array($res);						  
 				?>		
 <?php /*?><td><strong><?php echo $month['term_name'];?></strong></td><td><?php echo $row['fees_amount'];?></td><td><?php echo date('d-m-Y',strtotime($row['deposit_date'])); ?></td><td><?php echo $row['session'];?></td><td><?php echo $row['session'];?></td><td><?php echo $row['session'];?></td><td><?php echo $row['session'];?></td>
 </tr>
@@ -214,7 +214,7 @@ $select_fees_detail=mysql_query("select * from student_fees_detail where registr
 //$registration_no=$_GET['registration_no'];
 //$fees_term=$_GET['fees_term'];
 			 $studentinfo="select * from student_info where registration_no='".$registration_no."' and session='".$_SESSION['session']."'";
-			 $row=mysql_fetch_array(mysql_query($studentinfo));
+			 $row=db_fetch_array(db_query($studentinfo));
 
 
 	        
@@ -222,11 +222,11 @@ $select_fees_detail=mysql_query("select * from student_fees_detail where registr
 
 //$student_fees_detail="select ";
    $sql_pending="select sum(fees_amount) from student_fees_detail where registration_no='".$registration_no."'  and session='".$_SESSION['session']."'";
-	$deposit_amount=mysql_fetch_array(mysql_query($sql_pending));
+	$deposit_amount=db_fetch_array(db_query($sql_pending));
 	
 	 $sql="SELECT * FROM fees_package where package_id='".$row['admission_fee']."' ";
-	                           $res=mysql_query($sql);
-								$row3=mysql_fetch_array($res);
+	                           $res=db_query($sql);
+								$row3=db_fetch_array($res);
 								?>
 <?php */?>
 <!------------------------------------------------------------------>
@@ -257,9 +257,9 @@ $select_fees_detail=mysql_query("select * from student_fees_detail where registr
 					if($_POST['date_to'] !=null){
 						$sql1.=" and date_of_txn <='".$_POST['date_to']."'";
 					}
-					$res1=mysql_query($sql1);
+					$res1=db_query($sql1);
 				
-							while($rows1=mysql_fetch_array($res1))
+							while($rows1=db_fetch_array($res1))
 							{
 								
 								?>

@@ -4,10 +4,10 @@ declare(strict_types=1);
 require_once("config/config.inc.php");
 
 $book_number = trim((string)($_GET['book_number'] ?? ''));
-$book_number_safe = mysql_real_escape_string($book_number);
+$book_number_safe = db_escape($book_number);
  $sql1="SELECT * FROM book_manager where book_number='".$book_number_safe."'";
-	$res1=mysql_query($sql1) or die("Error : " . mysql_error());
-	$num=mysql_num_rows($res1);
+	$res1=db_query($sql1) or die("Error : " . db_error());
+	$num=db_num_rows($res1);
 	if($num==0)
 	{	?>
     

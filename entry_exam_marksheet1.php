@@ -8,8 +8,8 @@ if(isset($_POST['submit']))
 
 	
 	 $sql1="SELECT * FROM exam_add_maximum_marks where subject_id='".$_POST['subject_id']."' and session='".$_SESSION['session']."'  ";
-	$res1=mysql_query($sql1) or die("Error : " . mysql_error());
-	$num=mysql_num_rows($res1);
+	$res1=db_query($sql1) or die("Error : " . db_error());
+	$num=db_num_rows($res1);
 	
 	if($num==0)
 	{
@@ -17,7 +17,7 @@ if(isset($_POST['submit']))
 		{
 			
 	       $sql3="INSERT INTO  exam_add_maximum_marks(class_id,stream_id,subject_id,term_id,max_marks,session) VALUES ('".$_POST['class_id']."','".$_POST['stream']."', '".$_POST['subject_id']."','".$_POST['term_id']."', '".$_POST['marks']."','".$_SESSION['session']."')";
-		   $res3=mysql_query($sql3) or die("Error : " . mysql_error());
+		   $res3=db_query($sql3) or die("Error : " . db_error());
 		  //header("Location:exam_show_maximum_marks.php?msg=1");
 			
 			
@@ -48,7 +48,7 @@ $_SESSION['registration_no']=$_POST['registration_no'];
 $registration_no=$_SESSION['registration_no'];
 
  $studentinfo="select * from student_info where registration_no='".$registration_no."' and session='".$_SESSION['session']."'";
-$row_value=mysql_fetch_array(mysql_query($studentinfo));
+$row_value=db_fetch_array(db_query($studentinfo));
 
 
 ?>
@@ -164,8 +164,8 @@ xmlhttp.send();
 								<option value="" selected="selected"> - Select Class - </option>
 							<?php
 							 $sql="SELECT * FROM class ";
-	                           $res=mysql_query($sql);
-								while($row=mysql_fetch_array($res))
+	                           $res=db_query($sql);
+								while($row=db_fetch_array($res))
 								{
 									if($row_value['class']==$row['class_id'])
 									{
@@ -206,9 +206,9 @@ xmlhttp.send();
                                         	 <?php 
 						$i=1;
 					$sql="SELECT * FROM allocate_class_stream where class_id='".$row_value['class']."' ";
-					$res=mysql_query($sql);
+					$res=db_query($sql);
 				
-							while($row=mysql_fetch_array($res))
+							while($row=db_fetch_array($res))
 							{
 								if($row_value['stream']==$row['stream_id'])
 								{
@@ -219,7 +219,7 @@ xmlhttp.send();
 										}
 								
 						$sql2="SELECT * FROM stream where stream_id='".$row['stream_id']."'";
-					$stream=mysql_fetch_array(mysql_query($sql2));
+					$stream=db_fetch_array(db_query($sql2));
 					?>			<option <?php echo $stream_sel;?> value="<?php echo $row['stream_id']; ?>"><?php echo $stream['stream_name']; ?></option>
 									<?php
 								}
@@ -242,8 +242,8 @@ xmlhttp.send();
 								<option value="all"> All term </option>
 							<?php
 							 $sqls1="SELECT * FROM exam_nuber_of_term";
-	                           $ress=mysql_query($sqls1);
-								while($row22=mysql_fetch_array($ress))
+	                           $ress=db_query($sqls1);
+								while($row22=db_fetch_array($ress))
 								{
 									?>
 									<option value="<?php echo $row22['term_id']; ?>"><?php echo $row22['term_name']; ?></option>

@@ -6,7 +6,7 @@ $sid = (int)($_GET['sid'] ?? 0);
 if ($sid > 0)
 {
 	$delete_detail="delete from student_info where student_id='".$sid."'";
-	mysql_query($delete_detail);
+	db_query($delete_detail);
 	header("Location:student_detail.php?msg=2");
 	
 	}

@@ -15,12 +15,12 @@ if(isset($_POST['submit']))
 	
 		
 		$sql1="SELECT * FROM account_exp_income_detail where title='".$title."' and txn_id!='".$_GET['sid']."'";
-	$res1=mysql_query($sql1) or die("Error : " . mysql_error());
-	$num=mysql_num_rows($res1);
+	$res1=db_query($sql1) or die("Error : " . db_error());
+	$num=db_num_rows($res1);
 	if($num==0)
 	{
 	$sql3="UPDATE account_exp_income_detail SET `title` = '".$title."',description='".$description."', `amount` = '".$amount."',date_of_txn='".$date_of_txn."', `account_category_id` = '".$account_category_id."'  where txn_id='".$_GET['sid']."'";
-	$res3=mysql_query($sql3) or die("Error : " . mysql_error());
+	$res3=db_query($sql3) or die("Error : " . db_error());
 	header("Location:expense_manager.php?msg=3");
 	}else
 	{
@@ -34,8 +34,8 @@ if(isset($_POST['submit']))
 	}
 		
 	$sql2="SELECT * FROM account_exp_income_detail WHERE `txn_id` = '" . $_GET['sid'] . "';";
-	$res2=mysql_query($sql2);	
-	$row2=mysql_fetch_array($res2);
+	$res2=db_query($sql2);	
+	$row2=db_fetch_array($res2);
 		
   ?>
     <div class="page_title">
@@ -173,8 +173,8 @@ if(isset($_POST['submit']))
 											<option value="" selected="selected"> - Select Category - </option>
 							<?php
 							 $sql="SELECT * FROM account_category where category_type='Expense' ";
-	                           $res=mysql_query($sql);
-								while($row=mysql_fetch_array($res))
+	                           $res=db_query($sql);
+								while($row=db_fetch_array($res))
 								{
 									if($row2['account_category_id']==$row[0])
 									{$sel='selected="selected"';}else{

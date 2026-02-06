@@ -9,7 +9,7 @@ if ($staff <= 0) {
     exit;
 }
 $sql="delete  from  staff_department where staff_department_id='".$staff."'";
-$res=mysql_query($sql);
+$res=db_query($sql);
 header('location:view_staff_department.php');
 die();
 

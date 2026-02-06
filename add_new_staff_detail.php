@@ -65,12 +65,12 @@ include_once("includes/header.php");?>
 						   move_uploaded_file($_FILES['image']['tmp_name'],$path.$image_name);
 					
 					$select_employee_q="select * from staff_employee where email='".$email."'";
-					$select_num_row=mysql_num_rows(mysql_query($select_employee_q));
+					$select_num_row=db_num_rows(db_query($select_employee_q));
 					
 					if($select_num_row==0)
 					{
 				 $sql="insert into staff_employee(emp_id,first,last,email,gender,staff_department_id,staff_cat_id,staff_pos_id,staff_qualification_id,job_title,exp,marritial_status,father_name,mother_name,blood_group,nationality,address1,address2,image) values('".$emp_id."','".$first."','".$last."','".$email."','".$gender."','".$department."','".$category."','".$position."','".$qualification."','".$job."','".$exp."','".$marritial."','".$father."','".$mother."','".$blood_group."','".$nationality."','".$address1."','".$address2."','".$image_name."')";
-					$query=mysql_query($sql);
+					$query=db_query($sql);
 					
 				$msg = "<span style='color:#009900;'><h4> Employee Detail Added Successfully </h4></span>";
 					}else
@@ -213,8 +213,8 @@ include_once("includes/header.php");?>
 										<select style=" width:300px" class="chzn-select" tabindex="13" name="staff_department">
 											 <?php
                      $category="select * from staff_department";
-				 $value=mysql_query($category);
-					 while($dep=mysql_fetch_array($value))
+				 $value=db_query($category);
+					 while($dep=db_fetch_array($value))
 					 {
 			?>
 											
@@ -232,8 +232,8 @@ include_once("includes/header.php");?>
 										<select style=" width:300px" class="chzn-select" tabindex="13" name="staff_category">
                                          <?php
                      $cat="select * from staff_category";
-				 $val=mysql_query($cat);
-					 while($staff_category=mysql_fetch_array($val))
+				 $val=db_query($cat);
+					 while($staff_category=db_fetch_array($val))
 					 {
 			?>
 											
@@ -249,8 +249,8 @@ include_once("includes/header.php");?>
 										<select style=" width:300px" class="chzn-select" tabindex="13" name="staff_position">
                                          <?php
                      $cate="select * from staff_position";
-				 $val1=mysql_query($cate);
-					 while($pos=mysql_fetch_array($val1))
+				 $val1=db_query($cate);
+					 while($pos=db_fetch_array($val1))
 					 {
 			?>
 											
@@ -267,8 +267,8 @@ include_once("includes/header.php");?>
 										<select style=" width:300px" class="chzn-select" tabindex="13" name="staff_qualification">
                                          <?php
                      $categ="select * from staff_qualification";
-				 $value1=mysql_query($categ);
-					 while($qua=mysql_fetch_array($value1))
+				 $value1=db_query($categ);
+					 while($qua=db_fetch_array($value1))
 					 {
 			?>
 								<option value="<?php echo $qua['staff_qualification_id'];?>"><?php echo $qua['staff_qualification'];?></option><?php }?>

@@ -10,11 +10,11 @@ if(isset($_POST['login']))
    
 	$username=trim($_POST['username'] ?? '');
 	$password=trim($_POST['password'] ?? '');
-	  $query="SELECT * FROM admin WHERE username='".mysql_real_escape_string($username)."'";
+	  $query="SELECT * FROM admin WHERE username='".db_escape($username)."'";
 	 
-	 $result=mysql_query($query);
-	 $row=mysql_fetch_array($result);
-	 $num=mysql_num_rows($result);
+	 $result=db_query($query);
+	 $row=db_fetch_array($result);
+	 $num=db_num_rows($result);
 	 if($num>0)
 	 {
 	 if($row['username']==$username)

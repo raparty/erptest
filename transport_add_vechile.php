@@ -8,8 +8,8 @@ if(isset($_POST['submit']))
 {
 	
 	 $sql1="SELECT * FROM transport_add_vechile where vechile_number='".$_POST['number']."'";
-	$res1=mysql_query($sql1) or die("Error : " . mysql_error());
-	$num=mysql_num_rows($res1);
+	$res1=db_query($sql1) or die("Error : " . db_error());
+	$num=db_num_rows($res1);
 	if($num==0)
 	{
 		$route_id=implode(",",$_POST['route_id']);
@@ -17,7 +17,7 @@ if(isset($_POST['submit']))
 		if($_POST['number']!="")
 		{
 		 $sql3="INSERT INTO transport_add_vechile(vechile_number,route_id,seat) VALUES ('".$_POST['number']."','".$route_id."','".$_POST['seat']."')";
-		$res3=mysql_query($sql3) or die("Error : " . mysql_error());
+		$res3=db_query($sql3) or die("Error : " . db_error());
 		header("Location:transport_add_vechile.php?msg=1");
 		}else
 		{    header("location:transport_add_vechile.php?error=2");
@@ -114,8 +114,8 @@ else
 											<option value=""></option>
 											<?php 
 											$sql="select * from transport_add_route";
-											$ro=mysql_query($sql);
-											while($row=mysql_fetch_array($ro)){
+											$ro=db_query($sql);
+											while($row=db_fetch_array($ro)){
 											
 											?>
                                             											<option value="<?php echo $row['route_id'];?>"><?php echo $row['route_name'];?></option><?php }?>

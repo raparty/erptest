@@ -35,12 +35,12 @@ if(isset($_POST['submit']))
 	
 		
 		 $sql1="SELECT * FROM account_exp_income_detail where title='".$title."' ";
-	$res1=mysql_query($sql1) or die("Error : " . mysql_error());
-	$num=mysql_num_rows($res1);
+	$res1=db_query($sql1) or die("Error : " . db_error());
+	$num=db_num_rows($res1);
 	if($num==0)
 	{
 		 $sql_insert_q="insert into account_exp_income_detail(title,description,amount,date_of_txn,	account_category_id,category_type,session)values('".$title."','".$description."','".$amount."','".$date_of_txn."','".$account_category_id."','".$category_type."','".$_SESSION['session']."')";
-	mysql_query($sql_insert_q);
+	db_query($sql_insert_q);
 	header('location:expense_manager.php?msg=1');
 	
 	}
@@ -180,8 +180,8 @@ if(isset($_POST['submit']))
 											<option value="" selected="selected"> - Select Category - </option>
 							<?php
 							 $sql="SELECT * FROM account_category where category_type='Expense' ";
-	                           $res=mysql_query($sql);
-								while($row=mysql_fetch_array($res))
+	                           $res=db_query($sql);
+								while($row=db_fetch_array($res))
 								{
 									?>
 									<option value="<?php echo $row['account_category_id']; ?>"><?php echo $row['category_name']; ?></option>

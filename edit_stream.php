@@ -9,13 +9,13 @@ if(isset($_POST['submit']))
 	$stream_name = $_POST['stream_name'];
 	// $class_id = $_POST['class_id'];
 	$sql1="SELECT * FROM stream where stream_name='".$stream_name."' and stream_id!='".$_GET['sid']."'";
-	$res1=mysql_query($sql1) or die("Error : " . mysql_error());
-	$num=mysql_num_rows($res1);
+	$res1=db_query($sql1) or die("Error : " . db_error());
+	$num=db_num_rows($res1);
 	if($num==0)
 	{
 		
 	  $sql3="UPDATE stream SET stream_name='".$stream_name."'  where stream_id='".$_GET['sid']."'";
-	$res3=mysql_query($sql3) or die("Error : " . mysql_error());
+	$res3=db_query($sql3) or die("Error : " . db_error());
 	header("Location:stream.php?msg=3");
 }else
 	{
@@ -30,8 +30,8 @@ if(isset($_POST['submit']))
 	
 		
 	$sql2="SELECT * FROM stream WHERE `stream_id` = '" . $_GET['sid'] . "';";
-	$res2=mysql_query($sql2);	
-	$row2=mysql_fetch_array($res2);
+	$res2=db_query($sql2);	
+	$row2=db_fetch_array($res2);
 		
   ?>
 <div class="page_title">

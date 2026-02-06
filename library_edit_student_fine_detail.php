@@ -17,7 +17,7 @@ if(isset($_POST['submit']))
 		$fine_amount=$_POST['total_fine_amount']-$_POST['fine_amount'];
 		
 		  $sql3="UPDATE student_fine_detail set registration_no='".$_POST['registration_no']."',book_number='".$_POST['book_number']."',fine_amount='".$fine_amount."'  where student_fine_id='".$_GET['sid']."'";
-		$res3=mysql_query($sql3) or die("Error : " . mysql_error());
+		$res3=db_query($sql3) or die("Error : " . db_error());
 		header("Location:student_fine_detail.php");
 		
 		
@@ -55,8 +55,8 @@ else
 }
 
 $select_q="select * from student_fine_detail where student_fine_id='".$_GET['sid']."'";
-$result=mysql_query($select_q);
-$row_detail=mysql_fetch_array($result);
+$result=db_query($select_q);
+$row_detail=db_fetch_array($result);
 $registration_no=$row_detail['registration_no'];
 ?>
 <div class="page_title">
@@ -120,11 +120,11 @@ $registration_no=$row_detail['registration_no'];
 //$registration_no=$_GET['registration_no'];
 //$fees_term=$_GET['fees_term'];
  $studentinfo="select * from student_info where registration_no='".$registration_no."' and session='".$_SESSION['session']."'";
-$row=mysql_fetch_array(mysql_query($studentinfo));
+$row=db_fetch_array(db_query($studentinfo));
 
 
 	      $sql_pending="select sum(fees_amount) from student_fees_detail where registration_no='".$registration_no."'  and session='".$_SESSION['session']."'";
-	$deposit_amount=mysql_fetch_array(mysql_query($sql_pending));
+	$deposit_amount=db_fetch_array(db_query($sql_pending));
 	
 	
 
@@ -161,8 +161,8 @@ $row=mysql_fetch_array(mysql_query($studentinfo));
 											
 							<?php
 							 $sql="SELECT * FROM class  where class_id='".$row['class']."'";
-	                           $res=mysql_query($sql);
-								while($row1=mysql_fetch_array($res))
+	                           $res=db_query($sql);
+								while($row1=db_fetch_array($res))
 								{
 									?>
 									<option value="<?php echo $row1['class_id']; ?>"><?php echo $row1['class_name']; ?></option>
@@ -182,8 +182,8 @@ $row=mysql_fetch_array(mysql_query($studentinfo));
 										
                                         	<?php
 							 $sql="SELECT * FROM stream where stream_id='".$row['stream']."' ";
-	                           $res=mysql_query($sql);
-								while($row2=mysql_fetch_array($res))
+	                           $res=db_query($sql);
+								while($row2=db_fetch_array($res))
 								{
 									?>
 									<option value="<?php echo $row2['stream_id']; ?>"><?php echo $row2['stream_name']; ?></option>

@@ -14,12 +14,12 @@ if(isset($_POST['submit']))
 	//$school_logo = $_POST['school_logo'];
 	
 	 $sql1="SELECT * FROM book_manager where book_number='".$book_number."' and `book_id` != '" . $_GET['sid'] . "'";
-	$res1=mysql_query($sql1) or die("Error : " . mysql_error());
-	$num=mysql_num_rows($res1);
+	$res1=db_query($sql1) or die("Error : " . db_error());
+	$num=db_num_rows($res1);
 	if($num==0)
 	{
 	  $sql3="UPDATE book_manager SET `book_number` = '".$book_number."',book_category_id='".$book_category_id."',`book_name` = '".$book_name."',book_description='".$book_description."',`book_author` = '".$book_author."'   WHERE `book_id` = '" . $_GET['sid'] . "'";
-	$res3=mysql_query($sql3) or die("Error : " . mysql_error());
+	$res3=db_query($sql3) or die("Error : " . db_error());
 	header("Location:library_book_manager.php?msg=3");
 	}else
 		{    header("location:library_edit_book.php?error=2&&sid=".$_GET['sid']);
@@ -35,8 +35,8 @@ if($_GET['error']==2)
 	
 		
 	$sql2="SELECT * FROM book_manager WHERE `book_id` = '" . $_GET['sid'] . "'";
-	$res2=mysql_query($sql2);	
-	$row2=mysql_fetch_array($res2);
+	$res2=db_query($sql2);	
+	$row2=db_fetch_array($res2);
 		
   ?>
 <div class="page_title">
@@ -81,8 +81,8 @@ if($_GET['error']==2)
 								<option value="" selected="selected"> - Select ctegory - </option>
 							<?php
 							 $sql="SELECT * FROM library_category  ";
-	                           $res=mysql_query($sql);
-								while($row=mysql_fetch_array($res))
+	                           $res=db_query($sql);
+								while($row=db_fetch_array($res))
 								{
 									
 									if($row2['book_category_id']==$row['library_category_id']){

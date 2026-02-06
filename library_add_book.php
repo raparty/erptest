@@ -14,15 +14,15 @@ if(isset($_POST['submit']))
 	//$school_logo = $_POST['school_logo'];
 	
 	 $sql1="SELECT * FROM book_manager where book_number='".$book_number."' ";
-	$res1=mysql_query($sql1) or die("Error : " . mysql_error());
-	$num=mysql_num_rows($res1);
+	$res1=db_query($sql1) or die("Error : " . db_error());
+	$num=db_num_rows($res1);
 	if($num==0)
 	{
 		
 		
 		
 		 $sql3="INSERT INTO book_manager(book_category_id,book_number,book_name,book_description,book_author) VALUES ('".$book_category_id."','".$book_number."','".$book_name."','".$book_description."','".$book_author."')";
-		$res3=mysql_query($sql3) or die("Error : " . mysql_error());
+		$res3=db_query($sql3) or die("Error : " . db_error());
 		header("Location:library_book_manager.php?msg=1");
 		
 		
@@ -100,8 +100,8 @@ else
 								<option value="" selected="selected"> - Select ctegory - </option>
 							<?php
 							 $sql="SELECT * FROM library_category  ";
-	                           $res=mysql_query($sql);
-								while($row=mysql_fetch_array($res))
+	                           $res=db_query($sql);
+								while($row=db_fetch_array($res))
 								{
 									?>
 									<option value="<?php echo $row['library_category_id']; ?>"><?php echo $row['category_name']; ?></option>

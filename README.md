@@ -64,7 +64,8 @@ The system now requires modern infrastructure for optimal performance and securi
 - UTF-8 (utf8mb4) for full Unicode support including emojis
 - Modern schema with foreign key constraints
 - Optimized queries for better performance
-- Prepared statement support via mysqli
+- Native mysqli for all database operations
+- Helper functions (db_query, db_escape, etc.) for consistency
 
 ### Modern Frontend
 - HTML5 semantic markup
@@ -77,8 +78,8 @@ The system now requires modern infrastructure for optimal performance and securi
 - Secure session handling with httponly and samesite attributes
 - XSS protection headers
 - CSRF protection patterns
-- Input sanitization via mysqli_real_escape_string
-- Prepared for transition to PDO with prepared statements
+- Input sanitization via Database::escape() using mysqli
+- Native mysqli database operations throughout
 
 ## Summary
 

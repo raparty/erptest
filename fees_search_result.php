@@ -57,8 +57,8 @@ include_once("includes/header.php");?>
 											<option value="" selected="selected"> - Select fees term - </option>
 							<?php
 							 $sql="SELECT * FROM fees_term";
-	                           $res=mysql_query($sql);
-								while($row=mysql_fetch_array($res))
+	                           $res=db_query($sql);
+								while($row=db_fetch_array($res))
 								{
 									?>
 									<option value="<?php echo $row['fees_term_id']; ?>"><?php echo $row['term_name']; ?></option>
@@ -77,8 +77,8 @@ include_once("includes/header.php");?>
 											<option value="" selected="selected"> - Select Class - </option>
 							<?php
 							 $sql="SELECT * FROM class";
-	                           $res=mysql_query($sql);
-								while($row=mysql_fetch_array($res))
+	                           $res=db_query($sql);
+								while($row=db_fetch_array($res))
 								{
 									?>
 									<option value="<?php echo $row['class_id']; ?>"><?php echo $row['class_name']; ?></option>
@@ -203,16 +203,16 @@ include_once("includes/header.php");?>
 						}
 						$i=1;
 					
-					$res=mysql_query($sql10);
+					$res=db_query($sql10);
 				
-							while($row=mysql_fetch_array($res))
+							while($row=db_fetch_array($res))
 							{
 								
 								$sql="SELECT * FROM student_info where registration_no='".$row[1]."'  and  session='".$_SESSION['session']."'";
-	                           $student_fees_detail=mysql_fetch_array(mysql_query($sql));
+	                           $student_fees_detail=db_fetch_array(db_query($sql));
 							   
 							   $sql1="SELECT * FROM fees_term where fees_term_id='".$row['fees_term']."'";
-	                           $fees_term=mysql_fetch_array(mysql_query($sql1));
+	                           $fees_term=db_fetch_array(db_query($sql1));
 								
 								
 								?>

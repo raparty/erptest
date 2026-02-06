@@ -11,15 +11,15 @@ if(isset($_POST['submit']))
 	
 		
 	  $sql3="UPDATE subject SET subject_name='".$subject_name."'  where subject_id='".$_GET['sid']."'";
-	$res3=mysql_query($sql3) or die("Error : " . mysql_error());
+	$res3=db_query($sql3) or die("Error : " . db_error());
 	header("Location:subject.php?msg=3");
 }
 
 	
 		
 	$sql2="SELECT * FROM subject WHERE `subject_id` = '" . $_GET['sid'] . "';";
-	$res2=mysql_query($sql2);	
-	$row2=mysql_fetch_array($res2);
+	$res2=db_query($sql2);	
+	$row2=db_fetch_array($res2);
 		
   ?>
 <div class="page_title">

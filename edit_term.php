@@ -7,16 +7,16 @@ $sid = (int)($_GET['sid'] ?? 0);
 if(isset($_POST['submit']))
 {
 	$term_name = trim((string)($_POST['term_name'] ?? ''));
-	$term_name_safe = mysql_real_escape_string($term_name);
+	$term_name_safe = db_escape($term_name);
 	// $class_id = $_POST['class_id'];
 	
 		$sql1="SELECT * FROM fees_term where term_name='".$term_name_safe."' and fees_term_id!='".$sid."'";
-	$res1=mysql_query($sql1) or die("Error : " . mysql_error());
-	$num=mysql_num_rows($res1);
+	$res1=db_query($sql1) or die("Error : " . db_error());
+	$num=db_num_rows($res1);
 	if($num==0)
 	{
 	  $sql3="UPDATE fees_term SET term_name='".$term_name_safe."'  where fees_term_id='".$sid."'";
-	$res3=mysql_query($sql3) or die("Error : " . mysql_error());
+	$res3=db_query($sql3) or die("Error : " . db_error());
 	header("Location:term_manager.php?msg=3");
 	}else
 	{
@@ -33,8 +33,8 @@ if(($_GET['error'] ?? null)==2)
 	
 		
 	$sql2="SELECT * FROM fees_term WHERE `fees_term_id` = '" . $sid . "';";
-	$res2=mysql_query($sql2);	
-	$row2=mysql_fetch_array($res2);
+	$res2=db_query($sql2);	
+	$row2=db_fetch_array($res2);
 		
   ?>
 <div class="page_title">

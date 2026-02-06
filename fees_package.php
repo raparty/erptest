@@ -70,9 +70,9 @@ include_once("includes/header.php");?>
                         <?php 
 						$i=1;
 					$sql="SELECT * FROM fees_package";
-					$res=mysql_query($sql);
+					$res=db_query($sql);
 				
-							while($row=mysql_fetch_array($res))
+							while($row=db_fetch_array($res))
 							{
 								
 								?>

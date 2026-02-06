@@ -13,15 +13,15 @@ if(isset($_POST['submit']))
 	$pending_amount = (float)($_POST['pending_amount'] ?? 0);
 	$fees_amount_value = (float)($fees_amount !== '' ? $fees_amount : 0);
 
-	$registration_no_safe = mysql_real_escape_string($registration_no);
-	$fees_term_safe = mysql_real_escape_string($fees_term);
-	$fees_amount_safe = mysql_real_escape_string($fees_amount);
+	$registration_no_safe = db_escape($registration_no);
+	$fees_term_safe = db_escape($fees_term);
+	$fees_amount_safe = db_escape($fees_amount);
 
 	if($pending_amount >= $fees_amount_value)
 	{
 	 $sql1="SELECT * FROM student_fees_detail where registration_no='".$registration_no_safe."' and fees_term='".$fees_term_safe."' and session='".$_SESSION['session']."'";
-	$res1=mysql_query($sql1) or die("Error : " . mysql_error());
-	$num=mysql_num_rows($res1);
+	$res1=db_query($sql1) or die("Error : " . db_error());
+	$num=db_num_rows($res1);
 	if($num==0)
 	{
 		
@@ -29,7 +29,7 @@ if(isset($_POST['submit']))
 		if($registration_no_safe!=""&&$fees_term_safe!=""&&$fees_amount_safe!="")
 		{
 		 $sql3="INSERT INTO student_fees_detail(registration_no,fees_term,fees_amount,session) VALUES ('".$registration_no_safe."','".$fees_term_safe."','".$fees_amount_safe."','".$_SESSION['session']."')";
-		$res3=mysql_query($sql3) or die("Error : " . mysql_error());
+		$res3=db_query($sql3) or die("Error : " . db_error());
 		header("Location:fees_manager.php?msg=1");
 		}else
 		{    header("location:add_student_fees.php?error=2");

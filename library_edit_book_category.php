@@ -10,12 +10,12 @@ if(isset($_POST['submit']))
 	//$category_type=$_POST['category_type'];
 		
 		$sql1="SELECT * FROM library_category where category_name='".$category_name."' and library_category_id!='".$_GET['sid']."'";
-	$res1=mysql_query($sql1) or die("Error : " . mysql_error());
-	$num=mysql_num_rows($res1);
+	$res1=db_query($sql1) or die("Error : " . db_error());
+	$num=db_num_rows($res1);
 	if($num==0)
 	{
 	  $sql3="UPDATE library_category SET `category_name` = '".$category_name."'  where library_category_id='".$_GET['sid']."'";
-	$res3=mysql_query($sql3) or die("Error : " . mysql_error());
+	$res3=db_query($sql3) or die("Error : " . db_error());
 	header("Location:library_book_category.php?msg=3");
 	}else
 	{
@@ -29,8 +29,8 @@ if(isset($_POST['submit']))
 	}
 		
 	$sql2="SELECT * FROM library_category WHERE `library_category_id` = '" . $_GET['sid'] . "';";
-	$res2=mysql_query($sql2);	
-	$row2=mysql_fetch_array($res2);
+	$res2=db_query($sql2);	
+	$row2=db_fetch_array($res2);
 		
   ?>
 <div class="page_title">

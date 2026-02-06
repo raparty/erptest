@@ -11,12 +11,12 @@ if(isset($_POST['submit']))
 	
 		  $sql1="SELECT * FROM allocate_class_stream where  class_id='".$class_id."' and stream_id='".$stream_id."' and `allocate_id` != '" . $_GET['sid'] . "'";
 	
-	$res1=mysql_query($sql1) or die("Error : " . mysql_error());
-	$num=mysql_num_rows($res1);
+	$res1=db_query($sql1) or die("Error : " . db_error());
+	$num=db_num_rows($res1);
 	if($num==0)
 	{
 	  $sql3="UPDATE allocate_class_stream SET `class_id` = '".$class_id."',stream_id='".$stream_id."'   WHERE `allocate_id` = '" . $_GET['sid'] . "'";
-	$res3=mysql_query($sql3) or die("Error : " . mysql_error());
+	$res3=db_query($sql3) or die("Error : " . db_error());
 	header("Location:allocate_stream.php?msg=3");
 	}else
 		{    header("location:edit_allocate_stream.php?error=2&&sid=".$_GET['sid']);
@@ -32,8 +32,8 @@ if($_GET['error']==2)
 	
 		
 	$sql2="SELECT * FROM allocate_class_stream WHERE `allocate_id` = '" . $_GET['sid'] . "'";
-	$res2=mysql_query($sql2);	
-	$row2=mysql_fetch_array($res2);
+	$res2=db_query($sql2);	
+	$row2=db_fetch_array($res2);
 		
   ?>
 <div class="page_title">
@@ -78,8 +78,8 @@ if($_GET['error']==2)
 								<option value="" selected="selected"> - Select Class - </option>
 							<?php
 							 $sql="SELECT * FROM class where stream_status='1' ";
-	                           $res=mysql_query($sql);
-								while($row=mysql_fetch_array($res))
+	                           $res=db_query($sql);
+								while($row=db_fetch_array($res))
 								{   
 								if($row['class_id']==$row2['class_id'])                    {
 									 $class='selected="selected"';
@@ -116,8 +116,8 @@ if($_GET['error']==2)
 								<option value="" selected="selected"> - Select stream - </option>
 							<?php
 							 $sql="SELECT * FROM stream  ";
-	                           $res=mysql_query($sql);
-								while($row=mysql_fetch_array($res))
+	                           $res=db_query($sql);
+								while($row=db_fetch_array($res))
 								{   
 								if($row['stream_id']==$row2['stream_id'])                    {
 									 $stream='selected="selected"';
