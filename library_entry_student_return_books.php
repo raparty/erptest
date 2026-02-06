@@ -4,6 +4,7 @@ declare(strict_types=1);
 include_once("includes/header.php");?>
 <?php include_once("includes/sidebar.php"); ?>
 <?php 
+$msg = "";
 if(isset($_POST['submit']))
 {
 	// $package_name = $_POST['package_name'];
@@ -41,27 +42,27 @@ if(isset($_POST['submit']))
 }
 else
 {
-	if($_GET['msg']==1)
+	if(isset($_GET['msg']) && $_GET['msg']==1)
 	{
 		$msg = "<span style='color:#009900;'><h4> Student Fees  Detail Added Successfully </h4></span>";
 	}
-	if($_GET['msg']==2)
+	if(isset($_GET['msg']) && $_GET['msg']==2)
 	{
 		$msg = "<span style='color:#009900;'><h4>Student Fees Detail Deleted Successfully </h4></span>";
 	}
-	if($_GET['msg']==3)
+	if(isset($_GET['msg']) && $_GET['msg']==3)
 	{
 		$msg = "<span style='color:#009900;'><h4> Student Fees Detail Updated Successfully </h4></span>";
 	}
-	else if($_GET['error']==1)
+	else if(isset($_GET['error']) && $_GET['error']==1)
 	{
 		$msg = "<span style='color:#FF0000;'><h4>Student Fees Detail Already Exists </h4></span>";
 	}
-	else if($_GET['error']==2)
+	else if(isset($_GET['error']) && $_GET['error']==2)
 	{
 		$msg = "<span style='color:#FF0000;'><h4> Please fill all detail </h4></span>";
 	}
-	else if($_GET['error']==3)
+	else if(isset($_GET['error']) && $_GET['error']==3)
 	{
 		$msg = "<span style='color:#FF0000;'><h4> Deposit fees amount is greater than  pending amount.</h4></span>";
 	}
@@ -69,6 +70,7 @@ else
 
 
 ?>
+<?php include_once("includes/library_setting_sidebar.php");?>
 <div class="page_title">
 	<!--	<span class="title_icon"><span class="computer_imac"></span></span>
 		<h3>Dashboard</h3>-->
@@ -85,7 +87,6 @@ else
 			</form>
 		</div>
 	</div>
-<?php include_once("includes/library_setting_sidebar.php");?>
 
 <div id="container">
 	
