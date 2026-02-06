@@ -1,48 +1,8 @@
-<?php include_once("includes/header.php"); ?>
+<?php
+
+declare(strict_types=1);
+include_once("includes/header.php");?>
 <?php include_once("includes/sidebar.php"); ?>
-<main class="app-content">
-<div id="header" class="blue_lin">
-		<div class="header_left">
-			<div class="logo">
-				<img src="images/logo.png" width="300" height="49" alt="Ekra">
-			</div>
-			<div id="responsive_mnu">
-				<a href="#responsive_menu" class="fg-button" id="hierarchybreadcrumb"><span class="responsive_icon"></span>Menu</a>
-				<div id="responsive_menu" class="hidden">
-					<ul>
-						
-						<li><a href="#"><span class="nav_icon computer_imac"></span> Dashboard</a>
-				
-				</li>
-                
-				<li><a href="#"><span class="nav_icon frames"></span> Category<span class="up_down_arrow">&nbsp;</span></a>
-				<ul class="acitem">
-					<li><a href="form-elements.html"><span class="list-icon">&nbsp;</span>All Forms Elements</a></li>
-					<li><a href="left-label-form.html"><span class="list-icon">&nbsp;</span>Left Label Form</a></li>
-					<li><a href="top-label-form.html"><span class="list-icon">&nbsp;</span>Top Label Form</a></li>
-					<li><a href="form-xtras.html"><span class="list-icon">&nbsp;</span>Additional Forms (3)</a></li>
-					<li><a href="form-validation.html"><span class="list-icon">&nbsp;</span>Form Validation</a></li>
-					<li><a href="signup-form.html"><span class="list-icon">&nbsp;</span>Signup Form</a></li>
-					<li><a href="content-post.html"><span class="list-icon">&nbsp;</span>Content Post Form</a></li>
-					<li><a href="wizard.html"><span class="list-icon">&nbsp;</span>wizard</a></li>
-				</ul>
-				</li>
-		
-					</ul>
-				</div>
-			</div>
-		</div>
-		<div class="header_right">
-			
-			<div id="user_nav">
-				<ul>
-					<li class="user_thumb"><a href="#"><span class="icon"><img src="images/user_thumb.png" width="30" height="30" alt="User"></span></a></li>
-					<li class="user_info"><span class="user_name">Administrator</span><span><a href="#">Profile</a> &#124; <a href="#">Settings</a> &#124; <a href="#">Help&#63;</a></span></li>
-					<li class="logout"><a href="#"><span class="icon"></span>Logout</a></li>
-				</ul>
-			</div>
-		</div>
-	</div>
     <div class="page_title">
 	<!--	<span class="title_icon"><span class="computer_imac"></span></span>
 		<h3>Dashboard</h3>-->
@@ -71,7 +31,31 @@
           
 			<div class="grid_12">
 				<div class="widget_wrap">
-					<h3 style="padding-left:20px; color:#1c75bc">Add New Position</h3>
+               
+					<h3 style="padding-left:20px; color:#1c75bc"> Staff Position</h3> <?php
+                include_once('config/config.inc.php');
+				?>
+                <?php
+				if(isset($_POST['submit']))
+				{
+					 $insert_check="select * from staff_position  where staff_position='".$_POST['staff_position']."'"; 
+	 $num=db_fetch_array(db_query($insert_check));
+			if($num==0)
+			{   
+                $sql="insert into staff_position(staff_position) values('".$_POST['staff_position']."')";
+				$res=db_query($sql);
+				$msg = "<span style='color:#009900;'><h4> Staff Position Detail Added Successfully </h4></span>";
+				}
+				else
+				{ 
+					$msg = "<span style='color:#FF0000;'><h4> Staff Position  Detail already exist </h4></span>";
+				
+				}}
+				
+				
+				?>
+                
+                <?php if($msg!=""){echo $msg; } ?>
 					<form action="#" method="post" class="form_container left_label">
 							<ul>
 								<li>
@@ -79,7 +63,7 @@
 									<label class="field_title">Position</label>
                                     <div class="form_input">
 										<div class="form_grid_5 alpha">
-											<input name="position" type="text"/>
+											<input name="staff_position" type="text" required="required"/>
 											<span class=" label_intro">New Position</span>
 										</div>
 									
@@ -97,10 +81,10 @@
 								<div class="form_grid_12">
 									<div class="form_input">
 										
-										<button type="submit" class="btn_small btn_blue"><span>Save</span></button>
+										<button type="submit" class="btn_small btn_blue"  name="submit"><span>Save</span></button>
 										
-										<button type="submit" class="btn_small btn_orange"><span>Back</span></button>
-										
+									<a href="view_staff_position.php">	<button type="button" class="btn_small btn_orange"><span>Back</span></button>
+						</a>				
 									</div>
 								</div>
 								</li>
@@ -119,5 +103,3 @@
 	</div>
 </div>
 <?php include_once("includes/footer.php");?>
-</main>
-<?php include_once("includes/footer.php"); ?>

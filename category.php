@@ -33,7 +33,7 @@ include_once("includes/header.php");?>
  
 
            <div class="btn_30_blue" style="float:right">
-								<a href="add_category.html"><span style="width:140px">Add New Super Category </span></a>
+								<a href="add_category.php"><span style="width:140px">Add New Super Category </span></a>
 							</div>
                             
                             
