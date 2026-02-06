@@ -23,6 +23,16 @@
   --shadow-md: 0 8px 24px rgba(15, 23, 42, 0.12);
   --shadow-lg: 0 18px 50px rgba(15, 23, 42, 0.18);
   --font-sans: "Inter", "Segoe UI", "Helvetica Neue", Arial, sans-serif;
+  
+  /* App-specific variables for legacy bridge */
+  --app-primary: var(--brand-500);
+  --app-primary-dark: var(--brand-700);
+  --app-surface: var(--neutral-0);
+  --app-border: var(--neutral-200);
+  --app-accent: var(--brand-50);
+  --app-radius: var(--radius-md);
+  --app-shadow: var(--shadow-md);
+  --app-transition: all 0.2s ease;
 }
 
 @media (prefers-color-scheme: dark) {
@@ -33,6 +43,11 @@
     --neutral-100: #334155;
     --neutral-900: #f1f5f9;
     --neutral-700: #e2e8f0;
+    
+    /* Update app variables for dark mode */
+    --app-surface: var(--neutral-100);
+    --app-border: var(--neutral-500);
+    --app-accent: var(--neutral-50);
   }
 }
 
