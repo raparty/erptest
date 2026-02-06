@@ -1,222 +1,102 @@
 <?php
-
 declare(strict_types=1);
-include_once("includes/header.php");?>
-<?php include_once("includes/sidebar.php"); ?>
-<?php 
-if(isset($_POST['submit']))
-{
-	 $stream_id = $_POST['stream'];
-	 $class_id = $_POST['class_id'];
-	 $subject_id=$_POST['subject_id'];
-	//$school_logo = $_POST['school_logo'];
-	if($_POST['stream']!="")
-	{
-	 $sql1="SELECT * FROM allocate_class_subject where stream_id='".$stream_id."'  and class_id='".$class_id."' and subject_id='".$subject_id."'";
-	}else
-	{
-		
-		 $sql1="SELECT * FROM allocate_class_subject where  class_id='".$class_id."' and subject_id='".$subject_id."'";
-		}
-	$res1=db_query($sql1) or die("Error : " . db_error());
-	$num=db_num_rows($res1);
-	if($num==0)
-	{
-		
-		
-		if($_POST['class_id']!=""&&$_POST['subject_id']!="")
-		{
-		 $sql3="INSERT INTO allocate_class_subject(class_id,stream_id,subject_id) VALUES ('".$class_id."','".$stream_id."','".$subject_id."')";
-		$res3=db_query($sql3) or die("Error : " . db_error());
-		header("Location:allocate_subject.php?msg=1");
-		}else
-		{    header("location:add_allocate_subject.php?error=2");
-			
-			}
-		
-	}
-	else
-	{
-		header("location: add_allocate_subject.php?error=1");
-	}
-}
-else
-{
-	if($_GET['msg']==1)
-	{
-		$msg = "<span style='color:#009900;'><h4> subject Detail Added Successfully </h4></span>";
-	}
-	if($_GET['msg']==2)
-	{
-		$msg = "<span style='color:#009900;'><h4>subject Detail Deleted Successfully </h4></span>";
-	}
-	if($_GET['msg']==3)
-	{
-		$msg = "<span style='color:#009900;'><h4> subject Detail Updated Successfully </h4></span>";
-	}
-	else if($_GET['error']==1)
-	{
-		$msg = "<span style='color:#FF0000;'><h4> subject Detail Already Exists </h4></span>";
-	}
-	else if($_GET['error']==2)
-	{
-		$msg = "<span style='color:#FF0000;'><h4> Please fill all detail </h4></span>";
-	}
+require_once("includes/bootstrap.php");
+
+$msg = "";
+if (isset($_POST['submit'])) {
+    $class_id = (int)$_POST['class_id'];
+    $stream_id = (int)($_POST['stream_id'] ?? 0);
+    $subject_id = (int)$_POST['subject_id'];
+
+    if ($class_id > 0 && $subject_id > 0) {
+        $sql = "INSERT INTO allocate_class_subject (class_id, stream_id, subject_id) VALUES ($class_id, $stream_id, $subject_id)";
+        if (db_query($sql)) {
+            header("Location: allocate_subject.php?msg=1");
+            exit;
+        }
+    } else {
+        header("Location: add_allocate_subject.php?error=2");
+        exit;
+    }
 }
 
-
+include_once("includes/header.php");
+include_once("includes/sidebar.php");
+include_once("includes/school_setting_sidebar.php");
 ?>
-<div class="page_title">
-	<!--	<span class="title_icon"><span class="computer_imac"></span></span>
-		<h3>Dashboard</h3>-->
-		<div class="top_search">
-			<form action="#" method="post">
-				<ul id="search_box">
-					<li>
-					<input name="" type="text" class="search_input" id="suggest1" placeholder="Search...">
-					</li>
-					<li>
-					<input name="" type="submit" value="Search" class="search_btn">
-					</li>
-				</ul>
-			</form>
-		</div>
-	</div>
-<?php include_once("includes/school_setting_sidebar.php");?>
 
 <div id="container">
-	
-	
-	
-	<div id="content">
-		<div class="grid_container">
-
-          
-			<div class="grid_12">
-				<div class="widget_wrap">
-					<h3 style="padding-left:20px; color:#1c75bc">Allocate class stream </h3>
-                    
-                    <?php if($msg!=""){echo $msg; } ?>
-					<form action="" method="post" class="form_container left_label" enctype="multipart/form-data">
-							<ul>
-								<li>
-								<div class="form_grid_12 multiline">
-									<label class="field_title"> Class  Name</label>
-                                    <div class="form_input">
-										<div class="form_grid_5 alpha">
-											<select name="class_id"   onChange="getForm('ajax_stream_code1.php?class_id='+this.value)">
-								<option value="" selected="selected"> - Select Class - </option>
-							<?php
-							 $sql="SELECT * FROM class ";
-	                           $res=db_query($sql);
-								while($row=db_fetch_array($res))
-								{
-									?>
-									<option value="<?php echo $row['class_id']; ?>"><?php echo $row['class_name']; ?></option>
-									<?php
-								}
-							?>
-							</select>
-											<span class=" label_intro">Class name</span>
-										</div>
-									
-										<span class="clear"></span>
-									</div>
-
-									
-									<div class="form_input">
-
-										<span class="clear"></span>
-									</div>
-								</div>
-								</li>
-                                
-                                <li id="stream_code">
-								<div class="form_grid_12 multiline">
-									<label class="field_title"> Stream  Name</label>
-                                    <div class="form_input">
-										<div class="form_grid_5 alpha">
-											<select name="stream" >
-								<option value="" selected="selected"> - Select Stream - </option>
-							<?php
-							 $sql="SELECT * FROM stream ";
-	                           $res=db_query($sql);
-								while($row=db_fetch_array($res))
-								{
-									?>
-									<option value="<?php echo $row['stream_id']; ?>"><?php echo $row['stream_name']; ?></option>
-									<?php
-								}
-							?>
-							</select>
-											<span class=" label_intro">Stream name</span>
-										</div>
-									
-										<span class="clear"></span>
-									</div>
-
-									
-									<div class="form_input">
-
-										<span class="clear"></span>
-									</div>
-								</div>
-								</li>
-                                
+    <div id="content">
+        <div class="grid_container">
+            <div class="grid_12">
+                <div class="widget_wrap">
+                    <div class="widget_top">
+                        <span class="h_icon documents"></span>
+                        <h6>Link Subject to Class</h6>
+                    </div>
+                    <div class="widget_content">
+                        <form action="add_allocate_subject.php" method="post" class="form_container left_label">
+                            <ul>
                                 <li>
-								<div class="form_grid_12 multiline">
-									<label class="field_title"> Subject  Name</label>
+                                    <div class="form_grid_12">
+                                        <label class="field_title">Select Class</label>
+                                        <div class="form_input">
+                                            <select name="class_id" style="width:100%" required>
+                                                <option value="">- Choose Class -</option>
+                                                <?php
+                                                $res = db_query("SELECT id, class_name FROM classes ORDER BY id ASC");
+                                                while($row = db_fetch_array($res)) {
+                                                    echo "<option value='{$row['id']}'>{$row['class_name']}</option>";
+                                                }
+                                                ?>
+                                            </select>
+                                        </div>
+                                    </div>
+                                </li>
+                                <li>
+                                    <div class="form_grid_12">
+                                        <label class="field_title">Select Stream (Optional)</label>
+                                        <div class="form_input">
+                                            <select name="stream_id" style="width:100%">
+                                                <option value="0">No Stream (General)</option>
+                                                <?php
+                                                $res = db_query("SELECT id, stream_name FROM streams ORDER BY stream_name ASC");
+                                                while($row = db_fetch_array($res)) {
+                                                    echo "<option value='{$row['id']}'>{$row['stream_name']}</option>";
+                                                }
+                                                ?>
+                                            </select>
+                                        </div>
+                                    </div>
+                                </li>
+                                <li>
+                                    <div class="form_grid_12">
+                                        <label class="field_title">Select Subject</label>
+                                        <div class="form_input">
+                                            <select name="subject_id" style="width:100%" required>
+                                                <option value="">- Choose Subject -</option>
+                                                <?php
+                                                $res = db_query("SELECT id, subject_name FROM subjects ORDER BY subject_name ASC");
+                                                while($row = db_fetch_array($res)) {
+                                                    echo "<option value='{$row['id']}'>{$row['subject_name']}</option>";
+                                                }
+                                                ?>
+                                            </select>
+                                        </div>
+                                    </div>
+                                </li>
+                                <li>
                                     <div class="form_input">
-										<div class="form_grid_5 alpha">
-											<select name="subject_id" >
-								<option value="" selected="selected"> - Select Subject - </option>
-							<?php
-							 $sql="SELECT * FROM subject ";
-	                           $res=db_query($sql);
-								while($row=db_fetch_array($res))
-								{
-									?>
-									<option value="<?php echo $row['subject_id']; ?>"><?php echo $row['subject_name']; ?></option>
-									<?php
-								}
-							?>
-							</select>
-											<span class=" label_intro">Subject name</span>
-										</div>
-									
-										<span class="clear"></span>
-									</div>
-
-									
-									<div class="form_input">
-
-										<span class="clear"></span>
-									</div>
-								</div>
-								</li>
-								<li>
-								<div class="form_grid_12">
-									<div class="form_input">
-										
-										<button type="submit" class="btn_small btn_blue" name="submit"><span>Save</span></button>
-										
-										<a href="stream.php"><button type="button" class="btn_small btn_orange"><span>Back</span></button></a>
-										
-									</div>
-								</div>
-								</li>
-							</ul>
-						</form>
-				</div>
-			</div>
-			
-			
-			<span class="clear"></span>
-			
-			
-			
-		</div>
-		<span class="clear"></span>
-	</div>
+                                        <button type="submit" name="submit" class="btn_small btn_blue"><span>Save Link</span></button>
+                                        <a href="allocate_subject.php" class="btn_small btn_orange"><span>Back</span></a>
+                                    </div>
+                                </li>
+                            </ul>
+                        </form>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
 </div>
-<?php include_once("includes/footer.php");?>
+<?php include_once("includes/footer.php"); ?>

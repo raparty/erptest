@@ -1,143 +1,55 @@
 <?php
-
 declare(strict_types=1);
-include_once("includes/header.php");?>
-<?php include_once("includes/sidebar.php"); ?>
-<?php 
-$msg = "";
-if(isset($_POST['submit']))
-{
-	// $class_name = $_POST['class_name'];
-	 $section_name=$_POST['section_name'];
-	//$school_logo = $_POST['school_logo'];
-	
-	 $sql1="SELECT * FROM section where section_name='".$section_name."' ";
-	$res1=db_query($sql1) or die("Error : " . db_error());
-	$num=db_num_rows($res1);
-	if($num==0)
-	{
-		
-		
-		if($_POST['section_name']!="")
-		{
-		 $sql3="INSERT INTO section(section_name) VALUES ('".$section_name."')";
-		$res3=db_query($sql3) or die("Error : " . db_error());
-		header("Location:section.php?msg=1");
-		}else
-		{    header("location:add_section.php?error=2");
-			
-			}
-		
-	}
-	else
-	{
-		header("location: add_section.php?error=1");
-	}
-}
-else
-{
-	if(isset($_GET['msg']) && $_GET['msg']==1)
-	{
-		$msg = "<span style='color:#009900;'><h4> Section Detail Added Successfully </h4></span>";
-	}
-	else if(isset($_GET['msg']) && $_GET['msg']==2)
-	{
-		$msg = "<span style='color:#009900;'><h4> Section Detail Deleted Successfully </h4></span>";
-	}
-	else if(isset($_GET['msg']) && $_GET['msg']==3)
-	{
-		$msg = "<span style='color:#009900;'><h4> Section Detail Updated Successfully </h4></span>";
-	}
-	else if(isset($_GET['error']) && $_GET['error']==1)
-	{
-		$msg = "<span style='color:#FF0000;'><h4> Section Detail Already Exists </h4></span>";
-	}
-	else if(isset($_GET['error']) && $_GET['error']==2)
-	{
-		$msg = "<span style='color:#FF0000;'><h4> Please fill all details </h4></span>";
-	}
+require_once("includes/bootstrap.php");
+
+if (isset($_POST['submit'])) {
+    $section_name = db_escape(trim($_POST['section_name']));
+
+    if (!empty($section_name)) {
+        $sql = "INSERT INTO sections (section_name) VALUES ('$section_name')";
+        if (db_query($sql)) {
+            header("Location: section.php?msg=1");
+            exit;
+        }
+    } else {
+        header("Location: add_section.php?error=2");
+        exit;
+    }
 }
 
-
+include_once("includes/header.php");
+include_once("includes/sidebar.php");
 ?>
-<div class="page_title">
-	<!--	<span class="title_icon"><span class="computer_imac"></span></span>
-		<h3>Dashboard</h3>-->
-		<div class="top_search">
-			<form action="#" method="post">
-				<ul id="search_box">
-					<li>
-					<input name="" type="text" class="search_input" id="suggest1" placeholder="Search...">
-					</li>
-					<li>
-					<input name="" type="submit" value="Search" class="search_btn">
-					</li>
-				</ul>
-			</form>
-		</div>
-	</div>
-<?php include_once("includes/school_setting_sidebar.php");?>
 
 <div id="container">
-	
-	
-	
-	<div id="content">
-		<div class="grid_container">
-
-          
-			<div class="grid_12">
-				<div class="widget_wrap">
-					<h3 style="padding-left:20px; color:#1c75bc">Add Section name</h3>
-                    
-                    <?php if($msg!=""){echo $msg; } ?>
-					<form action="" method="post" class="form_container left_label" enctype="multipart/form-data">
-							<ul>
-								<li>
-								<div class="form_grid_12 multiline">
-									<label class="field_title"> Section Name</label>
+    <div id="content">
+        <div class="grid_container">
+            <div class="grid_12">
+                <div class="widget_wrap">
+                    <h3 style="padding:20px; color:#1c75bc">Add New Section</h3>
+                    <form action="add_section.php" method="post" class="form_container left_label">
+                        <ul>
+                            <li>
+                                <div class="form_grid_12">
+                                    <label class="field_title">Section Name</label>
                                     <div class="form_input">
-										<div class="form_grid_5 alpha">
-											<input name="section_name" type="text"/>
-											<span class=" label_intro">Section name</span>
-										</div>
-									
-										<span class="clear"></span>
-									</div>
-
-									
-									<div class="form_input">
-
-										<span class="clear"></span>
-									</div>
-								</div>
-								</li>
-                                
-                                
-                                
-								<li>
-								<div class="form_grid_12">
-									<div class="form_input">
-										
-										<button type="submit" class="btn_small btn_blue" name="submit"><span>Save</span></button>
-										
-										<a href="section.php"><button type="button" class="btn_small btn_orange"><span>Back</span></button></a>
-										
-									</div>
-								</div>
-								</li>
-							</ul>
-						</form>
-				</div>
-			</div>
-			
-			
-			<span class="clear"></span>
-			
-			
-			
-		</div>
-		<span class="clear"></span>
-	</div>
+                                        <input name="section_name" type="text" style="width:100%" placeholder="e.g. Section A" required>
+                                    </div>
+                                </div>
+                            </li>
+                            <li>
+                                <div class="form_grid_12">
+                                    <div class="form_input">
+                                        <button type="submit" name="submit" class="btn_small btn_blue"><span>Save Section</span></button>
+                                        <a href="section.php" class="btn_small btn_orange"><span>Cancel</span></a>
+                                    </div>
+                                </div>
+                            </li>
+                        </ul>
+                    </form>
+                </div>
+            </div>
+        </div>
+    </div>
 </div>
-<?php include_once("includes/footer.php");?>
+<?php include_once("includes/footer.php"); ?>

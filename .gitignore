@@ -1,1 +1,12 @@
 docs/
+# Ignore sensitive config files
+includes/config.php
+config/config.inc.php
+
+# Ignore temporary files and logs
+*.log
+.DS_Store
+thumbs.db
+
+# Ignore session data
+/var/lib/php/sessions/*

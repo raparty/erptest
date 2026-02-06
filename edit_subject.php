@@ -1,105 +1,28 @@
 <?php
-
 declare(strict_types=1);
-include_once("includes/header.php");?>
-<?php include_once("includes/sidebar.php"); ?>
-<?php 
-if(isset($_POST['submit']))
-{
-	$subject_name = $_POST['subject_name'];
-	
-	
-		
-	  $sql3="UPDATE subject SET subject_name='".$subject_name."'  where subject_id='".$_GET['sid']."'";
-	$res3=db_query($sql3) or die("Error : " . db_error());
-	header("Location:subject.php?msg=3");
+require_once("includes/bootstrap.php");
+$sid = (int)($_GET['sid'] ?? 0);
+$row2 = db_fetch_array(db_query("SELECT * FROM subjects WHERE id = '$sid'"));
+
+if (isset($_POST['submit'])) {
+    $subject_name = db_escape(trim($_POST['subject_name']));
+    db_query("UPDATE subjects SET subject_name = '$subject_name' WHERE id = '$sid'");
+    header("Location: subject.php?msg=3");
+    exit;
 }
-
-	
-		
-	$sql2="SELECT * FROM subject WHERE `subject_id` = '" . $_GET['sid'] . "';";
-	$res2=db_query($sql2);	
-	$row2=db_fetch_array($res2);
-		
-  ?>
-<div class="page_title">
-	<!--	<span class="title_icon"><span class="computer_imac"></span></span>
-		<h3>Dashboard</h3>-->
-		<div class="top_search">
-			<form action="#" method="post">
-				<ul id="search_box">
-					<li>
-					<input name="" type="text" class="search_input" id="suggest1" placeholder="Search...">
-					</li>
-					<li>
-					<input name="" type="submit" value="Search" class="search_btn">
-					</li>
-				</ul>
-			</form>
-		</div>
-	</div>
-<?php include_once("includes/school_setting_sidebar.php");?>
-
-<div id="container">
-	
-	
-	
-	<div id="content">
-		<div class="grid_container">
-
-          
-			<div class="grid_12">
-				<div class="widget_wrap">
-					<h3 style="padding-left:20px; color:#1c75bc">Edit Subject </h3>
-                    
-                    <?php if($msg!=""){echo $msg; } ?>
-					<form action="" method="post" class="form_container left_label" enctype="multipart/form-data">
-							<ul>
-								
-                                
-                                
-                                <li>
-								<div class="form_grid_12 multiline">
-									<label class="field_title"> Subject  Name</label>
-                                    <div class="form_input">
-										<div class="form_grid_5 alpha">
-											<input name="subject_name" type="text" value="<?php echo $row2['subject_name']; ?>"/>
-											<span class=" label_intro">Stream name</span>
-										</div>
-									
-										<span class="clear"></span>
-									</div>
-
-									
-									<div class="form_input">
-
-										<span class="clear"></span>
-									</div>
-								</div>
-								</li>
-								<li>
-								<div class="form_grid_12">
-									<div class="form_input">
-										
-										<button type="submit" class="btn_small btn_blue" name="submit"><span>Save</span></button>
-										
-										<a href="subject.php"><button type="button" class="btn_small btn_orange"><span>Back</span></button></a>
-										
-									</div>
-								</div>
-								</li>
-							</ul>
-						</form>
-				</div>
-			</div>
-			
-			
-			<span class="clear"></span>
-			
-			
-			
-		</div>
-		<span class="clear"></span>
-	</div>
-</div>
-<?php include_once("includes/footer.php");?>
+include_once("includes/header.php");
+include_once("includes/sidebar.php");
+include_once("includes/school_setting_sidebar.php");
+?>
+<div id="container"><div id="content"><div class="grid_container"><div class="grid_12"><div class="widget_wrap">
+    <h3 style="padding:20px; color:#1c75bc">Edit Subject</h3>
+    <form action="edit_subject.php?sid=<?php echo $sid; ?>" method="post" class="form_container left_label">
+        <ul>
+            <li><label class="field_title">Subject Name</label>
+                <div class="form_input"><input name="subject_name" type="text" value="<?php echo htmlspecialchars($row2['subject_name']); ?>" required style="width:100%"></div>
+            </li>
+            <li><div class="form_input"><button type="submit" name="submit" class="btn_small btn_blue"><span>Update</span></button></div></li>
+        </ul>
+    </form>
+</div></div></div></div></div>
+<?php include_once("includes/footer.php"); ?>

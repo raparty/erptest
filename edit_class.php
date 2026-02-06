@@ -1,158 +1,85 @@
 <?php
-
 declare(strict_types=1);
-include_once("includes/header.php");?>
-<?php include_once("includes/sidebar.php"); ?>
-<?php 
-if(isset($_POST['submit']))
-{
-	$class_name = $_POST['class_name'];
-	$stream_status=$_POST['stream_status'];
-		
-		$sql1="SELECT * FROM class where class_name='".$class_name."' and class_id!='".$_GET['sid']."'";
-	$res1=db_query($sql1) or die("Error : " . db_error());
-	$num=db_num_rows($res1);
-	if($num==0)
-	{
-	  $sql3="UPDATE class SET `class_name` = '".$class_name."',stream_status='".$stream_status."'  where class_id='".$_GET['sid']."'";
-	$res3=db_query($sql3) or die("Error : " . db_error());
-	header("Location:class.php?msg=3");
-	}else
-	{
-		header("Location:edit_class.php?error=2&&sid=".$_GET['sid']);
-	}
+require_once("includes/bootstrap.php");
+
+$sid = (int)($_GET['sid'] ?? 0);
+$msg = "";
+
+// Fetch current class data
+$sql2 = "SELECT * FROM classes WHERE id = '$sid'";
+$res2 = db_query($sql2);
+$row2 = db_fetch_array($res2);
+
+if (!$row2) {
+    header("Location: class.php");
+    exit;
 }
 
-	$msg = "";
-	if(isset($_GET['error']) && $_GET['error']==2)
-	{
-		$msg = "<span style='color:#FF0000;'><h4>Class Detail Already Exists  </h4></span>";
-	}
-		
-	if(isset($_GET['sid'])) {
-		$sql2="SELECT * FROM class WHERE `class_id` = '" . $_GET['sid'] . "';";
-		$res2=db_query($sql2);	
-		$row2=db_fetch_array($res2);
-	} else {
-		header("Location:class.php");
-		exit();
-	}
-		
-  ?>
-<div class="page_title">
-	<!--	<span class="title_icon"><span class="computer_imac"></span></span>
-		<h3>Dashboard</h3>-->
-		<div class="top_search">
-			<form action="#" method="post">
-				<ul id="search_box">
-					<li>
-					<input name="" type="text" class="search_input" id="suggest1" placeholder="Search...">
-					</li>
-					<li>
-					<input name="" type="submit" value="Search" class="search_btn">
-					</li>
-				</ul>
-			</form>
-		</div>
-	</div>
-<?php include_once("includes/school_setting_sidebar.php");?>
+if (isset($_POST['submit'])) {
+    $class_name = db_escape(trim($_POST['class_name']));
+    $stream_status = (int)$_POST['stream_status'];
+
+    // Check for duplicates excluding current record
+    $check = db_query("SELECT id FROM classes WHERE class_name = '$class_name' AND id != '$sid'");
+    if (db_num_rows($check) == 0) {
+        $sql3 = "UPDATE classes SET class_name = '$class_name', stream_status = '$stream_status' WHERE id = '$sid'";
+        db_query($sql3);
+        header("Location: class.php?msg=3");
+        exit;
+    } else {
+        header("Location: edit_class.php?error=2&sid=$sid");
+        exit;
+    }
+}
+
+if (isset($_GET['error']) && $_GET['error'] == 2) {
+    $msg = "<span style='color:#FF0000;'><h4>Class Name Already Exists</h4></span>";
+}
+
+include_once("includes/header.php");
+include_once("includes/sidebar.php");
+include_once("includes/school_setting_sidebar.php");
+?>
 
 <div id="container">
-	
-	
-	
-	<div id="content">
-		<div class="grid_container">
-
-          
-			<div class="grid_12">
-				<div class="widget_wrap">
-					<h3 style="padding-left:20px; color:#1c75bc">Edit Class name</h3>
-                    
-                    <?php if($msg!=""){echo $msg; } ?>
-					<form action="" method="post" class="form_container left_label" enctype="multipart/form-data">
-							<ul>
-								<li>
-								<div class="form_grid_12 multiline">
-									<label class="field_title"> Class Name</label>
+    <div id="content">
+        <div class="grid_container">
+            <div class="grid_12">
+                <div class="widget_wrap">
+                    <h3 style="padding:20px; color:#1c75bc">Edit Class Details</h3>
+                    <?php if($msg != "") echo "<div style='padding-left:20px;'>$msg</div>"; ?>
+                    <form action="edit_class.php?sid=<?php echo $sid; ?>" method="post" class="form_container left_label">
+                        <ul>
+                            <li>
+                                <div class="form_grid_12">
+                                    <label class="field_title">Class Name</label>
                                     <div class="form_input">
-										<div class="form_grid_5 alpha">
-											<input name="class_name" type="text" value="<?php echo $row2['class_name'];?>"/>
-											<span class=" label_intro">Class name</span>
-										</div>
-									
-										<span class="clear"></span>
-									</div>
-
-									
-									<div class="form_input">
-
-										<span class="clear"></span>
-									</div>
-								</div>
-								</li>
-                                
-                                
-                                <li>
-								<div class="form_grid_12 multiline">
-									<label class="field_title"> Is Stream</label>
+                                        <input name="class_name" type="text" value="<?php echo htmlspecialchars($row2['class_name']); ?>" required style="width:100%">
+                                    </div>
+                                </div>
+                            </li>
+                            <li>
+                                <div class="form_grid_12">
+                                    <label class="field_title">Enable Streams?</label>
                                     <div class="form_input">
-										<div class="form_grid_5 alpha">
-										<?php
-										$yes="";
-										$no="";
-										 if($row2['stream_status']==1){
-											
-											$yes='selected="selected"';
-											}
-											else
-											{
-												$no='selected="selected"';
-												
-												}
-											?>
-                                        	<select name="stream_status" >
-								
-							<option value="1" <?php echo $yes;?>>Yes</option>
-                            <option value="0" <?php echo $no;?>>No</option>
-							</select>
-											<span class=" label_intro">Is stream?</span>
-										</div>
-									
-										<span class="clear"></span>
-									</div>
-
-									
-									<div class="form_input">
-
-										<span class="clear"></span>
-									</div>
-								</div>
-								</li>
-                                
-								<li>
-								<div class="form_grid_12">
-									<div class="form_input">
-										
-										<button type="submit" class="btn_small btn_blue" name="submit"><span>Save</span></button>
-										
-										<a href="class.php"><button type="button" class="btn_small btn_orange"><span>Back</span></button></a>
-										
-									</div>
-								</div>
-								</li>
-							</ul>
-						</form>
-				</div>
-			</div>
-			
-			
-			<span class="clear"></span>
-			
-			
-			
-		</div>
-		<span class="clear"></span>
-	</div>
+                                        <select name="stream_status">
+                                            <option value="1" <?php if($row2['stream_status'] == 1) echo 'selected'; ?>>Yes</option>
+                                            <option value="0" <?php if($row2['stream_status'] == 0) echo 'selected'; ?>>No</option>
+                                        </select>
+                                    </div>
+                                </div>
+                            </li>
+                            <li>
+                                <div class="form_input">
+                                    <button type="submit" name="submit" class="btn_small btn_blue"><span>Update Class</span></button>
+                                    <a href="class.php" class="btn_small btn_orange"><span>Cancel</span></a>
+                                </div>
+                            </li>
+                        </ul>
+                    </form>
+                </div>
+            </div>
+        </div>
+    </div>
 </div>
-<?php include_once("includes/footer.php");?>
+<?php include_once("includes/footer.php"); ?>

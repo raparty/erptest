@@ -1,118 +1,33 @@
 <?php
-
 declare(strict_types=1);
-include_once("includes/header.php");?>
-<?php include_once("includes/sidebar.php"); ?>
-<?php 
-if(isset($_POST['submit']))
-{
-	$section_name = $_POST['section_name'];
-	//$stream_status=$_POST['stream_status'];
-		 $sql1="SELECT * FROM section where section_name='".$section_name."' and section_id!='".$_GET['sid']."'";
-	$res1=db_query($sql1) or die("Error : " . db_error());
-	$num=db_num_rows($res1);
-	if($num==0)
-	{
-	  $sql3="UPDATE section SET `section_name` = '".$section_name."' where section_id='".$_GET['sid']."'";
-	$res3=db_query($sql3) or die("Error : " . db_error());
-	header("Location:section.php?msg=3");
-	}else
-	{
-		header("Location:edit_section.php?error=2&&sid=".$_GET['sid']);
-	}
+require_once("includes/bootstrap.php");
+$sid = (int)($_GET['sid'] ?? 0);
+
+$row2 = db_fetch_array(db_query("SELECT * FROM sections WHERE id = '$sid'"));
+if (!$row2) { header("Location: section.php"); exit; }
+
+if (isset($_POST['submit'])) {
+    $section_name = db_escape(trim($_POST['section_name']));
+    $check = db_query("SELECT id FROM sections WHERE section_name = '$section_name' AND id != '$sid'");
+    if (db_num_rows($check) == 0) {
+        db_query("UPDATE sections SET section_name = '$section_name' WHERE id = '$sid'");
+        header("Location: section.php?msg=3");
+        exit;
+    }
 }
-
-	
-	
-	if($_GET['error']==2)
-	{
-		$msg = "<span style='color:#FF0000;'><h4> Section Detail Already Exists  </h4></span>";
-	}
-		
-	$sql2="SELECT * FROM section WHERE `section_id` = '" . $_GET['sid'] . "';";
-	$res2=db_query($sql2);	
-	$row2=db_fetch_array($res2);
-		
-  ?>
-<div class="page_title">
-	<!--	<span class="title_icon"><span class="computer_imac"></span></span>
-		<h3>Dashboard</h3>-->
-		<div class="top_search">
-			<form action="#" method="post">
-				<ul id="search_box">
-					<li>
-					<input name="" type="text" class="search_input" id="suggest1" placeholder="Search...">
-					</li>
-					<li>
-					<input name="" type="submit" value="Search" class="search_btn">
-					</li>
-				</ul>
-			</form>
-		</div>
-	</div>
-<?php include_once("includes/school_setting_sidebar.php");?>
-
-<div id="container">
-	
-	
-	
-	<div id="content">
-		<div class="grid_container">
-
-          
-			<div class="grid_12">
-				<div class="widget_wrap">
-					<h3 style="padding-left:20px; color:#1c75bc">Edit section name</h3>
-                    
-                    <?php if($msg!=""){echo $msg; } ?>
-					<form action="" method="post" class="form_container left_label" enctype="multipart/form-data">
-							<ul>
-								<li>
-								<div class="form_grid_12 multiline">
-									<label class="field_title"> Section Name</label>
-                                    <div class="form_input">
-										<div class="form_grid_5 alpha">
-											<input name="section_name" type="text" value="<?php echo $row2['section_name'];?>"/>
-											<span class=" label_intro">section name</span>
-										</div>
-									
-										<span class="clear"></span>
-									</div>
-
-									
-									<div class="form_input">
-
-										<span class="clear"></span>
-									</div>
-								</div>
-								</li>
-                                
-                                
-                                
-                                
-								<li>
-								<div class="form_grid_12">
-									<div class="form_input">
-										
-										<button type="submit" class="btn_small btn_blue" name="submit"><span>Save</span></button>
-										
-										<a href="section.php"><button type="button" class="btn_small btn_orange"><span>Back</span></button></a>
-										
-									</div>
-								</div>
-								</li>
-							</ul>
-						</form>
-				</div>
-			</div>
-			
-			
-			<span class="clear"></span>
-			
-			
-			
-		</div>
-		<span class="clear"></span>
-	</div>
-</div>
-<?php include_once("includes/footer.php");?>
+include_once("includes/header.php");
+include_once("includes/sidebar.php");
+include_once("includes/school_setting_sidebar.php");
+?>
+<div id="container"><div id="content"><div class="grid_container"><div class="grid_12"><div class="widget_wrap">
+    <h3 style="padding:20px; color:#1c75bc">Edit Section</h3>
+    <form action="edit_section.php?sid=<?php echo $sid; ?>" method="post" class="form_container left_label">
+        <ul>
+            <li><label class="field_title">Section Name</label>
+                <div class="form_input"><input name="section_name" type="text" value="<?php echo htmlspecialchars($row2['section_name']); ?>" required style="width:100%"></div>
+            </li>
+            <li><div class="form_input"><button type="submit" name="submit" class="btn_small btn_blue"><span>Update</span></button></div></li>
+        </ul>
+    </form>
+</div></div></div></div></div>
+<?php include_once("includes/footer.php"); ?>
