@@ -8,10 +8,14 @@
         <a class="nav-link" href="student_tc.php">Transfer Certificates</a>
         <div class="nav-section">Academics</div>
         <a class="nav-link" href="school_setting.php">School Settings</a>
+        <a class="nav-link" href="school_detail.php">School Details</a>
         <a class="nav-link" href="class.php">Classes</a>
         <a class="nav-link" href="section.php">Sections</a>
         <a class="nav-link" href="stream.php">Streams</a>
         <a class="nav-link" href="subject.php">Subjects</a>
+        <a class="nav-link" href="allocate_section.php">Allocate Sections</a>
+        <a class="nav-link" href="allocate_stream.php">Allocate Streams</a>
+        <a class="nav-link" href="allocate_subject.php">Allocate Subjects</a>
         <div class="nav-section">Fees & Accounts</div>
         <a class="nav-link" href="fees_setting.php">Fees Settings</a>
         <a class="nav-link" href="fees_manager.php">Fees Manager</a>
