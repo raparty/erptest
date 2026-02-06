@@ -1,4 +1,5 @@
     </div>
+    </div>
     <footer class="app-footer">
         <div class="container-fluid d-flex flex-wrap justify-content-between align-items-center py-3">
             <div>© <?php echo date('Y'); ?> School ERP. All rights reserved.</div>

@@ -3,8 +3,8 @@
 declare(strict_types=1);
 
 // Enforce modern PHP environment
-if (version_compare(PHP_VERSION, '8.4.0', '<')) {
-    throw new RuntimeException('School ERP requires PHP 8.4 or newer.');
+if (version_compare(PHP_VERSION, '8.3.0', '<')) {
+    throw new RuntimeException('School ERP requires PHP 8.3 or newer.');
 }
 
 $config = require __DIR__ . '/config.php';
@@ -43,7 +43,13 @@ if (session_status() !== PHP_SESSION_ACTIVE) {
 
 // Load and initialize database
 require_once __DIR__ . '/database.php';
-Database::init($config['db']);
+try {
+    Database::init($config['db']);
+} catch (RuntimeException $e) {
+    // Store error in session for display on login page or error handler
+    $_SESSION['db_error'] = $e->getMessage();
+    // Don't crash the application - let pages handle missing database gracefully
+}
 
 /**
  * Access application configuration values

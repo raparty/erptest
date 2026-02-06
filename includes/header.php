@@ -5,7 +5,12 @@ declare(strict_types=1);
 require_once __DIR__ . '/bootstrap.php';
 
 $appName = app_config('name', 'School ERP');
-$mysqlServerInfo = Database::connection()->server_info;
+$mysqlServerInfo = 'N/A';
+try {
+    $mysqlServerInfo = Database::connection()->server_info;
+} catch (RuntimeException $e) {
+    // Database not connected
+}
 $mysqlServerInfoSafe = htmlspecialchars($mysqlServerInfo, ENT_QUOTES, 'UTF-8');
 ?>
 <!DOCTYPE html>

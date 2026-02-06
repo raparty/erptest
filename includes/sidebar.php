@@ -24,3 +24,4 @@
         <a class="nav-link" href="staff_setting.php">Staff</a>
     </nav>
 </aside>
+<div class="app-content">
