@@ -53,6 +53,9 @@ $mysqlServerInfoSafe = htmlspecialchars($mysqlServerInfo, ENT_QUOTES, 'UTF-8');
                     <span class="badge bg-primary">Active</span>
                     <span class="ms-2">Welcome<?php echo isset($_SESSION['username']) ? ', ' . htmlspecialchars($_SESSION['username'], ENT_QUOTES, 'UTF-8') : ''; ?></span>
                 </div>
+                <a href="change_password.php" class="btn btn-outline-secondary btn-sm" title="Change Password">
+                    <span>Change Password</span>
+                </a>
                 <a href="logout.php" class="btn btn-outline-danger btn-sm" title="Logout">
                     <span>Logout</span>
                 </a>

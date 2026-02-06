@@ -18,6 +18,7 @@ include_once("includes/header.php");?>
 			</form>
 		</div>
 	</div>
+	<?php include_once("includes/staff_setting_sidebar.php");?>
 
 	<div id="container">
 	
@@ -26,34 +27,10 @@ include_once("includes/header.php");?>
 			<div class="grid_12 full_block">
 				<div class="widget_wrap">
 					<div class="widget_content">
-                    <div class="switch_bar">
-		<ul>
-			
-			
-            
-          
-			<li><a href="view_staff_department.php"><span class="stats_icon administrative_docs_sl"></span><span class="label">Department </span></a></li>
-          
-           <li><a href="view_staff_category.php"><span class="stats_icon administrative_docs_sl"></span><span class="label">Category </span></a></li>
-          
-          <li><a href="view_staff_qualification.php"><span class="stats_icon administrative_docs_sl"></span><span class="label">Qualification </span></a></li>
-          
-            <li ><a href="view_staff_position.php"><span class="stats_icon archives_sl"></span><span class="label">Position </span></a>
-			
-			</li>
-           
-             
-			
-				<li><a href="view_staff.php"><span class="stats_icon administrative_docs_sl"></span><span class="label">Staff Manager</span></a></li>		
-            
-			</ul>
-	</div>
-						
+						<h2 style="padding:20px; text-align:center;">Staff Settings Dashboard</h2>
 					</div>
-                   
 				</div>
 			</div>
-			 
 		</div>
        <h1>&nbsp;</h1>
 		  <h6 align="center" >Copyright © 2013 </h6>
