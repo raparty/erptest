@@ -8,6 +8,15 @@
     padding: 16px 20px;
     border-radius: var(--app-radius);
     box-shadow: var(--app-shadow);
+    gap: 16px;
+    flex-wrap: wrap;
+}
+
+@media (max-width: 768px) {
+    .page_title {
+        flex-direction: column;
+        align-items: stretch;
+    }
 }
 
 .page_title h3 {
@@ -36,6 +45,18 @@
     border-radius: 10px;
     width: 40px;
     height: 40px;
+    cursor: pointer;
+    transition: all 0.2s ease;
+}
+
+.top_search .search_btn:hover {
+    background: var(--app-primary-dark);
+    transform: scale(1.05);
+}
+
+.top_search .search_btn:focus-visible {
+    outline: 2px solid var(--app-primary);
+    outline-offset: 2px;
 }
 
 #container,
@@ -91,6 +112,20 @@
     border: none;
     padding: 10px 16px;
     border-radius: 10px;
+    cursor: pointer;
+    transition: all 0.2s ease;
+}
+
+.form_container .submit_button:hover,
+.form_container input[type='submit']:hover {
+    background: var(--app-primary-dark);
+    transform: translateY(-1px);
+}
+
+.form_container .submit_button:focus-visible,
+.form_container input[type='submit']:focus-visible {
+    outline: 2px solid var(--app-primary);
+    outline-offset: 2px;
 }
 
 .table,
@@ -115,4 +150,20 @@
 #header,
 #left_bar {
     display: none;
+}
+
+@media (prefers-reduced-motion: reduce) {
+    *,
+    *::before,
+    *::after {
+        animation-duration: 0.01ms !important;
+        animation-iteration-count: 1 !important;
+        transition-duration: 0.01ms !important;
+    }
+}
+
+@supports (backdrop-filter: blur(10px)) {
+    .widget_wrap {
+        backdrop-filter: blur(10px);
+    }
 }
