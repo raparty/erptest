@@ -2,12 +2,14 @@
 
 declare(strict_types=1);
 
+// Enforce modern PHP environment
 if (version_compare(PHP_VERSION, '8.4.0', '<')) {
     throw new RuntimeException('School ERP requires PHP 8.4 or newer.');
 }
 
 $config = require __DIR__ . '/config.php';
 
+// Set secure response headers
 if (!headers_sent()) {
     header('X-Frame-Options: SAMEORIGIN');
     header('X-Content-Type-Options: nosniff');
@@ -16,6 +18,7 @@ if (!headers_sent()) {
 
 date_default_timezone_set($config['app']['timezone']);
 
+// Configure secure session handling
 ini_set('session.cookie_httponly', $config['session']['httponly'] ? '1' : '0');
 ini_set('session.use_only_cookies', '1');
 ini_set('session.use_strict_mode', '1');
@@ -33,13 +36,18 @@ session_set_cookie_params([
     'httponly' => $config['session']['httponly'],
     'samesite' => $config['session']['samesite'],
 ]);
+
 if (session_status() !== PHP_SESSION_ACTIVE) {
     session_start();
 }
 
+// Load and initialize database
 require_once __DIR__ . '/database.php';
 Database::init($config['db']);
 
+/**
+ * Access application configuration values
+ */
 function app_config(string $key, mixed $default = null): mixed
 {
     static $configCache = null;

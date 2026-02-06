@@ -12,8 +12,7 @@ final class Database
 
     /**
      * Initialize the database connection
-     * 
-     * @param array $config Database configuration
+     * * @param array $config Database configuration
      * @throws RuntimeException If connection fails
      */
     public static function init(array $config): void
@@ -50,6 +49,7 @@ final class Database
         if (stripos($serverInfo, 'mariadb') === false) {
             if (preg_match('/\d+(?:\.\d+){1,2}/', $serverInfo, $matches)) {
                 $serverVersion = $matches[0];
+                // Now passes because you upgraded to MySQL 8.4.8
                 if (version_compare($serverVersion, '8.4.0', '<')) {
                     throw new RuntimeException('MySQL 8.4 or newer is required. Detected: ' . $serverVersion);
                 }
@@ -61,24 +61,17 @@ final class Database
 
     /**
      * Get the mysqli connection instance
-     * 
-     * @return mysqli
-     * @throws RuntimeException If connection not initialized
      */
     public static function connection(): mysqli
     {
         if (!self::$connection instanceof mysqli) {
             throw new RuntimeException('Database connection has not been initialized.');
         }
-
         return self::$connection;
     }
 
     /**
      * Execute a query and return the result
-     * 
-     * @param string $query SQL query
-     * @return mysqli_result|bool
      */
     public static function query(string $query): mysqli_result|bool
     {
@@ -87,115 +80,40 @@ final class Database
 
     /**
      * Escape a string for safe use in SQL queries
-     * 
-     * @param string $value Value to escape
-     * @return string Escaped value
      */
     public static function escape(string $value): string
     {
         return self::connection()->real_escape_string($value);
     }
 
-    /**
-     * Get the number of rows in a result set
-     * 
-     * @param mysqli_result|bool $result Result from query
-     * @return int Number of rows
-     */
     public static function num_rows(mysqli_result|bool $result): int
     {
         return $result instanceof mysqli_result ? $result->num_rows : 0;
     }
 
-    /**
-     * Fetch a result row as an associative array, numeric array, or both
-     * 
-     * @param mysqli_result|bool $result Result from query
-     * @param int $mode Fetch mode (MYSQLI_ASSOC, MYSQLI_NUM, MYSQLI_BOTH)
-     * @return array|null
-     */
     public static function fetch_array(mysqli_result|bool $result, int $mode = MYSQLI_BOTH): ?array
     {
-        if (!$result instanceof mysqli_result) {
-            return null;
-        }
+        if (!$result instanceof mysqli_result) { return null; }
         return $result->fetch_array($mode);
     }
 
-    /**
-     * Fetch a result row as an associative array
-     * 
-     * @param mysqli_result|bool $result Result from query
-     * @return array|null
-     */
     public static function fetch_assoc(mysqli_result|bool $result): ?array
     {
-        if (!$result instanceof mysqli_result) {
-            return null;
-        }
+        if (!$result instanceof mysqli_result) { return null; }
         return $result->fetch_assoc();
     }
 
-    /**
-     * Fetch a result row as a numeric array
-     * 
-     * @param mysqli_result|bool $result Result from query
-     * @return array|null
-     */
     public static function fetch_row(mysqli_result|bool $result): ?array
     {
-        if (!$result instanceof mysqli_result) {
-            return null;
-        }
+        if (!$result instanceof mysqli_result) { return null; }
         return $result->fetch_row();
     }
 
-    /**
-     * Get the last error message
-     * 
-     * @return string Error message
-     */
-    public static function error(): string
-    {
-        return self::connection()->error;
-    }
+    public static function error(): string { return self::connection()->error; }
+    public static function errno(): int { return self::connection()->errno; }
+    public static function affected_rows(): int { return self::connection()->affected_rows; }
+    public static function insert_id(): int { return self::connection()->insert_id; }
 
-    /**
-     * Get the last error number
-     * 
-     * @return int Error number
-     */
-    public static function errno(): int
-    {
-        return self::connection()->errno;
-    }
-
-    /**
-     * Get the number of affected rows from the last query
-     * 
-     * @return int Number of affected rows
-     */
-    public static function affected_rows(): int
-    {
-        return self::connection()->affected_rows;
-    }
-
-    /**
-     * Get the ID generated from the last INSERT query
-     * 
-     * @return int Insert ID
-     */
-    public static function insert_id(): int
-    {
-        return self::connection()->insert_id;
-    }
-
-    /**
-     * Free result memory
-     * 
-     * @param mysqli_result|bool $result Result to free
-     * @return bool Success
-     */
     public static function free_result(mysqli_result|bool $result): bool
     {
         if ($result instanceof mysqli_result) {
@@ -205,11 +123,6 @@ final class Database
         return false;
     }
 
-    /**
-     * Close the database connection
-     * 
-     * @return bool Success
-     */
     public static function close(): bool
     {
         if (self::$connection instanceof mysqli) {
@@ -220,62 +133,15 @@ final class Database
 }
 
 // Helper functions for easier migration
-function db_query(string $query): mysqli_result|bool
-{
-    return Database::query($query);
-}
-
-function db_escape(string $value): string
-{
-    return Database::escape($value);
-}
-
-function db_num_rows(mysqli_result|bool $result): int
-{
-    return Database::num_rows($result);
-}
-
-function db_fetch_array(mysqli_result|bool $result, int $mode = MYSQLI_BOTH): ?array
-{
-    return Database::fetch_array($result, $mode);
-}
-
-function db_fetch_assoc(mysqli_result|bool $result): ?array
-{
-    return Database::fetch_assoc($result);
-}
-
-function db_fetch_row(mysqli_result|bool $result): ?array
-{
-    return Database::fetch_row($result);
-}
-
-function db_error(): string
-{
-    return Database::error();
-}
-
-function db_errno(): int
-{
-    return Database::errno();
-}
-
-function db_affected_rows(): int
-{
-    return Database::affected_rows();
-}
-
-function db_insert_id(): int
-{
-    return Database::insert_id();
-}
-
-function db_free_result(mysqli_result|bool $result): bool
-{
-    return Database::free_result($result);
-}
-
-function db_connection(): mysqli
-{
-    return Database::connection();
-}
+function db_query(string $query): mysqli_result|bool { return Database::query($query); }
+function db_escape(string $value): string { return Database::escape($value); }
+function db_num_rows(mysqli_result|bool $result): int { return Database::num_rows($result); }
+function db_fetch_array(mysqli_result|bool $result, int $mode = MYSQLI_BOTH): ?array { return Database::fetch_array($result, $mode); }
+function db_fetch_assoc(mysqli_result|bool $result): ?array { return Database::fetch_assoc($result); }
+function db_fetch_row(mysqli_result|bool $result): ?array { return Database::fetch_row($result); }
+function db_error(): string { return Database::error(); }
+function db_errno(): int { return Database::errno(); }
+function db_affected_rows(): int { return Database::affected_rows(); }
+function db_insert_id(): int { return Database::insert_id(); }
+function db_free_result(mysqli_result|bool $result): bool { return Database::free_result($result); }
+function db_connection(): mysqli { return Database::connection(); }

@@ -12,9 +12,9 @@ return [
     'db' => [
         'host' => getenv('ERP_DB_HOST') ?: '127.0.0.1',
         'port' => (int) (getenv('ERP_DB_PORT') ?: 3306),
-        'name' => getenv('ERP_DB_NAME') ?: 'school_erp',
-        'user' => getenv('ERP_DB_USER') ?: 'root',
-        'pass' => getenv('ERP_DB_PASS') ?: '',
+        'name' => getenv('ERP_DB_NAME') ?: 'school_erp_db',
+        'user' => getenv('ERP_DB_USER') ?: 'erp_admin',
+        'pass' => getenv('ERP_DB_PASS') ?: 'SchoolERP@2026',
         'charset' => 'utf8mb4',
     ],
     'session' => [
