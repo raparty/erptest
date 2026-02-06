@@ -54,28 +54,44 @@ color:#ffffff;
 </style>
 
  <?php
-            	 if($_GET['registration_no']!="")
+            	 if(isset($_GET['registration_no']) && $_GET['registration_no']!="")
 				{
 					$_SESSION['registration_no']=$_GET['registration_no'];
 				}
 				
 				
-				if($_POST['registration_no']!="")
+				if(isset($_POST['registration_no']) && $_POST['registration_no']!="")
 				{
 					$_SESSION['registration_no']=$_POST['registration_no'];
 				}
+				
+				// Check if registration_no is set in session
+				if(!isset($_SESSION['registration_no']) || empty($_SESSION['registration_no'])) {
+					echo '<div style="padding:20px;text-align:center;color:red;font-size:18px;">';
+					echo 'Error: No student registration number provided. Please access this page through <a href="entry_student_tc.php">Student TC Entry</a>.';
+					echo '</div></body></html>';
+					exit;
+				}
+				
 //$registration_no=$_SESSION['registration_no'];
 			  $id=$_SESSION['registration_no'];
-			    $names="select * from student_info where registration_no='".$_SESSION['registration_no']."' and session='".$_SESSION['session']."' ";
-			  if($_SESSION['stream_id']!="")
+			    $names="select * from student_info where registration_no='".db_escape($_SESSION['registration_no'])."' and session='".(isset($_SESSION['session']) ? db_escape($_SESSION['session']) : '')."' ";
+			  if(isset($_SESSION['stream_id']) && $_SESSION['stream_id']!="")
 			  {
-				  $names.="and stream='".$_SESSION['stream_id']."'";
+				  $names.="and stream='".db_escape($_SESSION['stream_id'])."'";
 				  }
 				// echo $names;
 			   $values=db_query($names);
 			   $rows=db_fetch_array($values);
 			   
-			   $ArrOtherDetails=$_POST['other_details'];
+			   if(!$rows) {
+				   echo '<div style="padding:20px;text-align:center;color:red;font-size:18px;">';
+				   echo 'Error: Student record not found. Please go back to <a href="entry_student_tc.php">Student TC Entry</a> and try again.';
+				   echo '</div></body></html>';
+				   exit;
+			   }
+			   
+			   $ArrOtherDetails=isset($_POST['other_details']) ? $_POST['other_details'] : [];
 			   $sql="SELECT * FROM school_detail";
 					$res=db_query($sql);
 				
