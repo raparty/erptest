@@ -53,6 +53,9 @@ $mysqlServerInfoSafe = htmlspecialchars($mysqlServerInfo, ENT_QUOTES, 'UTF-8');
                     <span class="badge bg-primary">Active</span>
                     <span class="ms-2">Welcome<?php echo isset($_SESSION['username']) ? ', ' . htmlspecialchars($_SESSION['username'], ENT_QUOTES, 'UTF-8') : ''; ?></span>
                 </div>
+                <a href="logout.php" class="btn btn-outline-danger btn-sm" title="Logout">
+                    <span>Logout</span>
+                </a>
                 <span class="runtime-badge" data-runtime-badge="true" data-php-version="<?php echo PHP_VERSION; ?>" data-mysql-version="<?php echo $mysqlServerInfoSafe; ?>">
                     PHP <?php echo PHP_VERSION; ?> · MySQL <?php echo $mysqlServerInfoSafe; ?>
                 </span>

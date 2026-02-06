@@ -34,6 +34,9 @@ $appName = 'School ERP';
             <div class="d-flex align-items-center gap-3">
                 <span class="badge bg-success">Demo Mode</span>
                 <span class="ms-2">Welcome, <?php echo htmlspecialchars($_SESSION['username'], ENT_QUOTES, 'UTF-8'); ?></span>
+                <a href="logout.php" class="btn btn-outline-danger btn-sm" title="Logout">
+                    <span>Logout</span>
+                </a>
             </div>
         </div>
     </header>
