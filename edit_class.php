@@ -23,14 +23,20 @@ if(isset($_POST['submit']))
 	}
 }
 
-	if($_GET['error']==2)
+	$msg = "";
+	if(isset($_GET['error']) && $_GET['error']==2)
 	{
 		$msg = "<span style='color:#FF0000;'><h4>Class Detail Already Exists  </h4></span>";
 	}
 		
-	$sql2="SELECT * FROM class WHERE `class_id` = '" . $_GET['sid'] . "';";
-	$res2=db_query($sql2);	
-	$row2=db_fetch_array($res2);
+	if(isset($_GET['sid'])) {
+		$sql2="SELECT * FROM class WHERE `class_id` = '" . $_GET['sid'] . "';";
+		$res2=db_query($sql2);	
+		$row2=db_fetch_array($res2);
+	} else {
+		header("Location:class.php");
+		exit();
+	}
 		
   ?>
 <div class="page_title">
@@ -43,7 +49,7 @@ if(isset($_POST['submit']))
 					<input name="" type="text" class="search_input" id="suggest1" placeholder="Search...">
 					</li>
 					<li>
-					<input name="" type="submit" value="" class="search_btn">
+					<input name="" type="submit" value="Search" class="search_btn">
 					</li>
 				</ul>
 			</form>

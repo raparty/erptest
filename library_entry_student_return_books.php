@@ -79,7 +79,7 @@ else
 					<input name="" type="text" class="search_input" id="suggest1" placeholder="Search...">
 					</li>
 					<li>
-					<input name="" type="submit" value="" class="search_btn">
+					<input name="" type="submit" value="Search" class="search_btn">
 					</li>
 				</ul>
 			</form>
