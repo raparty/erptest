@@ -38,23 +38,23 @@ else
 {
 	if(isset($_GET['msg']) && $_GET['msg']==1)
 	{
-		$msg = "<span style='color:#009900;'><h4> subject Detail Added Successfully </h4></span>";
+		$msg = "<span style='color:#009900;'><h4> Subject Detail Added Successfully </h4></span>";
 	}
 	else if(isset($_GET['msg']) && $_GET['msg']==2)
 	{
-		$msg = "<span style='color:#009900;'><h4>subject Detail Deleted Successfully </h4></span>";
+		$msg = "<span style='color:#009900;'><h4>Subject Detail Deleted Successfully </h4></span>";
 	}
 	else if(isset($_GET['msg']) && $_GET['msg']==3)
 	{
-		$msg = "<span style='color:#009900;'><h4> subject Detail Updated Successfully </h4></span>";
+		$msg = "<span style='color:#009900;'><h4> Subject Detail Updated Successfully </h4></span>";
 	}
 	else if(isset($_GET['error']) && $_GET['error']==1)
 	{
-		$msg = "<span style='color:#FF0000;'><h4> subject Detail Already Exists </h4></span>";
+		$msg = "<span style='color:#FF0000;'><h4> Subject Detail Already Exists </h4></span>";
 	}
 	else if(isset($_GET['error']) && $_GET['error']==2)
 	{
-		$msg = "<span style='color:#FF0000;'><h4> Please fill all detail </h4></span>";
+		$msg = "<span style='color:#FF0000;'><h4> Please fill all details </h4></span>";
 	}
 }
 

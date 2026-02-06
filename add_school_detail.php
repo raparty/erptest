@@ -61,7 +61,7 @@ else
 	}
 	else if(isset($_GET['error']) && $_GET['error']==2)
 	{
-		$msg = "<span style='color:#FF0000;'><h4> Please fill all detail </h4></span>";
+		$msg = "<span style='color:#FF0000;'><h4> Please fill all details </h4></span>";
 	}
 }
 
