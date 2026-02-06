@@ -1,4 +1,7 @@
-<?php include_once("includes/header.php");?>
+<?php
+
+declare(strict_types=1);
+include_once("includes/header.php");?>
 <?php 
 $msgs='';
 if(isset($_POST['submit']))

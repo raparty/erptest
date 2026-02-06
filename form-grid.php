@@ -1,4 +1,7 @@
-<?php include_once("includes/header.php"); ?>
+<?php
+
+declare(strict_types=1);
+include_once("includes/header.php"); ?>
 <?php include_once("includes/sidebar.php"); ?>
 <main class="app-content">
 <div id="left_bar">

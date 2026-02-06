@@ -1,5 +1,7 @@
 <?php
-	/*
+
+declare(strict_types=1);
+/*
 		Place code to connect to your DB here.
 	*/
 	include_once('admin/config/config.inc.php');	// include your code to connect to DB.
