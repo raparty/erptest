@@ -4,7 +4,7 @@ include_once("includes/header.php");?>
 <?php include_once("includes/sidebar.php");?>
 	<div class="page_title">
 		<span class="title_icon"><span class="computer_imac"></span></span>
-		<h3>Dashboard</h3>
+		<h3>Staff Settings</h3>
 		<div class="top_search">
 			<form action="#" method="post">
 				<ul id="search_box">
@@ -26,8 +26,8 @@ include_once("includes/header.php");?>
 		<div class="grid_container">
 			<div class="grid_12 full_block">
 				<div class="widget_wrap">
-					<div class="widget_content">
-						<h2 style="padding:20px; text-align:center;">Staff Settings Dashboard</h2>
+					<div class="widget_content settings-dashboard">
+						<h2>Staff Settings Dashboard</h2>
 					</div>
 				</div>
 			</div>

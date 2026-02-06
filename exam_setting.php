@@ -5,9 +5,9 @@ include_once("includes/header.php");?>
 <?php include_once("includes/sidebar.php"); ?>
 
 <div class="page_title">
-	<!--	<span class="title_icon"><span class="computer_imac"></span></span>
-		<h3>Dashboard</h3>-->
-		<div class="top_search">
+	<span class="title_icon"><span class="computer_imac"></span></span>
+	<h3>Exam Settings</h3>
+	<div class="top_search">
 			<form action="#" method="post">
 				<ul id="search_box">
 					<li>
@@ -32,31 +32,12 @@ include_once("includes/header.php");?>
 		<div class="grid_container">
 			<div class="grid_12 full_block">
 				<div class="widget_wrap">
-					<div class="widget_content">
-                    <div class="switch_bar">
-		<ul>
-			
-			
-            <li><a href="exam_show_maximum_marks.php"><span class="stats_icon administrative_docs_sl"></span><span class="label">Add Exam Marks</span></a></li>
-          
-			<li><a href="exam_time_table_detail.php"><span class="stats_icon administrative_docs_sl"></span><span class="label">Exam Time Table</span></a></li>
-          
-           <li><a href="exam_show_student_marks.php"><span class="stats_icon administrative_docs_sl"></span><span class="label">Student Marks Detail</span></a></li>
-          
-          <li><a href="entry_exam_marksheet.php"><span class="stats_icon administrative_docs_sl"></span><span class="label">Exam Report Detail</span></a></li>
-          
-          
-			
-						
-            
-			</ul>
-	</div>
-						
+					<div class="widget_content settings-dashboard">
+						<h2>Exam Settings Dashboard</h2>
+						<p>Use the navigation above to manage exam marks, time tables, and student reports.</p>
 					</div>
-                   
 				</div>
 			</div>
-			 
 		</div>
        <h1>&nbsp;</h1>
 		  <h6 align="center" >Copyright © 2013 </h6>

@@ -371,3 +371,17 @@ button span,
 span.clear {
     display: block;
 }
+
+/* Settings dashboard styling */
+.settings-dashboard {
+    padding: 20px;
+    text-align: center;
+}
+
+.settings-dashboard h2 {
+    margin-bottom: 12px;
+}
+
+.settings-dashboard p {
+    margin: 0;
+}
