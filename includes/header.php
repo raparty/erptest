@@ -69,9 +69,29 @@ $mysqlServerInfoSafe = htmlspecialchars($mysqlServerInfo, ENT_QUOTES, 'UTF-8');
                 <div style="font-size: 13px; color: var(--fluent-slate-light); text-transform: uppercase; letter-spacing: 0.5px;">Enterprise School Management</div>
             </div>
         </div>
-        <div style="display: flex; align-items: center; gap: 20px;">
+        <div style="display: flex; align-items: center; gap: 15px;">
             <span style="font-size: 13px; color: var(--fluent-slate);">Welcome, <strong style="color: var(--fluent-azure);"><?php echo htmlspecialchars($_SESSION['username'] ?? 'Admin'); ?></strong></span>
-            <a href="logout.php" class="btn btn-sm btn-fluent-primary">Sign Out</a>
+            <button type="button" id="backButton" class="btn-fluent-secondary" title="Go back to previous page">
+                <svg width="16" height="16" viewBox="0 0 24 24" fill="currentColor" style="margin-right: 4px;">
+                    <path d="M20 11H7.83l5.59-5.59L12 4l-8 8 8 8 1.41-1.41L7.83 13H20v-2z"/>
+                </svg>
+                Back
+            </button>
+            <a href="logout.php" class="btn-fluent-primary">Sign Out</a>
         </div>
     </header>
+    <script>
+        // Back button functionality with fallback
+        var backBtn = document.getElementById('backButton');
+        if (backBtn) {
+            backBtn.addEventListener('click', function() {
+                if (window.history.length > 1 && document.referrer) {
+                    window.history.back();
+                } else {
+                    // Fallback to dashboard if no history
+                    window.location.href = 'dashboard.php';
+                }
+            });
+        }
+    </script>
     <div class="app-shell">
