@@ -99,6 +99,7 @@ include_once("includes/sidebar.php");
                             <div class="form_grid_12">
                                 <div class="form_input" style="text-align: right; padding-top: 20px;">
                                     <button type="submit" class="btn_blue">Confirm & Save Admission</button>
+                                    <a href="student_detail.php" class="btn btn-light ms-2">Cancel</a>
                                     <button type="reset" class="btn btn-light ms-2">Clear Form</button>
                                 </div>
                             </div>
