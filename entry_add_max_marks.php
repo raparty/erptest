@@ -91,7 +91,7 @@ xmlhttp.send();
           
 			<div class="grid_12">
 				<div class="widget_wrap" >
-					<h3 style="padding-left:20px; color:#1c75bc">Exam Marks Managment</h3>
+					<h3 style="padding-left:20px; color:#0078D4">Exam Marks Managment</h3>
 				
 				
                 	<form action="exam_add_maximum_marks.php" method="post" class="form_container left_label">

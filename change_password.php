@@ -50,7 +50,7 @@ if(isset($_POST['submit']))
           
 			<div class="grid_12">
 				
-					<h3 style="padding-left:20px; color:#1c75bc; border-bottom:1px solid #e2e2e2;">Change Admin detail</h3>
+					<h3 style="padding-left:20px; color:#0078D4; border-bottom:1px solid #e2e2e2;">Change Admin detail</h3>
                     
                     
                   <?php if($msg!=""){echo $msg; } ?>
@@ -72,7 +72,7 @@ if(isset($_POST['submit']))
                                 
                                 
 <!--------------------------------------------------------------->
-<li style=" border-bottom:1px solid #f2420a;"><h4 style=" color:#f2420a; ">Edit Login Details</h4>     </li>                           
+<li style=" border-bottom:1px solid #F7630C;"><h4 style=" color:#F7630C; ">Edit Login Details</h4>     </li>                           
                                 
                                <li>
 								<div class="form_grid_12 multiline">

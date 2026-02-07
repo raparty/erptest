@@ -56,7 +56,7 @@ $row_max=db_fetch_array($sql_max);
           
 			<div class="grid_12">
 				<div class="widget_wrap" style="min-height:600px;">
-					<h3 style="padding-left:20px; color:#1c75bc">Exam Marks Managment</h3>
+					<h3 style="padding-left:20px; color:#0078D4">Exam Marks Managment</h3>
 				<h3><?php
 				if($msgs!='')
 				{

@@ -34,7 +34,7 @@ include_once("includes/header.php");?>
 			</div>
          
 				
-					<h3 style="padding-left:20px; color:#1c75bc; border-bottom:1px solid #e2e2e2;">Staff Detail</h3>
+					<h3 style="padding-left:20px; color:#0078D4; border-bottom:1px solid #e2e2e2;">Staff Detail</h3>
                     
                     
                

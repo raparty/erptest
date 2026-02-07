@@ -27,7 +27,7 @@ include_once("includes/header.php");?>
 	
 	<div id="content">
 		<div class="grid_container">
-<h3 style="padding-left:20px; color:#1c75bc">Student Fees Detail</h3>
+<h3 style="padding-left:20px; color:#0078D4">Student Fees Detail</h3>
 
           <div class="grid_12">
 
@@ -41,7 +41,7 @@ include_once("includes/header.php");?>
                
           
            
-               <li style=" border-bottom:1px solid #f2420a;"><h4 style=" color:#f2420a; ">Search</h4>     </li>
+               <li style=" border-bottom:1px solid #F7630C;"><h4 style=" color:#F7630C; ">Search</h4>     </li>
                
                
                
@@ -111,7 +111,7 @@ include_once("includes/header.php");?>
 
 
                 </form>
-           <div class="btn_30_blue" style="float:right">
+           <div class="btn_30_blue" class="float-right">
 								<a href="entry_fees_reciept.php"><span style="width:140px"> Student Fees Reciept </span></a>&nbsp;&nbsp;&nbsp;&nbsp;<a href="entry_student_fees.php"><span style="width:140px">Add Student Fees  </span></a>
 			</div>
                             

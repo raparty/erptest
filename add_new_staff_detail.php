@@ -31,7 +31,7 @@ include_once("includes/header.php");?>
           
 			<div class="grid_12">
 				
-					<h3 style="padding-left:20px; color:#1c75bc; border-bottom:1px solid #e2e2e2;">Employee Resistration</h3>
+					<h3 style="padding-left:20px; color:#0078D4; border-bottom:1px solid #e2e2e2;">Employee Resistration</h3>
                   <?php 
 					 include_once('config/config.inc.php');
 					?>
@@ -100,14 +100,14 @@ include_once("includes/header.php");?>
 
     <div class="grid_12">
 
- <div class="btn_30_light" style="float:right">
+ <div class="btn_30_light" class="float-right">
 <a href="#">
 <span class="icon find_co"></span>
 <span class="btn_link">Advance Search</span>
 </a>
 </div>
 
-<div class="btn_30_light" style="float:right">
+<div class="btn_30_light" class="float-right">
 <a href="#">
 <span class="icon database_co"></span>
 <span class="btn_link">View All</span>
@@ -122,7 +122,7 @@ include_once("includes/header.php");?>
 <br>
   
            
-               <li style=" border-bottom:1px solid #f2420a;"><h4 style=" color:#f2420a; ">General Details</h4>     </li>
+               <li style=" border-bottom:1px solid #F7630C;"><h4 style=" color:#F7630C; ">General Details</h4>     </li>
                
                
                <li>
@@ -309,7 +309,7 @@ include_once("includes/header.php");?>
 								</div>
 								</li>
                                 
-                                <li style=" border-bottom:1px solid #f2420a;"><h4 style=" color:#f2420a; ">Personal Details</h4>     </li>
+                                <li style=" border-bottom:1px solid #F7630C;"><h4 style=" color:#F7630C; ">Personal Details</h4>     </li>
                                 <li>
 								<div class="form_grid_12">
 									<label class="field_title">Marrital Status</label>

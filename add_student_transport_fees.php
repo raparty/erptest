@@ -112,7 +112,7 @@ $_SESSION['registration_no']=$_POST['registration_no'];
           
 			<div class="grid_12">
 				<div class="widget_wrap" style="min-height:800px;">
-					<h3 style="padding-left:20px; color:#1c75bc">Add transport student  fees </h3>
+					<h3 style="padding-left:20px; color:#0078D4">Add transport student  fees </h3>
                     
                     <?php if($msg!=""){echo $msg; } ?>
                     

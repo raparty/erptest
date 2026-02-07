@@ -40,7 +40,7 @@ if(isset($_POST['category_type']) && $_POST['category_type']!="")
 
           
 			<div class="grid_12">
-			  <h3 style="padding-left:20px; color:#1c75bc; border-bottom:1px solid #e2e2e2;">Account report  Detail</h3>
+			  <h3 style="padding-left:20px; color:#0078D4; border-bottom:1px solid #e2e2e2;">Account report  Detail</h3>
                     
                     
                
@@ -53,7 +53,7 @@ if(isset($_POST['category_type']) && $_POST['category_type']!="")
                
           
            
-               <li style=" border-bottom:1px solid #f2420a;"><h4 style=" color:#f2420a; ">Search</h4>     </li>
+               <li style=" border-bottom:1px solid #F7630C;"><h4 style=" color:#F7630C; ">Search</h4>     </li>
                
                
                
@@ -113,7 +113,7 @@ if(isset($_POST['category_type']) && $_POST['category_type']!="")
 					
 			
 		  </div>
-            <div class="btn_30_blue" style="float:right">
+            <div class="btn_30_blue" class="float-right">
 								<!--<a href="add_income.php"><span style="width:140px">Add Income</span></a>-->
 							</div>
             <div class="grid_12">

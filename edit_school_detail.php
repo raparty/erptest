@@ -68,7 +68,7 @@ if(isset($_POST['submit']))
           
 			<div class="grid_12">
 				<div class="widget_wrap">
-					<h3 style="padding-left:20px; color:#1c75bc">Edit school name</h3>
+					<h3 style="padding-left:20px; color:#0078D4">Edit school name</h3>
                     
                     <?php if($msg!=""){echo $msg; } ?>
 					<form action="" method="post" class="form_container left_label" enctype="multipart/form-data">

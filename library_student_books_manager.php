@@ -27,13 +27,13 @@ include_once("includes/header.php");?>
 	
 	<div id="content">
 		<div class="grid_container">
-<h3 style="padding-left:20px; color:#1c75bc">Student books Detail</h3>
+<h3 style="padding-left:20px; color:#0078D4">Student books Detail</h3>
 
           <div class="grid_12">
 
  
 
-           <div class="btn_30_blue" style="float:right">
+           <div class="btn_30_blue" class="float-right">
 								<a href="library_entry_add_student_books.php"><span style="width:140px">Add Student Books  </span></a>
 			</div>
                             

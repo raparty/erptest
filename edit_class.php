@@ -46,7 +46,7 @@ include_once("includes/school_setting_sidebar.php");
         <div class="grid_container">
             <div class="grid_12">
                 <div class="widget_wrap">
-                    <h3 style="padding:20px; color:#1c75bc">Edit Class Details</h3>
+                    <h3 style="padding:20px; color:#0078D4">Edit Class Details</h3>
                     <?php if($msg != "") echo "<div style='padding-left:20px;'>$msg</div>"; ?>
                     <form action="edit_class.php?sid=<?php echo $sid; ?>" method="post" class="form_container left_label">
                         <ul>
