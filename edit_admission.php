@@ -206,7 +206,7 @@ include_once("includes/sidebar.php");
                                         <?php 
                                         $current_photo = !empty($row_value['student_pic']) ? $row_value['student_pic'] : 'assets/images/no-photo.png';
                                         ?>
-                                        <img src="<?php echo $current_photo; ?>" alt="Student Photo" 
+                                        <img src="<?php echo htmlspecialchars($current_photo); ?>" alt="Student Photo" 
                                              style="width: 150px; height: 150px; border: 2px solid #e2e8f0; border-radius: 12px; object-fit: cover; margin-bottom: 10px;">
                                     </div>
                                     <input type="file" name="student_pic" class="form-control form-control-sm" accept="image/*">
@@ -258,8 +258,9 @@ include_once("includes/sidebar.php");
                                         mysqli_stmt_execute($stmt_classes);
                                         $classes_result = mysqli_stmt_get_result($stmt_classes);
                                         while($c = mysqli_fetch_assoc($classes_result)) {
-                                            $selected = ($c['id'] == $row_value['class_id']) ? 'selected' : '';
-                                            echo "<option value='".htmlspecialchars($c['id'])."' $selected>".htmlspecialchars($c['class_name'])."</option>";
+                                            $is_selected = ($c['id'] == $row_value['class_id']);
+                                            $selected_attr = $is_selected ? ' selected' : '';
+                                            echo "<option value='".htmlspecialchars((string)$c['id'])."'".$selected_attr.">".htmlspecialchars($c['class_name'])."</option>";
                                         }
                                         mysqli_stmt_close($stmt_classes);
                                         ?>
