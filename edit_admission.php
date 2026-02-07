@@ -128,7 +128,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST' && isset($_POST['submit'])) {
                         past_school_info = ?
                     WHERE id = ?");
             
-            mysqli_stmt_bind_param($stmt, "sssssississsi", 
+            mysqli_stmt_bind_param($stmt, "sssssissssssi", 
                 $student_name, $photo_path, $dob, $gender, $blood_group, 
                 $class_id, $admission_date, $aadhaar_no, $doc_path, 
                 $guardian_name, $guardian_phone, $past_school, $student_id);
@@ -254,11 +254,14 @@ include_once("includes/sidebar.php");
                                     <select name="class_id" class="form-select" required>
                                         <option value="">Select Class</option>
                                         <?php 
-                                        $classes = db_query("SELECT id, class_name FROM classes ORDER BY id ASC");
-                                        while($c = db_fetch_array($classes)) {
+                                        $stmt_classes = mysqli_prepare($conn, "SELECT id, class_name FROM classes ORDER BY id ASC");
+                                        mysqli_stmt_execute($stmt_classes);
+                                        $classes_result = mysqli_stmt_get_result($stmt_classes);
+                                        while($c = mysqli_fetch_assoc($classes_result)) {
                                             $selected = ($c['id'] == $row_value['class_id']) ? 'selected' : '';
-                                            echo "<option value='".$c['id']."' $selected>".$c['class_name']."</option>";
+                                            echo "<option value='".htmlspecialchars($c['id'])."' $selected>".htmlspecialchars($c['class_name'])."</option>";
                                         }
+                                        mysqli_stmt_close($stmt_classes);
                                         ?>
                                     </select>
                                 </div>
