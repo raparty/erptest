@@ -32,7 +32,7 @@ include_once("includes/header.php");?>
 
  
 
-           <div class="btn_30_blue" class="float-right">
+           <div class="btn_30_blue float-right">
 								<a href="add_staff_category.php"><span style="width:140px">Add Category </span></a>
 							</div>
                             

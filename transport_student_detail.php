@@ -125,7 +125,7 @@ db_query("delete from transport_student_detail where transport_id='".$_GET['sid'
 
  
 
-           <div class="btn_30_blue" class="float-right">
+           <div class="btn_30_blue float-right">
 								<a href="entry_transport_add_student.php"><span style="width:140px">Add Student Bus</span></a>
 							</div>
                             

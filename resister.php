@@ -135,14 +135,14 @@ include_once("includes/header.php"); ?>
 
     <div class="grid_12">
 
- <div class="btn_30_light" class="float-right">
+ <div class="btn_30_light float-right">
 <a href="#">
 <span class="icon find_co"></span>
 <span class="btn_link">Advance Search</span>
 </a>
 </div>
 
-<div class="btn_30_light" class="float-right">
+<div class="btn_30_light float-right">
 <a href="#">
 <span class="icon database_co"></span>
 <span class="btn_link">View All</span>

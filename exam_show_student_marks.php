@@ -38,7 +38,7 @@ include_once("includes/header.php");?>
 
  
 
-           <div class="btn_30_blue" class="float-right">
+           <div class="btn_30_blue float-right">
 								<a href="entry_exam_add_student_marks.php"><span style="width:140px">Add Student  Marks </span></a>
 							</div>
                             

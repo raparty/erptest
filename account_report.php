@@ -113,7 +113,7 @@ if(isset($_POST['category_type']) && $_POST['category_type']!="")
 					
 			
 		  </div>
-            <div class="btn_30_blue" class="float-right">
+            <div class="btn_30_blue float-right">
 								<!--<a href="add_income.php"><span style="width:140px">Add Income</span></a>-->
 							</div>
             <div class="grid_12">

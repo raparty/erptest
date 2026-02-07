@@ -111,7 +111,7 @@ include_once("includes/header.php");?>
 
 
                 </form>
-           <div class="btn_30_blue" class="float-right">
+           <div class="btn_30_blue float-right">
 								<a href="add_student_fees.php"><span style="width:140px">Add Student Fees  </span></a>
 			</div>
                             

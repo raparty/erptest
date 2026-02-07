@@ -33,7 +33,7 @@ include_once("includes/header.php");?>
 
  
 
-           <div class="btn_30_blue" class="float-right">
+           <div class="btn_30_blue float-right">
 				<a href="entry_student_fine_detail.php"><span style="width:140px"> Individual Student Fine </span></a>				
 			</div>
                             

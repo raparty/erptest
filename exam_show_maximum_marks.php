@@ -38,7 +38,7 @@ include_once("includes/header.php");?>
 
  
 
-           <div class="btn_30_blue" class="float-right">
+           <div class="btn_30_blue float-right">
 								<a href="entry_add_max_marks.php"><span style="width:140px">Add  Maximum marks </span></a>
 							</div>
                             

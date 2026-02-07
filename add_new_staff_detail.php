@@ -31,7 +31,7 @@ include_once("includes/header.php");?>
           
 			<div class="grid_12">
 				
-					<h3 style="padding-left:20px; color:#0078D4; border-bottom:1px solid #e2e2e2;">Employee Resistration</h3>
+					<h3 style="padding-left:20px; color:#0078D4; border-bottom:1px solid #e2e2e2;">Employee Registration</h3>
                   <?php 
 					 include_once('config/config.inc.php');
 					?>
@@ -100,14 +100,14 @@ include_once("includes/header.php");?>
 
     <div class="grid_12">
 
- <div class="btn_30_light" class="float-right">
+ <div class="btn_30_light float-right">
 <a href="#">
 <span class="icon find_co"></span>
 <span class="btn_link">Advance Search</span>
 </a>
 </div>
 
-<div class="btn_30_light" class="float-right">
+<div class="btn_30_light float-right">
 <a href="#">
 <span class="icon database_co"></span>
 <span class="btn_link">View All</span>

@@ -39,7 +39,7 @@ db_query("delete from transport_add_route where route_id='".$_GET['sid']."'");
 
  
 
-           <div class="btn_30_blue" class="float-right">
+           <div class="btn_30_blue float-right">
 								<a href="transport_add_vechile.php"><span style="width:140px">Add New Vehicle</span></a>
 							</div>
                             

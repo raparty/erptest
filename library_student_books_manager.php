@@ -33,7 +33,7 @@ include_once("includes/header.php");?>
 
  
 
-           <div class="btn_30_blue" class="float-right">
+           <div class="btn_30_blue float-right">
 								<a href="library_entry_add_student_books.php"><span style="width:140px">Add Student Books  </span></a>
 			</div>
                             

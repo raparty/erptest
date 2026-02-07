@@ -85,7 +85,7 @@ include_once("includes/header.php"); ?>
 
  
 
-           <div class="btn_30_blue" class="float-right">
+           <div class="btn_30_blue float-right">
 								<a href="add_sub_category.html"><span style="width:140px">Add New Sub Category </span></a>
 							</div>
                             

@@ -119,7 +119,7 @@ include_once("includes/header.php");?>
 
 
                 </form>
-           <div class="btn_30_blue" class="float-right">
+           <div class="btn_30_blue float-right">
 								
 			</div>
                             
