@@ -92,5 +92,3 @@ $mysqlServerInfoSafe = htmlspecialchars($mysqlServerInfo, ENT_QUOTES, 'UTF-8');
         });
     </script>
     <div class="app-shell">
-    </header>
-    <div class="app-shell">
