@@ -1,563 +1,108 @@
 <?php
 declare(strict_types=1);
-include_once("includes/header.php");?>
-    <div class="page_title">
-	<!--	<span class="title_icon"><span class="computer_imac"></span></span>
-		<h3>Dashboard</h3>-->
-		<div class="top_search">
-			<form action="#" method="post">
-				<ul id="search_box">
-					<li>
-					<input name="" type="text" class="search_input" id="suggest1" placeholder="Search...">
-					</li>
-					<li>
-					<input name="" type="submit" value="Search" class="search_btn">
-					</li>
-				</ul>
-			</form>
-		</div>
-	</div>
+require_once("includes/bootstrap.php");
+include_once("includes/header.php");
+include_once("includes/sidebar.php");
 
-<?php include_once("includes/sidebar.php");?>
+// Fetching from the modernized 'admissions' table
+$student_id = (int)($_GET['student_id'] ?? 0);
+$sql = "SELECT a.*, c.class_name 
+        FROM admissions a 
+        LEFT JOIN classes c ON a.class_id = c.id 
+        WHERE a.id = '$student_id'";
+$row_value = db_fetch_array(db_query($sql));
 
-<?php	
-	$sql10="SELECT * FROM student_info where student_id='".$_GET['student_id']."' ";
-	$row_value=db_fetch_array(db_query($sql10));
+if (!$row_value) {
+    echo "<div class='alert alert-danger'>Student record not found.</div>";
+    exit;
+}
 
+// File Path Logic (The "Drive" mapping)
+$photo_path = !empty($row_value['student_pic']) ? $row_value['student_pic'] : 'assets/images/no-photo.png';
 ?>
+
 <div id="container">
-	
-	
-	
-	<div id="content">
-		<div class="grid_container">
+    <div class="page_title">
+        <span class="title_icon"><span class="user_business_st"></span></span>
+        <h3>Student Profile: <?php echo htmlspecialchars($row_value['student_name']); ?></h3>
+    </div>
 
-          
-			<div class="grid_12">
-				
-					<h3 style="padding-left:20px; color:#1c75bc; border-bottom:1px solid #e2e2e2;">Admission</h3>
+    <div id="content">
+        <div class="grid_container">
+            <div class="grid_4">
+                <div class="widget_wrap enterprise-card text-center" style="padding: 30px 20px;">
+                    <img src="<?php echo $photo_path; ?>" alt="Profile" 
+                         style="width: 150px; height: 150px; border-radius: 15px; border: 4px solid #f1f5f9; object-fit: cover; margin-bottom: 20px;">
+                    <h4 style="color: #1c75bc; margin-bottom: 5px;"><?php echo htmlspecialchars($row_value['student_name']); ?></h4>
+                    <span class="badge bg-primary mb-3"><?php echo htmlspecialchars($row_value['reg_no']); ?></span>
                     
-                    
-                  <?php if($msg!=""){echo $msg; } ?>
-               	<form action="" method="post" class="form_container left_label" enctype="multipart/form-data">
-                                    
+                    <div style="margin-top: 20px; border-top: 1px solid #f1f5f9; padding-top: 20px;">
+                        <a href="edit_admission.php?student_id=<?php echo $student_id; ?>" class="btn_blue w-100 mb-2">Edit Profile</a>
+                        <a href="print_id_card.php?student_id=<?php echo $student_id; ?>" class="btn btn-outline-secondary btn-sm w-100">Print ID Card</a>
+                    </div>
+                </div>
+            </div>
 
-              <ul>
-               
-               
-               
-               
-           
-    <h5 style="padding-left:20px; color: #666;">   Fields marked with<span style="color:#F00"> *</span> must be filled.</h5><br>
-           
-               
-               
-								<li>
-								<div class="form_grid_12 multiline">
-									<label class="field_title" style="width:15%"> S R Number<span style="color:#F00"> *</span>
-</label>
-                                    <div class="form_input" >
-										
-                                        <div class="form_grid_4 alpha"  >
-											<?php echo $row_value['student_admission_no'];?>									
-										</div>
-                                        
-                                        <label class="field_title" style=" margin-left:110px; width:16%">
-Admission Date <span style="color:#F00"> *</span>
-</label>
-                                        <div class="form_grid_4" style="margin-left:-25px;">
-											<?php echo $row_value['addmission_date'];?>
-								</div>
-									
-										<span class="clear"></span>
-									</div>
-                                    
-                                    
-                                    
+            <div class="grid_8">
+                <div class="widget_wrap enterprise-card">
+                    <div class="widget_top">
+                        <h6>Academic & Personal Details</h6>
+                    </div>
+                    <div class="widget_content" style="padding: 25px;">
+                        <div class="row mb-4">
+                            <div class="col-md-6">
+                                <label class="text-muted small fw-bold">DATE OF BIRTH</label>
+                                <p class="fw-medium"><?php echo date('d-M-Y', strtotime($row_value['dob'])); ?></p>
+                            </div>
+                            <div class="col-md-6">
+                                <label class="text-muted small fw-bold">ADMISSION DATE</label>
+                                <p class="fw-medium"><?php echo date('d-M-Y', strtotime($row_value['admission_date'])); ?></p>
+                            </div>
+                        </div>
 
-									
-									
-								</div>
-								</li>
-                                
-                                
-                                
-<!--------------------------------------------------------------->
-<li style=" border-bottom:1px solid #f2420a;"><h4 style=" color:#f2420a; ">Personal Details</h4>     </li>                           
-                                
-                               <li>
-								<div class="form_grid_12 multiline">
-									<label class="field_title"> Roll Number* </label>
-                                    <div class="form_input">
-										<div class="form_grid_5 alpha">
-											<?php echo $row_value['registration_no'];?>
-											
-										</div>
-									
-										<span class="clear"></span>
-									</div>
+                        <div class="row mb-4">
+                            <div class="col-md-6">
+                                <label class="text-muted small fw-bold">CLASS / GRADE</label>
+                                <p class="fw-medium text-primary"><?php echo htmlspecialchars($row_value['class_name'] ?? 'Not Assigned'); ?></p>
+                            </div>
+                            <div class="col-md-6">
+                                <label class="text-muted small fw-bold">GENDER / BLOOD GROUP</label>
+                                <p class="fw-medium"><?php echo $row_value['gender']; ?> (<?php echo $row_value['blood_group'] ?: 'N/A'; ?>)</p>
+                            </div>
+                        </div>
 
-									
-									
-								</div>
-								</li>
-                                
-                                
-                                <li>
-								<div class="form_grid_12 multiline">
-									<label class="field_title"> Name* </label>
-                                    <div class="form_input">
-										<div class="form_grid_5 alpha">
-											<?php echo $row_value['name'];?>
-											
-										</div>
-									
-										<span class="clear"></span>
-									</div>
+                        <div style="background: #f8fafc; border-radius: 10px; padding: 20px; border: 1px solid #eff6ff;">
+                            <h6 style="color: #1e293b; margin-bottom: 15px; font-size: 12px; text-transform: uppercase;">Guardian & Identification</h6>
+                            <div class="row">
+                                <div class="col-md-6">
+                                    <label class="text-muted small fw-bold">GUARDIAN NAME</label>
+                                    <p class="fw-medium mb-1"><?php echo htmlspecialchars($row_value['guardian_name'] ?: 'N/A'); ?></p>
+                                    <p class="text-muted small"><?php echo htmlspecialchars($row_value['guardian_phone'] ?: ''); ?></p>
+                                </div>
+                                <div class="col-md-6">
+                                    <label class="text-muted small fw-bold">AADHAAR VERIFICATION</label>
+                                    <p class="fw-medium mb-1"><?php echo $row_value['aadhaar_no'] ?: 'Not Provided'; ?></p>
+                                    <?php if (!empty($row_value['aadhaar_doc_path'])): ?>
+                                        <a href="<?php echo $row_value['aadhaar_doc_path']; ?>" target="_blank" class="text-primary small fw-bold">
+                                            <svg style="width:14px; fill:currentColor; vertical-align:middle; margin-right:4px;" viewBox="0 0 24 24"><path d="M14 2H6c-1.1 0-1.99.9-1.99 2L4 20c0 1.1.89 2 1.99 2H18c1.1 0 2-.9 2-2V8l-6-6zm2 16H8v-2h8v2zm0-4H8v-2h8v2zm-3-5V3.5L18.5 9H13z"/></svg>
+                                            View Aadhaar Document
+                                        </a>
+                                    <?php endif; ?>
+                                </div>
+                            </div>
+                        </div>
 
-									
-									
-								</div>
-								</li>
-                                
-                                
-                                
-                                <li>
-								<div class="form_grid_12 multiline">
-									<label class="field_title">  Date of Birth * </label>
-                                    <div class="form_input">
-										<div class="form_grid_5 alpha">
-											<?php echo $row_value['dob'];?>											
-										</div>
-									
-										<span class="clear"></span>
-									</div>
-
-									
-									
-								</div>
-								</li>
-                                
-                                <li>
-								<div class="form_grid_12">
-									<label class="field_title"> Class Name </label>
-									<div class="form_input">
-										
-							<?php
-							 $sql="SELECT * FROM class where class_id='".$row_value['class']."' ";
-	                           $class=db_fetch_array(db_query($sql));
-							   echo $class['class_name'];
-								?>
-									</div>
-								</div>
-								</li>
-                                
-                                <li>
-								<div class="form_grid_12">
-									<label class="field_title">School Fees</label>
-									<div class="form_input">
-										<?php
-							 $sql="SELECT * FROM fees_package where package_id='".$row_value['admission_fee']."' ";
-	                           $admission_fee=db_fetch_array(db_query($sql));
-							   echo $admission_fee['package_fees'];
-								?>
-									</div>
-								</div>
-								</li>
-                                <?php if($row_value['stream']!=0){?>
-                                <li>
-								<div class="form_grid_12">
-									<label class="field_title">Stream</label>
-									<div class="form_input">
-										<?php
-							 $sql="SELECT * FROM stream where stream_id='".$row_value['stream']."' ";
-	                           $stream=db_fetch_array(db_query($sql));
-							   echo $stream['stream_name'];
-								?>
-									</div>
-								</div>
-								</li><?php } ?>
-                                 <li>
-								<div class="form_grid_12">
-									<label class="field_title"> Optional Subject </label>
-									<div class="form_input">
-										
-							<?php
-							 $sql="SELECT * FROM subject where subject_id='".$row_value['subject']."' ";
-	                           $class=db_fetch_array(db_query($sql));
-							   echo $class['subject_name'];
-								?>
-									</div>
-								</div>
-								</li>
-                               
-                                <li>
-								<div class="form_grid_12">
-									<label class="field_title"> Category</label>
-									<div class="form_input">
-                                    <?php
-							 $sql="SELECT * FROM category where cat_id='".$row_value['category']."' ";
-	                           $category=db_fetch_array(db_query($sql));
-							   echo $category['category'];
-								?>
-										
-									</div>
-								</div>
-								</li>
-                                
-                                
-                                <li>
-								<div class="form_grid_12">
-                              
-									<label class="field_title">Gender</label>
-									<div class="form_input">
-                                      <?php
-								echo $row_value['gender'];								
-											
-											?>
-										
-									</div>
-								</div>
-								</li>
-                                
-                                <li>
-								<div class="form_grid_12">
-									<label class="field_title"> Upload User Photo (500KB max)</label>
-									<div class="form_input">
-										
-                                        <img src="student_image/<?php echo $row_value['image'];?>" width="50" height="50">
-                                        
-									</div>
-								</div>
-								</li>
-                                
-                                
-                                
-                                
-                                
-                                
-                                
-  <!------------------------------------------------------------>                            
-                                
-								<li style=" border-bottom:1px solid #f2420a;"><h4 style=" color:#f2420a; ">Contact Details </h4>     </li>
-                                
-                                   <li>
-                                   <?php $s_address=explode("<br/>",$row_value['s_address']);?>
-								<div class="form_grid_12 multiline">
-									<label class="field_title">  Address Line 1</label>
-                                    <div class="form_input">
-										<div class="form_grid_5 alpha">
-											<?php echo $s_address[0];?>
-											
-										</div>
-									
-										<span class="clear"></span>
-									</div>
-
-									
-									
-								</div>
-								</li>
-                                
-                                
-                                
-                                <li>
-								<div class="form_grid_12 multiline">
-									<label class="field_title"> Address Line 2</label>
-                                    <div class="form_input">
-										<div class="form_grid_5 alpha">
-											<?php echo $s_address[1];?>
-											
-										</div>
-									
-										<span class="clear"></span>
-									</div>
-
-									
-									
-								</div>
-								</li>
-                                
-                                <li>
-								<div class="form_grid_12">
-									<label class="field_title"> Country</label>
-									<div class="form_input">
-										India
-									</div>
-								</div>
-								</li>
-                 
-                                
-                                <li>
-								<div class="form_grid_12 multiline">
-									<label class="field_title"> State </label>
-                                    <div class="form_input">
-										<div class="form_grid_5 alpha">
-											<?php echo $row_value['state'];?>
-											
-										</div>
-									
-										<span class="clear"></span>
-									</div>
-
-									
-									
-								</div>
-								</li>
-                                
-                                <li>
-								<div class="form_grid_12 multiline">
-									<label class="field_title"> City </label>
-                                    <div class="form_input">
-										<div class="form_grid_5 alpha">
-											<?php echo $row_value['city'];?>											
-										</div>
-									
-										<span class="clear"></span>
-									</div>
-
-									
-									
-								</div>
-								</li>
-                                
-                                
-                                <li>
-								<div class="form_grid_12 multiline">
-									<label class="field_title"> Pin Code </label>
-                                    <div class="form_input">
-										<div class="form_grid_5 alpha">
-											<?php echo $row_value['pin_code'];?>
-											
-										</div>
-									
-										<span class="clear"></span>
-									</div>
-
-									
-									
-								</div>
-								</li>
-                                
-                                
-                                
-                                
-                                <li>
-								<div class="form_grid_12 multiline">
-									<label class="field_title"> Mobile No. / Telephone No.</label>
-                                    <div class="form_input">
-										<div class="form_grid_5 alpha">
-											<?php echo $row_value['s_mobile_no'];?>
-											
-										</div>
-									
-										<span class="clear"></span>
-									</div>
-
-									
-									
-								</div>
-								</li>
-                                
-                                <li>
-								<div class="form_grid_12 multiline">
-									<label class="field_title"> Email Id</label>
-                                    <div class="form_input">
-										<div class="form_grid_5 alpha">
-											<?php echo $row_value['s_email'];?>
-											
-										</div>
-									
-										<span class="clear"></span>
-									</div>
-
-									
-									
-								</div>
-								</li>
-                                
-                                
-                                
-                                
-                                
- <!---------------------------------------------------------------->                               
-                                
-                                
-                                
-                               
-                             
-      
-                                
-                                  <!--------------------------------------------------------------->
-<li style=" border-bottom:1px solid #f2420a;"><h4 style=" color:#f2420a; ">Parents Details</h4>     </li>                           
-                                
-                               <li>
-								<div class="form_grid_12 multiline">
-									<label class="field_title">  Father's Name* </label>
-                                    <div class="form_input">
-										<div class="form_grid_5 alpha">
-											<?php echo $row_value['f_name'];?>
-											
-										</div>
-									
-										<span class="clear"></span>
-									</div>
-
-									
-									
-								</div>
-								</li>
-                                
-                                <li>
-								<div class="form_grid_12 multiline">
-									<label class="field_title">  Mother's Name* </label>
-                                    <div class="form_input">
-										<div class="form_grid_5 alpha">
-											<?php echo $row_value['m_name'];?>
-											
-										</div>
-									
-										<span class="clear"></span>
-									</div>
-
-									
-									
-								</div>
-								</li>
-                                 <?php $f_address=explode("<br/>",$row_value['f_address']);?>
-                                  <li>
-								<div class="form_grid_12 multiline">
-									<label class="field_title">  Address Line 1</label>
-                                    <div class="form_input">
-										<div class="form_grid_5 alpha">
-											<?php echo $f_address[0];?>
-											
-										</div>
-									
-										<span class="clear"></span>
-									</div>
-
-									
-									
-								</div>
-								</li>
-                                
-                                
-                                
-                                <li>
-								<div class="form_grid_12 multiline">
-									<label class="field_title"> Address Line 2</label>
-                                    <div class="form_input">
-										<div class="form_grid_5 alpha">
-											<?php echo $f_address[1];?>
-											
-										</div>
-									
-										<span class="clear"></span>
-									</div>
-
-									
-									
-								</div>
-								</li>
-                                
-                                 <li>
-								<div class="form_grid_12 multiline">
-									<label class="field_title"> Mobile No. / Telephone No.</label>
-                                    <div class="form_input">
-										<div class="form_grid_5 alpha">
-											<?php echo $row_value['f_mobile_no'];?>
-											
-										</div>
-									
-										<span class="clear"></span>
-									</div>
-
-									
-									
-								</div>
-								</li>
-                                
-                                <li>
-								<div class="form_grid_12 multiline">
-									<label class="field_title"> Email Id</label>
-                                    <div class="form_input">
-										<div class="form_grid_5 alpha">
-											<?php echo $row_value['f_email'];?>
-											
-										</div>
-									
-										<span class="clear"></span>
-									</div>
-
-									
-									
-								</div>
-								</li>
-
-                                <li>
-								<div class="form_grid_12 multiline">
-									<label class="field_title">Certificate Details</label>
-                                    <div class="form_input">
-                                    <?php if($row_value['caste_certificate']==1)
-								{?>
-										<div class="form_grid_5 alpha" style="height:40px;">
-											Caste Certificate
-											
-                                            
-										</div> <?php } ?> 
-                                        <?php if($row_value['bonafied_cetificate']==1)
-								{?>
-                                        
-                                        <div class="form_grid_5 alpha" style="height:40px;">
-										Bonafied Certificate
-										</div> 
-                                        <?php } ?>
-
-                                        <?php if($row_value['income_certificate']==1)
-								        {?>
-                                        <div class="form_grid_5 alpha" style="height:40px;">
-											Income Certificate
-											
-										</div> 
-                                        <?php } ?>
-                                         <?php if($row_value['Previous_class_certificate']==1)
-								{?><div class="form_grid_5 alpha" style="height:40px;">
-											Previous class documents
-											
-										</div><?php } ?>
-									
-										<span class="clear"></span>
-									</div>
-
-									
-									
-								</div>
-								</li>
-     <!-------------------------------------------------------------------------------------------------------------------->
-                                
-                                
-							</ul>
-                
-                
-                </form>  
-                 
-                 
-                 
-                 
-                 
-                 
-					
-			
-			</div>
-			
-			
-			<span class="clear"></span>
-			
-			
-			
-		</div>
-		<span class="clear"></span>
-	</div>
+                        <div class="mt-4">
+                            <label class="text-muted small fw-bold">PAST SCHOOL INFORMATION</label>
+                            <p class="text-muted" style="font-size: 13px; line-height: 1.6;">
+                                <?php echo nl2br(htmlspecialchars($row_value['past_school_info'] ?: 'No previous school history recorded.')); ?>
+                            </p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
 </div>
-<?php include_once("includes/footer.php");?>
+
+<?php include_once("includes/footer.php"); ?>

@@ -1,244 +1,84 @@
 <?php
 declare(strict_types=1);
-include_once("includes/header.php");?>
-<?php include_once("includes/sidebar.php");?>
-    <div class="page_title">
-	<!--	<span class="title_icon"><span class="computer_imac"></span></span>
-		<h3>Dashboard</h3>-->
-		<div class="top_search">
-			<form action="#" method="post">
-				<ul id="search_box">
-					<li>
-					<input name="" type="text" class="search_input" id="suggest1" placeholder="Search...">
-					</li>
-					<li>
-					<input name="" type="submit" value="Search" class="search_btn">
-					</li>
-				</ul>
-			</form>
-		</div>
-	</div>
+require_once("includes/bootstrap.php");
+include_once("includes/header.php");
+include_once("includes/sidebar.php");
 
+// Handle success messages from the process file
+$msg = $_GET['msg'] ?? '';
+$reg = $_GET['reg'] ?? '';
+?>
 
 <div id="container">
-	
-	
-	
-	<div id="content">
-		<div class="grid_container">
+    <div class="page_title">
+        <span class="title_icon"><span class="users_mm"></span></span>
+        <h3>Student Directory</h3>
+    </div>
 
-          
-			<div class="grid_12">
-				
-					<h3 style="padding-left:20px; color:#1c75bc; border-bottom:1px solid #e2e2e2;">Student Detail</h3>
-                    
-                    
-               
-               	<form action="student_search_result.php" method="post" class="form_container left_label">
-                                    
+    <?php if ($msg === 'success'): ?>
+        <div class="alert alert-success border-0 shadow-sm mb-4" style="border-radius: 12px; background: #ecfdf5; color: #065f46; padding: 15px;">
+            <strong>Success!</strong> Student admitted successfully. Registration Number: <strong><?php echo htmlspecialchars($reg); ?></strong>
+        </div>
+    <?php endif; ?>
 
-              <ul>
-               
-               
-               
-          
-           
-               <li style=" border-bottom:1px solid #f2420a;"><h4 style=" color:#f2420a; ">Search</h4>     </li>
-               
-               
-               <li>
-								<div class="form_grid_12 multiline">
-									<label class="field_title">Name</label>
-                                    <div class="form_input">
-										<div class="form_grid_5 alpha">
-											<input name="name" type="text" />
-											
-										</div>
-									
-										<span class="clear"></span>
-									</div>
-
-									
-									
-								</div>
-								</li>
-                                
-							  
-                                
-                                
-                                <li>
-								<div class="form_grid_12">
-									<label class="field_title"> Class Name </label>
-									<div class="form_input">
-										<select style=" width:300px" name="class" class="chzn-select" tabindex="13" onChange="getForm('ajax_stream_code.php?class_id='+this.value)">
-											<option value="" selected="selected"> - Select Class - </option>
-							<?php
-							 $sql="SELECT * FROM class ";
-	                           $res=db_query($sql);
-								while($row=db_fetch_array($res))
-								{
-									?>
-									<option value="<?php echo $row['class_id']; ?>"><?php echo $row['class_name']; ?></option>
-									<?php
-								}
-							?>
-										</select>
-									</div>
-								</div>
-								</li>
-                                <li id="stream_code">
-								
-								</li>
-                                
-                                
-                                
-                                <li>
-								<div class="form_grid_12">
-									<div class="form_input">
-										
-										<button type="submit" name="submit" class="btn_small btn_blue"><span>Search</span></button>
-										
-										
-										
-									</div>
-								</div>
-								</li>
-                                
-</ul>
-
-
-                </form>  
-
-					
-			
-			</div>
-            
+    <div id="content">
+        <div class="grid_container">
             <div class="grid_12">
-				<div class="widget_wrap">
-					<div class="widget_top">
-						<span class="h_icon list_images"></span>
-						<h6>Student Detail</h6>
-					</div>
-					<div class="widget_content">
-						
-						<table class="display data_tbl" >
-						<thead>
-						<tr>
-							
-							<th>
-								S.No.
-							</th>
-							<th>
-								 Student Name 
-							</th>
-                             <th>
-								 Student Type 
-							</th>
-                            <th>
-								Class
-							</th>
-                             <th>
-								Email
-							</th>
-							
-							<th>
-								 Action
-							</th>
-						</tr>
-						</thead>
-						<tbody>
-                       <?php 
-					   $i=1;
-					   
-					   $mytablename="student_info";
-						   //$sql10="SELECT * FROM student_info";
-						include("student_detail_pagination.php");
-						//$res=db_query($sql10);
-						 $num=db_num_rows($result_res);
-						if($total_pages!=0)
-						{
-						while($row_value=db_fetch_array($result_res))
-						{
-							$sql1="SELECT * FROM class where class_id='".$row_value['class']."'";
-					$class=db_fetch_array(db_query($sql1));
-						
-						$student_type_detail=db_fetch_array(db_query("select * from student_type where student_type_id='".$row_value['student_type']."'"));
-						
-						?>
-						<tr>
-							
-							<td class="center">
-								<a href="#"><?php echo $i;?></a>
-							</td>
-                            
-						<td class=" center">
-								<?php echo $row_value['name'];?>
-							</td>
-                            <td class="center"><?php echo $student_type_detail['student_type'];?></td>
-                            <td class="center">
-								<?php echo $class['class_name'];?>
-							</td>
-							
-							<td class="center">
-								<?php echo $row_value['s_email'];?>
-							</td>
-							
-							
-							<td class="center">
-							<a class="action-icons c-add" href="view_student_detail.php?student_id=<?php echo $row_value[0];?>" original-title="View Profile">View Profile</a>	<span><a class="action-icons c-edit" href="edit_admission.php?student_id=<?php echo $row_value[0];?>" title="Edit">Edit</a></span><span><a class="action-icons c-delete" href="delete_admission.php?sid=<?php echo $row_value[0];?>" title="delete" onClick="return checkform1()">Delete</a></span>
-							</td>
-						</tr>
-                        
-						<?php $i++;} } else{?>
-                        <tr>
-							
-							<td class="center" colspan="5" style="color:#F00;">Result not found
-								
-							</td>
-						
-						</tr>
-                        <?php } ?>
-						
-                        <?php if($pagination!=""){?>
-						
-						<tr>
-							
-							<td class="center" colspan="5" style="color:#F00;"><?php echo $pagination;?>
-								
-							</td>
-						
-						</tr>
-						<?php } ?>
-						</tbody>
-						
-						</table>
-                        
-                        <script type="text/javascript" language="javascript">
-									frm2=document.del;
-									function checkform1()
-									{
-										if(confirm("Are you sure you want to delete"))
-										{
-											return true;
-										}else
-										{
-											return false;
-											
-											}
-									}
-								</script>
-                        
-					</div>
-				</div>
-			</div>
-			
-			
-			<span class="clear"></span>
-			
-			
-			
-		</div>
-		<span class="clear"></span>
-	</div>
+                <div class="widget_wrap enterprise-card">
+                    <div class="widget_top">
+                        <h6>Enrolled Students</h6>
+                        <div class="widget_actions">
+                            <a href="add_admission.php" class="btn_blue">+ New Admission</a>
+                        </div>
+                    </div>
+                    <div class="widget_content">
+                        <table class="display data_tbl">
+                            <thead>
+                                <tr>
+                                    <th>Photo</th>
+                                    <th>Reg. No</th>
+                                    <th>Student Name</th>
+                                    <th>Class</th>
+                                    <th>Gender</th>
+                                    <th>Admission Date</th>
+                                    <th>Action</th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                <?php 
+                                // Joining with the 'classes' table for a professional display
+                                $sql = "SELECT a.*, c.class_name 
+                                        FROM admissions a 
+                                        LEFT JOIN classes c ON a.class_id = c.id 
+                                        ORDER BY a.id DESC";
+                                $res = db_query($sql);
+                                
+                                while($row = db_fetch_array($res)) { 
+                                    // Use a placeholder if no photo exists
+                                    $photo = !empty($row['student_pic']) ? $row['student_pic'] : 'assets/images/no-photo.png';
+                                ?>		
+                                <tr>
+                                    <td class="center">
+                                        <img src="<?php echo $photo; ?>" alt="Student" style="width: 40px; height: 40px; border-radius: 50%; object-fit: cover; border: 2px solid #e2e8f0;">
+                                    </td>
+                                    <td class="center"><strong><?php echo htmlspecialchars($row['reg_no']); ?></strong></td>
+                                    <td><?php echo htmlspecialchars($row['student_name']); ?></td>
+                                    <td class="center"><?php echo htmlspecialchars($row['class_name'] ?? 'N/A'); ?></td>
+                                    <td class="center"><?php echo $row['gender']; ?></td>
+                                    <td class="center"><?php echo date('d-M-Y', strtotime($row['admission_date'])); ?></td>
+                                    <td class="center">
+                                        <a href="view_student_detail.php?student_id=<?php echo $row['id']; ?>" class="action-icons c-edit" title="View Full Profile">Profile</a>
+                                        <a href="delete_admission.php?sid=<?php echo $row['id']; ?>" class="action-icons c-delete" onclick="return confirm('Are you sure you want to delete this record?')">Delete</a>
+                                    </td>
+                                </tr>
+                                <?php } ?>
+                            </tbody>
+                        </table>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
 </div>
-<?php include_once("includes/footer.php");?>
+
+<?php include_once("includes/footer.php"); ?>
