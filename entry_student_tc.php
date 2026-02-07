@@ -1,171 +1,75 @@
 <?php
-
 declare(strict_types=1);
-include_once("includes/header.php");?>
-<?php include_once("includes/sidebar.php");?>
-<?php 
-$msgs='';
-if(isset($_POST['submit']))
-{
-	
-
-	
-	 $sql1="SELECT * FROM exam_add_maximum_marks where subject_id='".$_POST['subject_id']."' and session='".$_SESSION['session']."'  ";
-	$res1=db_query($sql1) or die("Error : " . db_error());
-	$num=db_num_rows($res1);
-	
-	if($num==0)
-	{
-		if($_POST['subject_id']!='')
-		{
-			
-	       $sql3="INSERT INTO  exam_add_maximum_marks(class_id,stream_id,subject_id,term_id,max_marks,session) VALUES ('".$_POST['class_id']."','".$_POST['stream']."', '".$_POST['subject_id']."','".$_POST['term_id']."', '".$_POST['marks']."','".$_SESSION['session']."')";
-		   $res3=db_query($sql3) or die("Error : " . db_error());
-		  //header("Location:exam_show_maximum_marks.php?msg=1");
-			
-			
-		}
-		else
-		{   
-		 header("location:exam_add_maximum_marks.php?error=2");
-			
-		}
-		
-	}
-	else
-	{
-		header("location:exam_add_maximum_marks.php?error=1");
-	}
-}
-
-
+require_once("includes/bootstrap.php");
+include_once("includes/header.php");
+include_once("includes/sidebar.php");
 ?>
+
 <div class="page_title">
-	<!--	<span class="title_icon"><span class="computer_imac"></span></span>
-	<script>
-									function subcat()
-									{
-										var s=document.getElementById("subc").value;
-										var xmlhttp;
-										//alert(s);
-if (window.XMLHttpRequest)
-  {// code for IE7+, Firefox, Chrome, Opera, Safari
-  xmlhttp=new XMLHttpRequest();
-  }
-else
-  {// code for IE6, IE5
-  xmlhttp=new ActiveXObject("Microsoft.XMLHTTP");
-  }
-xmlhttp.onreadystatechange=function()
-  {
-  if (xmlhttp.readyState==4 && xmlhttp.status==200)
-    {
-    document.getElementById("subd").innerHTML=xmlhttp.responseText;
-  // alert(subd);
-    }
-  }
-xmlhttp.open("GET","ajax_exam_date.php?s="+s,true);
-xmlhttp.send();	
-									}
-									</script>	<h3>Dashboard</h3>-->
-		<div class="top_search">
-			<form action="#" method="post">
-				<ul id="search_box">
-					<li>
-					<input name="" type="text" class="search_input" id="suggest1" placeholder="Search...">
-					</li>
-					<li>
-					<input name="" type="submit" value="Search" class="search_btn">
-					</li>
-				</ul>
-			</form>
-		</div>
-	</div>
+    <span class="title_icon"><span class="users_mm"></span></span>
+    <h3>Student Transfer Certificate</h3>
+</div>
 <div id="container">
-	
-	
-	
-	<div id="content">
-		<div class="grid_container">
-
-          
-			<div class="grid_12">
-				<div class="widget_wrap" >
-					<h3 style="padding-left:20px; color:#0078D4">Student transfer certificate</h3>
-				
-				
-                	<form action="student_tc.php" method="post" class="form_container left_label">
-							<ul  style="height:auto; min-height:80px;">
-								
-								
-                                
-                                <li>
-								<div class="form_grid_12 multiline">
-									<label class="field_title" style="width:15%"> S R Number<span style="color:#F00"> *</span>
-</label>
-                                    <div class="form_input" >
-										
-                                        <div class="form_grid_4 alpha"  >
-											<input name="registration_no"   onBlur="getCheckreg('checkregno.php?registration_no='+this.value)" type="text" style=" margin-left:-192px;" />										
-										</div>
-                                        
-                                        <label class="field_title" style=" margin-left:110px; width:16%">
-OR <span style="color:#F00"> *</span>
-</label>
-                                        <div class="form_grid_4" style="margin-left:-25px;">
-											<a  href="student_tc_search_by_name.php" style="text-decoration:underline"><input type="button" name="search" value="search by name" class="btn_small btn_orange"></a>
-								</div>
-									
-										<span class="clear"></span>
-									</div>
-                                    
-                                    
-                                    
-
-									
-									
-								</div>
-								</li>
-                                
-                                 	
-                                  
-                 
-                                
-                          </ul>
-                                <ul  style="height:auto; min-height:40px;">
-                               
-                                <li id="stream_code"></li>
-                                
-                              </ul>
-                              
-                              <ul style="height:auto; min-height:80px;">
-								
-                                
-                                
-                                
-                                <li style="height:40px;">
-								<div class="form_grid_12">
-									<div class="form_input"><div class="form_grid_4 alpha">
-										
-										<button type="submit" name="entry_submit" class="btn_small btn_blue"><span>Submit</span></button>
-										
-										<a href="exam_show_maximum_marks.php"><button type="button" class="btn_small btn_orange"><span>Back</span></button>
-									</a>	</div>
-									</div>
-								</div>
-								</li>
-							</ul>
-						</form>
-				</div>
-			</div>
-			
-			
-			<span class="clear"></span>
-			
-			
-			
-		</div>
-		<span class="clear"></span>
-	</div>
+    <div id="content">
+        <div class="grid_container">
+            <div class="grid_12">
+                <div class="widget_wrap enterprise-card">
+                    <div class="widget_top">
+                        <h6>Generate Transfer Certificate</h6>
+                    </div>
+                    <div class="widget_content">
+                        <form action="student_tc.php" method="post" class="p-4">
+                            <div class="row mb-4">
+                                <div class="col-md-5">
+                                    <label for="registration_no" class="form-label fw-bold">
+                                        Student Registration Number <span class="text-danger">*</span>
+                                    </label>
+                                    <input 
+                                        name="registration_no" 
+                                        id="registration_no"
+                                        type="text" 
+                                        class="form-control" 
+                                        placeholder="Enter SR Number"
+                                        onBlur="getCheckreg('checkregno.php?registration_no='+this.value)" 
+                                        required
+                                    />
+                                </div>
+                                <div class="col-md-2 d-flex align-items-end justify-content-center">
+                                    <span class="text-muted fw-bold">OR</span>
+                                </div>
+                                <div class="col-md-5 d-flex align-items-end">
+                                    <a href="student_tc_search_by_name.php" class="btn-fluent-secondary w-100">
+                                        <svg width="16" height="16" viewBox="0 0 24 24" fill="none" style="vertical-align:middle;margin-right:6px;">
+                                            <path d="M15.5 14h-.79l-.28-.27C15.41 12.59 16 11.11 16 9.5 16 5.91 13.09 3 9.5 3S3 5.91 3 9.5 5.91 16 9.5 16c1.61 0 3.09-.59 4.23-1.57l.27.28v.79l5 4.99L20.49 19l-4.99-5zm-6 0C7.01 14 5 11.99 5 9.5S7.01 5 9.5 5 14 7.01 14 9.5 11.99 14 9.5 14z" fill="currentColor"/>
+                                        </svg>
+                                        Search by Name
+                                    </a>
+                                </div>
+                            </div>
+                            
+                            <div id="stream_code"></div>
+                            
+                            <hr class="my-4">
+                            
+                            <div class="d-flex gap-2">
+                                <button type="submit" name="entry_submit" class="btn-fluent-primary">
+                                    <svg width="16" height="16" viewBox="0 0 24 24" fill="none" style="vertical-align:middle;margin-right:6px;">
+                                        <path d="M9 16.2L4.8 12l-1.4 1.4L9 19 21 7l-1.4-1.4L9 16.2z" fill="currentColor"/>
+                                    </svg>
+                                    Submit
+                                </button>
+                                <a href="student_detail.php" class="btn-fluent-secondary">
+                                    <svg width="16" height="16" viewBox="0 0 24 24" fill="none" style="vertical-align:middle;margin-right:6px;">
+                                        <path d="M20 11H7.83l5.59-5.59L12 4l-8 8 8 8 1.41-1.41L7.83 13H20v-2z" fill="currentColor"/>
+                                    </svg>
+                                    Back
+                                </a>
+                            </div>
+                        </form>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
 </div>
 <?php include_once("includes/footer.php"); ?>
