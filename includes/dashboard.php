@@ -1,14 +1,7 @@
 <?php
 declare(strict_types=1);
-
-// 1. Establish core layout
 require_once("includes/header.php");
 require_once("includes/sidebar.php");
-
-/**
- * Institutional Dashboard Grid
- * We have removed RTE Admissions and synchronized Student TC per your request
- */
 ?>
 
 <div class="page_title">
@@ -30,7 +23,7 @@ require_once("includes/sidebar.php");
             <div class="switch_bar">
                 <ul>
                     <?php
-                    // Verified Module List - Azure Grade
+                    // Adjusted Module List: Removed RTE Admission, kept Student TC
                     $modules = [
                         ['label' => 'School Setting', 'link' => 'school_setting.php', 'icon' => 'M12 15.5a3.5 3.5 0 1 1 0-7 3.5 3.5 0 0 1 0 7z'],
                         ['label' => 'Admission', 'link' => 'admission.php', 'icon' => 'M19 13h-6v6h-2v-6H5v-2h6V5h2v6h6v2z'],
@@ -46,11 +39,11 @@ require_once("includes/sidebar.php");
 
                     foreach ($modules as $mod): ?>
                         <li>
-                            <a href="<?php echo htmlspecialchars($mod['link']); ?>">
+                            <a href="<?php echo $mod['link']; ?>">
                                 <div class="azure-icon-box">
                                     <svg viewBox="0 0 24 24" style="width:24px; height:24px; fill:var(--app-primary);"><path d="<?php echo $mod['icon']; ?>"/></svg>
                                 </div>
-                                <span class="label"><?php echo htmlspecialchars($mod['label']); ?></span>
+                                <span class="label"><?php echo $mod['label']; ?></span>
                             </a>
                         </li>
                     <?php endforeach; ?>
@@ -60,18 +53,4 @@ require_once("includes/sidebar.php");
     </div>
 </div>
 
-<style>
-    /* Failure-proof layout for Azure Shell */
-    .grid_container { width: 100%; }
-    .azure-icon-box { 
-        width: 48px; height: 48px; background: var(--app-accent); 
-        border-radius: var(--app-radius); display: flex; align-items: center; 
-        justify-content: center; margin-bottom: 12px; transition: var(--app-transition);
-    }
-    .switch_bar ul { 
-        display: grid; grid-template-columns: repeat(auto-fill, minmax(180px, 1fr)); 
-        gap: 20px; list-style: none; padding: 0; margin: 0; 
-    }
-</style>
-
-<?php require_once("includes/footer.php"); ?>
+<?php include_once("includes/footer.php"); ?>

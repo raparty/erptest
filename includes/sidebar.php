@@ -3,7 +3,6 @@
         <a class="nav-link" href="dashboard.php">Dashboard</a>
         <div class="nav-section">Admissions</div>
         <a class="nav-link" href="admission.php">Admission</a>
-        <a class="nav-link" href="rte_admission.php">RTE Admission</a>
         <a class="nav-link" href="student_detail.php">Student Details</a>
         <a class="nav-link" href="student_tc.php">Transfer Certificates</a>
         <div class="nav-section">Academics</div>
