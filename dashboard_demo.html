@@ -1,0 +1,188 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <title>School ERP | Dashboard</title>
+    
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css">
+    <link rel="stylesheet" href="assets/css/enterprise.css">
+    <link rel="stylesheet" href="assets/css/legacy-bridge.css">
+
+    <style>
+        /* Microsoft Fluent UI Color Palette */
+        :root { 
+            --fluent-slate: #605E5C;
+            --fluent-slate-light: #8A8886;
+            --fluent-slate-lighter: #F3F2F1;
+            --fluent-azure: #0078D4;
+            --fluent-azure-dark: #106EBE;
+            --fluent-azure-darker: #005A9E;
+            --fluent-white: #FFFFFF;
+            --fluent-white-soft: #FAF9F8;
+            --fluent-white-softer: #F3F2F1;
+            --sidebar-w: 260px; 
+            --bg-page: var(--fluent-white-soft);
+        }
+        
+        /* Robust Flexbox Shell */
+        body { margin: 0; padding: 0; min-height: 100vh; display: flex; flex-direction: column; }
+        .app-shell { display: flex !important; flex: 1; width: 100%; align-items: stretch; }
+        #sidebar { width: var(--sidebar-w); flex-shrink: 0; background: var(--fluent-white); border-right: 1px solid var(--fluent-slate-lighter); }
+        #container { flex: 1; padding: 30px; background: var(--bg-page); min-width: 0; }
+        
+        /* Responsive Flexbox */
+        @media (max-width: 768px) {
+            .app-shell { flex-direction: column; }
+            #sidebar { width: 100%; border-right: none; border-bottom: 1px solid var(--fluent-slate-lighter); }
+        }
+    </style>
+</head>
+<body class="app-body">
+    <header class="app-header shadow-sm" style="background: var(--fluent-white); border-bottom: 1px solid var(--fluent-slate-lighter); padding: 10px 30px; display: flex; justify-content: space-between; align-items: center; height: 75px; flex-shrink: 0;">
+        <div style="display: flex; align-items: center; gap: 15px;">
+            <div style="background: var(--fluent-azure); color: var(--fluent-white); padding: 6px 14px; border-radius: 4px; font-weight: 600; font-size: 18px; box-shadow: 0 1.6px 3.6px 0 rgba(0,0,0,0.132), 0 0.3px 0.9px 0 rgba(0,0,0,0.108);">ERP</div>
+            <div>
+                <div style="font-weight: 600; font-size: 16px; color: var(--fluent-slate);">School ERP</div>
+                <div style="font-size: 13px; color: var(--fluent-slate-light); text-transform: uppercase; letter-spacing: 0.5px;">Enterprise School Management</div>
+            </div>
+        </div>
+        <div style="display: flex; align-items: center; gap: 20px;">
+            <span style="font-size: 13px; color: var(--fluent-slate);">Welcome, <strong style="color: var(--fluent-azure);">Admin</strong></span>
+            <a href="logout.php" class="btn btn-sm btn-fluent-primary">Sign Out</a>
+        </div>
+    </header>
+    <div class="app-shell">
+        <aside class="app-sidebar">
+            <nav class="nav flex-column gap-1">
+                <a class="nav-link" href="dashboard.php" style="background: #E1F0FF; color: #0078D4; font-weight: 600;">Dashboard</a>
+                <div class="nav-section">Admissions</div>
+                <a class="nav-link" href="admission.php">Admission</a>
+                <a class="nav-link" href="rte_admission.php">RTE Admission</a>
+                <a class="nav-link" href="student_detail.php">Student Details</a>
+                <a class="nav-link" href="student_tc.php">Transfer Certificates</a>
+                <div class="nav-section">Academics</div>
+                <a class="nav-link" href="school_setting.php">School Settings</a>
+                <a class="nav-link" href="school_detail.php">School Details</a>
+                <a class="nav-link" href="class.php">Classes</a>
+                <a class="nav-link" href="section.php">Sections</a>
+                <a class="nav-link" href="stream.php">Streams</a>
+                <a class="nav-link" href="subject.php">Subjects</a>
+                <div class="nav-section">Operations</div>
+                <a class="nav-link" href="fees_setting.php">Fees</a>
+                <a class="nav-link" href="exam_setting.php">Examinations</a>
+                <a class="nav-link" href="transport_setting.php">Transport</a>
+                <a class="nav-link" href="library_setting.php">Library</a>
+                <a class="nav-link" href="staff_setting.php">Staff</a>
+            </nav>
+        </aside>
+        <div class="app-content">
+            <div class="page_title">
+                <span class="title_icon"><span class="computer_imac">📊</span></span>
+                <h3>Dashboard</h3>
+                <div class="top_search">
+                    <form action="#" method="post">
+                        <ul id="search_box">
+                            <li>
+                                <input name="" type="text" class="search_input" id="suggest1" placeholder="Search...">
+                            </li>
+                            <li>
+                                <input name="" type="submit" value="Search" class="search_btn">
+                            </li>
+                        </ul>
+                    </form>
+                </div>
+            </div>
+
+            <div id="container">
+                <div id="content">
+                    <div class="grid_container">
+                        <div class="grid_12 full_block">
+                            <div class="widget_wrap">
+                                <div class="widget_content">
+                                    <div class="switch_bar">
+                                        <ul>
+                                            <li>
+                                                <a href="school_setting.php">
+                                                    <svg viewBox="0 0 24 24" style="width:48px; height:48px; fill:#0078D4;"><path d="M19.14,12.94c0.04-0.3,0.06-0.61,0.06-0.94c0-0.32-0.02-0.64-0.07-0.94l2.03-1.58c0.18-0.14,0.23-0.41,0.12-0.61 l-1.92-3.32c-0.12-0.22-0.37-0.29-0.59-0.22l-2.39,0.96c-0.5-0.38-1.03-0.7-1.62-0.94L14.4,2.81c-0.04-0.24-0.24-0.41-0.48-0.41 h-3.84c-0.24,0-0.43,0.17-0.47,0.41L9.25,5.35C8.66,5.59,8.12,5.92,7.63,6.29L5.24,5.33c-0.22-0.08-0.47,0-0.59,0.22L2.74,8.87 C2.62,9.08,2.66,9.34,2.86,9.48l2.03,1.58C4.84,11.36,4.8,11.69,4.8,12s0.02,0.64,0.07,0.94l-2.03,1.58 c-0.18,0.14-0.23,0.41-0.12,0.61l1.92,3.32c0.12,0.22,0.37,0.29,0.59,0.22l2.39-0.96c0.5,0.38,1.03,0.7,1.62,0.94l0.36,2.54 c0.05,0.24,0.24,0.41,0.48,0.41h3.84c0.24,0,0.44-0.17,0.47-0.41l0.36-2.54c0.59-0.24,1.13-0.56,1.62-0.94l2.39,0.96 c0.22,0.08,0.47,0,0.59-0.22l1.92-3.32c0.12-0.22,0.07-0.47-0.12-0.61L19.14,12.94z M12,15.6c-1.98,0-3.6-1.62-3.6-3.6 s1.62-3.6,3.6-3.6s3.6,1.62,3.6,3.6S13.98,15.6,12,15.6z"/></svg>
+                                                    <span class="label">School Setting</span>
+                                                </a>
+                                            </li>
+                                            <li>
+                                                <a href="admission.php">
+                                                    <svg viewBox="0 0 24 24" style="width:48px; height:48px; fill:#0078D4;"><path d="M15 12c2.21 0 4-1.79 4-4s-1.79-4-4-4-4 1.79-4 4 1.79 4 4 4zm-9-2V7H4v3H1v2h3v3h2v-3h3v-2H6zm9 4c-2.67 0-8 1.34-8 4v2h16v-2c0-2.66-5.33-4-8-4z"/></svg>
+                                                    <span class="label">Admission</span>
+                                                </a>
+                                            </li>
+                                            <li>
+                                                <a href="student_detail.php">
+                                                    <svg viewBox="0 0 24 24" style="width:48px; height:48px; fill:#0078D4;"><path d="M16 11c1.66 0 2.99-1.34 2.99-3S17.66 5 16 5s-3 1.34-3 3 1.34 3 3 3zm-8 0c1.66 0 2.99-1.34 2.99-3S9.66 5 8 5 5 6.34 5 8s1.34 3 3 3zm0 2c-2.33 0-7 1.17-7 3.5V19h14v-2.5c0-2.33-4.67-3.5-7-3.5zm8 0c-.29 0-.62.02-.97.05 1.16.84 1.97 1.97 1.97 3.45V19h6v-2.5c0-2.33-4.67-3.5-7-3.5z"/></svg>
+                                                    <span class="label">Student Details</span>
+                                                </a>
+                                            </li>
+                                            <li>
+                                                <a href="fees_setting.php">
+                                                    <svg viewBox="0 0 24 24" style="width:48px; height:48px; fill:#0078D4;"><path d="M11.8 10.9c-2.27-.59-3-1.2-3-2.15 0-1.09 1.01-1.85 2.7-1.85 1.78 0 2.44.85 2.5 2.1h2.21c-.07-1.72-1.12-3.3-3.21-3.81V3h-3v2.16c-1.94.42-3.5 1.68-3.5 3.61 0 2.31 1.91 3.46 4.7 4.13 2.5.6 3 1.48 3 2.41 0 .69-.49 1.79-2.7 1.79-2.06 0-2.87-.92-2.98-2.1h-2.2c.12 2.19 1.76 3.42 3.68 3.83V21h3v-2.15c1.95-.37 3.5-1.5 3.5-3.55 0-2.84-2.43-3.81-4.7-4.4z"/></svg>
+                                                    <span class="label">Fees</span>
+                                                </a>
+                                            </li>
+                                            <li>
+                                                <a href="account_setting.php">
+                                                    <svg viewBox="0 0 24 24" style="width:48px; height:48px; fill:#0078D4;"><path d="M21 18v1c0 1.1-.9 2-2 2H5c-1.11 0-2-.9-2-2V5c0-1.1.89-2 2-2h14c1.1 0 2 .9 2 2v1h-9c-1.11 0-2 .9-2 2v8c0 1.1.89 2 2 2h9zm-9-2h10V8H12v8zm4-2.5c-.83 0-1.5-.67-1.5-1.5s.67-1.5 1.5-1.5 1.5.67 1.5 1.5-.67 1.5-1.5 1.5z"/></svg>
+                                                    <span class="label">Account</span>
+                                                </a>
+                                            </li>
+                                            <li>
+                                                <a href="exam_setting.php">
+                                                    <svg viewBox="0 0 24 24" style="width:48px; height:48px; fill:#0078D4;"><path d="M14 2H6c-1.1 0-1.99.9-1.99 2L4 20c0 1.1.89 2 1.99 2H18c1.1 0 2-.9 2-2V8l-6-6zm2 16H8v-2h8v2zm0-4H8v-2h8v2zm-3-5V3.5L18.5 9H13z"/></svg>
+                                                    <span class="label">Examination</span>
+                                                </a>
+                                            </li>
+                                            <li>
+                                                <a href="transport_setting.php">
+                                                    <svg viewBox="0 0 24 24" style="width:48px; height:48px; fill:#0078D4;"><path d="M4 16c0 .88.39 1.67 1 2.22V20c0 .55.45 1 1 1h1c.55 0 1-.45 1-1v-1h8v1c0 .55.45 1 1 1h1c.55 0 1-.45 1-1v-1.78c.61-.55 1-1.34 1-2.22V6c0-3.5-3.58-4-8-4s-8 .5-8 4v10zm3.5 1c-.83 0-1.5-.67-1.5-1.5S6.67 14 7.5 14s1.5.67 1.5 1.5S8.33 17 7.5 17zm9 0c-.83 0-1.5-.67-1.5-1.5s.67-1.5 1.5-1.5 1.5.67 1.5 1.5-.67 1.5-1.5 1.5zm1.5-6H6V6h12v5z"/></svg>
+                                                    <span class="label">Transport</span>
+                                                </a>
+                                            </li>
+                                            <li>
+                                                <a href="staff_setting.php">
+                                                    <svg viewBox="0 0 24 24" style="width:48px; height:48px; fill:#0078D4;"><path d="M16 11c1.66 0 2.99-1.34 2.99-3S17.66 5 16 5c-1.66 0-3 1.34-3 3s1.34 3 3 3zm-8 0c1.66 0 2.99-1.34 2.99-3S9.66 5 8 5C6.34 5 5 6.34 5 8s1.34 3 3 3zm0 2c-2.33 0-7 1.17-7 3.5V19h14v-2.5c0-2.33-4.67-3.5-7-3.5zm8 0c-.29 0-.62.02-.97.05.02.01.03.03.04.04 1.14.83 1.93 1.94 1.93 3.41V19h6v-2.5c0-2.33-4.67-3.5-7-3.5z"/></svg>
+                                                    <span class="label">Staff</span>
+                                                </a>
+                                            </li>
+                                            <li>
+                                                <a href="library_setting.php">
+                                                    <svg viewBox="0 0 24 24" style="width:48px; height:48px; fill:#0078D4;"><path d="M18 2H6c-1.1 0-2 .9-2 2v16c0 1.1.9 2 2 2h12c1.1 0 2-.9 2-2V4c0-1.1-.9-2-2-2zM6 4h5v8l-2.5-1.5L6 12V4z"/></svg>
+                                                    <span class="label">Library</span>
+                                                </a>
+                                            </li>
+                                            <li>
+                                                <a href="rte_student_detail.php">
+                                                    <svg viewBox="0 0 24 24" style="width:48px; height:48px; fill:#0078D4;"><path d="M12 2C6.48 2 2 6.48 2 12s4.48 10 10 10 10-4.48 10-10S17.52 2 12 2zm-2 15l-5-5 1.41-1.41L10 14.17l7.59-7.59L19 8l-9 9z"/></svg>
+                                                    <span class="label">RTE Students</span>
+                                                </a>
+                                            </li>
+                                            <li>
+                                                <a href="entry_student_tc.php">
+                                                    <svg viewBox="0 0 24 24" style="width:48px; height:48px; fill:#0078D4;"><path d="M14 2H6c-1.1 0-1.99.9-1.99 2L4 20c0 1.1.89 2 1.99 2H18c1.1 0 2-.9 2-2V8l-6-6zm2 16H8v-2h8v2zm0-4H8v-2h8v2zm-3-5V3.5L18.5 9H13z"/></svg>
+                                                    <span class="label">Student TC</span>
+                                                </a>
+                                            </li>
+                                        </ul>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <h6 style="text-align: center; margin-top: 40px; color: var(--fluent-slate-light);">Copyright © 2026</h6>
+                </div>
+            </div>
+        </div>
+    </div>
+    <footer style="background: var(--fluent-white); border-top: 1px solid var(--fluent-slate-lighter); padding: 20px 30px; font-size: 12px; color: var(--fluent-slate-light); text-align: center; flex-shrink: 0; box-shadow: 0 -1.6px 3.6px 0 rgba(0,0,0,0.132), 0 -0.3px 0.9px 0 rgba(0,0,0,0.108);">
+        © 2026 School ERP | <strong style="color: var(--fluent-slate);">PHP 8.3.6</strong> · <strong style="color: var(--fluent-slate);">MySQL 8.4</strong>
+    </footer>
+
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js"></script>
+</body>
+</html>

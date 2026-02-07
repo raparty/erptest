@@ -1,0 +1,216 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <title>School ERP | Fees Manager</title>
+    
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css">
+    <link rel="stylesheet" href="assets/css/enterprise.css">
+    <link rel="stylesheet" href="assets/css/legacy-bridge.css">
+
+    <style>
+        :root { 
+            --fluent-slate: #605E5C;
+            --fluent-slate-light: #8A8886;
+            --fluent-slate-lighter: #F3F2F1;
+            --fluent-azure: #0078D4;
+            --fluent-azure-dark: #106EBE;
+            --fluent-white: #FFFFFF;
+            --fluent-white-soft: #FAF9F8;
+            --fluent-white-softer: #F3F2F1;
+            --sidebar-w: 260px; 
+            --bg-page: var(--fluent-white-soft);
+        }
+        body { margin: 0; padding: 0; min-height: 100vh; display: flex; flex-direction: column; }
+        .app-shell { display: flex !important; flex: 1; width: 100%; align-items: stretch; }
+        #sidebar { width: var(--sidebar-w); flex-shrink: 0; background: var(--fluent-white); border-right: 1px solid var(--fluent-slate-lighter); }
+        #container { flex: 1; padding: 30px; background: var(--bg-page); min-width: 0; }
+    </style>
+</head>
+<body class="app-body">
+    <header class="app-header shadow-sm" style="background: var(--fluent-white); border-bottom: 1px solid var(--fluent-slate-lighter); padding: 10px 30px; display: flex; justify-content: space-between; align-items: center; height: 75px; flex-shrink: 0;">
+        <div style="display: flex; align-items: center; gap: 15px;">
+            <div style="background: var(--fluent-azure); color: var(--fluent-white); padding: 6px 14px; border-radius: 4px; font-weight: 600; font-size: 18px;">ERP</div>
+            <div>
+                <div style="font-weight: 600; font-size: 16px; color: var(--fluent-slate);">School ERP</div>
+                <div style="font-size: 13px; color: var(--fluent-slate-light); text-transform: uppercase; letter-spacing: 0.5px;">Enterprise School Management</div>
+            </div>
+        </div>
+        <div style="display: flex; align-items: center; gap: 20px;">
+            <span style="font-size: 13px; color: var(--fluent-slate);">Welcome, <strong style="color: var(--fluent-azure);">Admin</strong></span>
+            <a href="logout.php" class="btn btn-sm btn-fluent-primary">Sign Out</a>
+        </div>
+    </header>
+    <div class="app-shell">
+        <aside class="app-sidebar">
+            <nav class="nav flex-column gap-1">
+                <a class="nav-link" href="dashboard.php">Dashboard</a>
+                <div class="nav-section">Admissions</div>
+                <a class="nav-link" href="admission.php">Admission</a>
+                <a class="nav-link" href="student_detail.php">Student Details</a>
+                <div class="nav-section">Fees & Accounts</div>
+                <a class="nav-link" href="fees_setting.php">Fees Settings</a>
+                <a class="nav-link" href="fees_manager.php" style="background: #E1F0FF; color: #0078D4; font-weight: 600;">Fees Manager</a>
+                <a class="nav-link" href="account_setting.php">Account Settings</a>
+                <div class="nav-section">Academics</div>
+                <a class="nav-link" href="school_setting.php">School Settings</a>
+                <a class="nav-link" href="class.php">Classes</a>
+                <div class="nav-section">Operations</div>
+                <a class="nav-link" href="exam_setting.php">Examinations</a>
+                <a class="nav-link" href="transport_setting.php">Transport</a>
+                <a class="nav-link" href="library_setting.php">Library</a>
+                <a class="nav-link" href="staff_setting.php">Staff</a>
+            </nav>
+        </aside>
+        <div class="app-content">
+            <div class="page_title">
+                <span class="title_icon"><span>💰</span></span>
+                <h3>Fees Manager</h3>
+                <div class="top_search">
+                    <form action="#" method="post">
+                        <ul id="search_box">
+                            <li><input name="" type="text" class="search_input" placeholder="Search..."></li>
+                            <li><input name="" type="submit" value="Search" class="search_btn"></li>
+                        </ul>
+                    </form>
+                </div>
+            </div>
+
+            <div id="container">
+                <div id="content">
+                    <div class="grid_container">
+                        <h3 style="padding-left:20px; color:#0078D4">Student Fees Detail</h3>
+                        <div class="grid_12">
+                            <div class="widget_wrap">
+                                <form action="#" method="post" class="form_container left_label">
+                                    <ul>
+                                        <li style="border-bottom:1px solid #F7630C; margin-bottom: 20px;"><h4 style="color:#F7630C; margin: 0;">Search</h4></li>
+                                        <li>
+                                            <div class="form_grid_12">
+                                                <label class="field_title">Fees Term</label>
+                                                <div class="form_input">
+                                                    <select style="width:300px" name="fees_term" class="form-select">
+                                                        <option value="" selected>- Select fees term -</option>
+                                                        <option value="1">Term 1 - 2026</option>
+                                                        <option value="2">Term 2 - 2026</option>
+                                                        <option value="3">Term 3 - 2026</option>
+                                                        <option value="4">Annual - 2026</option>
+                                                    </select>
+                                                </div>
+                                            </div>
+                                        </li>
+                                        <li>
+                                            <div class="form_grid_12">
+                                                <label class="field_title">Class Name</label>
+                                                <div class="form_input">
+                                                    <select style="width:300px" name="class" class="form-select">
+                                                        <option value="" selected>- Select Class -</option>
+                                                        <option value="1">Class 6</option>
+                                                        <option value="2">Class 7</option>
+                                                        <option value="3">Class 8</option>
+                                                        <option value="4">Class 9</option>
+                                                        <option value="5">Class 10</option>
+                                                        <option value="6">Class 11</option>
+                                                        <option value="7">Class 12</option>
+                                                    </select>
+                                                </div>
+                                            </div>
+                                        </li>
+                                        <li>
+                                            <div class="form_grid_12">
+                                                <label class="field_title">Student Name</label>
+                                                <div class="form_input">
+                                                    <input type="text" name="student_name" placeholder="Enter student name" style="width:300px" class="form-control">
+                                                </div>
+                                            </div>
+                                        </li>
+                                        <li style="margin-top: 20px;">
+                                            <button type="submit" class="btn_30_blue">Search Student</button>
+                                            <button type="reset" class="btn_30_orange" style="margin-left: 10px;">Reset</button>
+                                        </li>
+                                    </ul>
+                                </form>
+                            </div>
+                        </div>
+
+                        <div class="grid_12" style="margin-top: 20px;">
+                            <div class="widget_wrap">
+                                <div class="widget_top">
+                                    <span class="h_icon"></span>
+                                    <h6>Recent Fees Transactions</h6>
+                                </div>
+                                <div class="widget_content">
+                                    <table class="display data_tbl">
+                                        <thead>
+                                            <tr>
+                                                <th>Receipt No</th>
+                                                <th>Student Name</th>
+                                                <th>Class</th>
+                                                <th>Term</th>
+                                                <th>Amount Paid</th>
+                                                <th>Payment Date</th>
+                                                <th>Status</th>
+                                            </tr>
+                                        </thead>
+                                        <tbody>
+                                            <tr>
+                                                <td>FEE-2026-001</td>
+                                                <td><strong>Rajesh Kumar</strong></td>
+                                                <td>Class 10-A</td>
+                                                <td>Term 1</td>
+                                                <td style="color: #107C10; font-weight: 600;">₹15,000</td>
+                                                <td>2026-01-25</td>
+                                                <td><span style="background: #107C10; color: white; padding: 4px 12px; border-radius: 4px; font-size: 13px;">Paid</span></td>
+                                            </tr>
+                                            <tr>
+                                                <td>FEE-2026-002</td>
+                                                <td><strong>Priya Sharma</strong></td>
+                                                <td>Class 9-B</td>
+                                                <td>Term 1</td>
+                                                <td style="color: #107C10; font-weight: 600;">₹12,500</td>
+                                                <td>2026-01-28</td>
+                                                <td><span style="background: #107C10; color: white; padding: 4px 12px; border-radius: 4px; font-size: 13px;">Paid</span></td>
+                                            </tr>
+                                            <tr>
+                                                <td>FEE-2026-003</td>
+                                                <td><strong>Amit Patel</strong></td>
+                                                <td>Class 11-A</td>
+                                                <td>Term 1</td>
+                                                <td style="color: #F7630C; font-weight: 600;">₹8,000</td>
+                                                <td>2026-02-01</td>
+                                                <td><span style="background: #F7630C; color: white; padding: 4px 12px; border-radius: 4px; font-size: 13px;">Partial</span></td>
+                                            </tr>
+                                            <tr>
+                                                <td>-</td>
+                                                <td><strong>Sneha Reddy</strong></td>
+                                                <td>Class 8-C</td>
+                                                <td>Term 1</td>
+                                                <td style="color: #D13438; font-weight: 600;">₹0</td>
+                                                <td>-</td>
+                                                <td><span style="background: #D13438; color: white; padding: 4px 12px; border-radius: 4px; font-size: 13px;">Pending</span></td>
+                                            </tr>
+                                            <tr>
+                                                <td>FEE-2026-004</td>
+                                                <td><strong>Vivek Singh</strong></td>
+                                                <td>Class 12-B</td>
+                                                <td>Term 1</td>
+                                                <td style="color: #107C10; font-weight: 600;">₹18,000</td>
+                                                <td>2026-02-03</td>
+                                                <td><span style="background: #107C10; color: white; padding: 4px 12px; border-radius: 4px; font-size: 13px;">Paid</span></td>
+                                            </tr>
+                                        </tbody>
+                                    </table>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    <footer style="background: var(--fluent-white); border-top: 1px solid var(--fluent-slate-lighter); padding: 20px 30px; font-size: 12px; color: var(--fluent-slate-light); text-align: center; flex-shrink: 0;">
+        © 2026 School ERP | <strong style="color: var(--fluent-slate);">Microsoft Fluent UI Design</strong>
+    </footer>
+</body>
+</html>
