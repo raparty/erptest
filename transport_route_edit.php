@@ -77,7 +77,7 @@ echo $sql1="SELECT * FROM transport_add_route where route_id='".$_GET['sid']."'"
           
 			<div class="grid_12">
 				<div class="widget_wrap">
-					<h3 style="padding-left:20px; color:#1c75bc">Add New Route</h3> <?php if($msg!=""){echo $msg; } ?>
+					<h3 style="padding-left:20px; color:#0078D4">Add New Route</h3> <?php if($msg!=""){echo $msg; } ?>
 					<form action="#" method="post" class="form_container left_label">
 							<ul>
 								<li>

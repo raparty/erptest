@@ -32,7 +32,7 @@ include_once("includes/header.php");?>
 			<div class="grid_12">
 				<div class="widget_wrap">
                
-					<h3 style="padding-left:20px; color:#1c75bc"> Staff Category</h3> <?php
+					<h3 style="padding-left:20px; color:#0078D4"> Staff Category</h3> <?php
                 include_once('config/config.inc.php');
 				?>
                 <?php

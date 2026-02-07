@@ -98,7 +98,7 @@ else
           
 			<div class="grid_12">
 				<div class="widget_wrap">
-					<h3 style="padding-left:20px; color:#1c75bc">Student return   book detail </h3>
+					<h3 style="padding-left:20px; color:#0078D4">Student return   book detail </h3>
                     
                     <?php if($msg!=""){echo $msg; } ?>
 		  <form action="library_student_return_books.php" method="post" class="form_container left_label" enctype="multipart/form-data">

@@ -107,8 +107,8 @@ include_once("includes/header.php"); ?>
 
           
 			<div class="grid_12">
-		  <li style=" border-bottom:1px solid #f2420a; list-style:none">
-					<h3 style=" color:#1c75bc">Attendance</h3></li>
+		  <li style=" border-bottom:1px solid #F7630C; list-style:none">
+					<h3 style=" color:#0078D4">Attendance</h3></li>
                    
 <br>
 <br>

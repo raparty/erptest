@@ -27,12 +27,12 @@ include_once("includes/header.php");?>
 	
 	<div id="content">
 		<div class="grid_container">
-<h3 style="padding-left:20px; color:#1c75bc">Super Category List</h3>
+<h3 style="padding-left:20px; color:#0078D4">Super Category List</h3>
           <div class="grid_12">
 
  
 
-           <div class="btn_30_blue" style="float:right">
+           <div class="btn_30_blue float-right">
 								<a href="add_category.php"><span style="width:140px">Add New Super Category </span></a>
 							</div>
                             

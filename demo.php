@@ -38,7 +38,7 @@ include_once("includes/header.php");?>
                             <div class="grid_container">
                               <div class="grid_12">
                                 <div class="widget_wrap" style="height:600px">
-                                  <h3 style="padding-left:20px; color:#1c75bc">Employee Details</h3>
+                                  <h3 style="padding-left:20px; color:#0078D4">Employee Details</h3>
                            
                                   <ul style="height:auto">
                                          <?php include_once('config/config.inc.php');

@@ -34,7 +34,7 @@ include_once("includes/header.php");?>
           
 			<div class="grid_12">
 				
-					<h3 style="padding-left:20px; color:#1c75bc; border-bottom:1px solid #e2e2e2;">RTE Admission</h3>
+					<h3 style="padding-left:20px; color:#0078D4; border-bottom:1px solid #e2e2e2;">RTE Admission</h3>
                     
                     
                   <?php if($msg!=""){echo $msg; } ?>
@@ -82,7 +82,7 @@ Admission Date <span style="color:#F00"> *</span>
                                 
                                 
 <!--------------------------------------------------------------->
-<li style=" border-bottom:1px solid #f2420a;"><h4 style=" color:#f2420a; ">Personal Details</h4>     </li>                           
+<li style=" border-bottom:1px solid #F7630C;"><h4 style=" color:#F7630C; ">Personal Details</h4>     </li>                           
                                 
                                <li>
 								<div class="form_grid_12 multiline">
@@ -238,7 +238,7 @@ Admission Date <span style="color:#F00"> *</span>
                                 
   <!------------------------------------------------------------>                            
                                 
-								<li style=" border-bottom:1px solid #f2420a;"><h4 style=" color:#f2420a; ">Contact Details </h4>     </li>
+								<li style=" border-bottom:1px solid #F7630C;"><h4 style=" color:#F7630C; ">Contact Details </h4>     </li>
                                 
                                    <li>
                                    <?php $s_address=explode("<br/>",$row_value['s_address']);?>
@@ -388,7 +388,7 @@ Admission Date <span style="color:#F00"> *</span>
       
                                 
                                   <!--------------------------------------------------------------->
-<li style=" border-bottom:1px solid #f2420a;"><h4 style=" color:#f2420a; ">Parents Details</h4>     </li>                           
+<li style=" border-bottom:1px solid #F7630C;"><h4 style=" color:#F7630C; ">Parents Details</h4>     </li>                           
                                 
                                <li>
 								<div class="form_grid_12 multiline">

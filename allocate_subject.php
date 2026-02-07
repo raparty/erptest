@@ -9,7 +9,7 @@ include_once("includes/school_setting_sidebar.php");
 <div id="container">
     <div id="content">
         <div class="grid_container">
-            <h3 style="padding-left:20px; color:#1c75bc; padding-top:10px;">Subject Allocation List</h3>
+            <h3 style="padding-left:20px; color:#0078D4; padding-top:10px;">Subject Allocation List</h3>
             <div class="grid_12">
                 <div class="widget_wrap">
                     <div class="widget_top">

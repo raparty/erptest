@@ -28,12 +28,12 @@ include_once("includes/header.php");?>
 	
 	<div id="content">
 		<div class="grid_container">
-<h3 style="padding-left:20px; color:#1c75bc">Staff Qualification List</h3>
+<h3 style="padding-left:20px; color:#0078D4">Staff Qualification List</h3>
           <div class="grid_12">
 
  
 
-           <div class="btn_30_blue" style="float:right">
+           <div class="btn_30_blue float-right">
 								<a href="add_staff_qualification.php"><span style="width:140px">Add Qualification </span></a>
 							</div>
                             

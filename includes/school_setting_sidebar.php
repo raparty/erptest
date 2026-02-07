@@ -6,7 +6,7 @@
 ?>
 <style>
     :root {
-        --primary-blue: #1c75bc;
+        --primary-blue: #0078D4;
         --text-dark: #334155;
         --border-light: #e2e8f0;
     }
@@ -48,7 +48,7 @@
     /* Modern SVG Icon Styling */
     .nav-icon-svg {
         width: 32px; height: 32px;
-        fill: #64748b; /* Slate grey default */
+        fill: #605E5C; /* Slate grey default */
         margin-bottom: 12px;
         transition: fill 0.3s ease;
     }

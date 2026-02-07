@@ -33,12 +33,12 @@ include_once("includes/header.php");?>
 	
 	<div id="content">
 		<div class="grid_container">
-<h3 style="padding-left:20px; color:#1c75bc">Student  Marks</h3>
+<h3 style="padding-left:20px; color:#0078D4">Student  Marks</h3>
           <div class="grid_12">
 
  
 
-           <div class="btn_30_blue" style="float:right">
+           <div class="btn_30_blue float-right">
 								<a href="entry_add_max_marks.php"><span style="width:140px">Add  Maximum marks </span></a>
 							</div>
                             

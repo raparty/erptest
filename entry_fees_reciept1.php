@@ -75,7 +75,7 @@ xmlhttp.send();
           
 			<div class="grid_12">
 				<div class="widget_wrap" >
-					<h3 style="padding-left:20px; color:#1c75bc">Fees Reciept Management</h3>
+					<h3 style="padding-left:20px; color:#0078D4">Fees Reciept Management</h3>
 				
 				
                 	<form action="fees_reciept_byterm.php" method="post" class="form_container left_label">

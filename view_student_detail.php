@@ -33,7 +33,7 @@ $photo_path = !empty($row_value['student_pic']) ? $row_value['student_pic'] : 'a
                 <div class="widget_wrap enterprise-card text-center" style="padding: 30px 20px;">
                     <img src="<?php echo $photo_path; ?>" alt="Profile" 
                          style="width: 150px; height: 150px; border-radius: 15px; border: 4px solid #f1f5f9; object-fit: cover; margin-bottom: 20px;">
-                    <h4 style="color: #1c75bc; margin-bottom: 5px;"><?php echo htmlspecialchars($row_value['student_name']); ?></h4>
+                    <h4 style="color: #0078D4; margin-bottom: 5px;"><?php echo htmlspecialchars($row_value['student_name']); ?></h4>
                     <span class="badge bg-primary mb-3"><?php echo htmlspecialchars($row_value['reg_no']); ?></span>
                     
                     <div style="margin-top: 20px; border-top: 1px solid #f1f5f9; padding-top: 20px;">

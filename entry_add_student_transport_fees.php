@@ -106,7 +106,7 @@ else
           
 			<div class="grid_12">
 				<div class="widget_wrap">
-					<h3 style="padding-left:20px; color:#1c75bc">Add  student  bus  fees </h3>
+					<h3 style="padding-left:20px; color:#0078D4">Add  student  bus  fees </h3>
                     
                     <?php if($msg!=""){echo $msg; } ?>
 					<form action="add_student_transport_fees.php" method="post" class="form_container left_label">

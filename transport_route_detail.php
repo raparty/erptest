@@ -34,12 +34,12 @@ db_query("delete from transport_add_route where route_id='".$_GET['sid']."'");
 	
 	<div id="content">
 		<div class="grid_container">
-<h3 style="padding-left:20px; color:#1c75bc">Route Detail</h3>
+<h3 style="padding-left:20px; color:#0078D4">Route Detail</h3>
           <div class="grid_12">
 
  
 
-           <div class="btn_30_blue" style="float:right">
+           <div class="btn_30_blue float-right">
 								<a href="transport_add_route.php"><span style="width:140px">Add New Route</span></a>
 							</div>
                             

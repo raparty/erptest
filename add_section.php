@@ -26,7 +26,7 @@ include_once("includes/sidebar.php");
         <div class="grid_container">
             <div class="grid_12">
                 <div class="widget_wrap">
-                    <h3 style="padding:20px; color:#1c75bc">Add New Section</h3>
+                    <h3 style="padding:20px; color:#0078D4">Add New Section</h3>
                     <form action="add_section.php" method="post" class="form_container left_label">
                         <ul>
                             <li>

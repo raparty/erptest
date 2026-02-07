@@ -16,7 +16,7 @@ include_once("includes/sidebar.php");
 include_once("includes/school_setting_sidebar.php");
 ?>
 <div id="container"><div id="content"><div class="grid_container"><div class="grid_12"><div class="widget_wrap">
-    <h3 style="padding:20px; color:#1c75bc">Edit Stream Allocation</h3>
+    <h3 style="padding:20px; color:#0078D4">Edit Stream Allocation</h3>
     <form action="edit_allocate_stream.php?sid=<?php echo $sid; ?>" method="post" class="form_container left_label">
         <ul>
             <li><label class="field_title">Class</label>
