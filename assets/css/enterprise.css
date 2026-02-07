@@ -1,35 +1,49 @@
 /* Runtime target: PHP 8.4+ / MySQL 8.4+ */
+/* Microsoft Fluent UI Design System */
 :root {
     color-scheme: light dark;
-    --app-bg: #f5f7fb;
-    --app-surface: #ffffff;
-    --app-muted: #6b7280;
-    --app-border: #e5e7eb;
-    --app-primary: #1f4aa8;
-    --app-primary-dark: #15377d;
-    --app-accent: #e3edff;
-    --app-radius: 16px;
-    --app-shadow: 0 14px 32px rgba(15, 23, 42, 0.08);
-    --app-transition: all 0.2s ease;
+    /* Fluent UI Color Palette */
+    --fluent-slate: #605E5C;
+    --fluent-slate-light: #8A8886;
+    --fluent-slate-lighter: #F3F2F1;
+    --fluent-azure: #0078D4;
+    --fluent-azure-dark: #106EBE;
+    --fluent-azure-darker: #005A9E;
+    --fluent-white: #FFFFFF;
+    --fluent-white-soft: #FAF9F8;
+    --fluent-white-softer: #F3F2F1;
+    
+    /* Application Variables */
+    --app-bg: var(--fluent-white-soft);
+    --app-surface: var(--fluent-white);
+    --app-muted: var(--fluent-slate-light);
+    --app-border: var(--fluent-slate-lighter);
+    --app-primary: var(--fluent-azure);
+    --app-primary-dark: var(--fluent-azure-dark);
+    --app-accent: #E1F0FF;
+    --app-radius: 4px;
+    --app-shadow: 0 1.6px 3.6px 0 rgba(0,0,0,0.132), 0 0.3px 0.9px 0 rgba(0,0,0,0.108);
+    --app-shadow-lifted: 0 3.2px 7.2px 0 rgba(0,0,0,0.132), 0 0.6px 1.8px 0 rgba(0,0,0,0.108);
+    --app-transition: all 0.1s cubic-bezier(0.4, 0, 0.2, 1);
 }
 
 @media (prefers-color-scheme: dark) {
     :root {
         color-scheme: dark;
-        --app-bg: #0f172a;
-        --app-surface: #1e293b;
-        --app-muted: #94a3b8;
-        --app-border: #334155;
-        --app-primary: #60a5fa;
-        --app-primary-dark: #3b82f6;
-        --app-accent: #1e3a8a;
+        --app-bg: #201F1E;
+        --app-surface: #323130;
+        --app-muted: #A19F9D;
+        --app-border: #605E5C;
+        --app-primary: #2899F5;
+        --app-primary-dark: #0078D4;
+        --app-accent: #004578;
     }
 }
 
 body.app-body {
-    font-family: "Inter", "Segoe UI", system-ui, -apple-system, sans-serif;
+    font-family: "Segoe UI", "Segoe UI Web (West European)", -apple-system, BlinkMacSystemFont, Roboto, "Helvetica Neue", sans-serif;
     background: var(--app-bg);
-    color: #111827;
+    color: var(--fluent-slate);
     -webkit-font-smoothing: antialiased;
     -moz-osx-font-smoothing: grayscale;
 }
@@ -43,16 +57,18 @@ body.app-body {
     height: 44px;
     width: 44px;
     background: var(--app-primary);
-    color: #fff;
-    border-radius: 12px;
-    font-weight: 700;
+    color: var(--fluent-white);
+    border-radius: var(--app-radius);
+    font-weight: 600;
     display: grid;
     place-items: center;
+    box-shadow: var(--app-shadow);
 }
 
 .app-title {
     font-size: 1.15rem;
     font-weight: 600;
+    color: var(--fluent-slate);
 }
 
 .app-subtitle {
@@ -69,36 +85,38 @@ body.app-body {
     align-items: center;
     gap: 6px;
     padding: 6px 10px;
-    border-radius: 999px;
+    border-radius: var(--app-radius);
     background: var(--app-accent);
     color: var(--app-primary-dark);
     font-size: 0.75rem;
     font-weight: 600;
-    border: 1px solid rgba(31, 74, 168, 0.2);
+    border: 1px solid rgba(0, 120, 212, 0.2);
 }
 
 .app-shell {
     display: grid;
     grid-template-columns: 260px 1fr;
-    gap: 24px;
-    padding: 24px;
+    gap: 0;
+    flex: 1;
 }
 
 .app-sidebar {
     background: var(--app-surface);
-    border-radius: var(--app-radius);
-    box-shadow: var(--app-shadow);
+    border-right: 1px solid var(--app-border);
     padding: 20px;
     position: sticky;
-    top: 110px;
+    top: 0;
     height: fit-content;
+    max-height: calc(100vh - 75px);
+    overflow-y: auto;
 }
 
 .app-sidebar .nav-link {
-    color: #1f2937;
-    border-radius: 10px;
+    color: var(--fluent-slate);
+    border-radius: var(--app-radius);
     padding: 10px 12px;
     transition: var(--app-transition);
+    font-size: 14px;
 }
 
 .app-sidebar .nav-link:hover {
@@ -132,6 +150,7 @@ body.app-body {
 
     .app-sidebar {
         position: static;
+        max-height: none;
     }
 }
 

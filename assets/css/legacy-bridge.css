@@ -1,4 +1,5 @@
 /* Runtime target: PHP 8.4+ / MySQL 8.4+ */
+/* Microsoft Fluent UI Legacy Bridge */
 .page_title {
     display: flex;
     justify-content: space-between;
@@ -22,6 +23,7 @@
 .page_title h3 {
     margin: 0;
     font-weight: 600;
+    color: var(--fluent-slate);
 }
 
 .top_search #search_box {
@@ -34,25 +36,32 @@
 
 .top_search .search_input {
     border: 1px solid var(--app-border);
-    border-radius: 10px;
+    border-radius: var(--app-radius);
     padding: 8px 12px;
+    font-family: inherit;
+}
+
+.top_search .search_input:focus {
+    outline: 2px solid var(--app-primary);
+    border-color: var(--app-primary);
 }
 
 .top_search .search_btn {
     border: none;
     background: var(--app-primary);
-    color: #fff;
-    border-radius: 10px;
+    color: var(--fluent-white);
+    border-radius: var(--app-radius);
     padding: 10px 20px;
     min-width: 80px;
     cursor: pointer;
-    transition: all 0.2s ease;
+    transition: var(--app-transition);
     font-weight: 500;
+    box-shadow: var(--app-shadow);
 }
 
 .top_search .search_btn:hover {
     background: var(--app-primary-dark);
-    transform: scale(1.05);
+    box-shadow: var(--app-shadow-lifted);
 }
 
 .top_search .search_btn:focus-visible {
@@ -85,6 +94,7 @@
 
 .widget_wrap h3 {
     font-weight: 600;
+    color: var(--fluent-slate);
 }
 
 .form_container ul {
@@ -101,26 +111,35 @@
 .form_container select,
 .form_container textarea {
     width: 100%;
-    border-radius: 10px;
+    border-radius: var(--app-radius);
     border: 1px solid var(--app-border);
     padding: 10px 12px;
+    font-family: inherit;
+}
+
+.form_container input:focus,
+.form_container select:focus,
+.form_container textarea:focus {
+    outline: 2px solid var(--app-primary);
+    border-color: var(--app-primary);
 }
 
 .form_container .submit_button,
 .form_container input[type='submit'] {
     background: var(--app-primary);
-    color: #fff;
+    color: var(--fluent-white);
     border: none;
     padding: 10px 16px;
-    border-radius: 10px;
+    border-radius: var(--app-radius);
     cursor: pointer;
-    transition: all 0.2s ease;
+    transition: var(--app-transition);
+    box-shadow: var(--app-shadow);
 }
 
 .form_container .submit_button:hover,
 .form_container input[type='submit']:hover {
     background: var(--app-primary-dark);
-    transform: translateY(-1px);
+    box-shadow: var(--app-shadow-lifted);
 }
 
 .form_container .submit_button:focus-visible,
@@ -141,6 +160,13 @@
 .data_table td {
     padding: 12px 14px;
     border-bottom: 1px solid var(--app-border);
+}
+
+.table th,
+.data_table th {
+    background: var(--fluent-white-softer);
+    color: var(--fluent-slate);
+    font-weight: 600;
 }
 
 .login_container,
@@ -196,24 +222,25 @@
     padding: 24px 16px;
     background: var(--app-surface);
     border: 1px solid var(--app-border);
-    border-radius: 12px;
+    border-radius: var(--app-radius);
     text-decoration: none;
     color: inherit;
     transition: var(--app-transition);
     min-height: 120px;
+    box-shadow: var(--app-shadow);
 }
 
 .switch_bar li a:hover {
     background: var(--app-accent);
     border-color: var(--app-primary);
     transform: translateY(-2px);
-    box-shadow: var(--app-shadow);
+    box-shadow: var(--app-shadow-lifted);
 }
 
 .switch_bar li a .label {
     font-weight: 500;
     text-align: center;
-    color: #1f2937;
+    color: var(--fluent-slate);
 }
 
 /* Dark mode support for switch_bar labels */
@@ -237,54 +264,55 @@
 .btn_large {
     display: inline-block;
     padding: 10px 20px;
-    border-radius: 10px;
+    border-radius: var(--app-radius);
     border: none;
     cursor: pointer;
     font-weight: 500;
     transition: var(--app-transition);
     text-decoration: none;
+    box-shadow: var(--app-shadow);
 }
 
 .btn_blue,
 button[type="submit"] {
     background: var(--app-primary);
-    color: #fff;
+    color: var(--fluent-white);
 }
 
 .btn_blue:hover,
 button[type="submit"]:hover {
     background: var(--app-primary-dark);
-    transform: translateY(-1px);
+    box-shadow: var(--app-shadow-lifted);
 }
 
 .btn_orange {
-    background: #f59e0b;
-    color: #fff;
+    background: #F7630C;
+    color: var(--fluent-white);
 }
 
 .btn_orange:hover {
-    background: #d97706;
-    transform: translateY(-1px);
+    background: #D15500;
+    box-shadow: var(--app-shadow-lifted);
 }
 
 .btn_red {
-    background: #ef4444;
-    color: #fff;
+    background: #D13438;
+    color: var(--fluent-white);
 }
 
 .btn_red:hover {
-    background: #dc2626;
-    transform: translateY(-1px);
+    background: #A4262C;
+    box-shadow: var(--app-shadow-lifted);
 }
 
 .btn_green {
-    background: #16a34a;
-    color: #fff;
+    background: #107C10;
+    color: var(--fluent-white);
 }
 
 .btn_green:hover {
-    background: #15803d;
-    transform: translateY(-1px);
+    background: #0B6A0B;
+    box-shadow: var(--app-shadow-lifted);
 }
 
 /* Ensure button text (including spans) inherits button color */
@@ -311,7 +339,7 @@ button span,
     display: block;
     font-weight: 500;
     margin-bottom: 8px;
-    color: #374151;
+    color: var(--fluent-slate);
 }
 
 .form_input {
@@ -352,9 +380,9 @@ button span,
 #secondary_nav #sidenav li a {
     display: block;
     padding: 10px 12px;
-    border-radius: 8px;
+    border-radius: var(--app-radius);
     text-decoration: none;
-    color: #1f2937;
+    color: var(--fluent-slate);
     transition: var(--app-transition);
 }
 
@@ -380,8 +408,10 @@ span.clear {
 
 .settings-dashboard h2 {
     margin-bottom: 12px;
+    color: var(--fluent-slate);
 }
 
 .settings-dashboard p {
     margin: 0;
+    color: var(--app-muted);
 }

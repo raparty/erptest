@@ -32,24 +32,46 @@ $mysqlServerInfoSafe = htmlspecialchars($mysqlServerInfo, ENT_QUOTES, 'UTF-8');
     <link rel="stylesheet" href="assets/css/legacy-bridge.css">
 
     <style>
-        :root { --sidebar-w: 260px; --bg-page: #f8fafc; }
-        .app-shell { display: flex !important; min-height: 100vh; width: 100%; align-items: stretch; }
-        #sidebar { width: var(--sidebar-w); flex-shrink: 0; background: #fff; border-right: 1px solid #e2e8f0; }
-        #container { flex: 1; padding: 30px; background: var(--bg-page); }
+        /* Microsoft Fluent UI Color Palette */
+        :root { 
+            --fluent-slate: #605E5C;
+            --fluent-slate-light: #8A8886;
+            --fluent-slate-lighter: #F3F2F1;
+            --fluent-azure: #0078D4;
+            --fluent-azure-dark: #106EBE;
+            --fluent-azure-darker: #005A9E;
+            --fluent-white: #FFFFFF;
+            --fluent-white-soft: #FAF9F8;
+            --fluent-white-softer: #F3F2F1;
+            --sidebar-w: 260px; 
+            --bg-page: var(--fluent-white-soft);
+        }
+        
+        /* Robust Flexbox Shell */
+        body { margin: 0; padding: 0; min-height: 100vh; display: flex; flex-direction: column; }
+        .app-shell { display: flex !important; flex: 1; width: 100%; align-items: stretch; }
+        #sidebar { width: var(--sidebar-w); flex-shrink: 0; background: var(--fluent-white); border-right: 1px solid var(--fluent-slate-lighter); }
+        #container { flex: 1; padding: 30px; background: var(--bg-page); min-width: 0; }
+        
+        /* Responsive Flexbox */
+        @media (max-width: 768px) {
+            .app-shell { flex-direction: column; }
+            #sidebar { width: 100%; border-right: none; border-bottom: 1px solid var(--fluent-slate-lighter); }
+        }
     </style>
 </head>
 <body class="app-body">
-    <header class="app-header shadow-sm" style="background: #fff; border-bottom: 1px solid #e2e8f0; padding: 10px 30px; display: flex; justify-content: space-between; align-items: center; height: 75px;">
+    <header class="app-header shadow-sm" style="background: var(--fluent-white); border-bottom: 1px solid var(--fluent-slate-lighter); padding: 10px 30px; display: flex; justify-content: space-between; align-items: center; height: 75px; flex-shrink: 0;">
         <div style="display: flex; align-items: center; gap: 15px;">
-            <div style="background: #1c75bc; color: #fff; padding: 6px 14px; border-radius: 8px; font-weight: 800; font-size: 18px;">ERP</div>
+            <div style="background: var(--fluent-azure); color: var(--fluent-white); padding: 6px 14px; border-radius: 4px; font-weight: 600; font-size: 18px; box-shadow: 0 1.6px 3.6px 0 rgba(0,0,0,0.132), 0 0.3px 0.9px 0 rgba(0,0,0,0.108);">ERP</div>
             <div>
-                <div style="font-weight: 700; font-size: 16px;"><?php echo htmlspecialchars($appName); ?></div>
-                <div style="font-size: 10px; color: #64748b; text-transform: uppercase;">Enterprise School Management</div>
+                <div style="font-weight: 600; font-size: 16px; color: var(--fluent-slate);"><?php echo htmlspecialchars($appName); ?></div>
+                <div style="font-size: 11px; color: var(--fluent-slate-light); text-transform: uppercase; letter-spacing: 0.5px;">Enterprise School Management</div>
             </div>
         </div>
         <div style="display: flex; align-items: center; gap: 20px;">
-            <span style="font-size: 13px;">Welcome, <strong><?php echo htmlspecialchars($_SESSION['username'] ?? 'Admin'); ?></strong></span>
-            <a href="logout.php" class="btn btn-outline-danger btn-sm">Sign Out</a>
+            <span style="font-size: 13px; color: var(--fluent-slate);">Welcome, <strong style="color: var(--fluent-azure);"><?php echo htmlspecialchars($_SESSION['username'] ?? 'Admin'); ?></strong></span>
+            <a href="logout.php" class="btn btn-sm" style="background: var(--fluent-azure); color: var(--fluent-white); border: none; padding: 8px 16px; border-radius: 4px; text-decoration: none; font-size: 14px; font-weight: 500; box-shadow: 0 1.6px 3.6px 0 rgba(0,0,0,0.132), 0 0.3px 0.9px 0 rgba(0,0,0,0.108); transition: all 0.1s ease;">Sign Out</a>
         </div>
     </header>
     <div class="app-shell">
