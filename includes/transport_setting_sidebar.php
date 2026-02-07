@@ -68,7 +68,7 @@
     <ul>
         <li>
             <a href="transport_route_detail.php">
-                <svg class="nav-icon-svg" viewBox="0 0 24 24"><path d="M12 2L4.5 20.29l.71.71L12 18l6.79 3 .71-.71z M12 2L4.5 20.29l.71.71L12 18l6.79 3 .71-.71z M13 17.94v-14l5.47 9.06-5.47 4.94z M11 3.94l-5.47 9.06 5.47 4.94V3.94z"/></svg>
+                <svg class="nav-icon-svg" viewBox="0 0 24 24"><path d="M12 2L4.5 20.29l.71.71L12 18l6.79 3 .71-.71z M13 17.94v-14l5.47 9.06-5.47 4.94z M11 3.94l-5.47 9.06 5.47 4.94V3.94z"/></svg>
                 <span class="label">Set Routes Details</span>
             </a>
         </li>

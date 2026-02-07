@@ -68,7 +68,7 @@
     <ul>
         <li>
             <a href="category.php">
-                <svg class="nav-icon-svg" viewBox="0 0 24 24"><path d="M12 2l-5.5 9h11z M17.5 13h-11L12 22z M12 2L6.5 11h11L12 2zm0 20l-5.5-9h11L12 22z"/></svg>
+                <svg class="nav-icon-svg" viewBox="0 0 24 24"><path d="M12 2L6.5 11h11L12 2zm0 20l-5.5-9h11L12 22z"/></svg>
                 <span class="label">Category Manager</span>
             </a>
         </li>
