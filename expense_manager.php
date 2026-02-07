@@ -104,8 +104,8 @@ include_once("includes/header.php");?>
 					
 			
 		  </div>
-            <div class="btn_30_blue float-right">
-								<a href="add_expense.php"><span style="width:140px">Add Expense</span></a>
+            <div class="btn_30_blue float-right" style="margin-bottom: 20px;">
+								<a href="add_expense.php" class="btn_small btn_blue"><span style="width:140px">+ Add Expense</span></a>
 							</div>
             <div class="grid_12">
 				<div class="widget_wrap">

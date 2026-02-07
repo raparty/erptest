@@ -37,7 +37,7 @@ $photo_path = !empty($row_value['student_pic']) ? $row_value['student_pic'] : 'a
                     <span class="badge bg-primary mb-3"><?php echo htmlspecialchars($row_value['reg_no']); ?></span>
                     
                     <div style="margin-top: 20px; border-top: 1px solid #f1f5f9; padding-top: 20px;">
-                        <a href="edit_admission.php?id=<?php echo $student_id; ?>" class="btn_blue w-100 mb-2">Edit Profile</a>
+                        <a href="edit_admission.php?student_id=<?php echo $student_id; ?>" class="btn_blue w-100 mb-2">Edit Profile</a>
                         <a href="print_id_card.php?student_id=<?php echo $student_id; ?>" class="btn btn-outline-secondary btn-sm w-100">Print ID Card</a>
                     </div>
                 </div>
