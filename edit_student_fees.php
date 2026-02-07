@@ -23,12 +23,12 @@ if(isset($_POST['submit']))
 	header("Location:fees_manager.php?msg=3");
 	}else
 	{
-		header("Location:edit_student_fees.php?error=2&&fee_id=$fee_id");
+		header("Location:edit_student_fees.php?error=2&fee_id=$fee_id");
 	}
 }
 else
 	{
-		header("location:edit_student_fees.php?error=3&&fee_id=$fee_id");
+		header("location:edit_student_fees.php?error=3&fee_id=$fee_id");
 	}
 }
 
