@@ -214,7 +214,10 @@ include_once("includes/header.php");?>
 							
 							
 							<td class="center">
-						<span><a class="action-icons c-add" href="fees_reciept.php?registration_no=<?php echo $student_info['registration_no'];?>&&fees_term=<?php echo $row['fees_term']; ?>" original-title="View Reciept">Reciept</a></span>		<span><a class="action-icons c-edit" href="edit_student_fees.php?sid=<?php echo $row[0]; ?>" title="Edit">Edit</a></span><span><a class="action-icons c-delete" href="delete_student_fees.php?sid=<?php echo $row[0]; ?>" title="delete" onClick="return checkform1()">Delete</a></span>
+						<span><a class="action-icons c-add" href="fees_reciept.php?registration_no=<?php echo $student_info['registration_no'];?>&&fees_term=<?php echo $row['fees_term']; ?>" original-title="View Reciept">Receipt</a></span>		
+						<span><a class="action-icons c-add" href="entry_fees_reciept.php?registration_no=<?php echo $student_info['registration_no'];?>" original-title="Collect Fee">Collect Fee</a></span>
+						<span><a class="action-icons c-edit" href="edit_student_fees.php?sid=<?php echo $row[0]; ?>" title="Edit">Edit</a></span>
+						<span><a class="action-icons c-delete" href="delete_student_fees.php?sid=<?php echo $row[0]; ?>" title="delete" onClick="return checkform1()">Delete</a></span>
 							</td>
 						</tr>
 						

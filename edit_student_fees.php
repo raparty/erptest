@@ -236,7 +236,7 @@ $row=db_fetch_array(db_query($studentinfo));
 								<div class="form_grid_12">
 									<div class="form_input">
 										
-										<button type="submit" class="btn_small btn_blue" name="submit"><span>Save</span></button>
+										<button type="submit" class="btn-fluent-primary" name="submit"><span>Save</span></button>
 										
 										<a href="fees_manager.php"><button type="button" class="btn_small btn_orange"><span>Back</span></button></a>
 										

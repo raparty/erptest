@@ -40,47 +40,6 @@ if(isset($_POST['submit']))
 
 
 ?>
-<div class="page_title">
-	<!--	<span class="title_icon"><span class="computer_imac"></span></span>
-	<script>
-									function subcat()
-									{
-										var s=document.getElementById("subc").value;
-										var xmlhttp;
-										//alert(s);
-if (window.XMLHttpRequest)
-  {// code for IE7+, Firefox, Chrome, Opera, Safari
-  xmlhttp=new XMLHttpRequest();
-  }
-else
-  {// code for IE6, IE5
-  xmlhttp=new ActiveXObject("Microsoft.XMLHTTP");
-  }
-xmlhttp.onreadystatechange=function()
-  {
-  if (xmlhttp.readyState==4 && xmlhttp.status==200)
-    {
-    document.getElementById("subd").innerHTML=xmlhttp.responseText;
-  // alert(subd);
-    }
-  }
-xmlhttp.open("GET","ajax_exam_date.php?s="+s,true);
-xmlhttp.send();	
-									}
-									</script>	<h3>Dashboard</h3>-->
-		<div class="top_search">
-			<form action="#" method="post">
-				<ul id="search_box">
-					<li>
-					<input name="" type="text" class="search_input" id="suggest1" placeholder="Search...">
-					</li>
-					<li>
-					<input name="" type="submit" value="Search" class="search_btn">
-					</li>
-				</ul>
-			</form>
-		</div>
-	</div>
 <?php include_once("includes/fees_setting_sidebar.php");?>
 <div id="container">
 	
@@ -114,7 +73,7 @@ xmlhttp.send();
 OR <span style="color:#F00"> *</span>
 </label>
                                         <div class="form_grid_4" style="margin-left:-25px;">
-											<a  href="fees_reciept_searchby_name.php" style="text-decoration:underline"><input type="button" name="search" value="search by name" class="btn_small btn_orange"></a>
+											<a  href="fees_reciept_searchby_name.php" class="btn_small btn_blue" style="text-decoration:none; display:inline-block; padding: 8px 15px;"><span>Search by Name</span></a>
 								</div>
 									
 										<span class="clear"></span>

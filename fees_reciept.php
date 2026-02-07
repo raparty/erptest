@@ -242,7 +242,10 @@ color:#ffffff;
 
 <table width="100%" id="student1">
 <tr >
-<td colspan="6" id="hidebutton" style="display:block;"> <a href="fees_manager.php"  style="text-decoration:none;"><input type="button" name="search" value="Back" class="btn_small btn_orange"></a>  <a href="#" onclick="return printdata()"  style="text-decoration:none; margin-left:50px;"><input type="button" name="search" value="Print" class="btn_small btn_orange"></a></td>
+<td colspan="6" id="hidebutton" style="display:block;"> 
+  <a href="fees_manager.php" class="btn_small btn_blue" style="text-decoration:none; display:inline-block; padding: 8px 15px;"><span>Close</span></a>  
+  <a href="#" onclick="return printdata()" class="btn_small btn_orange" style="text-decoration:none; margin-left:15px; display:inline-block; padding: 8px 15px;"><span>Print</span></a>
+</td>
 </tr>
 
 </table>

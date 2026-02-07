@@ -39,6 +39,7 @@ include_once("includes/school_setting_sidebar.php");
                                     <td class="center"><strong><?php echo htmlspecialchars($row['class_name']); ?></strong></td>
                                     <td class="center"><?php echo ($row['stream_status'] == 1) ? "Yes" : "No"; ?></td>
                                     <td class="center">
+                                        <a href="section.php?class_id=<?php echo $row['id']; ?>" class="action-icons c-add" title="Manage Sections">Sections</a> | 
                                         <a href="edit_class.php?sid=<?php echo $row['id']; ?>">Edit</a> | 
                                         <a href="delete_class.php?sid=<?php echo $row['id']; ?>" onclick="return confirm('Delete this class?')">Delete</a>
                                     </td>

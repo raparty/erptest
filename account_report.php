@@ -125,7 +125,7 @@ if(isset($_POST['category_type']) && $_POST['category_type']!="")
 					<div class="widget_content">
 						
 						<table class="display data_tbl" >
-						<thead>
+						<thead style="background-color: #605E5C; color: white;">
 						<tr>
 							
 							<th>
