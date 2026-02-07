@@ -56,10 +56,12 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST' && isset($_POST['submit'])) {
                     if (move_uploaded_file($_FILES['student_pic']['tmp_name'], $target)) {
                         $photo_path = $target;
                         // Delete old photo if it exists and is within uploads directory
-                        if ($old_photo && $old_photo !== 'assets/images/no-photo.png' && 
-                            strpos(realpath($old_photo), realpath('uploads/students/')) === 0 && 
-                            file_exists($old_photo)) {
-                            unlink($old_photo);
+                        if ($old_photo && $old_photo !== 'assets/images/no-photo.png') {
+                            $old_real = realpath($old_photo);
+                            $uploads_real = realpath('uploads/students/');
+                            if ($old_real && $uploads_real && strpos($old_real, $uploads_real) === 0 && file_exists($old_photo)) {
+                                unlink($old_photo);
+                            }
                         }
                     }
                 }
@@ -97,10 +99,12 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST' && isset($_POST['submit'])) {
                     if (move_uploaded_file($_FILES['aadhaar_doc']['tmp_name'], $target)) {
                         $doc_path = $target;
                         // Delete old document if it exists and is within uploads directory
-                        if ($old_doc && 
-                            strpos(realpath($old_doc), realpath('uploads/students/')) === 0 && 
-                            file_exists($old_doc)) {
-                            unlink($old_doc);
+                        if ($old_doc) {
+                            $old_real = realpath($old_doc);
+                            $uploads_real = realpath('uploads/students/');
+                            if ($old_real && $uploads_real && strpos($old_real, $uploads_real) === 0 && file_exists($old_doc)) {
+                                unlink($old_doc);
+                            }
                         }
                     }
                 }
@@ -136,8 +140,8 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST' && isset($_POST['submit'])) {
             } else {
                 error_log("Database error in edit_admission.php: " . mysqli_error($conn));
                 $error_msg = "An error occurred while updating the student profile. Please try again.";
+                mysqli_stmt_close($stmt);
             }
-            mysqli_stmt_close($stmt);
         }
     }
 }
@@ -217,14 +221,14 @@ include_once("includes/sidebar.php");
                                         </div>
                                         <div class="col-md-6">
                                             <label class="form-label fw-bold">Admission Date</label>
-                                            <input name="admission_date" type="date" class="form-control" value="<?php echo $row_value['admission_date']; ?>">
+                                            <input name="admission_date" type="date" class="form-control" value="<?php echo htmlspecialchars($row_value['admission_date']); ?>">
                                         </div>
                                     </div>
 
                                     <div class="row mb-3">
                                         <div class="col-md-4">
                                             <label class="form-label fw-bold">Date of Birth</label>
-                                            <input name="dob" type="date" class="form-control" value="<?php echo $row_value['dob']; ?>" required>
+                                            <input name="dob" type="date" class="form-control" value="<?php echo htmlspecialchars($row_value['dob']); ?>" required>
                                         </div>
                                         <div class="col-md-4">
                                             <label class="form-label fw-bold">Gender</label>
@@ -277,7 +281,7 @@ include_once("includes/sidebar.php");
                                     <label class="form-label fw-bold">Aadhaar Document (PDF)</label>
                                     <input type="file" name="aadhaar_doc" class="form-control" accept=".pdf">
                                     <?php if (!empty($row_value['aadhaar_doc_path'])): ?>
-                                        <small class="text-muted">Current: <a href="<?php echo $row_value['aadhaar_doc_path']; ?>" target="_blank">View Document</a></small>
+                                        <small class="text-muted">Current: <a href="<?php echo htmlspecialchars($row_value['aadhaar_doc_path']); ?>" target="_blank">View Document</a></small>
                                     <?php endif; ?>
                                 </div>
                             </div>
