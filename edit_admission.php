@@ -7,77 +7,138 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST' && isset($_POST['submit'])) {
     $conn = Database::connection();
     $student_id = (int)$_GET['student_id'];
     
-    // Sanitize inputs
-    $student_name = mysqli_real_escape_string($conn, $_POST['student_name']);
-    $admission_date = mysqli_real_escape_string($conn, $_POST['admission_date']);
-    $dob = mysqli_real_escape_string($conn, $_POST['dob']);
-    $gender = mysqli_real_escape_string($conn, $_POST['gender']);
-    $blood_group = mysqli_real_escape_string($conn, $_POST['blood_group']);
+    // Validate inputs
+    $student_name = trim($_POST['student_name']);
+    $admission_date = $_POST['admission_date'];
+    $dob = $_POST['dob'];
+    $gender = $_POST['gender'];
+    $blood_group = trim($_POST['blood_group']);
     $class_id = (int)$_POST['class_id'];
-    $aadhaar_no = mysqli_real_escape_string($conn, $_POST['aadhaar_no']);
-    $guardian_name = mysqli_real_escape_string($conn, $_POST['guardian_name'] ?? '');
-    $guardian_phone = mysqli_real_escape_string($conn, $_POST['guardian_phone'] ?? '');
-    $past_school = mysqli_real_escape_string($conn, $_POST['past_school_info']);
+    $aadhaar_no = trim($_POST['aadhaar_no']);
+    $guardian_name = trim($_POST['guardian_name'] ?? '');
+    $guardian_phone = trim($_POST['guardian_phone'] ?? '');
+    $past_school = trim($_POST['past_school_info']);
     
-    // Get old photo path
-    $old_photo = mysqli_real_escape_string($conn, $_POST['old_photo']);
-    $photo_path = $old_photo;
-    
-    // Handle new photo upload
-    if (!empty($_FILES['student_pic']['name'])) {
-        $upload_dir = "uploads/students/photos/";
-        $ext = pathinfo($_FILES['student_pic']['name'], PATHINFO_EXTENSION);
-        $filename = "student_" . $student_id . "_" . time() . "." . $ext;
-        $target = $upload_dir . $filename;
-        if (move_uploaded_file($_FILES['student_pic']['tmp_name'], $target)) {
-            $photo_path = $target;
-            // Delete old photo if it exists and is not the default
-            if ($old_photo && $old_photo !== 'assets/images/no-photo.png' && file_exists($old_photo)) {
-                unlink($old_photo);
-            }
-        }
-    }
-    
-    // Get old document path
-    $old_doc = mysqli_real_escape_string($conn, $_POST['old_aadhaar_doc']);
-    $doc_path = $old_doc;
-    
-    // Handle new Aadhaar document upload
-    if (!empty($_FILES['aadhaar_doc']['name'])) {
-        $upload_dir = "uploads/students/documents/";
-        $ext = pathinfo($_FILES['aadhaar_doc']['name'], PATHINFO_EXTENSION);
-        $filename = "student_" . $student_id . "_aadhaar_" . time() . "." . $ext;
-        $target = $upload_dir . $filename;
-        if (move_uploaded_file($_FILES['aadhaar_doc']['tmp_name'], $target)) {
-            $doc_path = $target;
-            // Delete old document if it exists
-            if ($old_doc && file_exists($old_doc)) {
-                unlink($old_doc);
-            }
-        }
-    }
-    
-    // Update query
-    $sql = "UPDATE admissions SET 
-                student_name = '$student_name',
-                student_pic = '$photo_path',
-                dob = '$dob',
-                gender = '$gender',
-                blood_group = '$blood_group',
-                class_id = $class_id,
-                admission_date = '$admission_date',
-                aadhaar_no = '$aadhaar_no',
-                aadhaar_doc_path = '$doc_path',
-                guardian_name = '$guardian_name',
-                guardian_phone = '$guardian_phone',
-                past_school_info = '$past_school'
-            WHERE id = $student_id";
-    
-    if (mysqli_query($conn, $sql)) {
-        header("Location: view_student_detail.php?student_id=$student_id&msg=updated");
-        exit;
+    // Validate Aadhaar number format (12 digits only)
+    if (!empty($aadhaar_no) && !preg_match('/^\d{12}$/', $aadhaar_no)) {
+        $error_msg = "Aadhaar number must be exactly 12 digits.";
     } else {
-        $error_msg = "Database Error: " . mysqli_error($conn);
+        // Get old photo path
+        $old_photo = $_POST['old_photo'];
+        $photo_path = $old_photo;
+        
+        // Handle new photo upload
+        if (!empty($_FILES['student_pic']['name'])) {
+            $upload_dir = "uploads/students/photos/";
+            if (!is_dir($upload_dir)) {
+                mkdir($upload_dir, 0755, true);
+            }
+            
+            // Validate file
+            $allowed_types = ['image/jpeg', 'image/jpg', 'image/png'];
+            $max_size = 2 * 1024 * 1024; // 2MB
+            $finfo = finfo_open(FILEINFO_MIME_TYPE);
+            $mime_type = finfo_file($finfo, $_FILES['student_pic']['tmp_name']);
+            finfo_close($finfo);
+            
+            if (!in_array($mime_type, $allowed_types)) {
+                $error_msg = "Only JPG and PNG images are allowed.";
+            } elseif ($_FILES['student_pic']['size'] > $max_size) {
+                $error_msg = "Image file size must not exceed 2MB.";
+            } else {
+                $ext = pathinfo($_FILES['student_pic']['name'], PATHINFO_EXTENSION);
+                $allowed_exts = ['jpg', 'jpeg', 'png'];
+                if (!in_array(strtolower($ext), $allowed_exts)) {
+                    $error_msg = "Invalid file extension.";
+                } else {
+                    $filename = "student_" . $student_id . "_" . time() . "." . $ext;
+                    $target = $upload_dir . $filename;
+                    if (move_uploaded_file($_FILES['student_pic']['tmp_name'], $target)) {
+                        $photo_path = $target;
+                        // Delete old photo if it exists and is within uploads directory
+                        if ($old_photo && $old_photo !== 'assets/images/no-photo.png' && 
+                            strpos(realpath($old_photo), realpath('uploads/students/')) === 0 && 
+                            file_exists($old_photo)) {
+                            unlink($old_photo);
+                        }
+                    }
+                }
+            }
+        }
+        
+        // Get old document path
+        $old_doc = $_POST['old_aadhaar_doc'];
+        $doc_path = $old_doc;
+        
+        // Handle new Aadhaar document upload
+        if (empty($error_msg) && !empty($_FILES['aadhaar_doc']['name'])) {
+            $upload_dir = "uploads/students/documents/";
+            if (!is_dir($upload_dir)) {
+                mkdir($upload_dir, 0755, true);
+            }
+            
+            // Validate PDF
+            $max_size = 5 * 1024 * 1024; // 5MB
+            $finfo = finfo_open(FILEINFO_MIME_TYPE);
+            $mime_type = finfo_file($finfo, $_FILES['aadhaar_doc']['tmp_name']);
+            finfo_close($finfo);
+            
+            if ($mime_type !== 'application/pdf') {
+                $error_msg = "Aadhaar document must be a PDF file.";
+            } elseif ($_FILES['aadhaar_doc']['size'] > $max_size) {
+                $error_msg = "PDF file size must not exceed 5MB.";
+            } else {
+                $ext = pathinfo($_FILES['aadhaar_doc']['name'], PATHINFO_EXTENSION);
+                if (strtolower($ext) !== 'pdf') {
+                    $error_msg = "Invalid file extension for document.";
+                } else {
+                    $filename = "student_" . $student_id . "_aadhaar_" . time() . "." . $ext;
+                    $target = $upload_dir . $filename;
+                    if (move_uploaded_file($_FILES['aadhaar_doc']['tmp_name'], $target)) {
+                        $doc_path = $target;
+                        // Delete old document if it exists and is within uploads directory
+                        if ($old_doc && 
+                            strpos(realpath($old_doc), realpath('uploads/students/')) === 0 && 
+                            file_exists($old_doc)) {
+                            unlink($old_doc);
+                        }
+                    }
+                }
+            }
+        }
+        
+        // Update query using prepared statement
+        if (empty($error_msg)) {
+            $stmt = mysqli_prepare($conn, "UPDATE admissions SET 
+                        student_name = ?,
+                        student_pic = ?,
+                        dob = ?,
+                        gender = ?,
+                        blood_group = ?,
+                        class_id = ?,
+                        admission_date = ?,
+                        aadhaar_no = ?,
+                        aadhaar_doc_path = ?,
+                        guardian_name = ?,
+                        guardian_phone = ?,
+                        past_school_info = ?
+                    WHERE id = ?");
+            
+            mysqli_stmt_bind_param($stmt, "sssssississsi", 
+                $student_name, $photo_path, $dob, $gender, $blood_group, 
+                $class_id, $admission_date, $aadhaar_no, $doc_path, 
+                $guardian_name, $guardian_phone, $past_school, $student_id);
+            
+            if (mysqli_stmt_execute($stmt)) {
+                mysqli_stmt_close($stmt);
+                header("Location: view_student_detail.php?student_id=$student_id&msg=updated");
+                exit;
+            } else {
+                error_log("Database error in edit_admission.php: " . mysqli_error($conn));
+                $error_msg = "An error occurred while updating the student profile. Please try again.";
+            }
+            mysqli_stmt_close($stmt);
+        }
     }
 }
 
@@ -88,11 +149,16 @@ if ($student_id === 0) {
     exit;
 }
 
-$sql = "SELECT a.*, c.class_name 
+$conn = Database::connection();
+$stmt = mysqli_prepare($conn, "SELECT a.*, c.class_name 
         FROM admissions a 
         LEFT JOIN classes c ON a.class_id = c.id 
-        WHERE a.id = '$student_id'";
-$row_value = db_fetch_array(db_query($sql));
+        WHERE a.id = ?");
+mysqli_stmt_bind_param($stmt, "i", $student_id);
+mysqli_stmt_execute($stmt);
+$result = mysqli_stmt_get_result($stmt);
+$row_value = mysqli_fetch_assoc($result);
+mysqli_stmt_close($stmt);
 
 if (!$row_value) {
     header("Location: student_detail.php");
