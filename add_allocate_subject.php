@@ -31,7 +31,6 @@ include_once("includes/school_setting_sidebar.php");
             <div class="grid_12">
                 <div class="widget_wrap">
                     <div class="widget_top">
-                        <span class="h_icon documents"></span>
                         <h6>Link Subject to Class</h6>
                     </div>
                     <div class="widget_content">

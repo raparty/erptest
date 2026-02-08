@@ -85,9 +85,6 @@ require_once("includes/sidebar.php");
     .fluent-icon-container svg { width: 30px; height: 30px; fill: var(--app-primary); transition: 0.2s; }
     .fluent-card:hover .fluent-icon-container svg { fill: #fff; }
     .fluent-card-label { font-weight: 600; font-size: 13px; color: var(--fluent-slate); text-transform: uppercase; letter-spacing: 0.8px; }
-
-    /* Remove legacy artifacts */
-    .title_icon, .h_icon { display: none !important; }
 </style>
 
 <?php require_once("includes/footer.php"); ?>

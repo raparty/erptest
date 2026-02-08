@@ -66,7 +66,7 @@ include_once("includes/header.php"); ?>
 				</li>
 				<li><a href="table.html"><span class="nav_icon blocks_images"></span> Tables</a>
 				</li>
-				<li><a href="ui-elements.html"><span class="nav_icon list_images"></span>User Interface Elements</a></li>
+				<li><a href="ui-elements.html"><span class="nav_icon"></span>User Interface Elements</a></li>
 				<li><a href="buttons-icons.html"><span class="nav_icon coverflow"></span>Butons And Icons</a></li>
 				<li><a href="widgets.html"><span class="nav_icon list_image"></span>All Widgets</a></li>
 				<li><a href="#"><span class="nav_icon documents"></span>Pages<span class="alert_notify blue">5</span><span class="up_down_arrow">&nbsp;</span></a>
@@ -285,7 +285,6 @@ include_once("includes/header.php"); ?>
 			<div class="grid_12 full_block">
 				<div class="widget_wrap">
 					<div class="widget_top">
-						<span class="h_icon list_image"></span>
 						<h6>All Form Elements</h6>
 					</div>
 					<div class="widget_content">

@@ -342,15 +342,6 @@ input[type="button"] span {
   color: var(--neutral-500);
 }
 
-/* --- UI Modernization: Global Hide Legacy Icons --- */
-
-/* Hide the legacy round blue icon (h_icon) globally */
-.h_icon, 
-.h_icon.list_images,
-span[class*="h_icon"] {
-    display: none !important;
-}
-
 /* Adjust title alignment now that the icon is gone */
 .widget_top h6 {
     margin-left: 10px !important;

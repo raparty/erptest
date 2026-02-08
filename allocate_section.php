@@ -13,7 +13,6 @@ include_once("includes/school_setting_sidebar.php");
             <div class="grid_12">
                 <div class="widget_wrap">
                     <div class="widget_top">
-                        <span class="h_icon blocks_images"></span>
                         <h6 style="display:inline-block">Allocated Sections</h6>
                         <div style="float:right; padding: 5px;">
                             <a href="add_allocate_section.php" class="btn-fluent-primary"><span style="padding: 8px 16px; display: inline-block;">+ Allocate Section</span></a>
