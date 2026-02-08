@@ -9,12 +9,11 @@ include_once("includes/school_setting_sidebar.php");
 <div id="container">
     <div id="content">
         <div class="grid_container">
-            <h3 style="padding:10px 0 0 20px; color:#0078D4">Institutional Identity</h3>
+            <h3 style="padding:10px 0 0 20px; color:#1c75bc">Institutional Identity</h3>
             <div class="grid_12">
                 <div class="widget_wrap">
                     <div class="widget_top">
-                        <span class="h_icon list_images"></span>
-                        <h6 style="display:inline-block">School Profile</h6>
+                        <h6 style="display:inline-block; margin-left: 10px;">School Profile</h6>
                         <div style="float:right; padding: 5px;">
                             <a href="add_school_detail.php" class="btn_small btn_blue"><span>+ Update School Info</span></a>
                         </div>
