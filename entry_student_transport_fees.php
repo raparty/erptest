@@ -124,7 +124,12 @@ else
 OR <span style="color:#F00"> *</span>
 </label>
                                         <div class="form_grid_4" style="margin-left:-25px;">
-											<a  href="transport_fees_searchby_name.php" style="text-decoration:underline"><input type="button" name="search" value="search by name" class="btn_small btn_orange"></a>
+											<a href="transport_fees_searchby_name.php" class="btn-fluent-secondary" style="text-decoration:none;">
+												<svg width="16" height="16" viewBox="0 0 24 24" fill="none" style="vertical-align:middle;margin-right:6px;">
+													<path d="M15.5 14h-.79l-.28-.27C15.41 12.59 16 11.11 16 9.5 16 5.91 13.09 3 9.5 3S3 5.91 3 9.5 5.91 16 9.5 16c1.61 0 3.09-.59 4.23-1.57l.27.28v.79l5 4.99L20.49 19l-4.99-5zm-6 0C7.01 14 5 11.99 5 9.5S7.01 5 9.5 5 14 7.01 14 9.5 11.99 14 9.5 14z" fill="currentColor"/>
+												</svg>
+												Search by Name
+											</a>
 								</div>
 									
 										<span class="clear"></span>
@@ -142,11 +147,21 @@ OR <span style="color:#F00"> *</span>
                                 
 								<li>
 								<div class="form_grid_12">
-									<div class="form_input">
+									<div class="form_input d-flex gap-2">
 										
-										<button type="submit" class="btn_small btn_blue" name="submit1"><span>Save</span></button>
+										<button type="submit" class="btn-fluent-primary" name="submit1">
+											<svg width="16" height="16" viewBox="0 0 24 24" fill="none" style="vertical-align:middle;margin-right:6px;">
+												<path d="M9 16.2L4.8 12l-1.4 1.4L9 19 21 7l-1.4-1.4L9 16.2z" fill="currentColor"/>
+											</svg>
+											<span>Save</span>
+										</button>
 										
-										<a href="fees_manager.php"><button type="button" class="btn_small btn_orange"><span>Back</span></button></a>
+										<a href="fees_manager.php" class="btn-fluent-secondary">
+											<svg width="16" height="16" viewBox="0 0 24 24" fill="none" style="vertical-align:middle;margin-right:6px;">
+												<path d="M20 11H7.83l5.59-5.59L12 4l-8 8 8 8 1.41-1.41L7.83 13H20v-2z" fill="currentColor"/>
+											</svg>
+											<span>Back</span>
+										</a>
 										
 									</div>
 								</div>
