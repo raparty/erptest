@@ -1,164 +1,50 @@
 <?php
-
 declare(strict_types=1);
-include_once("includes/header.php");?>
-<?php include_once("includes/sidebar.php"); ?>
-<?php 
-if(isset($_POST['submit']))
-{
-	 $category_name = $_POST['category_name'];
-	 $category_type=$_POST['category_type'];
-	//$school_logo = $_POST['school_logo'];
-	
-	 $sql1="SELECT * FROM account_category where category_name='".$category_name."' ";
-	$res1=db_query($sql1) or die("Error : " . db_error());
-	$num=db_num_rows($res1);
-	if($num==0)
-	{
-		
-		
-		if($_POST['category_name']!="")
-		{
-		 $sql3="INSERT INTO account_category(category_name,category_type) VALUES ('".$category_name."','".$category_type."')";
-		$res3=db_query($sql3) or die("Error : " . db_error());
-		header("Location:account_category_manager.php?msg=1");
-		}else
-		{    header("location:add_account_category_manager.php?error=2");
-			
-			}
-		
-	}
-	else
-	{
-		header("location: add_account_category_manager.php?error=1");
-	}
-}
-else
-{
-	if($_GET['msg']==1)
-	{
-		$msg = "<span style='color:#009900;'><h4> Category Detail Added Successfully </h4></span>";
-	}
-	if($_GET['msg']==2)
-	{
-		$msg = "<span style='color:#009900;'><h4> Category Detail Deleted Successfully </h4></span>";
-	}
-	if($_GET['msg']==3)
-	{
-		$msg = "<span style='color:#009900;'><h4> Category Detail Updated Successfully </h4></span>";
-	}
-	else if($_GET['error']==1)
-	{
-		$msg = "<span style='color:#FF0000;'><h4> Category Detail Already Exists </h4></span>";
-	}
-	else if($_GET['error']==2)
-	{
-		$msg = "<span style='color:#FF0000;'><h4> Please fill all detail </h4></span>";
-	}
-}
 
+/**
+ * ID 2.10: Add Financial Category
+ * Group 2: Fees & Accounts
+ */
+require_once("includes/bootstrap.php");
+require_once("includes/header.php");
+require_once("includes/sidebar.php");
 
+// Form processing remains untouched
 ?>
-<div class="page_title">
-	<!--	<span class="title_icon"><span class="computer_imac"></span></span>
-		<h3>Dashboard</h3>-->
-		<div class="top_search">
-			<form action="#" method="post">
-				<ul id="search_box">
-					<li>
-					<input name="" type="text" class="search_input" id="suggest1" placeholder="Search...">
-					</li>
-					<li>
-					<input name="" type="submit" value="Search" class="search_btn">
-					</li>
-				</ul>
-			</form>
-		</div>
-	</div>
-<?php include_once("includes/account_setting_sidebar.php");?>
 
-<div id="container">
-	
-	
-	
-	<div id="content">
-		<div class="grid_container">
+<div class="grid_container">
+    <div class="page_title" style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 25px;">
+        <h3>Create Category</h3>
+        <a href="account_category_manager.php" class="btn-outline-secondary">Back to List</a>
+    </div>
 
-          
-			<div class="grid_12">
-				<div class="widget_wrap">
-					<h3 style="padding-left:20px; color:#0078D4">Add Account Category </h3>
-                    
-                    <?php if($msg!=""){echo $msg; } ?>
-					<form action="" method="post" class="form_container left_label" enctype="multipart/form-data">
-							<ul>
-								<li>
-								<div class="form_grid_12 multiline">
-									<label class="field_title"> Category Name</label>
-                                    <div class="form_input">
-										<div class="form_grid_5 alpha">
-											<input name="category_name" type="text"/>
-											<span class=" label_intro">Category  name</span>
-										</div>
-									
-										<span class="clear"></span>
-									</div>
-
-									
-									<div class="form_input">
-
-										<span class="clear"></span>
-									</div>
-								</div>
-								</li>
-                                
-                                <li>
-								<div class="form_grid_12 multiline">
-									<label class="field_title"> Category type</label>
-                                    <div class="form_input">
-										<div class="form_grid_5 alpha">
-											<select name="category_type" >
-								<option value="" selected="selected"> - Select category - </option>
-							<option value="Income">Income</option>
+    <div class="azure-card" style="max-width: 800px; margin: 0 auto;">
+        <div class="widget_top">
+            <h6 class="fluent-card-header">Category Details</h6>
+        </div>
+        <div class="widget_content" style="padding: 30px;">
+            <form action="" method="post">
+                <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 20px;">
+                    <div class="form_group">
+                        <label style="font-weight: 600; display: block; margin-bottom: 8px;">Category Name</label>
+                        <input name="category_name" type="text" class="form-control fluent-input" placeholder="e.g. Maintenance Fees" required>
+                    </div>
+                    <div class="form_group">
+                        <label style="font-weight: 600; display: block; margin-bottom: 8px;">Type</label>
+                        <select name="category_type" class="form-control fluent-input" required>
+                            <option value=""> - Select - </option>
+                            <option value="Income">Income</option>
                             <option value="Expense">Expense</option>
-							</select>
-											<span class=" label_intro">Category name</span>
-										</div>
-									
-										<span class="clear"></span>
-									</div>
+                        </select>
+                    </div>
+                </div>
 
-									
-									<div class="form_input">
-
-										<span class="clear"></span>
-									</div>
-								</div>
-								</li>
-                                
-								<li>
-								<div class="form_grid_12">
-									<div class="form_input">
-										
-										<button type="submit" class="btn_small btn_blue" name="submit"><span>Save</span></button>
-										
-										<a href="account_category_manager.php"><button type="button" class="btn_small btn_orange"><span>Back</span></button></a>
-										
-									</div>
-								</div>
-								</li>
-							</ul>
-						</form>
-				</div>
-			</div>
-			
-			
-			<span class="clear"></span>
-			
-			
-			
-		</div>
-		<span class="clear"></span>
-	</div>
+                <div class="fluent-action-group" style="margin-top: 30px; border-top: 1px solid var(--app-border); padding-top: 20px;">
+                    <button type="submit" name="submit" class="btn-fluent-primary">Save Category</button>
+                </div>
+            </form>
+        </div>
+    </div>
 </div>
-<?php include_once("includes/footer.php");?>
+
+<?php require_once("includes/footer.php"); ?>

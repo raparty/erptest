@@ -1,286 +1,102 @@
 <?php
-
 declare(strict_types=1);
-include_once("includes/header.php");?>
-<?php include_once("includes/sidebar.php"); ?>
-    <div class="page_title">
-	<!--	<span class="title_icon"><span class="computer_imac"></span></span>
-		<h3>Dashboard</h3>-->
-		<div class="top_search">
-			<form action="#" method="post">
-				<ul id="search_box">
-					<li>
-					<input name="" type="text" class="search_input" id="suggest1" placeholder="Search...">
-					</li>
-					<li>
-					<input name="" type="submit" value="Search" class="search_btn">
-					</li>
-				</ul>
-			</form>
-		</div>
-	</div>
 
-<?php include_once("includes/fees_setting_sidebar.php");?>
-<div id="container">
-	
-	
-	
-	<div id="content">
-		<div class="grid_container">
+/**
+ * ID 2.2: Student Selector for Fee Collection
+ * Group 2: Fees & Accounts
+ */
+require_once("includes/bootstrap.php");
+require_once("includes/header.php");
+require_once("includes/sidebar.php");
 
-          
-			<div class="grid_12">
-				
-					<h3 style="padding-left:20px; color:#0078D4; border-bottom:1px solid #e2e2e2;">Student Detail</h3>
-                    
-                    
-               
-               	<form action="" method="post" class="form_container left_label">
-                                    
+// Handle Search Query
+$search_query = db_escape($_POST['student_name'] ?? '');
+?>
 
-              <ul>
-               
-               
-               
-          
-           
-               <li style=" border-bottom:1px solid #F7630C;"><h4 style=" color:#F7630C; ">Search</h4>     </li>
-               
-               
-               <li>
-								<div class="form_grid_12 multiline">
-									<label class="field_title">Name</label>
-                                    <div class="form_input">
-										<div class="form_grid_5 alpha">
-											<input name="name" type="text" />
-											
-										</div>
-									
-										<span class="clear"></span>
-									</div>
-
-									
-									
-								</div>
-								</li>
-                                
-							  
-                                
-                                
-                                <li>
-								<div class="form_grid_12">
-									<label class="field_title"> Class Name </label>
-									<div class="form_input">
-										<select style=" width:300px" name="class" class="chzn-select" tabindex="13"  onChange="getForm('ajax_stream_code.php?class_id='+this.value)">
-											<option value="" selected="selected"> - Select Class - </option>
-							<?php
-							 $sql="SELECT * FROM class";
-	                           $res=db_query($sql);
-								while($row=db_fetch_array($res))
-								{
-									?>
-									<option value="<?php echo $row['class_id']; ?>"><?php echo $row['class_name']; ?></option>
-									<?php
-								}
-							?>
-										</select>
-									</div>
-								</div>
-								</li>
-                                <li>
-								<div class="form_grid_12">
-									<label class="field_title">Stream</label>
-									<div class="form_input">
-										<select style=" width:300px" name="stream" class="chzn-select" tabindex="13">
-										<option value="">---select stream---</option>
-                                        	<?php
-							 $sql="SELECT * FROM stream";
-	                           $res=db_query($sql);
-								while($row=db_fetch_array($res))
-								{
-									?>
-									<option value="<?php echo $row['stream_id']; ?>"><?php echo $row['stream_name']; ?></option>
-									<?php
-								}
-							?>
-										</select>
-									</div>
-								</div>
-								</li>
-                                
-                                
-                                
-                                <li>
-								<div class="form_grid_12">
-									<div class="form_input">
-										
-										<button type="submit" name="submit" class="btn_small btn_blue"><span>Search</span></button>
-										
-										
-										
-									</div>
-								</div>
-								</li>
-                                
-
-</ul>
-
-                </form>  
-
-					
-			
-			</div>
-            
-            <div class="grid_12">
-				<div class="widget_wrap">
-					<div class="widget_top">
-						<span class="h_icon list_images"></span>
-						<h6>Student Detail</h6>
-					</div>
-					<div class="widget_content">
-						
-						<table class="display data_tbl" >
-						<thead>
-						<tr>
-							
-							<th>
-								S.No.
-							</th>
-							<th>
-								 S R Number
-							</th>
-                            <th>
-								 Student Name 
-							</th>
-                            <th>
-								Class
-							</th>
-                             <th>
-								Email
-							</th>
-							
-							<th>
-								 Action
-							</th>
-						</tr>
-						</thead>
-						<tbody>
-                        <?php 
-						$i=1;
-						if($_POST['name']!=""&&$_POST['class']==""&&$_POST['stream']=="")
-						{
-							 $sql10="SELECT * FROM student_info where name like '%".$_POST['name']."%' and session='".$_SESSION['session']."'";
-							                                                                         
-						}
-						else if($_POST['name']==""&&$_POST['class']!=""&&$_POST['stream']=="")
-						{
-							$sql10="SELECT * FROM student_info where class ='".$_POST['class']."' and session='".$_SESSION['session']."'";
-							                                                                         
-						}
-						
-						else if($_POST['name']==""&&$_POST['class']==""&&$_POST['stream']!="")
-						{
-								$sql10="SELECT * FROM student_info where stream ='".$_POST['stream']."' and session='".$_SESSION['session']."'";
-							                                                                         
-						}
-						else if($_POST['name']!=""&&$_POST['class']!=""&&$_POST['stream']=="")
-						{
-							$sql10="SELECT * FROM student_info where name like '%".$_POST['name']."%' and  class ='".$_POST['class']."' and session='".$_SESSION['session']."'";
-							                                                                         
-						}
-						else if($_POST['name']==""&&$_POST['class']!=""&&$_POST['stream']!="")
-						{
-								$sql10="SELECT * FROM student_info where stream ='".$_POST['stream']."'  and  class ='".$_POST['class']."' and session='".$_SESSION['session']."'";
-							                                                                         
-						}
-						
-						else if($_POST['name']!=""&&$_POST['class']==""&&$_POST['stream']!="")
-						{
-							$sql10="SELECT * FROM student_info where name like '%".$_POST['name']."%' and  stream ='".$_POST['stream']."' and session='".$_SESSION['session']."'";
-							                                                                         
-						}
-						
-						else if($_POST['name']!=""&&$_POST['class']!=""&&$_POST['stream']!="")
-						{
-							
-							     $sql10="SELECT * FROM student_info where name like '%".$_POST['name']."%' and  stream ='".$_POST['stream']."' and  class ='".$_POST['class']."' and session='".$_SESSION['session']."'";                                                                    
-						}
-						
-						$res=db_query($sql10);
-						$num=db_num_rows($res);
-						if($num!=0)
-						{
-						while($row_value=db_fetch_array($res))
-						{
-							$sql1="SELECT * FROM class where class_id='".$row_value['class']."'";
-					$class=db_fetch_array(db_query($sql1));
-						
-						?>
-						<tr>
-							
-							<td class="center">
-								<a href="#"><?php echo $i;?></a>
-							</td>
-                            <td class="center">
-								<?php echo $row_value['registration_no'];?>
-							</td>
-						<td class="center">
-								<?php echo $row_value['name'];?>
-							</td>
-                            <td class="center">
-								<?php echo $class['class_name'];?>
-							</td>
-							
-							<td class="center">
-								<?php echo $row_value['s_email'];?>
-							</td>
-							
-							
-							<td class="center">
-							<a class="action-icons c-add" href="add_student_fees.php?registration_no=<?php echo $row_value['registration_no'];?>" original-title="select">Go</a>	
-							</td>
-						</tr>
-                        
-						<?php $i++;} } else{?>
-                        <tr>
-							
-							<td class="center" colspan="5" style="color:#F00;">Result not found
-								
-							</td>
-						
-						</tr>
-                        <?php } ?>
-						
-						</tbody>
-						
-						</table>
-                        
-                        <script type="text/javascript" language="javascript">
-									frm2=document.del;
-									function checkform1()
-									{
-										if(confirm("Are you sure you want to delete"))
-										{
-											return true;
-										}else
-										{
-											return false;
-											
-											}
-									}
-								</script>
-                        
-					</div>
-				</div>
-			</div>
-			
-			
-			<span class="clear"></span>
-			
-			
-			
-		</div>
-		<span class="clear"></span>
-	</div>
+<div class="dashboard-header-container">
+    <h2 class="enterprise-title">Fee Collection: Student Search</h2>
+    <div class="dashboard-search-wrapper">
+        <form action="" method="post" class="fluent-search-form">
+            <div class="input-group shadow-sm">
+                <input name="student_name" type="text" class="form-control fluent-input" 
+                       placeholder="Type student name or registration number..." 
+                       value="<?php echo htmlspecialchars($search_query); ?>" autofocus>
+                <button type="submit" class="btn-azure-search">
+                    <svg viewBox="0 0 24 24" width="18" height="18" fill="white"><path d="M15.5 14h-.79l-.28-.27A6.471 6.471 0 0 0 16 9.5 6.5 6.5 0 1 0 9.5 16c1.61 0 3.09-.59 4.23-1.57l.27.28v.79l5 4.99L20.49 19l-4.99-5zm-6 0C7.01 14 5 11.99 5 9.5S7.01 5 9.5 5 14 7.01 14 9.5 11.99 14 9.5 14z"/></svg>
+                    <span>Search Student</span>
+                </button>
+            </div>
+        </form>
+    </div>
 </div>
-<?php include_once("includes/footer.php");?>
+
+<div class="grid_container">
+    <?php include_once("includes/fees_setting_sidebar.php"); ?>
+
+    <div class="widget_wrap azure-card">
+        <div class="widget_top">
+            <h6 class="fluent-card-header">Search Results</h6>
+        </div>
+        <div class="widget_content">
+            <table class="display data_tbl fluent-table">
+                <thead>
+                    <tr>
+                        <th style="width: 60px;">Photo</th>
+                        <th>Reg. No</th>
+                        <th>Student Name</th>
+                        <th>Class</th>
+                        <th>Email</th>
+                        <th class="center">Action</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <?php 
+                    if (!empty($search_query)) {
+                        $sql = "SELECT a.*, c.class_name 
+                                FROM admissions a 
+                                LEFT JOIN classes c ON a.class_id = c.id 
+                                WHERE a.student_name LIKE '%$search_query%' 
+                                OR a.reg_no LIKE '%$search_query%'
+                                ORDER BY a.student_name ASC";
+                        $res = db_query($sql);
+                        
+                        if (db_num_rows($res) > 0) {
+                            while($row = db_fetch_array($res)) { 
+                                $photo = !empty($row['student_pic']) ? $row['student_pic'] : 'assets/images/no-photo.png';
+                    ?>
+                    <tr>
+                        <td class="center">
+                            <img src="<?php echo $photo; ?>" alt="Student" class="fluent-table-avatar">
+                        </td>
+                        <td class="center"><strong><?php echo $row['reg_no']; ?></strong></td>
+                        <td style="font-weight: 600;"><?php echo htmlspecialchars($row['student_name']); ?></td>
+                        <td class="center"><?php echo htmlspecialchars($row['class_name'] ?? 'N/A'); ?></td>
+                        <td><?php echo htmlspecialchars($row['s_email'] ?? 'N/A'); ?></td>
+                        <td class="center">
+                            <a href="add_student_fees.php?registration_no=<?php echo urlencode($row['reg_no']); ?>" 
+                               class="btn-fluent-primary" style="padding: 5px 15px; font-size: 12px;">
+                               Select Student
+                            </a>
+                        </td>
+                    </tr>
+                    <?php 
+                            }
+                        } else {
+                            echo "<tr><td colspan='6' class='center' style='padding: 40px; color: #6b7280;'>No students found matching '$search_query'.</td></tr>";
+                        }
+                    } else {
+                        echo "<tr><td colspan='6' class='center' style='padding: 40px; color: #6b7280;'>Please enter a name above to start fee collection.</td></tr>";
+                    }
+                    ?>
+                </tbody>
+            </table>
+        </div>
+    </div>
+</div>
+
+<style>
+    .title_icon { display: none !important; }
+    .fluent-table-avatar { width: 32px; height: 32px; border-radius: 50%; object-fit: cover; border: 1px solid var(--app-border); }
+</style>
+
+<?php require_once("includes/footer.php"); ?>

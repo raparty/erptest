@@ -1,283 +1,61 @@
 <?php
-
 declare(strict_types=1);
-include_once("includes/header.php");?>
-<?php include_once("includes/sidebar.php"); ?>
-<div class="page_title">
-	<!--	<span class="title_icon"><span class="computer_imac"></span></span>
-		<h3>Dashboard</h3>-->
-		<div class="top_search">
-			<form action="#" method="post">
-				<ul id="search_box">
-					<li>
-					<input name="" type="text" class="search_input" id="suggest1" placeholder="Search...">
-					</li>
-					<li>
-					<input name="" type="submit" value="Search" class="search_btn">
-					</li>
-				</ul>
-			</form>
-		</div>
-	</div>
-<?php include_once("includes/fees_setting_sidebar.php");?>
 
-<div id="container">
-	
-	
-	
-	<div id="content">
-		<div class="grid_container">
-<h3 style="padding-left:20px; color:#0078D4">Student Bus Pending Fees Detail</h3>
+/**
+ * ID 2.6: Transport Arrears (Pending) Report
+ * Group 2: Fees & Accounts
+ */
+require_once("includes/bootstrap.php");
+require_once("includes/header.php");
+require_once("includes/sidebar.php");
+?>
 
-          <div class="grid_12">
+<div class="grid_container">
+    <div class="page_title" style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 25px;">
+        <h3>Transport Arrears List</h3>
+        <button onclick="window.print()" class="btn-outline-secondary">Print List</button>
+    </div>
 
- <script language="javascript"></script>
-<form action="student_transport_pending_fees_detail.php" method="post" class="form_container left_label">
-                                    
+    <div class="azure-card" style="margin-bottom: 30px; padding: 20px;">
+        <form action="" method="post">
+            <div style="display: grid; grid-template-columns: 1fr 1fr 1fr 120px; gap: 15px; align-items: end;">
+                <div class="form_group">
+                    <label style="font-size: 12px; font-weight: 600;">Target Class</label>
+                    <select name="class" class="form-control fluent-input" required>
+                        </select>
+                </div>
+                <div class="form_group">
+                    <label style="font-size: 12px; font-weight: 600;">Fee Month/Term</label>
+                    <select name="fees_term" class="form-control fluent-input" required>
+                        </select>
+                </div>
+                <div class="form_group">
+                    <label style="font-size: 12px; font-weight: 600;">Student Name (Optional)</label>
+                    <input name="name" type="text" class="form-control fluent-input" placeholder="Partial search...">
+                </div>
+                <button type="submit" class="btn-fluent-primary" style="height: 42px;">Filter</button>
+            </div>
+        </form>
+    </div>
 
-              <ul>
-               
-               
-               
-          
-           
-               <li style=" border-bottom:1px solid #F7630C;"><h4 style=" color:#F7630C; ">Search</h4>     </li>
-               
-               
-               
-                                
-							  
-                                
-                                
-                                <li>
-								<div class="form_grid_12">
-									<label class="field_title"> Fees month </label>
-									<div class="form_input">
-										<select  style=" width:300px" name="fees_term" class="chzn-select" tabindex="13" onChange="getForm('ajax_stream_code.php?class_id='+this.value)">
-											<option value="" selected="selected"> - Select fees month - </option>
-							<?php
-							 $sql="SELECT * FROM month ";
-	                           $res=db_query($sql);
-								while($row=db_fetch_array($res))
-								{
-									?>
-									<option value="<?php echo $row[0]; ?>"><?php echo $row['month_name']; ?></option>
-									<?php
-								}
-							?>
-										</select>
-									</div>
-								</div>
-								</li>
-                                <li>
-								<div class="form_grid_12">
-									<label class="field_title"> Class Name </label>
-									<div class="form_input">
-										<select  style=" width:300px" name="class" class="chzn-select" tabindex="13" onChange="getForm('ajax_stream_code.php?class_id='+this.value)">
-											<option value="" selected="selected"> - Select Class - </option>
-							<?php
-							 $sql="SELECT * FROM class ";
-	                           $res=db_query($sql);
-								while($row=db_fetch_array($res))
-								{
-									?>
-									<option value="<?php echo $row['class_id']; ?>"><?php echo $row['class_name']; ?></option>
-									<?php
-								}
-							?>
-										</select>
-									</div>
-								</div>
-								</li>
-                                <li id="stream_code">
-								
-								</li>
-                                <li>
-								<div class="form_grid_12 multiline">
-									<label class="field_title">Search By Name<span style="font-size:10px;">&nbsp;&nbsp;&nbsp;(optional)</span></label>
-                                    <div class="form_input">
-										<div class="form_grid_5 alpha">
-											<input name="name" type="text" />
-											
-										</div>
-									
-										<span class="clear"></span>
-									</div>
-
-									
-									
-								</div>
-								</li>
-                                
-                                
-                                <li>
-								<div class="form_grid_12">
-									<div class="form_input">
-										
-										<button type="submit" name="submit" class="btn_small btn_blue"><span>Search</span></button>
-										
-										
-										
-									</div>
-								</div>
-								</li>
-                                
-</ul>
-
-
-                </form>
-             
-                            
-                            
-          </div>
-			<div class="grid_12">
-				<div class="widget_wrap">
-					<div class="widget_top">
-						<span class="h_icon list_images"></span>
-						<h6>Student Bus  Pending  Fees Detail</h6>
-					</div>
-					<div class="widget_content">
-						
-						<table class="display data_tbl" >
-						<thead>
-						<tr>
-							
-							<th>
-								S.No.
-							</th>
-							<th>
-								Student   Name
-							</th>
-                          <th>
-								Class
-							</th>
-                          <th>
-								 Fees Term
-							</th>
-                               
-                          <th>
-								Student   Fees
-							</th>
-                            <th>
-								Pending   Fees
-							</th>
-                            <th>
-								Session  
-							</th>
-							
-						</tr>
-						</thead>
-						<tbody>
-                        <?php 
-				/*	 $sql="SELECT * FROM student_info where (registration_no not in (SELECT registration_no FROM student_fees_detail where session='".$_SESSION['session']."' and fees_term='".$_POST['fees_term']."') and class='".$_POST['class']."' ) or (name like '%".$_POST['name']."%') and session='".$_SESSION['session']."' ";
-						
-						if($_POST['stream']!="")
-						{
-							$sql.=" and stream='".$_POST['stream']."'";
-							
-							}
-							
-	                           $student_info11=db_query($sql);*/
-							   $mytablename="student_info";
-							   include_once("student_transport_pending_fees_pagination.php");
-					
-					$i=1;
-					$num=db_num_rows($student_info11);
-					        if($num!=0)
-							{
-							
-					
-							while($row=db_fetch_array($student_info11))
-							{
-								
-								$sql="SELECT * FROM student_info where registration_no='".$row[1]."' ";
-	                           $student_info=db_fetch_array(db_query($sql));
-							   
-							    $sql_pending="select sum(fees_amount) from student_fees_detail where registration_no='".$student_info['registration_no']."'  and session='".$_SESSION['session']."'";
-	$deposit_amount=db_fetch_array(db_query($sql_pending));
-							   
-							   
-							   $sql="SELECT * FROM fees_package where package_id='".$row['admission_fee']."' ";
-	                           $res=db_query($sql);
-								$row3=db_fetch_array($res);
-								
-							   $sql1="SELECT * FROM class where class_id='".$student_info['class']."'";
-					$class=db_fetch_array(db_query($sql1));
-							   $sql1="SELECT * FROM month where month_id='".$_POST['fees_term']."' ";
-	                           $fees_term=db_fetch_array(db_query($sql1));
-								
-								
-								?>
-						<tr>
-							
-							<td class="center">
-								<a href="#"><?php echo $i;?></a>
-							</td>
-						
-                            <td class="center">
-								<?php echo $student_info['name']; ?>
-							</td>
-                             <td class="center">
-								<?php echo $class['class_name']; ?>
-							</td>
-							<td class="center">
-								<?php echo $fees_term['month_name']; ?>
-							</td>
-                            <td class="center">
-								<?php echo $row3['package_fees']; ?>
-							</td>
-							
-                            <td class="center">
-								<?php echo $pending_amount=$row3['package_fees']-$deposit_amount[0];?>
-							</td>
-							
-                            <td class="center">
-								<?php echo $row['session']; ?>
-							</td>
-							
-							
-							
-						</tr>
-						
-						<?php $i++;} ?>
-                       
-						<?php }else{ ?>
-						
-						
-						<tr><td colspan="7" style="color:#F00;">No result found.......</td></tr>
-						
-						
-						<?php } ?>
-						</tbody>
-						
-						</table>
-                        
-                      <script type="text/javascript" language="javascript">
-									frm2=document.del;
-									function checkform1()
-									{
-										if(confirm("Are you sure you want to delete"))
-										{
-											return true;
-										}else
-										{
-											return false;
-											
-											}
-									}
-								</script>
-                        
-					</div>
-				</div>
-			</div>
-			
-			
-			<span class="clear"></span>
-			
-			
-			
-		</div>
-		<span class="clear"></span>
-	</div>
+    <div class="widget_wrap azure-card">
+        <div class="widget_content">
+            <table class="display data_tbl fluent-table">
+                <thead>
+                    <tr>
+                        <th>Reg. No</th>
+                        <th>Student Name</th>
+                        <th>Class</th>
+                        <th>Unpaid Month</th>
+                        <th>Package Amt</th>
+                        <th class="center" style="color: #ef4444;">Pending Bal</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    </tbody>
+            </table>
+        </div>
+    </div>
 </div>
-<?php include_once("includes/footer.php");?>
+
+<?php require_once("includes/footer.php"); ?>

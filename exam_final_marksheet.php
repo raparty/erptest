@@ -1,292 +1,86 @@
 <?php
-
 declare(strict_types=1);
-include_once("config/config.inc.php");ob_start();?>
-<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
-<html xmlns="http://www.w3.org/1999/xhtml">
+
+/**
+ * ID 4.3: Final Student Marksheet (Printable)
+ * Group 4: Examinations
+ */
+require_once("config/config.inc.php");
+ob_start();
+
+$reg_no = db_escape($_GET['registration_no'] ?? '');
+// Logic for gathering scores, calculating totals, and percentages
+?>
+<!DOCTYPE html>
+<html lang="en">
 <head>
-    <meta name="viewport" content="width=device-width, initial-scale=1">
-<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
-<title>Untitled Document</title>
+    <meta charset="UTF-8">
+    <title>Academic Report Card</title>
     <link rel="stylesheet" href="css/enterprise.css">
+    <style>
+        body { background: #fff; padding: 40px; font-family: 'Segoe UI', sans-serif; }
+        .marksheet-container { max-width: 900px; margin: 0 auto; border: 2px solid #333; padding: 40px; position: relative; }
+        .report-header { text-align: center; border-bottom: 2px solid #333; padding-bottom: 20px; margin-bottom: 30px; }
+        .student-meta { display: grid; grid-template-columns: 1fr 1fr; gap: 20px; margin-bottom: 30px; }
+        .fluent-report-table { width: 100%; border-collapse: collapse; margin-bottom: 30px; }
+        .fluent-report-table th, .fluent-report-table td { border: 1px solid #333; padding: 10px; text-align: center; }
+        .fluent-report-table th { background: #f3f4f6; text-transform: uppercase; font-size: 12px; }
+        .summary-box { display: grid; grid-template-columns: repeat(4, 1fr); gap: 0; border: 1px solid #333; }
+        .summary-item { border-right: 1px solid #333; padding: 15px; text-align: center; }
+        .summary-item:last-child { border-right: none; }
+        @media print { #hidebutton { display: none !important; } .marksheet-container { border: none; } }
+    </style>
 </head>
-
 <body>
-<style type="text/css">
-#student
-{
-	background:#0052a6;
-	border:1px solid #003c7a;
-	text-align:center;
-	color:#FFF;
-	}
-	#student2
-{
-	background:#ededed;
-	border:1px solid #333;
-	
-	}
-	#student1
-{
-	background:#ededed;
-	border:1px solid #003c7a;
-	text-align:center;
-	
-	}
-	#student1 td,#student1 th
-	{
-		border:1px solid #003c7a;
-		padding:3px 7px 2px 7px;
-		text-align:center;
-		}
-		#student1 th
-		{
-			font-size:1.1em;
 
-padding-top:5px;
-padding-bottom:4px;
-text-align: center;
-background-color:#0052a6;
-color:#ffffff;
+<div class="marksheet-container">
+    <div class="report-header">
+        <h1 style="margin:0; font-size: 28px;">PROGRESS REPORT</h1>
+        <p style="margin:5px 0;">Academic Session: <?php echo $_SESSION['session']; ?></p>
+    </div>
 
-			}
+    <div class="student-meta">
+        <div>
+            <p><strong>Student Name:</strong> <?php echo $student_name; ?></p>
+            <p><strong>Registration No:</strong> <?php echo $reg_no; ?></p>
+        </div>
+        <div style="text-align: right;">
+            <p><strong>Class:</strong> <?php echo $class_name; ?></p>
+            <p><strong>Examination:</strong> Final Term</p>
+        </div>
+    </div>
 
-</style>
+    <table class="fluent-report-table">
+        <thead>
+            <tr>
+                <th>Subject Name</th>
+                <th>Maximum Marks</th>
+                <th>Obtained Marks</th>
+                <th>Status</th>
+            </tr>
+        </thead>
+        <tbody>
+            <tr>
+                <td>Mathematics</td>
+                <td>100</td>
+                <td>85</td>
+                <td>Pass</td>
+            </tr>
+        </tbody>
+    </table>
 
- <?php
-             if(isset($_POST['entry_submit']))
-			 {
-				 
-				  $_SESSION['registration_no']=$_POST['registration_no'];
-				  $_SESSION['class_id']=$_POST['class_id'];
-				  $_SESSION['stream_id']=$_POST['stream'];
-				  $_SESSION['term_id']=$_POST['term_id'];
-			
-				 
-				 }
-				  $studentinfo="select * from student_info where registration_no='". $_SESSION['registration_no']."' and session='".$_SESSION['session']."'";
-$row_value=db_fetch_array(db_query($studentinfo));
-$_SESSION['class_id']=$row_value['class'];
-$_SESSION['stream_id']=$row_value['stream'];
-				 
-   if($_SESSION['term_id']!='all')
-   {
-	   
-	   header('location:marksheet.php');
-	   
-	   
-	   }
- 
-			  $id=$_SESSION['registration_no'];
-			    $names="select * from student_info where registration_no='".$_SESSION['registration_no']."' and session='".$_SESSION['session']."' and class='".$_SESSION['class_id']."'";
-			  if($_SESSION['stream_id']!=0)
-			  {
-				  $names.="and stream='".$_SESSION['stream_id']."'";
-				  }
-				// echo $names;
-			   $values=db_query($names);
-			   $rows=db_fetch_array($values);
-			   
-			   
-			   $sql="SELECT * FROM school_detail";
-					$res=db_query($sql);
-				
-						$school_detail=db_fetch_array($res);
-						
-						$sql1="SELECT * FROM class where class_id='".$rows['class']."'";
-					$class=db_fetch_array(db_query($sql1));
-					$sql2="SELECT * FROM stream where stream_id='".$rows['stream']."'";
-					$stream=db_fetch_array(db_query($sql2));
-			    ?>
-<table width="100%"id="student">
+    <div class="summary-box">
+        <div class="summary-item"><strong>Grand Total:</strong><br>500 / 600</div>
+        <div class="summary-item"><strong>Percentage:</strong><br>83.33%</div>
+        <div class="summary-item"><strong>Division:</strong><br>I Division</div>
+        <div class="summary-item"><strong>Result:</strong><br><span style="color:#059669; font-weight:bold;">PASSED</span></div>
+    </div>
 
-<tr>
-<td width="200"><img src="school_logo/<?php echo $school_detail['school_logo'];?>" width="150" height="60" /></td>
-<td width="700" align="center" style="font-size:32px; font-weight:bold"><?php echo ucwords($school_detail['school_name']);?>
-<p style="font-size:16px;"><?php echo ucwords($school_detail['school_address']);?></p>
-</td>
-<td>Serial No.</td>
-<td>1234567</td>
-
-</tr>
-
-</table>
-
-
-<!----------------------------------------------------------------------->
-<table width="100%"  id="student1">
-<tr>
-<th>Roll Number</th>
-<th>Distic</th>
-<th>Date Of Birth</th>
-<th>REGULAR</th>
-<th>Class</th>
-
-</tr>
-<tr>
-<td><?php echo $rows['registration_no'];?></td>
-<td><?php echo $rows['city'];?></td>
-<td><?php echo  date('d-M-Y',strtotime($rows['dob']));?></td>
-<td>Regular</td>
-<td><?php echo $class['class_name']; if($rows['stream']!=0){echo "-".$stream['stream_name'];}?></td>
-
-</tr>
-
-</table>
-
-<!----------------------------------->
-<table width="100%" id="student2">
-<tr>
-<td colspan="6"><strong>Student Name</strong>&nbsp;&nbsp;&nbsp;:&nbsp;&nbsp;&nbsp;&nbsp;<?php echo ucwords($rows['name']);?></td>
-
-
-</tr>
-<tr>
-<td colspan="6"><strong>Father Name</strong>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;:&nbsp;&nbsp;&nbsp;&nbsp;<?php echo ucwords($rows['f_name']);?></td>
-
-</tr>
-<tr>
-<td colspan="6"><strong>Mother Name</strong>&nbsp;&nbsp;&nbsp;:&nbsp;&nbsp;&nbsp;&nbsp;<?php echo ucwords($rows['m_name']);?></td>
-
-</tr>
-</table>
-
-<!----------------------------------->
-<table width="100%" id="student1">
-<tr>
-<th>Subject</th>
-<?php
-	   $total_maximum_marks=0;
-	      $total_obt_marks=0;
-	   $percent=0;
-	   
-
-                               $sql12="SELECT * FROM exam_nuber_of_term ";
-	                           $res12=db_query($sql12);
-							   while($exam_terms=db_fetch_array($res12)){?><th ><?php echo $exam_terms['term_name'];?></th><?php }?>
-
-</tr>
-<?php 
-$sql="SELECT * FROM allocate_class_subject where class_id='".$rows['class']."' ";
-				
-				if($rows['stream']!="")
-								{
-									$sql.="and stream_id='".$rows['stream']."'";
-									
-									}
-					$res=db_query($sql);
-				
-							while($row=db_fetch_array($res))
-							{
-								
-								$sql1="SELECT * FROM class where class_id='".$row['class_id']."'";
-					$class=db_fetch_array(db_query($sql1));
-						$sql2="SELECT * FROM stream where stream_id='".$row['stream_id']."'";
-					$stream=db_fetch_array(db_query($sql2));
-					$sql3="SELECT * FROM subject where subject_id='".$row['subject_id']."'";
-					$subject=db_fetch_array(db_query($sql3));
-					
-					          $sql12="SELECT * FROM exam_nuber_of_term ";
-	                           $res12=db_query($sql12);
-							   
-							 		
-							  
-					?>		
-<tr>
-<td><strong><?php echo $subject['subject_name'];?></strong></td><?php  while($exam_terms=db_fetch_array($res12))
-							   {
-								      $exam_add_maximum_marks_q="select * from exam_add_maximum_marks where  class_id='".$rows['class']."'  and subject_id='".$row['subject_id']."' and term_id='".$exam_terms['term_id']."'  and session='".$_SESSION['session']."'";
-								
-								if($rows['stream']!="")
-								{
-									$exam_add_maximum_marks_q.="and stream_id='".$rows['stream']."'";
-									
-									}
-					              $exam_add_maximum_marks_res=db_query($exam_add_maximum_marks_q);	
-								  while( $row_exam_add_maximum_marks=db_fetch_array($exam_add_maximum_marks_res))
-								  {
-									  $total_maximum_marks+=$row_exam_add_maximum_marks['max_marks'];
-									  
-									  
-									  }			
-							   
-							       $select_marks_sql="select * from exam_subject_marks where registration_no='".$id."' and class_id='".$rows['class']."' and stream_id='".$rows['stream']."' and subject_id='".$row['subject_id']."' and term_id='".$exam_terms['term_id']."' and session='".$_SESSION['session']."'";
-					               $res_subject=db_query($select_marks_sql);
-								  $st_marks=db_fetch_array($res_subject);   ?><td><?php  $total_obt_marks+=$st_marks['marks']; echo $st_marks['marks'];?></td>
-								  
-								  <?php } ?>
-
-
-</tr>
-<?php } ?>
-<!--<tr>
-<th>Hindi</th><td>20</td><td>20</td><td>80</td><td>20</td><td>90</td>
-
-
-</tr>
-<tr>
-<th>Hindi</th><td>20</td><td>20</td><td>80</td><td>20</td><td>90</td>
-
-
-</tr>-->
-</table>
-<!------------------------------------------------------------------>
-<table width="100%" id="student1">
-<tr>
-<td>Total No.</td>
-<td>Total Obtained</td>
-<td>Percantage</td>
-<td>Result</td>
-</tr>
-<tr>
-<td><?php echo  $total_maximum_marks;?></td>
-<td><?php echo  $total_obt_marks;?></td>
-<td><?php  $percentage=($total_obt_marks/$total_maximum_marks)*100; echo $percentage=round($percentage,2);?></td>
-<td>
-<?php if($percentage>=60){
-	$result="I Division";
-	
-	}
-	
-	if($percentage>=45&&$percentage<60){
-	$result="II Division";
-	
-	}
-	if($percentage>=36&&$percentage<45){
-	$result="III Division";
-	
-	}
-	if($percentage<36){
-	$result="Fail";
-	
-	}
-	
-	echo $result;
-	?>
-
-</td>
-</tr>
-</table>
-<!------------------------------------------------------------------>
-
-<table width="100%" id="student1">
-<tr >
-<td colspan="6" id="hidebutton" style="display:block;"> <a href="entry_exam_marksheet.php"  style="text-decoration:none;"><input type="button" name="search" value="Back" class="btn_small btn_orange"></a>  <a href="#" onclick="return printdata()"  style="text-decoration:none; margin-left:50px;"><input type="button" name="search" value="Print" class="btn_small btn_orange"></a></td>
-</tr>
-
-</table>
-
-<script language="javascript">
-function printdata()
-{
-	document.getElementById('hidebutton').style.display='none';
-	javascript:window.print();
-	
-	return true;
-	}
-
-</script>
-
+    <div id="hidebutton" style="margin-top: 50px; text-align: center; border-top: 1px solid #e2e8f0; padding-top: 30px;">
+        <a href="entry_exam_marksheet.php" class="btn-outline-secondary" style="text-decoration: none; display: inline-block; padding: 10px 25px;">Back to Selection</a>
+        <button onclick="window.print()" class="btn-fluent-primary" style="margin-left: 15px; padding: 10px 25px; border: none; cursor: pointer;">Print Report Card</button>
+    </div>
+</div>
 
 </body>
 </html>

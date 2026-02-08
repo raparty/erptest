@@ -1,165 +1,66 @@
 <?php
-
 declare(strict_types=1);
-include_once("includes/header.php"); ?>
-<?php include_once("includes/sidebar.php"); ?>
-<main class="app-content">
-<div id="header" class="blue_lin">
-		<div class="header_left">
-			<div class="logo">
-				<img src="images/logo.png" width="300" height="49" alt="Ekra">
-			</div>
-			
-		</div>
-		<div class="header_right">
-			
-			<div id="user_nav">
-				<ul>
-					<li class="user_thumb"><a href="#"><span class="icon"><img src="images/user_thumb.png" width="30" height="30" alt="User"></span></a></li>
-					<li class="user_info"><span class="user_name">Administrator</span><span><a href="#">Profile</a> &#124; <a href="#">Settings</a> &#124; <a href="#">Help&#63;</a></span></li>
-					<li class="logout"><a href="#"><span class="icon"></span>Logout</a></li>
-				</ul>
-			</div>
-		</div>
-	</div>
-    <div class="page_title">
-	<!--	<span class="title_icon"><span class="computer_imac"></span></span>
-		<h3>Dashboard</h3>-->
-		<div class="top_search">
-			<form action="#" method="post">
-				<ul id="search_box">
-					<li>
-					<input name="" type="text" class="search_input" id="suggest1" placeholder="Search...">
-					</li>
-					<li>
-					<input name="" type="submit" value="Search" class="search_btn">
-					</li>
-				</ul>
-			</form>
-		</div>
-	</div>
 
-<div id="left_bar">
-	
-	
-	<div id="sidebar">
-		<div id="secondary_nav">
-			<ul id="sidenav" class="accordion_mnu collapsible">
-				<li><a href="#"><span class="nav_icon computer_imac"></span> Dashboard</a>
-				
-				</li>
-                
-				<li><a href="#"><span class="nav_icon frames"></span> Category<span class="up_down_arrow">&nbsp;</span></a>
-				<ul class="acitem">
-					<li><a href="category.html"><span class="list-icon">&nbsp;</span>Super Category</a></li>
-					<li><a href="sub_category.html"><span class="list-icon">&nbsp;</span>Sub Category</a></li>
-				</ul>
-				</li>
-                
-				
-				
-				
-				
-				
-				
-				
-				
-				
-				
-				
-				
-				
-				
-			</ul>
-		</div>
-	</div>
-</div>
-<div id="container">
-	
-	
-	
-	<div id="content">
-		<div class="grid_container">
-<h3 style="padding-left:20px; color:#0078D4">Sub Category List</h3>
-          <div class="grid_12">
+/**
+ * ID 2.10: Sub Category Manager
+ * Group 2: Fees & Accounts
+ */
+require_once("includes/bootstrap.php");
+require_once("includes/header.php");
+require_once("includes/sidebar.php");
+?>
 
- 
+<div class="grid_container">
+    <div class="page_title" style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 25px;">
+        <h3>Sub Categories</h3>
+        <a href="add_sub_category.php" class="btn-fluent-primary">+ New Sub Category</a>
+    </div>
 
-           <div class="btn_30_blue float-right">
-								<a href="add_sub_category.html"><span style="width:140px">Add New Sub Category </span></a>
-							</div>
-                            
-                            
-                            
+    <?php include_once("includes/account_setting_sidebar.php"); ?>
+
+    <div class="widget_wrap azure-card">
+        <div class="widget_top">
+            <h6 class="fluent-card-header">Secondary Classifications</h6>
+        </div>
+        <div class="widget_content">
+            <table class="display data_tbl fluent-table">
+                <thead>
+                    <tr>
+                        <th style="width: 80px;">S.No.</th>
+                        <th>Super Category</th>
+                        <th>Sub Category Name</th>
+                        <th class="center" style="width: 150px;">Action</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <?php 
+                    $i=1;
+                    $sql = "SELECT sub.*, sup.category_name as super_name 
+                            FROM sub_category sub 
+                            LEFT JOIN super_category sup ON sub.super_cat_id = sup.id 
+                            ORDER BY sub.sub_category_name ASC";
+                    $res = db_query($sql);
+                    while($row = db_fetch_array($res)) { ?>
+                    <tr>
+                        <td class="center"><?php echo $i; ?></td>
+                        <td><span class="fluent-badge-outline"><?php echo htmlspecialchars($row['super_name']); ?></span></td>
+                        <td style="font-weight: 600; color: var(--app-primary);"><?php echo htmlspecialchars($row['sub_category_name']); ?></td>
+                        <td class="center">
+                            <div class="fluent-action-group">
+                                <a href="edit_sub_category.php?sid=<?php echo $row[0]; ?>" class="fluent-btn-icon" title="Edit">
+                                    <svg viewBox="0 0 24 24" width="18" height="18"><path d="M3 17.25V21h3.75L17.81 9.94l-3.75-3.75L3 17.25zM20.71 7.04c.39-.39.39-1.02 0-1.41l-2.34-2.34c-.39-.39-1.02-.39-1.41 0l-1.83 1.83 3.75 3.75 1.83-1.83z"/></svg>
+                                </a>
+                                <a href="delete_sub_category.php?sid=<?php echo $row[0]; ?>" class="fluent-btn-icon icon-delete" onclick="return confirm('Delete this sub category?')" title="Delete">
+                                    <svg viewBox="0 0 24 24" width="18" height="18"><path d="M6 19c0 1.1.9 2 2 2h8c1.1 0 2-.9 2-2V7H6v12zM19 4h-3.5l-1-1h-5l-1 1H5v2h14V4z"/></svg>
+                                </a>
                             </div>
-			<div class="grid_12">
-				<div class="widget_wrap">
-					<div class="widget_top">
-						<span class="h_icon list_images"></span>
-						<h6>Sub Category</h6>
-					</div>
-					<div class="widget_content">
-						
-						<table class="display data_tbl" >
-						<thead>
-						<tr>
-							
-							<th>
-								S.No.
-							</th>
-							<th>
-								Super Category
-							</th>
-                            <th>
-								Sub Category
-							</th>
-							
-							<th>
-								 Action
-							</th>
-						</tr>
-						</thead>
-						<tbody>
-						<tr>
-							
-							<td class="center">
-								<a href="#">01</a>
-							</td>
-						<td class="center">
-								Category Name
-							</td>
-							<td class="center">
-							<span style="color:#f04508">Category Name</span>
-							</td>
-							
-							
-							
-							
-							<td class="center">
-								<span><a class="action-icons c-edit" href="#" title="Edit">Edit</a></span><span><a class="action-icons c-delete" href="#" title="delete">Delete</a></span>
-							</td>
-						</tr>
-						
-						
-						
-						</tbody>
-						
-						</table>
-                        
-                        
-                        
-					</div>
-				</div>
-			</div>
-			
-			
-			<span class="clear"></span>
-			
-			
-			
-		</div>
-		<span class="clear"></span>
-	</div>
+                        </td>
+                    </tr>
+                    <?php $i++; } ?>
+                </tbody>
+            </table>
+        </div>
+    </div>
 </div>
-</main>
-<?php include_once("includes/footer.php"); ?>
+
+<?php require_once("includes/footer.php"); ?>

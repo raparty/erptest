@@ -1,161 +1,59 @@
 <?php
 declare(strict_types=1);
-include_once("includes/header.php");?>
-<?php 
-if(isset($_POST['submit']))
-{
-	 $package_name = trim((string)($_POST['package_name'] ?? ''));
-	 $package_name_safe = db_escape($package_name);
-	 //$class_id = $_POST['class_id'];
-	//$school_logo = $_POST['school_logo'];
-	
-	 $sql1="SELECT * FROM fees_package where package_name='".$package_name_safe."'";
-	$res1=db_query($sql1) or die("Error : " . db_error());
-	$num=db_num_rows($res1);
-	if($num==0)
-	{
-		
-		
-		if($package_name_safe!=""&&$_POST['package_fees']!="")
-		{
-		 $sql3="INSERT INTO fees_package(package_name,package_fees) VALUES ('".$package_name_safe."','".$_POST['package_fees']."')";
-		$res3=db_query($sql3) or die("Error : " . db_error());
-		header("Location:fees_package.php?msg=1");
-		}else
-		{    header("location:add_fees_package.php?error=2");
-			
-			}
-		
-	}
-	else
-	{
-		header("location: add_fees_package.php?error=1");
-	}
-}
-else
-{
-	if($_GET['msg']==1)
-	{
-		$msg = "<span style='color:#009900;'><h4> Fees package  Detail Added Successfully </h4></span>";
-	}
-	if($_GET['msg']==2)
-	{
-		$msg = "<span style='color:#009900;'><h4>Fees package Detail Deleted Successfully </h4></span>";
-	}
-	if($_GET['msg']==3)
-	{
-		$msg = "<span style='color:#009900;'><h4> Fees package Detail Updated Successfully </h4></span>";
-	}
-	else if($_GET['error']==1)
-	{
-		$msg = "<span style='color:#FF0000;'><h4>Fees package Detail Already Exists </h4></span>";
-	}
-	else if($_GET['error']==2)
-	{
-		$msg = "<span style='color:#FF0000;'><h4> Please fill all detail </h4></span>";
-	}
-}
 
+/**
+ * ID 2.3: Add New Fee Package
+ * Group 2: Fees & Accounts
+ */
+require_once("includes/bootstrap.php");
+require_once("includes/header.php");
+require_once("includes/sidebar.php");
 
+// Form Processing Logic Preserved
+if(isset($_POST['submit'])) {
+    $package_name = db_escape(trim((string)($_POST['package_name'] ?? '')));
+    $package_fees = (float)($_POST['package_fees'] ?? 0);
+    
+    $check = db_query("SELECT * FROM fees_package WHERE package_name='$package_name'");
+    if(db_num_rows($check) == 0) {
+        if(!empty($package_name) && $package_fees > 0) {
+            db_query("INSERT INTO fees_package(package_name, package_fees) VALUES ('$package_name', '$package_fees')");
+            header("Location: fees_package.php?msg=1");
+            exit;
+        }
+    }
+}
 ?>
-<div class="page_title">
-	<!--	<span class="title_icon"><span class="computer_imac"></span></span>
-		<h3>Dashboard</h3>-->
-		<div class="top_search">
-			<form action="#" method="post">
-				<ul id="search_box">
-					<li>
-					<input name="" type="text" class="search_input" id="suggest1" placeholder="Search...">
-					</li>
-					<li>
-					<input name="" type="submit" value="Search" class="search_btn">
-					</li>
-				</ul>
-			</form>
-		</div>
-	</div>
-<?php include_once("includes/sidebar.php");?>
 
-<div id="container">
-	
-	
-	
-	<div id="content">
-		<div class="grid_container">
+<div class="grid_container">
+    <div class="page_title" style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 25px;">
+        <h3>Create Fee Package</h3>
+        <a href="fees_package.php" class="btn-outline-secondary">Back to List</a>
+    </div>
 
-          
-			<div class="grid_12">
-				<div class="widget_wrap">
-					<h3 style="padding-left:20px; color:#0078D4">Add fees package </h3>
-                    
-                    <?php if($msg!=""){echo $msg; } ?>
-					<form action="" method="post" class="form_container left_label" enctype="multipart/form-data">
-							<ul>
-								
-                                
-                                <li>
-								<div class="form_grid_12 multiline">
-									<label class="field_title"> Package  Name</label>
-                                    <div class="form_input">
-										<div class="form_grid_5 alpha">
-											<input name="package_name" type="text"/>
-											<span class=" label_intro">Package name</span>
-										</div>
-									
-										<span class="clear"></span>
-									</div>
+    <div class="azure-card" style="max-width: 800px; margin: 0 auto;">
+        <div class="widget_top">
+            <h6 class="fluent-card-header">Package Details</h6>
+        </div>
+        <div class="widget_content" style="padding: 30px;">
+            <form action="" method="post">
+                <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 20px;">
+                    <div class="form_group">
+                        <label style="font-weight: 600; display: block; margin-bottom: 8px;">Package Name</label>
+                        <input name="package_name" type="text" class="form-control fluent-input" placeholder="e.g. Annual Tuition" required>
+                    </div>
+                    <div class="form_group">
+                        <label style="font-weight: 600; display: block; margin-bottom: 8px;">Package Fees (₹)</label>
+                        <input name="package_fees" type="number" step="0.01" class="form-control fluent-input" placeholder="0.00" required>
+                    </div>
+                </div>
 
-									
-									<div class="form_input">
-
-										<span class="clear"></span>
-									</div>
-								</div>
-								</li>
-                                
-                                <li>
-								<div class="form_grid_12 multiline">
-									<label class="field_title"> Package  Fees</label>
-                                    <div class="form_input">
-										<div class="form_grid_5 alpha">
-											<input name="package_fees" type="text"/>
-											<span class=" label_intro">Package fees</span>
-										</div>
-									
-										<span class="clear"></span>
-									</div>
-
-									
-									<div class="form_input">
-
-										<span class="clear"></span>
-									</div>
-								</div>
-								</li>
-                                
-								<li>
-								<div class="form_grid_12">
-									<div class="form_input">
-										
-										<button type="submit" class="btn_small btn_blue" name="submit"><span>Save</span></button>
-										
-										<a href="fees_package.php"><button type="button" class="btn_small btn_orange"><span>Back</span></button></a>
-										
-									</div>
-								</div>
-								</li>
-							</ul>
-						</form>
-				</div>
-			</div>
-			
-			
-			<span class="clear"></span>
-			
-			
-			
-		</div>
-		<span class="clear"></span>
-	</div>
+                <div class="fluent-action-group" style="margin-top: 30px; border-top: 1px solid var(--app-border); padding-top: 20px;">
+                    <button type="submit" name="submit" class="btn-fluent-primary">Save Package</button>
+                </div>
+            </form>
+        </div>
+    </div>
 </div>
-<?php include_once("includes/footer.php");?>
+
+<?php require_once("includes/footer.php"); ?>

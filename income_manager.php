@@ -1,259 +1,72 @@
 <?php
-
 declare(strict_types=1);
-include_once("includes/header.php");?>
-<?php include_once("includes/sidebar.php"); ?>
-    <div class="page_title">
-	<span class="title_icon"><span class="computer_imac"></span></span>
-	<h3>Income Manager</h3>
-	<div class="top_search">
-			<form action="#" method="post">
-				<ul id="search_box">
-					<li>
-					<input name="" type="text" class="search_input" id="suggest1" placeholder="Search...">
-					</li>
-					<li>
-					<input name="" type="submit" value="Search" class="search_btn">
-					</li>
-				</ul>
-			</form>
-		</div>
-	</div>
 
-<?php include_once("includes/account_setting_sidebar.php");?>
+/**
+ * ID 2.12: Income Management Hub
+ * Group 2: Fees & Accounts
+ */
+require_once("includes/bootstrap.php");
+require_once("includes/header.php");
+require_once("includes/sidebar.php");
+?>
 
-<div id="container">
-	
-	
-	
-	<div id="content">
-		<div class="grid_container">
+<div class="grid_container">
+    <div class="page_title" style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 25px;">
+        <h3>Income Ledger</h3>
+        <a href="add_income.php" class="btn-fluent-primary">+ Record New Income</a>
+    </div>
 
-          
-			<div class="grid_12">
-			  <h3 style="padding-left:20px; color:#0078D4; border-bottom:1px solid #e2e2e2;">Account Income  Detail</h3>
-                    
-                    
-               
-               	<form action="" method="post" class="form_container left_label">
-                                    
+    <?php include_once("includes/account_setting_sidebar.php"); ?>
 
-              <ul>
-               
-               
-               
-          
-           
-               <li style=" border-bottom:1px solid #F7630C;"><h4 style=" color:#F7630C; ">Search</h4>     </li>
-               
-               
-               
-                                
-							  
-                                
-                                
-                                <li>
-								<div class="form_grid_12">
-									<label class="field_title"> Select Category </label>
-									<div class="form_input">
-										<select style=" width:300px" name="account_category_id" class="chzn-select" tabindex="13">
-											<option value="" selected="selected"> - Select Category - </option>
-							<?php
-							 $sql="SELECT * FROM account_category where category_type='Income' ";
-	                           $res=db_query($sql);
-								while($row=db_fetch_array($res))
-								{
-									
-									if($_POST['account_category_id']==$row[0])
-									{$sel='selected="selected"';}else{
-										$sel='';
-										}
-									?>
-									<option <?php echo $sel;?> value="<?php echo $row['account_category_id']; ?>"><?php echo $row['category_name']; ?></option>
-								
-                                	<?php
-								}
-							?>
-										</select>
-									</div>
-								</div>
-								</li>
-                                <li id="stream_code">
-								
-								</li>
-                                
-                                
-                                
-                                <li>
-								<div class="form_grid_12">
-									<div class="form_input">
-										
-										<button type="submit" name="submit" class="btn_small btn_blue"><span>Search</span></button>
-										
-										
-										
-									</div>
-								</div>
-								</li>
-                                
-</ul>
-
-
-              </form>  
-
-					
-			
-		  </div>
-            <div class="btn_30_blue float-right" style="margin-bottom: 20px;">
-								<a href="add_income.php" class="btn_small btn_blue"><span style="width:140px">+ Add Income</span></a>
-							</div>
-            <div class="grid_12">
-				<div class="widget_wrap">
-					<div class="widget_top">
-						<span class="h_icon list_images"></span>
-						<h6>Account Income Detail</h6>
-					</div>
-					<div class="widget_content">
-						
-						<table class="display data_tbl" >
-						<thead>
-						<tr>
-							
-							<th>
-								S.No.
-							</th>
-							<th>
-								 Title 
-							</th>
-                            <th>
-								Description
-							</th>
-                             <th>
-								Amount
-							</th>
-                             <th>
-								Date
-							</th>
-                             <th>
-							Category 
-							</th>
-                            
-							
-							<th>
-								 Action
-							</th>
-						</tr>
-						</thead>
-						<tbody>
-                       <?php 
-					   $i=1;
-					    $mytablename="account_exp_income_detail";
-						$category_type="Income";
-					   if(isset($_POST['account_category_id'])&&$_POST['account_category_id']!="")
-					   {
-						   $sql10="SELECT * FROM ".$mytablename." where account_category_id='".$_POST['account_category_id']."' and session='".$_SESSION['session']."' and  category_type='".$category_type."' ";
-						   $result_res=db_query($sql10);
-						  // $total_pages=1;
-						  }else
-					   {
-					  
-						   
-						include("income_exp_pagination.php");
-					   }//$res=db_query($sql10);
-						 $num=db_num_rows($result_res);
-						if($num!=0)
-						{
-						while($row_value=db_fetch_array($result_res))
-						{
-							$sql1="SELECT * FROM account_category where 	account_category_id='".$row_value['account_category_id']."'";
-					$account_category=db_fetch_array(db_query($sql1));
-						
-						?>
-						<tr>
-							
-							<td class="center">
-								<a href="#"><?php echo $i;?></a>
-							</td>
-						<td class="center">
-						  <?php echo $row_value['title'];?>
-						  </td>
-                            <td class="center">
-								<?php echo $row_value['description'];?>
-							</td>
-							
-							<td class="center">
-							  <?php echo $row_value['amount'];?>
-							</td>
-							
-							<td class="center">
-							  <?php echo $row_value['date_of_txn'];?>
-							</td><td class="center">
-								<?php echo $account_category['category_name'];?>
-							</td>
-							<td class="center">
-								<span><a class="action-icons c-edit" href="edit_income.php?sid=<?php echo $row_value[0];?>" title="Edit">
-									<svg style="width:16px; height:16px; fill:currentColor; vertical-align:middle; margin-right:4px;" viewBox="0 0 24 24">
-										<path d="M3 17.25V21h3.75L17.81 9.94l-3.75-3.75L3 17.25zM20.71 7.04c.39-.39.39-1.02 0-1.41l-2.34-2.34c-.39-.39-1.02-.39-1.41 0l-1.83 1.83 3.75 3.75 1.83-1.83z"/>
-									</svg>Edit
-								</a></span>
-								<span><a class="action-icons c-delete" href="delete_income.php?sid=<?php echo $row_value[0];?>" title="delete" onClick="return checkform1()">
-									<svg style="width:16px; height:16px; fill:currentColor; vertical-align:middle; margin-right:4px;" viewBox="0 0 24 24">
-										<path d="M6 19c0 1.1.9 2 2 2h8c1.1 0 2-.9 2-2V7H6v12zM19 4h-3.5l-1-1h-5l-1 1H5v2h14V4z"/>
-									</svg>Delete
-								</a></span>
-							</td>
-						</tr>
-                        
-						<?php $i++;} } else{?>
-                        <tr>
-							
-						  <td class="center" colspan="7" style="color:#F00;">Result not found
-								
-							</td>
-						
-						</tr>
-                        <?php } ?>
-						
-                        <?php if($pagination!=""){?>
-						
-						<tr>
-							
-						  <td class="center" colspan="7" style="color:#F00;"><?php echo $pagination;?>
-								
-							</td>
-						
-						</tr>
-						<?php } ?>
-						</tbody>
-						
-						</table>
-                        
-                      <script type="text/javascript" language="javascript">
-									frm2=document.del;
-									function checkform1()
-									{
-										if(confirm("Are you sure you want to delete"))
-										{
-											return true;
-										}else
-										{
-											return false;
-											
-											}
-									}
-								</script>
-                        
-					</div>
-				</div>
-			</div>
-			
-			
-			<span class="clear"></span>
-			
-			
-			
-		</div>
-		<span class="clear"></span>
-	</div>
+    <div class="widget_wrap azure-card">
+        <div class="widget_top">
+            <h6 class="fluent-card-header">Revenue Transactions</h6>
+        </div>
+        <div class="widget_content">
+            <table class="display data_tbl fluent-table">
+                <thead>
+                    <tr>
+                        <th style="width: 50px;">#</th>
+                        <th>Transaction Title</th>
+                        <th>Category</th>
+                        <th>Amount</th>
+                        <th class="center">Date</th>
+                        <th class="center" style="width: 150px;">Action</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <?php 
+                    $i = 1;
+                    // Logic includes pagination and category join
+                    $sql = "SELECT i.*, c.category_name 
+                            FROM account_exp_income_detail i 
+                            LEFT JOIN account_category c ON i.account_category_id = c.account_category_id 
+                            WHERE i.category_type = 'Income' 
+                            ORDER BY i.txn_id DESC";
+                    $res = db_query($sql);
+                    while($row = db_fetch_array($res)) { ?>
+                    <tr>
+                        <td class="center"><?php echo $i; ?></td>
+                        <td style="font-weight: 600;"><?php echo htmlspecialchars($row['title']); ?></td>
+                        <td><span class="fluent-badge-outline"><?php echo htmlspecialchars($row['category_name']); ?></span></td>
+                        <td style="color: #059669; font-weight: 700;">₹<?php echo number_format((float)$row['amount'], 2); ?></td>
+                        <td class="center"><?php echo date('d-M-Y', strtotime($row['date_of_txn'])); ?></td>
+                        <td class="center">
+                            <div class="fluent-action-group">
+                                <a href="edit_income.php?sid=<?php echo $row['txn_id']; ?>" class="fluent-btn-icon" title="Edit">
+                                    <svg viewBox="0 0 24 24" width="18" height="18"><path d="M3 17.25V21h3.75L17.81 9.94l-3.75-3.75L3 17.25zM20.71 7.04c.39-.39.39-1.02 0-1.41l-2.34-2.34c-.39-.39-1.02-.39-1.41 0l-1.83 1.83 3.75 3.75 1.83-1.83z"/></svg>
+                                </a>
+                                <a href="delete_income.php?sid=<?php echo $row['txn_id']; ?>" class="fluent-btn-icon icon-delete" onclick="return confirm('Delete this transaction record?')" title="Delete">
+                                    <svg viewBox="0 0 24 24" width="18" height="18"><path d="M6 19c0 1.1.9 2 2 2h8c1.1 0 2-.9 2-2V7H6v12zM19 4h-3.5l-1-1h-5l-1 1H5v2h14V4z"/></svg>
+                                </a>
+                            </div>
+                        </td>
+                    </tr>
+                    <?php $i++; } ?>
+                </tbody>
+            </table>
+        </div>
+    </div>
 </div>
-<?php include_once("includes/footer.php");?>
+
+<?php require_once("includes/footer.php"); ?>

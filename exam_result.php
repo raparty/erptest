@@ -1,252 +1,106 @@
 <?php
-
 declare(strict_types=1);
-include_once("includes/header.php");?>
-<?php include_once("includes/sidebar.php"); ?>
-    <div class="page_title">
-	<!--	<span class="title_icon"><span class="computer_imac"></span></span>
-		<h3>Dashboard</h3>-->
-		<div class="top_search">
-			<form action="#" method="post">
-				<ul id="search_box">
-					<li>
-					<input name="" type="text" class="search_input" id="suggest1" placeholder="Search...">
-					</li>
-					<li>
-					<input name="" type="submit" value="Search" class="search_btn">
-					</li>
-				</ul>
-			</form>
-		</div>
-	</div>
 
-<?php include_once("includes/exam_setting_sidebar.php");?>
+/**
+ * ID 4.9: Exam Result Search Hub
+ * Restoration: Global Sidebar and Admissions Table Fix
+ */
+require_once("includes/bootstrap.php");
+require_once("includes/header.php");
+require_once("includes/sidebar.php"); // Restoring full global navigation
 
-<div id="container">
-	
-	
-	
-	<div id="content">
-		<div class="grid_container">
+// Capture Search Inputs
+$reg_no = db_escape($_POST['registration_no'] ?? $_GET['id'] ?? '');
+?>
 
-          
-			<div class="grid_12">
-				
-					<h3 style="padding-left:20px; color:#0078D4; border-bottom:1px solid #e2e2e2;">Student Result</h3>
-                    
+<div class="grid_container">
+    <div class="page_title" style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 25px;">
+        <h3 style="font-weight: 400; color: var(--fluent-slate); font-size: 24px;">Exam Performance Search</h3>
+    </div>
+
+    <?php include_once("includes/exam_setting_sidebar.php"); ?>
+
+    <div class="azure-card" style="margin-bottom: 30px; padding: 25px;">
+        <h4 style="color: var(--app-primary); margin-bottom: 15px; font-weight: 500;">Search Student Performance</h4>
+        <form action="" method="post" class="fluent-search-form">
+            <div style="display: grid; grid-template-columns: 1fr 150px; gap: 15px; align-items: end;">
+                <div class="form_group">
+                    <label style="font-size: 12px; font-weight: 600;">Student Registration Number</label>
+                    <select name="registration_no" class="chzn-select fluent-input" required>
+                        <option value=""> - Select Registration No - </option>
+                        <?php
+                        // Correcting table to 'admissions' as per ERP schema
+                        $sql = "SELECT reg_no, student_name FROM admissions WHERE session='".$_SESSION['session']."' ORDER BY reg_no ASC";
+                        $res = db_query($sql);
+                        while($row = db_fetch_array($res)) {
+                            $sel = ($reg_no == $row['reg_no']) ? 'selected' : '';
+                            echo "<option value='{$row['reg_no']}' $sel>{$row['reg_no']} - {$row['student_name']}</option>";
+                        }
+                        ?>
+                    </select>
+                </div>
+                <button type="submit" name="submit_number" class="btn-fluent-primary" style="height: 42px;">Search Results</button>
+            </div>
+        </form>
+    </div>
+
+    
+
+    <div class="widget_wrap azure-card">
+        <div class="widget_top">
+            <h6 class="fluent-card-header">Academic Records <?php echo $reg_no ? "for $reg_no" : ""; ?></h6>
+        </div>
+        <div class="widget_content">
+            <table class="display data_tbl fluent-table">
+                <thead>
+                    <tr>
+                        <th style="width: 50px;">#</th>
+                        <th>Subject</th>
+                        <th>Exam Term</th>
+                        <th class="center">Marks Obtained</th>
+                        <th class="center">Action</th>
+                    </tr>
+                </thead>
+                <tbody>
                     <?php 
-					if(isset($_POST['submit_number']))
-					{
-					header('location:exam_result.php?id='.$_POST['registration_no']);
-					}
-					?>
-               
-               	<form action="" method="post" class="form_container left_label">
-                                    
-
-              <ul>
-               
-               
-               
-          
-           
-               <li style=" border-bottom:1px solid #F7630C;"><h4 style=" color:#F7630C; ">Search</h4>     </li>
-               
-               
-               <li>
-								<div class="form_grid_12">
-									<label class="field_title">Registration No </label>
-									<div class="form_input">
-										<select style=" width:300px"  class="chzn-select" tabindex="13" name="registration_no">
-											<option value="" selected="selected"> - Select Registration No - </option>
-							<?php
-							 $sql="SELECT * FROM student_info";
-	                           $res=db_query($sql);
-								while($row=db_fetch_array($res))
-								{
-									?>
-									<option value="<?php echo $row['registration_no']; ?>"><?php echo $row['registration_no']; ?></option>
-									<?php
-								}
-							?>
-										</select>
-									</div>
-								</div>
-								</li>
-                                
-                                
-							  <li>
-								<div class="form_grid_12">
-									<div class="form_input">
-										
-										<button type="submit" name="submit_number" class="btn_small btn_blue"><span>Search</span></button>
-										
-										
-										
-									</div>
-								</div>
-								</li>
-                    
-</ul>
-
-
-                </form>  
-
-				<form action="" method="post" class="form_container left_label">
-                                    
-
-              <ul>
-               
-               
-               
-          
-           
-               
-               <?php
-			   $id=$_GET['id'];
-			   $id1=$_GET['id1'];
-			   $names="select * from student_info where registration_no='$id'";
-			   $values=db_query($names);
-			   $rows=db_fetch_array($values);
-			   
-			    ?>
-               
-               <li>
-								<div class="form_grid_12">
-									<label class="field_title">Student Name</label>
-									<div class="form_input">
-								<?php echo $rows['name']?>
-									</div>
-								</div>
-								</li>
-                                
-				
-</ul>
-
-
-                </form>	
-			
-			</div>
-            
-            <div class="grid_12">
-				<div class="widget_wrap">
-					<div class="widget_top">
-						<span class="h_icon list_images"></span>
-						<h6>Student Detail</h6>
-					</div>
-					<div class="widget_content">
-						
-						<table class="display data_tbl" >
-						<thead>
-						<tr>
-							
-							<th>
-								S.No.
-							</th>
-							<th>
-								 Student Name 
-							</th>
-                            <th>
-								Class
-							</th>
-                             <th>
-								Email
-							</th>
-							
-							<th>
-								 Action
-							</th>
-						</tr>
-						</thead>
-						<tbody>
-                       <?php 
-					   $i=1;
-					   
-					   $mytablename="student_info";
-						   //$sql10="SELECT * FROM student_info";
-						include("student_detail_pagination.php");
-						//$res=db_query($sql10);
-						 $num=db_num_rows($result_res);
-						if($total_pages!=0)
-						{
-						while($row_value=db_fetch_array($result_res))
-						{
-							$sql1="SELECT * FROM class where class_id='".$row_value['class']."'";
-					$class=db_fetch_array(db_query($sql1));
-						
-						?>
-						<tr>
-							
-							<td class="center">
-								<a href="#"><?php echo $i;?></a>
-							</td>
-						<td class="center">
-								<?php echo $row_value['name'];?>
-							</td>
-                            <td class="center">
-								<?php echo $class['class_name'];?>
-							</td>
-							
-							<td class="center">
-								<?php echo $row_value['s_email'];?>
-							</td>
-							
-							
-							<td class="center">
-							<a class="action-icons c-add" href="view_student_detail.php?student_id=<?php echo $row_value[0];?>" original-title="View Profile"><svg style="width:16px; height:16px; fill:currentColor; vertical-align:middle; margin-right:4px;" viewBox="0 0 24 24"><path d="M12 12c2.21 0 4-1.79 4-4s-1.79-4-4-4-4 1.79-4 4 1.79 4 4 4zm0 2c-2.67 0-8 1.34-8 4v2h16v-2c0-2.66-5.33-4-8-4z"/></svg>View Profile</a>	<span><a class="action-icons c-edit" href="edit_admission.php?student_id=<?php echo $row_value[0];?>" title="Edit"><svg style="width:16px; height:16px; fill:currentColor; vertical-align:middle; margin-right:4px;" viewBox="0 0 24 24"><path d="M3 17.25V21h3.75L17.81 9.94l-3.75-3.75L3 17.25zM20.71 7.04c.39-.39.39-1.02 0-1.41l-2.34-2.34c-.39-.39-1.02-.39-1.41 0l-1.83 1.83 3.75 3.75 1.83-1.83z"/></svg>Edit</a></span><span><a class="action-icons c-delete" href="delete_admission.php?sid=<?php echo $row_value[0];?>" title="delete" onClick="return checkform1()"><svg style="width:16px; height:16px; fill:currentColor; vertical-align:middle; margin-right:4px;" viewBox="0 0 24 24"><path d="M6 19c0 1.1.9 2 2 2h8c1.1 0 2-.9 2-2V7H6v12zM19 4h-3.5l-1-1h-5l-1 1H5v2h14V4z"/></svg>Delete</a></span>
-							</td>
-						</tr>
+                    if (!empty($reg_no)) {
+                        $i = 1;
+                        $sql_results = "SELECT m.*, s.subject_name, t.term_name 
+                                        FROM exam_subject_marks m
+                                        JOIN subjects s ON m.subject_id = s.subject_id
+                                        JOIN exam_nuber_of_term t ON m.term_id = t.term_id
+                                        WHERE m.registration_no = '$reg_no' AND m.session = '".$_SESSION['session']."'
+                                        ORDER BY t.term_id ASC";
                         
-						<?php $i++;} } else{?>
-                        <tr>
-							
-							<td class="center" colspan="5" style="color:#F00;">Result not found
-								
-							</td>
-						
-						</tr>
-                        <?php } ?>
-						
-                        <?php if($pagination!=""){?>
-						
-						<tr>
-							
-							<td class="center" colspan="5" style="color:#F00;"><?php echo $pagination;?>
-								
-							</td>
-						
-						</tr>
-						<?php } ?>
-						</tbody>
-						
-						</table>
-                        
-                        <script type="text/javascript" language="javascript">
-									frm2=document.del;
-									function checkform1()
-									{
-										if(confirm("Are you sure you want to delete"))
-										{
-											return true;
-										}else
-										{
-											return false;
-											
-											}
-									}
-								</script>
-                        
-					</div>
-				</div>
-			</div>
-			
-			
-			<span class="clear"></span>
-			
-			
-			
-		</div>
-		<span class="clear"></span>
-	</div>
+                        $res_results = db_query($sql_results);
+                        if (db_num_rows($res_results) > 0) {
+                            while($row = db_fetch_array($res_results)) { ?>
+                            <tr>
+                                <td class="center"><?php echo $i++; ?></td>
+                                <td style="font-weight: 600;"><?php echo htmlspecialchars($row['subject_name']); ?></td>
+                                <td><?php echo htmlspecialchars($row['term_name']); ?></td>
+                                <td class="center" style="color: #059669; font-weight: 700;"><?php echo $row['marks']; ?></td>
+                                <td class="center">
+                                    <a href="exam_final_marksheet.php?registration_no=<?php echo $reg_no; ?>&term_id=<?php echo $row['term_id']; ?>" class="btn-fluent-primary" style="padding: 5px 15px; font-size: 11px;">View Marksheet</a>
+                                </td>
+                            </tr>
+                            <?php }
+                        } else {
+                            echo "<tr><td colspan='5' class='center' style='padding: 30px;'>No marks recorded for this student yet.</td></tr>";
+                        }
+                    } else {
+                        echo "<tr><td colspan='5' class='center' style='padding: 30px;'>Please select a registration number above to view results.</td></tr>";
+                    }
+                    ?>
+                </tbody>
+            </table>
+        </div>
+    </div>
 </div>
-<?php include_once("includes/footer.php");?>
+
+<style>
+    .title_icon { display: none !important; }
+    .chzn-container { width: 100% !important; }
+</style>
+
+<?php require_once("includes/footer.php"); ?>

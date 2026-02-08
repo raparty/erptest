@@ -1,192 +1,85 @@
 <?php
-
 declare(strict_types=1);
-include_once("includes/header.php");?>
-<?php include_once("includes/sidebar.php"); ?>
-<?php 
-$msgs='';
-if(isset($_POST['submit']))
-{
-	
 
-	
-	 $sql1="SELECT * FROM exam_add_maximum_marks where subject_id='".$_POST['subject_id']."' and session='".$_SESSION['session']."'  ";
-	$res1=db_query($sql1) or die("Error : " . db_error());
-	$num=db_num_rows($res1);
-	
-	if($num==0)
-	{
-		if($_POST['subject_id']!='')
-		{
-			
-	       $sql3="INSERT INTO  exam_add_maximum_marks(class_id,stream_id,subject_id,term_id,max_marks,session) VALUES ('".$_POST['class_id']."','".$_POST['stream']."', '".$_POST['subject_id']."','".$_POST['term_id']."', '".$_POST['marks']."','".$_SESSION['session']."')";
-		   $res3=db_query($sql3) or die("Error : " . db_error());
-		  //header("Location:exam_show_maximum_marks.php?msg=1");
-			
-			
-		}
-		else
-		{   
-		 header("location:exam_add_maximum_marks.php?error=2");
-			
-		}
-		
-	}
-	else
-	{
-		header("location:exam_add_maximum_marks.php?error=1");
-	}
-}
+/**
+ * ID 2.13: Account Reporting Hub
+ * Updated Date Picker: MM/DD/YYYY Format
+ */
+require_once("includes/bootstrap.php");
+require_once("includes/header.php");
+require_once("includes/sidebar.php");
 
-
+// Default to current month range in MM/DD/YYYY for the display
+$date_from = $_SESSION['report_date_from'] ?? date('m/01/Y'); 
+$date_to = $_SESSION['report_date_to'] ?? date('m/d/Y');      
 ?>
-<div class="page_title">
-	<!--	<span class="title_icon"><span class="computer_imac"></span></span>
-	<script>
-									function subcat()
-									{
-										var s=document.getElementById("subc").value;
-										var xmlhttp;
-										//alert(s);
-if (window.XMLHttpRequest)
-  {// code for IE7+, Firefox, Chrome, Opera, Safari
-  xmlhttp=new XMLHttpRequest();
-  }
-else
-  {// code for IE6, IE5
-  xmlhttp=new ActiveXObject("Microsoft.XMLHTTP");
-  }
-xmlhttp.onreadystatechange=function()
-  {
-  if (xmlhttp.readyState==4 && xmlhttp.status==200)
-    {
-    document.getElementById("subd").innerHTML=xmlhttp.responseText;
-  // alert(subd);
-    }
-  }
-xmlhttp.open("GET","ajax_exam_date.php?s="+s,true);
-xmlhttp.send();	
-									}
-									</script>	<h3>Dashboard</h3>-->
-		<div class="top_search">
-			<form action="#" method="post">
-				<ul id="search_box">
-					<li>
-					<input name="" type="text" class="search_input" id="suggest1" placeholder="Search...">
-					</li>
-					<li>
-					<input name="" type="submit" value="Search" class="search_btn">
-					</li>
-				</ul>
-			</form>
-		</div>
-	</div>
-<?php include_once("includes/account_setting_sidebar.php");?>
-<div id="container">
-	
-	
-	
-	<div id="content">
-		<div class="grid_container">
 
-          
-			<div class="grid_12">
-				<div class="widget_wrap" >
-					<h3 style="padding-left:20px; color:#0078D4">Account Management</h3>
-				
-				
-                	<form action="account_report.php" method="post" class="form_container left_label">
-							
-                                
-                              
-                              <ul style="height:auto; min-height:80px;">
-								
-                                <li>
-								<div class="form_grid_12 multiline">
-									<label class="field_title"> Category type</label>
-                                    <div class="form_input">
-										<div class="form_grid_5 alpha">
-											<select name="category_type" >
-							<option value="Income">Income</option>
-                            <option value="Expense">Expense</option>
-							</select>
-											<span class=" label_intro">Category name</span>
-										</div>
-									
-										<span class="clear"></span>
-									</div>
+<div class="grid_container">
+    <div class="page_title" style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 25px;">
+        <h3>Financial Operations Report</h3>
+        <button onclick="window.print()" class="btn-outline-secondary">Print PDF</button>
+    </div>
 
-									
-									<div class="form_input">
+    <div class="azure-card" style="margin-bottom: 30px; padding: 25px;">
+        <form action="" method="post" class="fluent-search-form">
+            <div style="display: grid; grid-template-columns: 1fr 1fr 150px; gap: 20px; align-items: end;">
+                <div class="form_group">
+                    <label style="font-size: 12px; font-weight: 600; display: block; margin-bottom: 8px;">From (MM/DD/YYYY)</label>
+                    <div class="input-with-icon">
+                        <input type="text" name="date_from" id="date_from" class="form-control fluent-input datepicker" 
+                               value="<?php echo htmlspecialchars($date_from); ?>" readonly required>
+                        <svg class="input-icon" viewBox="0 0 24 24"><path d="M19 3h-1V1h-2v2H8V1H6v2H5c-1.11 0-1.99.9-1.99 2L3 19c0 1.1.89 2 2 2h14c1.1 0 2-.9 2-2V5c0-1.1-.9-2-2-2zm0 16H5V8h14v11zM7 10h5v5H7z"/></svg>
+                    </div>
+                </div>
+                <div class="form_group">
+                    <label style="font-size: 12px; font-weight: 600; display: block; margin-bottom: 8px;">To (MM/DD/YYYY)</label>
+                    <div class="input-with-icon">
+                        <input type="text" name="date_to" id="date_to" class="form-control fluent-input datepicker" 
+                               value="<?php echo htmlspecialchars($date_to); ?>" readonly required>
+                        <svg class="input-icon" viewBox="0 0 24 24"><path d="M19 3h-1V1h-2v2H8V1H6v2H5c-1.11 0-1.99.9-1.99 2L3 19c0 1.1.89 2 2 2h14c1.1 0 2-.9 2-2V5c0-1.1-.9-2-2-2zm0 16H5V8h14v11zM7 10h5v5H7z"/></svg>
+                    </div>
+                </div>
+                <button type="submit" name="entry_submit" class="btn-fluent-primary" style="height: 42px;">Generate</button>
+            </div>
+        </form>
+    </div>
 
-										<span class="clear"></span>
-									</div>
-								</div>
-								</li>
-                                
-                                <li>
-								<div class="form_grid_12 multiline">
-									<label class="field_title"> Date From</label>
-                                    <div class="form_input">
-										<div class="form_grid_5 alpha">
-											<input type="text" name="date_from" class="datepicker">
-											<span class=" label_intro">date from</span>
-										</div>
-									
-										<span class="clear"></span>
-									</div>
-
-									
-									<div class="form_input">
-
-										<span class="clear"></span>
-									</div>
-								</div>
-								</li>
-                                
-                                
-                                <li>
-								<div class="form_grid_12 multiline">
-									<label class="field_title"> Date To</label>
-                                    <div class="form_input">
-										<div class="form_grid_5 alpha">
-											<input type="text" name="date_to" class="datepicker">
-											<span class=" label_intro">date to</span>
-										</div>
-									
-										<span class="clear"></span>
-									</div>
-
-									
-									<div class="form_input">
-
-										<span class="clear"></span>
-									</div>
-								</div>
-								</li>
-                                <li style="height:40px;">
-								<div class="form_grid_12">
-									<div class="form_input"><div class="form_grid_4 alpha">
-										
-										<button type="submit" name="entry_submit" class="btn_small btn_blue"><span>Submit</span></button>
-										
-										<a href="exam_show_maximum_marks.php"><button type="button" class="btn_small btn_orange"><span>Back</span></button>
-									</a>	</div>
-									</div>
-								</div>
-								</li>
-							</ul>
-						</form>
-				</div>
-			</div>
-			
-			
-			<span class="clear"></span>
-			
-			
-			
-		</div>
-		<span class="clear"></span>
-	</div>
+    <div class="widget_wrap azure-card">
+        <div class="widget_content">
+            <table class="display data_tbl fluent-table">
+                <thead>
+                    <tr>
+                        <th style="width: 120px;">Date</th>
+                        <th>Transaction Title</th>
+                        <th class="center">Inflow</th>
+                        <th class="center">Outflow</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    </tbody>
+            </table>
+        </div>
+    </div>
 </div>
-<?php include_once("includes/footer.php"); ?>
+
+<style>
+    .input-with-icon { position: relative; }
+    .input-with-icon .input-icon { 
+        position: absolute; right: 12px; top: 50%; transform: translateY(-50%); 
+        width: 18px; height: 18px; fill: var(--app-muted); pointer-events: none;
+    }
+    .datepicker { cursor: pointer; background-color: #fff !important; }
+</style>
+
+<script type="text/javascript">
+$(document).ready(function() {
+    $(".datepicker").datepicker({
+        dateFormat: 'mm/dd/yy', // This sets the UI display to MM/DD/YYYY
+        changeMonth: true,
+        changeYear: true,
+        showAnim: "slideDown"
+    });
+});
+</script>
+
+<?php require_once("includes/footer.php"); ?>

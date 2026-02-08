@@ -1,175 +1,70 @@
 <?php
-
 declare(strict_types=1);
-include_once("includes/header.php");?>
-<?php include_once("includes/sidebar.php"); ?>
-<div class="page_title">
-	<span class="title_icon"><span class="computer_imac"></span></span>
-	<h3>Exam Time Table</h3>
-	<div class="top_search">
-			<form action="#" method="post">
-				<ul id="search_box">
-					<li>
-					<input name="" type="text" class="search_input" id="suggest1" placeholder="Search...">
-					</li>
-					<li>
-					<input name="" type="submit" value="Search" class="search_btn">
-					</li>
-				</ul>
-			</form>
-		</div>
-	</div>
-<?php include_once("includes/exam_setting_sidebar.php");?>
 
-<div id="container">
-	<?php 
-	if(isset($_GET['sid']))
-	{
-	db_query("delete from exam_time_table where time_table_id='".$_GET['sid']."'");	
-		
-	}
-	?>
-	
-<div id="container">
-	
-	<script type="text/javascript" language="javascript">
-									frm2=document.del;
-									function checkform1()
-									{
-										if(confirm("Are you sure you want to delete"))
-										{
-											return true;
-										}else
-										{
-											return false;
-											
-											}
-									}
-								</script>
-	
-	<div id="content">
-		<div class="grid_container">
-<h3 style="padding-left:20px; color:#0078D4">Exam Time Table</h3>
-          <div class="grid_12">
+/**
+ * ID 4.5: Examination Timetable Detail
+ */
+require_once("includes/bootstrap.php");
+require_once("includes/header.php");
+require_once("includes/sidebar.php");
+?>
 
- 
+<div class="grid_container">
+    <div class="page_title" style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 25px;">
+        <h3>Examination Schedule</h3>
+        <a href="exam_date.php" class="btn-fluent-primary">+ Schedule New Exam</a>
+    </div>
 
-           <div class="btn_30_blue float-right">
-								<a href="exam_date.php"><span style="width:140px">Add New Exam Date </span></a>
-							</div>
-                            
-                            
-                            
+    <?php include_once("includes/exam_setting_sidebar.php"); ?>
+
+    <div class="widget_wrap azure-card">
+        <div class="widget_content">
+            <table class="display data_tbl fluent-table">
+                <thead>
+                    <tr>
+                        <th style="width: 50px;">#</th>
+                        <th>Class</th>
+                        <th>Subject Name</th>
+                        <th class="center">Exam Date (MM/DD/YYYY)</th>
+                        <th class="center" style="width: 150px;">Action</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <?php 
+                    $i=1;
+                    $sql = "SELECT t.*, c.class_name, s.subject_name 
+                            FROM exam_time_table t
+                            JOIN classes c ON t.class_id = c.id
+                            JOIN subjects s ON t.subject_id = s.subject_id
+                            WHERE t.session = '".$_SESSION['session']."'
+                            ORDER BY t.date ASC";
+                    $res = db_query($sql);
+                    while($row = db_fetch_array($res)) { ?>
+                    <tr>
+                        <td class="center"><?php echo $i; ?></td>
+                        <td><?php echo htmlspecialchars($row['class_name']); ?></td>
+                        <td style="font-weight: 600;"><?php echo htmlspecialchars($row['subject_name']); ?></td>
+                        <td class="center">
+                            <span class="fluent-badge-outline" style="background:#f0f7ff; color:var(--app-primary); font-weight:700;">
+                                <?php echo date('m/d/Y', strtotime($row['date'])); ?>
+                            </span>
+                        </td>
+                        <td class="center">
+                            <div class="fluent-action-group">
+                                <a href="exam_edit_time_table.php?sid=<?php echo $row[0]; ?>" class="fluent-btn-icon" title="Edit">
+                                    <svg viewBox="0 0 24 24" width="18" height="18"><path d="M3 17.25V21h3.75L17.81 9.94l-3.75-3.75L3 17.25zM20.71 7.04c.39-.39.39-1.02 0-1.41l-2.34-2.34c-.39-.39-1.02-.39-1.41 0l-1.83 1.83 3.75 3.75 1.83-1.83z"/></svg>
+                                </a>
+                                <a href="exam_time_table_detail.php?sid=<?php echo $row[0]; ?>" class="fluent-btn-icon icon-delete" onclick="return confirm('Remove this exam from timetable?')" title="Delete">
+                                    <svg viewBox="0 0 24 24" width="18" height="18"><path d="M6 19c0 1.1.9 2 2 2h8c1.1 0 2-.9 2-2V7H6v12zM19 4h-3.5l-1-1h-5l-1 1H5v2h14V4z"/></svg>
+                                </a>
                             </div>
-			<div class="grid_12">
-				<div class="widget_wrap">
-					<div class="widget_top">
-						<span class="h_icon list_images"></span>
-						<h6>Exam Time Table Detail</h6>
-					</div>
-					<div class="widget_content">
-						
-						<table class="display data_tbl" >
-						<thead>
-						<tr>
-							
-							<th>
-								S.No.
-							</th>
-							<th>
-							Class Name
-							</th>
-                            <th>
-								Streem Name
-							</th>
-							
-							
-						    <th>
-								Subject
-							</th>
-							
-							<th>
-								 Exam Date
-							</th>
-						<th>
-								 Action
-							</th>
-						
-                        </tr>
-						</thead>
-						<tbody>
-						 <?php 
-						$i=0;
-			 $sql="SELECT * FROM  exam_time_table where session='".$_SESSION['session']."'";
-					$res=db_query($sql);
-				
-							while($row=db_fetch_array($res))
-							{
-								$i++;
-						 $class="select * from class where class_id='".$row['class_id']."'";
-								$values=db_query($class);
-								$rows=db_fetch_array($values);
-							
-					 $class1="select * from stream where stream_id='".$row['stream_id']."'";
-								$values1=db_query($class1);
-								$rows_stream=db_fetch_array($values1);
-								
-						 $class_subject="select * from subject where subject_id='".$row['subject_id']."'";
-								$values_subject=db_query($class_subject);
-								$rows_subject=db_fetch_array($values_subject);
-								
-								
-								?>		
-						<tr>
-							
-							<td class="center">
-								<a href="#"><?php echo $i;?></a>
-							</td>
-						<td class="center">
-								<?php echo $rows['class_name']; ?>
-					
-							</td>
-                        
-                       	<td class="center">
-							<span style="color:#f04508"><?php echo $rows_stream['stream_name']; ?>
-					</span>
-							</td>
-							
-						<td class="center">
-							<?php echo $rows_subject['subject_name']; ?>
-							</td>
-							<td class="center">
-							<span style="color:#f04508"><?php echo $row['date']; ?></span>
-							</td>
-							
-							
-							
-							
-							<td class="center">
-								<span><a class="action-icons c-edit" href="exam_edit_time_table.php?sid=<?php echo $row[0]; ?>" title="Edit">Edit</a></span>
-                                <span><a class="action-icons c-delete" href="exam_time_table_detail.php?sid=<?php echo $row['time_table_id']; ?>" title="delete" onClick="return checkform1()">Delete</a></span>
-							</td>
-						</tr>
-						
-						
-						<?php }?>
-						</tbody>
-						
-						</table>
-                        
-                        
-                        
-					</div>
-				</div>
-			</div>
-			
-			
-			<span class="clear"></span>
-			
-			
-			
-		</div>
-		<span class="clear"></span>
-	</div>
-</div></div>
-<?php include_once("includes/footer.php"); ?>
+                        </td>
+                    </tr>
+                    <?php $i++; } ?>
+                </tbody>
+            </table>
+        </div>
+    </div>
+</div>
+
+<?php require_once("includes/footer.php"); ?>

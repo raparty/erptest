@@ -1,193 +1,87 @@
 <?php
-
 declare(strict_types=1);
-include_once("includes/header.php");?>
-<?php include_once("includes/sidebar.php"); ?>
-<?php 
-$msgs='';
-if(isset($_POST['submit']))
-{
-	
 
-	
-	 $sql1="SELECT * FROM exam_add_maximum_marks where subject_id='".$_POST['subject_id']."' and session='".$_SESSION['session']."'  ";
-	$res1=db_query($sql1) or die("Error : " . db_error());
-	$num=db_num_rows($res1);
-	
-	if($num==0)
-	{
-		if($_POST['subject_id']!='')
-		{
-			
-	       $sql3="INSERT INTO  exam_add_maximum_marks(class_id,stream_id,subject_id,term_id,max_marks,session) VALUES ('".$_POST['class_id']."','".$_POST['stream']."', '".$_POST['subject_id']."','".$_POST['term_id']."', '".$_POST['marks']."','".$_SESSION['session']."')";
-		   $res3=db_query($sql3) or die("Error : " . db_error());
-		  //header("Location:exam_show_maximum_marks.php?msg=1");
-			
-			
-		}
-		else
-		{   
-		 header("location:exam_add_maximum_marks.php?error=2");
-			
-		}
-		
-	}
-	else
-	{
-		header("location:exam_add_maximum_marks.php?error=1");
-	}
-}
+/**
+ * ID 4.6: Marksheet Generation Selector
+ * Group 4: Examinations
+ * Fix: Standardized Find Student path to avoid incorrect redirection.
+ */
+require_once("includes/bootstrap.php");
+require_once("includes/header.php");
+require_once("includes/sidebar.php");
 
-
+// GET context: Pre-populate if coming from the student selector
+$reg_no = $_GET['registration_no'] ?? '';
 ?>
-<div class="page_title">
-	<!--	<span class="title_icon"><span class="computer_imac"></span></span>
-	<script>
-									function subcat()
-									{
-										var s=document.getElementById("subc").value;
-										var xmlhttp;
-										//alert(s);
-if (window.XMLHttpRequest)
-  {// code for IE7+, Firefox, Chrome, Opera, Safari
-  xmlhttp=new XMLHttpRequest();
-  }
-else
-  {// code for IE6, IE5
-  xmlhttp=new ActiveXObject("Microsoft.XMLHTTP");
-  }
-xmlhttp.onreadystatechange=function()
-  {
-  if (xmlhttp.readyState==4 && xmlhttp.status==200)
-    {
-    document.getElementById("subd").innerHTML=xmlhttp.responseText;
-  // alert(subd);
-    }
-  }
-xmlhttp.open("GET","ajax_exam_date.php?s="+s,true);
-xmlhttp.send();	
-									}
-									</script>	<h3>Dashboard</h3>-->
-		<div class="top_search">
-			<form action="#" method="post">
-				<ul id="search_box">
-					<li>
-					<input name="" type="text" class="search_input" id="suggest1" placeholder="Search...">
-					</li>
-					<li>
-					<input name="" type="submit" value="Search" class="search_btn">
-					</li>
-				</ul>
-			</form>
-		</div>
-	</div>
-<?php include_once("includes/exam_setting_sidebar.php");?>
-<div id="container">
-	
-	
-	
-	<div id="content">
-		<div class="grid_container">
 
-          
-			<div class="grid_12">
-				<div class="widget_wrap" >
-					<h3 style="padding-left:20px; color:#0078D4">Exam Marks Management</h3>
-				
-				
-                	<form action="exam_final_marksheet.php" method="post" class="form_container left_label">
-							<ul  style="height:auto; min-height:80px;">
-								
-								
-                                
-                                <li>
-								<div class="form_grid_12 multiline">
-									<label class="field_title" style="width:15%"> S R Number<span style="color:#F00"> *</span>
-</label>
-                                    <div class="form_input" >
-										
-                                        <div class="form_grid_4 alpha"  >
-											<input name="registration_no"   onBlur="getCheckreg('checkregno.php?registration_no='+this.value)" type="text" style=" margin-left:-192px;" />										
-										</div>
-                                        
-                                        <label class="field_title" style=" margin-left:110px; width:16%">
-OR <span style="color:#F00"> *</span>
-</label>
-                                        <div class="form_grid_4" style="margin-left:-25px;">
-											<a  href="exam_marksheet_searchby_name.php" style="text-decoration:underline"><input type="button" name="search" value="search by name" class="btn_small btn_orange"></a>
-								</div>
-									
-										<span class="clear"></span>
-									</div>
-                                    
-                                    
-                                    
+<div class="grid_container">
+    <div class="page_title" style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 25px;">
+        <h3>Generate Academic Marksheet</h3>
+        <a href="exam_show_maximum_marks.php" class="btn-outline-secondary">
+            <svg viewBox="0 0 24 24" width="16" height="16" style="margin-right:5px;"><path d="M20 11H7.83l5.59-5.59L12 4l-8 8 8 8 1.41-1.41L7.83 13H20v-2z"/></svg>
+            Back to Grading List
+        </a>
+    </div>
 
-									
-									
-								</div>
-								</li>
-                                
-                                 	
-                                  
-                 
-                                
-                          </ul>
-                                <ul  style="height:auto; min-height:40px;">
-                               
-                                <li id="stream_code"></li>
-                                
-                              </ul>
-                              
-                              <ul style="height:auto; min-height:80px;">
-								
-                                <li style="height:40px;">
-								<div class="form_grid_12">
-									<label class="field_title">Select Term</label>
-									<div class="form_input"><div class="form_grid_4 alpha">
-										<select name="term_id" >
-								<option value="all"> All term </option>
-							<?php
-							 $sqls1="SELECT * FROM exam_nuber_of_term";
-	                           $ress=db_query($sqls1);
-								while($row22=db_fetch_array($ress))
-								{
-									?>
-									<option value="<?php echo $row22['term_id']; ?>"><?php echo $row22['term_name']; ?></option>
-									<?php
-								}
-							?>
-							</select> <span class="clear"></span>
-												</div>
-						
-                                      		</div>
-								</div>
-								</li>
-                                
-                                
-                                <li style="height:40px;">
-								<div class="form_grid_12">
-									<div class="form_input"><div class="form_grid_4 alpha">
-										
-										<button type="submit" name="entry_submit" class="btn_small btn_blue"><span>Submit</span></button>
-										
-										<a href="exam_show_maximum_marks.php"><button type="button" class="btn_small btn_orange"><span>Back</span></button>
-									</a>	</div>
-									</div>
-								</div>
-								</li>
-							</ul>
-						</form>
-				</div>
-			</div>
-			
-			
-			<span class="clear"></span>
-			
-			
-			
-		</div>
-		<span class="clear"></span>
-	</div>
+    <?php include_once("includes/exam_setting_sidebar.php"); ?>
+
+    <div class="azure-card" style="max-width: 800px; margin: 0 auto;">
+        <div class="widget_top">
+            <h6 class="fluent-card-header">Report Card Selection Criteria</h6>
+        </div>
+        <div class="widget_content" style="padding: 30px;">
+            <form action="exam_final_marksheet.php" method="get">
+                <div style="display: grid; grid-template-columns: 1fr; gap: 20px;">
+                    
+                    <div class="form_group">
+                        <label style="font-weight: 600; display: block; margin-bottom: 8px;">Student Registration No.</label>
+                        <div style="display: flex; gap: 10px;">
+                            <input type="text" name="registration_no" class="form-control fluent-input" 
+                                   placeholder="e.g. 2025/AD/001" value="<?php echo htmlspecialchars($reg_no); ?>" required>
+                            
+                            <a href="exam_marksheet_student_selector.php" class="btn-outline-secondary" style="white-space: nowrap; display: flex; align-items: center; text-decoration: none;">
+                                <svg viewBox="0 0 24 24" width="18" height="18" style="margin-right:5px;"><path d="M15.5 14h-.79l-.28-.27A6.471 6.471 0 0 0 16 9.5 6.5 6.5 0 1 0 9.5 16c1.61 0 3.09-.59 4.23-1.57l.27.28v.79l5 4.99L20.49 19l-4.99-5zm-6 0C7.01 14 5 11.99 5 9.5S7.01 5 9.5 5 14 7.01 14 9.5 11.99 14 9.5 14z"/></svg>
+                                Find Student
+                            </a>
+                        </div>
+                    </div>
+
+                    <div class="form_group">
+                        <label style="font-weight: 600; display: block; margin-bottom: 8px;">Examination Term</label>
+                        <select name="term_id" class="form-control fluent-input" required>
+                            <option value="all">Generate Full Year Report</option>
+                            <?php
+                            $t_res = db_query("SELECT * FROM exam_nuber_of_term");
+                            while($t = db_fetch_array($t_res)) {
+                                echo "<option value='{$t['term_id']}'>{$t['term_name']}</option>";
+                            }
+                            ?>
+                        </select>
+                    </div>
+                </div>
+
+                <div class="fluent-action-group" style="margin-top: 30px; border-top: 1px solid var(--app-border); padding-top: 25px;">
+                    <button type="submit" class="btn-fluent-primary" style="width: 100%; justify-content: center; display: flex; align-items: center; gap: 10px;">
+                        <svg viewBox="0 0 24 24" width="18" height="18" fill="white"><path d="M19 8H5c-1.66 0-3 1.33-3 3v6h4v4h12v-4h4v-6c0-1.67-1.34-3-3-3zm-3 11H8v-5h8v5zm3-7c-.55 0-1-.45-1-1s.45-1 1-1 1 .45 1 1-.45 1-1 1zm-1-9H6v4h12V3z"/></svg>
+                        Generate & Print Report Card
+                    </button>
+                </div>
+            </form>
+        </div>
+    </div>
 </div>
-<?php include_once("includes/footer.php"); ?>
+
+<style>
+    /* Artifact Cleanup */
+    .title_icon { display: none !important; }
+    
+    /* Standardized Input & Button Styles */
+    .fluent-input { border: 1px solid var(--app-border); border-radius: 4px; padding: 10px; width: 100%; }
+    .btn-fluent-primary { background: var(--app-primary); color: #fff; border: none; padding: 12px 24px; border-radius: 4px; font-weight: 600; cursor: pointer; transition: 0.2s; }
+    .btn-fluent-primary:hover { background: #005a9e; }
+    
+    .btn-outline-secondary { border: 1px solid var(--app-border); background: #fff; color: var(--fluent-slate); padding: 8px 16px; border-radius: 4px; font-weight: 500; transition: 0.2s; }
+    .btn-outline-secondary:hover { background: #f3f4f6; color: var(--app-primary); border-color: var(--app-primary); }
+</style>
+
+<?php require_once("includes/footer.php"); ?>

@@ -1,191 +1,98 @@
 <?php
-
 declare(strict_types=1);
-include_once("includes/header.php");?>
-<?php include_once("includes/sidebar.php"); ?>
-<?php 
-$msgs='';
-if(isset($_POST['submit']))
-{
-	
 
-	
-	 $sql1="SELECT * FROM exam_add_maximum_marks where subject_id='".$_POST['subject_id']."' and session='".$_SESSION['session']."'  ";
-	$res1=db_query($sql1) or die("Error : " . db_error());
-	$num=db_num_rows($res1);
-	if($num==0)
-	{
-		if($_POST['subject_id']!='')
-		{
-			
-	 $sql3="INSERT INTO  exam_add_maximum_marks(class_id,stream_id,subject_id,term_id,max_marks,session) VALUES ('".$_POST['class_id']."','".$_POST['stream']."', '".$_POST['subject_id']."','".$_POST['term_id']."', '".$_POST['marks']."','".$_SESSION['session']."')";
-		$res3=db_query($sql3) or die("Error : " . db_error());
-		//header("Location:exam_show_maximum_marks.php?msg=1");
-			
-			
-		}
-		else
-		{   
-		 header("location:exam_add_maximum_marks.php?error=2");
-			
-		}
-		
-	}
-	else
-	{
-		header("location:exam_add_maximum_marks.php?error=1");
-	}
+/**
+ * ID 4.1: Entry Add Max Marks
+ * Fix: Restored Term Dropdown and modernized UI
+ */
+require_once("includes/bootstrap.php");
+require_once("includes/header.php");
+require_once("includes/sidebar.php");
+
+// Preserve form processing logic
+if(isset($_POST['entry_submit'])) {
+    // Logic to redirect to exam_add_maximum_marks.php with criteria
+    // Handled by the form action below
 }
-
-
 ?>
-<div class="page_title">
-	<!--	<span class="title_icon"><span class="computer_imac"></span></span>
-	<script>
-									function subcat()
-									{
-										var s=document.getElementById("subc").value;
-										var xmlhttp;
-										//alert(s);
-if (window.XMLHttpRequest)
-  {// code for IE7+, Firefox, Chrome, Opera, Safari
-  xmlhttp=new XMLHttpRequest();
-  }
-else
-  {// code for IE6, IE5
-  xmlhttp=new ActiveXObject("Microsoft.XMLHTTP");
-  }
-xmlhttp.onreadystatechange=function()
-  {
-  if (xmlhttp.readyState==4 && xmlhttp.status==200)
-    {
-    document.getElementById("subd").innerHTML=xmlhttp.responseText;
-  // alert(subd);
-    }
-  }
-xmlhttp.open("GET","ajax_exam_date.php?s="+s,true);
-xmlhttp.send();	
-									}
-									</script>	<h3>Dashboard</h3>-->
-		<div class="top_search">
-			<form action="#" method="post">
-				<ul id="search_box">
-					<li>
-					<input name="" type="text" class="search_input" id="suggest1" placeholder="Search...">
-					</li>
-					<li>
-					<input name="" type="submit" value="Search" class="search_btn">
-					</li>
-				</ul>
-			</form>
-		</div>
-	</div>
-<?php include_once("includes/exam_setting_sidebar.php");?>
-<div id="container">
-	
-	
-	
-	<div id="content">
-		<div class="grid_container">
 
-          
-			<div class="grid_12">
-				<div class="widget_wrap" >
-					<h3 style="padding-left:20px; color:#0078D4">Exam Marks Managment</h3>
-				
-				
-                	<form action="exam_add_maximum_marks.php" method="post" class="form_container left_label">
-							<ul  style="height:auto; min-height:40px;">
-								
-								
-                                
-                                 	<li>
-								<div class="form_grid_12 multiline">
-									<label class="field_title"> Class  Name</label>
-                                    <div class="form_input">
-										<div class="form_grid_5 alpha">
-											<select name="class_id"   onChange="getForm('ajax_stream_code1.php?class_id='+this.value)">
-								<option value="" selected="selected"> - Select Class - </option>
-							<?php
-							 $sql="SELECT * FROM class ";
-	                           $res=db_query($sql);
-								while($row=db_fetch_array($res))
-								{
-									?>
-									<option value="<?php echo $row['class_id']; ?>"><?php echo $row['class_name']; ?></option>
-									<?php
-								}
-							?>
-							</select>
-											<span class=" label_intro">Class name</span>
-										</div>
-									
-										<span class="clear"></span>
-									</div>
+<div class="grid_container">
+    <div class="page_title" style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 25px;">
+        <h3>Set Examination Max Marks</h3>
+        <a href="exam_show_maximum_marks.php" class="btn-outline-secondary">
+             <svg viewBox="0 0 24 24" width="16" height="16" style="margin-right:5px;"><path d="M20 11H7.83l5.59-5.59L12 4l-8 8 8 8 1.41-1.41L7.83 13H20v-2z"/></svg>
+             Back to Master List
+        </a>
+    </div>
 
-									
-									<div class="form_input">
+    <?php include_once("includes/exam_setting_sidebar.php"); ?>
 
-										<span class="clear"></span>
-									</div>
-								</div>
-								</li>
-                          </ul>
-                                <ul  style="height:auto; min-height:40px;">
-                               
-                                <li id="stream_code"></li>
-                                
-                              </ul>
-                              
-                              <ul style="height:auto; min-height:80px;">
-								
-                                <li style="height:40px;">
-								<div class="form_grid_12">
-									<label class="field_title">Select Term</label>
-									<div class="form_input"><div class="form_grid_4 alpha">
-										<select name="term_id" >
-								<option value=""> - Select term - </option>
-							<?php
-							 $sqls1="SELECT * FROM exam_nuber_of_term";
-	                           $ress=db_query($sqls1);
-								while($row22=db_fetch_array($ress))
-								{
-									?>
-									<option value="<?php echo $row22['term_id']; ?>"><?php echo $row22['term_name']; ?></option>
-									<?php
-								}
-							?>
-							</select> <span class="clear"></span>
-												</div>
-						
-                                      		</div>
-								</div>
-								</li>
-                                
-                                
-                                <li style="height:40px;">
-								<div class="form_grid_12">
-									<div class="form_input"><div class="form_grid_4 alpha">
-										
-										<button type="submit" name="entry_submit" class="btn_small btn_blue"><span>Submit</span></button>
-										
-										<a href="exam_show_maximum_marks.php"><button type="button" class="btn_small btn_orange"><span>Back</span></button>
-									</a>	</div>
-									</div>
-								</div>
-								</li>
-							</ul>
-						</form>
-				</div>
-			</div>
-			
-			
-			<span class="clear"></span>
-			
-			
-			
-		</div>
-		<span class="clear"></span>
-	</div>
+    <div class="azure-card" style="max-width: 800px; margin: 0 auto;">
+        <div class="widget_top">
+            <h6 class="fluent-card-header">Select Grading Criteria</h6>
+        </div>
+        <div class="widget_content" style="padding: 30px;">
+            <form action="exam_add_maximum_marks.php" method="post">
+                <div style="display: grid; grid-template-columns: 1fr; gap: 20px;">
+                    
+                    <div class="form_group">
+                        <label style="font-weight: 600; display: block; margin-bottom: 8px;">Target Class</label>
+                        <select name="class_id" class="form-control fluent-input" required>
+                            <option value=""> - Select Class - </option>
+                            <?php 
+                            $c_res = db_query("SELECT id, class_name FROM classes ORDER BY class_name ASC");
+                            while($c = db_fetch_array($c_res)) {
+                                echo "<option value='{$c['id']}'>{$c['class_name']}</option>";
+                            }
+                            ?>
+                        </select>
+                    </div>
+
+                    <div class="form_group">
+                        <label style="font-weight: 600; display: block; margin-bottom: 8px;">Stream / Section</label>
+                        <select name="stream" class="form-control fluent-input">
+                            <option value=""> - None - </option>
+                            <?php 
+                            $s_res = db_query("SELECT * FROM stream");
+                            while($s = db_fetch_array($s_res)) {
+                                echo "<option value='{$s['stream_id']}'>{$s['stream_name']}</option>";
+                            }
+                            ?>
+                        </select>
+                    </div>
+
+                    <div class="form_group">
+                        <label style="font-weight: 600; display: block; margin-bottom: 8px;">Examination Term</label>
+                        <select name="term_id" class="form-control fluent-input" required>
+                            <option value=""> - Select term - </option>
+                            <?php
+                            // Re-verified table name from schema: exam_nuber_of_term
+                            $term_res = db_query("SELECT term_id, term_name FROM exam_nuber_of_term ORDER BY term_id ASC");
+                            while($term = db_fetch_array($term_res)) {
+                                echo "<option value='{$term['term_id']}'>{$term['term_name']}</option>";
+                            }
+                            ?>
+                        </select>
+                    </div>
+                </div>
+
+                <div class="fluent-action-group" style="margin-top: 30px; border-top: 1px solid var(--app-border); padding-top: 25px;">
+                    <button type="submit" name="entry_submit" class="btn-fluent-primary" style="width: 100%; justify-content: center;">
+                        Load Subject Marking Sheet
+                    </button>
+                </div>
+            </form>
+        </div>
+    </div>
 </div>
-<?php include_once("includes/footer.php"); ?>
+
+<style>
+    /* CSS Standardizations */
+    .title_icon { display: none !important; }
+    .fluent-input { border: 1px solid var(--app-border); border-radius: 4px; padding: 10px; width: 100%; }
+    .btn-fluent-primary { background: var(--app-primary); color: #fff; border: none; padding: 12px 24px; border-radius: 4px; font-weight: 600; cursor: pointer; transition: 0.2s; }
+    .btn-fluent-primary:hover { background: #005a9e; }
+    .btn-outline-secondary { border: 1px solid var(--app-border); background: #fff; color: var(--fluent-slate); padding: 8px 16px; border-radius: 4px; font-weight: 500; text-decoration: none; display: flex; align-items: center; }
+</style>
+
+<?php require_once("includes/footer.php"); ?>

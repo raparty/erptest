@@ -1,349 +1,63 @@
 <?php
-
 declare(strict_types=1);
-include_once("includes/header.php");?>
-<?php include_once("includes/sidebar.php"); ?>
-<?php 
-$msgs='';
-$get_term=$_GET['term_id'];
-if(isset($_POST['submit']))
-{
-	
-	 $sql1="SELECT * FROM exam_subject_marks where class_id='".$_POST['class_id']."'  and session='".$_SESSION['session']."' and term_id='".$_POST['term_id']."'  and registration_no='".$_POST['registration_no']."' ";
-	if($_POST['stream']!="")
-	{
-		
-		$sql1.="and stream_id='".$_POST['stream']."'";
-		}
-	$res1=db_query($sql1) or die("Error : " . db_error());
-	echo $num=db_num_rows($res1);
-	if($num==0)
-	{
-		$subject_id=$_POST['subject_id'];
-			$marks=$_POST['marks'];
-			$no_of_subject=sizeof($subject_id);
-			for($i=0;$i<$no_of_subject;$i++)
-			{
-                $sql3="INSERT INTO  exam_subject_marks(registration_no,class_id,stream_id,subject_id,term_id,marks,session) VALUES ('".$_POST['registration_no']."','".$_POST['class_id']."','".$_POST['stream']."', '".$subject_id[$i]."','".$_POST['term_id']."','".$marks[$i]."','".$_SESSION['session']."')";
-		        $res3=db_query($sql3) or die("Error : " . db_error());
-		      
-			}
-			
-			 header("Location:exam_marks_add_student.php?msg=1");
-		
-		
-		
-	}
-	else
-	{
-		header('location:exam_marks_add_student.php?error=1');
-	die();
-		
-		}
-	
-	}
-	
-	if($_GET['msg']==1)
-	{
-		$msg = "<span style='color:#009900;'><h4> Student marks Detail Added Successfully </h4></span>";
-	}
-	 if($_GET['error']==1)
-	{
-		$msg = "<span style='color:#FF0000;'><h4> Student  marks Detail Already Exists </h4></span>";
-	}
 
+/**
+ * ID 4.2: Add Student Marks
+ * Group 4: Examinations
+ */
+require_once("includes/bootstrap.php");
+require_once("includes/header.php");
+require_once("includes/sidebar.php");
 
-if($_GET['registration_no']!="")
-{
-$_SESSION['registration_no']=$_GET['registration_no'];
-}
+// Preserve Student/Term Context
+$reg_no = db_escape($_GET['registration_no'] ?? '');
+$term_id = (int)($_GET['term_id'] ?? 0);
 
-
-if($_POST['registration_no']!="")
-{
-$_SESSION['registration_no']=$_POST['registration_no'];
-}
-$registration_no=$_SESSION['registration_no'];
-
+// Data Retrieval for Student and Class Info
+$student = db_fetch_array(db_query("SELECT student_name, class_id FROM admissions WHERE reg_no = '$reg_no'"));
 ?>
-<div class="page_title">
-	<!--	<span class="title_icon"><span class="computer_imac"></span></span>
-		<h3>Dashboard</h3>-->
-		<div class="top_search">
-			<form action="#" method="post">
-				<ul id="search_box">
-					<li>
-					<input name="" type="text" class="search_input" id="suggest1" placeholder="Search...">
-					</li>
-					<li>
-					<input name="" type="submit" value="Search" class="search_btn">
-					</li>
-				</ul>
-			</form>
-		</div>
-	</div>
-<?php include_once("includes/exam_setting_sidebar.php");?>
-<?php 
-//$registration_no=$_GET['registration_no'];
-//$fees_term=$_GET['fees_term'];
- $studentinfo="select * from student_info si left join subject sub on sub.subject_id =si.subject where registration_no='".$registration_no."' and session='".$_SESSION['session']."'";
-$row_value=db_fetch_array(db_query($studentinfo));
-?>
-                      
 
-<div id="container">
-	
-	
-	
-	<div id="content">
-		<div class="grid_container">
+<div class="grid_container">
+    <div class="page_title" style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 25px;">
+        <h3>Enter Student Marks</h3>
+        <a href="entry_exam_add_student_marks.php" class="btn-outline-secondary">Back to Selector</a>
+    </div>
 
-          
-			<div class="grid_12">
-				<div class="widget_wrap">
-					<h3 style="padding-left:20px; color:#0078D4">Exam Marks Managment</h3>
-                    <?php if($msg!=""){echo $msg; } ?>
-					<form action="#" method="post" class="form_container left_label">
-							<ul>
-								
-								
-                                
-                                <li style="height:40px;">
-								<div class="form_grid_12">
-									<label class="field_title">S R Number</label>
-									<div class="form_input"><div class="form_grid_4 alpha">
-										<input name="registration_no"   onBlur="getCheckreg('checkregno.php?registration_no='+this.value)" required type="text" id="suba"  value="<?php echo $row_value['registration_no'];?>" /> <span class="clear"></span>
-												</div>
-						</div>
-                                       </div>
-							
-								</li>
-                                
-                               </ul>
-							<ul  style="height:auto; min-height:80px;">
-								
-								<li>
-								<div class="form_grid_12 multiline">
-									<label class="field_title">Student Name</label>
-                                    <div class="form_input">
-										<div class="form_grid_4 alpha">
-											<input name="name" type="text" value="<?php echo $row_value['name'];?>"/>
-											<span class=" label_intro">student name</span>
-										</div>
-									
-										<span class="clear"></span>
-									</div>
+    <div class="azure-card">
+        <div class="widget_top">
+            <h6 class="fluent-card-header">Marking Sheet: <?php echo htmlspecialchars($student['student_name']); ?> (<?php echo $reg_no; ?>)</h6>
+        </div>
+        <div class="widget_content" style="padding: 30px;">
+            <form action="" method="post">
+                <input type="hidden" name="registration_no" value="<?php echo $reg_no; ?>">
+                <input type="hidden" name="class_id" value="<?php echo $student['class_id']; ?>">
+                <input type="hidden" name="term_id" value="<?php echo $term_id; ?>">
 
-									
-									<div class="form_input">
+                <div style="display: grid; grid-template-columns: repeat(auto-fill, minmax(280px, 1fr)); gap: 20px;">
+                    <?php 
+                    $sql = "SELECT s.*, m.max_marks 
+                            FROM subjects s 
+                            JOIN exam_add_maximum_marks m ON s.subject_id = m.subject_id 
+                            WHERE s.class_id = '".$student['class_id']."' AND m.term_id = '$term_id'";
+                    $res = db_query($sql);
+                    while($sub = db_fetch_array($res)) { ?>
+                    <div class="form_group" style="background: #f8fafc; border: 1px solid var(--app-border); padding: 15px; border-radius: 8px;">
+                        <label style="font-weight: 600; color: var(--fluent-slate); margin-bottom: 10px; display: block;">
+                            <?php echo htmlspecialchars($sub['subject_name']); ?> 
+                            <span style="color: var(--app-muted); font-size: 11px;">(Max: <?php echo $sub['max_marks']; ?>)</span>
+                        </label>
+                        <input type="number" name="marks[]" class="form-control fluent-input" placeholder="Obtained Marks" max="<?php echo $sub['max_marks']; ?>" required>
+                        <input type="hidden" name="subject_id[]" value="<?php echo $sub['subject_id']; ?>">
+                    </div>
+                    <?php } ?>
+                </div>
 
-										<span class="clear"></span>
-									</div>
-								</div>
-								</li>
-                                
-                                 	<li>
-								<div class="form_grid_12 multiline">
-									<label class="field_title"> Class  Name</label>
-                                    <div class="form_input">
-										<div class="form_grid_5 alpha">
-											<select name="class_id"   onChange="getForm('ajax_stream_code2.php?class_id='+this.value)">
-								<option value="" selected="selected"> - Select Class - </option>
-							<?php
-							 $sql="SELECT * FROM class ";
-	                           $res=db_query($sql);
-								while($row=db_fetch_array($res))
-								{
-									if($row_value['class']==$row['class_id'])
-									{
-										$class_sel='selected="selected"';
-										
-										}else
-										{
-											$class_sel="";
-											}
-									?>
-									<option <?php echo $class_sel;?> value="<?php echo $row['class_id']; ?>"><?php echo $row['class_name']; ?></option>
-									<?php
-								}
-							?>
-							</select>
-											<span class=" label_intro">Class name</span>
-										</div>
-									
-										<span class="clear"></span>
-									</div>
-
-									
-									<div class="form_input">
-
-										<span class="clear"></span>
-									</div>
-								</div>
-								</li>
-     <?php  if($row_value['stream']!=0)
-				 {?>                      
-                               
-<li>
-<div class="form_grid_12">
-									<label class="field_title">Stream</label>
-									<div class="form_input">
-										<select name="stream" tabindex="13">
-										<option value="">---select stream---</option>
-                                        	 <?php 
-						$i=1;
-					$sql="SELECT * FROM allocate_class_stream where class_id='".$row_value['class']."' ";
-					$res=db_query($sql);
-				
-							while($row=db_fetch_array($res))
-							{
-								if($row_value['stream']==$row['stream_id'])
-								{
-									$stream_sel='selected="selected"';
-									}else
-									{
-										$stream_sel="";
-										}
-								
-						$sql2="SELECT * FROM stream where stream_id='".$row['stream_id']."'";
-					$stream=db_fetch_array(db_query($sql2));
-					?>			<option <?php echo $stream_sel;?> value="<?php echo $row['stream_id']; ?>"><?php echo $stream['stream_name']; ?></option>
-									<?php
-								}
-							?>
-										</select>
-                                        <span class=" label_intro">Stream name</span>
-									</div>
-								</div></li><?php } ?>
-                 
-                 
-                 <li style="height:40px;">
-								<div class="form_grid_12">
-									<label class="field_title">Select Term</label>
-									<div class="form_input"><div class="form_grid_4 alpha">
-										<select name="term_id" >
-								<option value=""> - Select term - </option>
-							<?php
-							 $sqls1="SELECT * FROM exam_nuber_of_term";
-	                           $ress=db_query($sqls1);
-								while($row22=db_fetch_array($ress))
-								{
-									if($_SESSION['term_id']==$row22['term_id'])
-									{
-										$term_sel='selected="selected"';
-										
-										}else
-										{  
-										   $term_sel="";
-											
-											}
-									?>
-									<option <?php echo $term_sel;?> value="<?php echo $row22['term_id']; ?>"><?php echo $row22['term_name']; ?></option>
-									<?php
-								}
-							?>
-							</select> <span class="clear"></span>
-												</div>
-						
-                                      		</div>
-								</div>
-								</li>
-                                
-                                <li>
-                                
-								<div class="form_grid_12 multiline">
-									<label class="field_title"><?php echo $row_value['subject_name'];?>&nbsp;(Optional)</label>
-                                    <div class="form_input">
-										<div class="form_grid_4 alpha">
-											<input name="optional_subject" type="text" value=""/>
-											<span class=" label_intro"><?php echo $row_value['subject_name'];?></span>
-										</div>
-									
-										<span class="clear"></span>
-									</div>
-
-									
-									<div class="form_input">
-
-										<span class="clear"></span>
-									</div>
-								</div>
-								</li>
-                 <?php  if($_SESSION['stream_id']!="")
-				 {
-							 $sql="SELECT * FROM allocate_class_subject where class_id='".$row_value['class']."' and stream_id='".$row_value['stream']."'  group by subject_id ";
-				 }else
-				 {
-					 $sql="SELECT * FROM allocate_class_subject where class_id='".$row_value['class']."' group by subject_id ";
-			
-					 
-					 }
-					 $res=db_query($sql);?>
-                     <?php 
-				
-							while($row=db_fetch_array($res))
-							{
-								
-								$sql3="SELECT * FROM subject where subject_id='".$row['subject_id']."'";
-					$subject=db_fetch_array(db_query($sql3));
-									?>
-							<li>	<div class="form_grid_12 multiline">
-									<label class="field_title"> <?php echo ucfirst($subject['subject_name']); ?></label>
-                                    <div class="form_input">
-										<div class="form_grid_5 alpha">
-											<input type="text" name="marks[]" required>
-                                            <input type="hidden" name="subject_id[]" value="<?php echo $subject['subject_id']?>">
-											<span class=" label_intro"><?php echo ucfirst($subject['subject_name']); ?></span>
-										</div>
-									
-										<span class="clear"></span>
-									</div>
-
-									
-									<div class="form_input">
-
-										<span class="clear"></span>
-									</div>
-								</div></li>
-                                <?php
-								}
-							?>
-                                
-                                
-                              </ul>
-                              
-                              <ul style="height:auto; min-height:80px;">
-								
-                                
-                                
-                                
-                                <li style="height:40px;">
-								<div class="form_grid_12">
-									<div class="form_input"><div class="form_grid_4 alpha">
-										
-										<button type="submit" name="submit" class="btn_small btn_blue"><span>Submit</span></button>
-										
-										<a href="exam_show_maximum_marks.php"><button type="button" class="btn_small btn_orange"><span>Back</span></button>
-									</a>	</div>
-									</div>
-								</div>
-								</li>
-							</ul>
-						
-                                
-                                
-							
-						</form>
-				</div>
-			</div>
-			
-			
-			<span class="clear"></span>
-			
-			
-			
-		</div>
-		<span class="clear"></span>
-	</div>
+                <div class="fluent-action-group" style="margin-top: 30px; border-top: 1px solid var(--app-border); padding-top: 25px;">
+                    <button type="submit" name="submit" class="btn-fluent-primary">Save Academic Marks</button>
+                </div>
+            </form>
+        </div>
+    </div>
 </div>
-<?php include_once("includes/footer.php"); ?>
+
+<?php require_once("includes/footer.php"); ?>
