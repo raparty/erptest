@@ -1,6 +1,6 @@
-# Microsoft Fluent UI Design Screenshots
+# School ERP System - Screenshots
 
-This folder contains screenshots of the updated ERP pages using Microsoft Fluent UI Design System.
+This folder contains screenshots of the School ERP System pages using Microsoft Fluent UI Design System.
 
 ## Color Palette
 - **Azure Blue**: #0078D4 (Primary actions, headers, icons)
@@ -18,13 +18,19 @@ The application uses a robust Flexbox shell:
 
 ## Screenshots
 
-### 1. Dashboard (dashboard_fluent_ui.png)
+### 1. Login Page (login_page.png)
+Modern login page with centered card layout, Fluent UI styling, and clean authentication form.
+
+### 2. Demo Dashboard (demo_dashboard.png)
+Complete dashboard view with sidebar navigation, module cards, and form examples showing the full layout.
+
+### 3. Dashboard (dashboard_fluent_ui.png)
 Main dashboard with module navigation cards using Fluent UI colors and shadows.
 
-### 2. Admission Page (admission_fluent_ui.png)
+### 4. Admission Page (admission_fluent_ui.png)
 Student admission management page with action buttons and data table.
 
-### 3. Fees Manager (fees_manager_fluent_ui.png)
+### 5. Fees Manager (fees_manager_fluent_ui.png)
 Fees management interface with search form and transaction history table.
 
 ## Features Implemented
