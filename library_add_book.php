@@ -1,230 +1,103 @@
 <?php
-
 declare(strict_types=1);
-include_once("includes/header.php");?>
-<?php include_once("includes/sidebar.php"); ?>
-<?php 
-if(isset($_POST['submit']))
-{
-	 $book_number = $_POST['book_number'];
-	 $book_category_id = $_POST['book_category_id'];
-	 $book_name=$_POST['book_name'];
-	 $book_description=$_POST['book_description'];
-	 $book_author=$_POST['book_author'];
-	//$school_logo = $_POST['school_logo'];
-	
-	 $sql1="SELECT * FROM book_manager where book_number='".$book_number."' ";
-	$res1=db_query($sql1) or die("Error : " . db_error());
-	$num=db_num_rows($res1);
-	if($num==0)
-	{
-		
-		
-		
-		 $sql3="INSERT INTO book_manager(book_category_id,book_number,book_name,book_description,book_author) VALUES ('".$book_category_id."','".$book_number."','".$book_name."','".$book_description."','".$book_author."')";
-		$res3=db_query($sql3) or die("Error : " . db_error());
-		header("Location:library_book_manager.php?msg=1");
-		
-		
-	}
-	else
-	{
-		header("location: library_add_book.php?error=1");
-	}
-}
-else
-{
-	if($_GET['msg']==1)
-	{
-		$msg = "<span style='color:#009900;'><h4> Book Detail Added Successfully </h4></span>";
-	}
-	if($_GET['msg']==2)
-	{
-		$msg = "<span style='color:#009900;'><h4> Book Detail Deleted Successfully </h4></span>";
-	}
-	if($_GET['msg']==3)
-	{
-		$msg = "<span style='color:#009900;'><h4>  Book Detail Updated Successfully </h4></span>";
-	}
-	else if($_GET['error']==1)
-	{
-		$msg = "<span style='color:#FF0000;'><h4>  Book Detail Already Exists </h4></span>";
-	}
-	else if($_GET['error']==2)
-	{
-		$msg = "<span style='color:#FF0000;'><h4> Please fill all detail </h4></span>";
-	}
+
+// Enable error reporting to diagnose database mismatches
+ini_set('display_errors', '1');
+ini_set('display_startup_errors', '1');
+error_reporting(E_ALL);
+
+require_once("includes/bootstrap.php");
+include_once("includes/header.php");
+include_once("includes/sidebar.php");
+include_once("includes/library_setting_sidebar.php");
+
+$conn = Database::connection();
+$msg = "";
+
+if (isset($_POST['submit'])) {
+    $book_number = mysqli_real_escape_string($conn, trim((string)$_POST['book_number']));
+    $book_category_id = (int)$_POST['book_category_id'];
+    $book_name = mysqli_real_escape_string($conn, trim((string)$_POST['book_name']));
+    $book_description = mysqli_real_escape_string($conn, trim((string)$_POST['book_description']));
+    $book_author = mysqli_real_escape_string($conn, trim((string)$_POST['book_author']));
+
+    if (!empty($book_number) && !empty($book_name)) {
+        // Updated to use pluralized table 'book_managers'
+        $sql_check = "SELECT * FROM book_managers WHERE book_number = '$book_number'";
+        $res_check = mysqli_query($conn, $sql_check);
+
+        if ($res_check && mysqli_num_rows($res_check) == 0) {
+            $sql_ins = "INSERT INTO book_managers (book_category_id, book_number, book_name, book_description, book_author) 
+                        VALUES ('$book_category_id', '$book_number', '$book_name', '$book_description', '$book_author')";
+            
+            if (mysqli_query($conn, $sql_ins)) {
+                echo "<script>window.location.href='library_book_manager.php?msg=1';</script>";
+                exit;
+            } else {
+                $msg = "<div class='alert alert-danger'>Database Error: " . htmlspecialchars(mysqli_error($conn)) . "</div>";
+            }
+        } else {
+            $msg = "<div class='alert alert-danger'>Book Number already exists.</div>";
+        }
+    } else {
+        $msg = "<div class='alert alert-danger'>Please fill in all required fields.</div>";
+    }
 }
 ?>
-<div class="page_title">
-	<!--	
-		<h3>Dashboard</h3>-->
-		<div class="top_search">
-			<form action="#" method="post">
-				<ul id="search_box">
-					<li>
-					<input name="" type="text" class="search_input" id="suggest1" placeholder="Search...">
-					</li>
-					<li>
-					<input name="" type="submit" value="Search" class="search_btn">
-					</li>
-				</ul>
-			</form>
-		</div>
-	</div>
-<?php include_once("includes/library_setting_sidebar.php");?>
 
 <div id="container">
-	
-	
-	
-	<div id="content">
-		<div class="grid_container">
-
-          
-			<div class="grid_12">
-				<div class="widget_wrap">
-					<h3 style="padding-left:20px; color:#0078D4">Add Book Detail </h3>
-                    
-                    <?php if($msg!=""){echo $msg; } ?>
-					<form action="" method="post" class="form_container left_label" enctype="multipart/form-data">
-							<ul>
-								<li>
-								<div class="form_grid_12 multiline">
-									<label class="field_title"> Category   Name</label>
-                                    <div class="form_input">
-										<div class="form_grid_5 alpha">
-											<select name="book_category_id" >
-								<option value="" selected="selected"> - Select ctegory - </option>
-							<?php
-							 $sql="SELECT * FROM library_category  ";
-	                           $res=db_query($sql);
-								while($row=db_fetch_array($res))
-								{
-									?>
-									<option value="<?php echo $row['library_category_id']; ?>"><?php echo $row['category_name']; ?></option>
-									<?php
-								}
-							?>
-							</select>
-											<span class=" label_intro">Category name</span>
-										</div>
-									
-										<span class="clear"></span>
-									</div>
-
-									
-									<div class="form_input">
-
-										<span class="clear"></span>
-									</div>
-								</div>
-								</li>
-                                
-                                <li>
-								<div class="form_grid_12 multiline">
-									<label class="field_title"> Book Name</label>
-                                    <div class="form_input">
-										<div class="form_grid_5 alpha">
-											<input name="book_name" type="text" />
-											
-											<span class=" label_intro">book name</span>
-										</div>
-									
-										<span class="clear"></span>
-									</div>
-
-									
-									<div class="form_input">
-
-										<span class="clear"></span>
-									</div>
-								</div>
-								</li>
-                                
-                                <li>
-								<div class="form_grid_12 multiline">
-									<label class="field_title"> Author Name</label>
-                                    <div class="form_input">
-										<div class="form_grid_5 alpha">
-											<input name="book_author" type="text" />
-											
-											<span class=" label_intro">Author name</span>
-										</div>
-									
-										<span class="clear"></span>
-									</div>
-
-									
-									<div class="form_input">
-
-										<span class="clear"></span>
-									</div>
-								</div>
-								</li>
-                                <li>
-								<div class="form_grid_12 multiline">
-									<label class="field_title"> Book number</label>
-                                    <div class="form_input">
-										<div class="form_grid_5 alpha">
-											<input name="book_number" type="text" />
-											
-											<span class=" label_intro">Book number</span>
-										</div>
-									
-										<span class="clear"></span>
-									</div>
-
-									
-									<div class="form_input">
-
-										<span class="clear"></span>
-									</div>
-								</div>
-								</li>
-                                <li>
-								<div class="form_grid_12 multiline">
-									<label class="field_title"> Book Description</label>
-                                     <div class="form_input">
-										<div class="form_grid_5 alpha">
-											<textarea  name="book_description" rows="4" cols="20"></textarea>
-											
-											<span class=" label_intro"> Book Description</span>
-										</div>
-									
-										<span class="clear"></span>
-									</div>
-
-									
-									<div class="form_input">
-
-										<span class="clear"></span>
-									</div>
-								</div>
-								</li>
-								<li>
-								<div class="form_grid_12">
-									<div class="form_input">
-										
-										<button type="submit" class="btn_small btn_blue" name="submit"><span>Save</span></button>
-										
-										<a href="library_book_manager.php"><button type="button" class="btn_small btn_orange"><span>Back</span></button></a>
-										
-									</div>
-								</div>
-								</li>
-							</ul>
-						</form>
-				</div>
-			</div>
-			
-			
-			<span class="clear"></span>
-			
-			
-			
-		</div>
-		<span class="clear"></span>
-	</div>
+    <div id="content">
+        <div class="grid_container">
+            <h3 style="padding:10px 0 0 20px; color:#1c75bc">Library Management</h3>
+            <div class="grid_12">
+                <div class="widget_wrap">
+                    <div class="widget_top">
+                        <h6>Add Book Detail</h6>
+                    </div>
+                    <div class="widget_content" style="padding: 20px;">
+                        <?php if ($msg != "") echo $msg; ?>
+                        
+                        <form action="library_add_book.php" method="post">
+                            <div class="row mb-3">
+                                <div class="col-md-6">
+                                    <label style="display:block; margin-bottom:5px; font-weight:bold;">Category <span style="color:red;">*</span></label>
+                                    <select name="book_category_id" style="width:100%;" required>
+                                        <option value="">-- Select Category --</option>
+                                        <?php
+                                        // Using your new pluralized 'library_categories' table
+                                        $sql_cat = "SELECT * FROM library_categories ORDER BY category_name ASC";
+                                        $res_cat = mysqli_query($conn, $sql_cat);
+                                        while ($row_cat = mysqli_fetch_assoc($res_cat)) {
+                                            echo '<option value="' . $row_cat['category_id'] . '">' . htmlspecialchars($row_cat['category_name']) . '</option>';
+                                        }
+                                        ?>
+                                    </select>
+                                </div>
+                                <div class="col-md-6">
+                                    <label style="display:block; margin-bottom:5px; font-weight:bold;">Book Number <span style="color:red;">*</span></label>
+                                    <input name="book_number" type="text" style="width:100%;" required />
+                                </div>
+                            </div>
+                            <div class="row mb-3">
+                                <div class="col-md-6">
+                                    <label style="display:block; margin-bottom:5px; font-weight:bold;">Book Name <span style="color:red;">*</span></label>
+                                    <input name="book_name" type="text" style="width:100%;" required />
+                                </div>
+                                <div class="col-md-6">
+                                    <label style="display:block; margin-bottom:5px; font-weight:bold;">Author Name</label>
+                                    <input name="book_author" type="text" style="width:100%;" />
+                                </div>
+                            </div>
+                            <div style="margin-top: 20px; padding-top: 20px; border-top: 1px solid #eee;">
+                                <button type="submit" name="submit" class="btn_small btn_blue"><span>Save Book</span></button>
+                                <a href="library_book_manager.php" class="btn_small btn_orange" style="margin-left:10px;"><span>Cancel</span></a>
+                            </div>
+                        </form>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
 </div>
-<?php include_once("includes/footer.php");?>
+
+<?php include_once("includes/footer.php"); ?>

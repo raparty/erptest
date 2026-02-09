@@ -1,117 +1,93 @@
 <?php
-
 declare(strict_types=1);
-include_once("includes/header.php");?>
-<?php include_once("includes/sidebar.php"); ?>
-<?php 
-if(isset($_POST['submit']))
-{
-	$category_name = $_POST['category_name'];
-	//$category_type=$_POST['category_type'];
-		
-		$sql1="SELECT * FROM library_category where category_name='".$category_name."' and library_category_id!='".$_GET['sid']."'";
-	$res1=db_query($sql1) or die("Error : " . db_error());
-	$num=db_num_rows($res1);
-	if($num==0)
-	{
-	  $sql3="UPDATE library_category SET `category_name` = '".$category_name."'  where library_category_id='".$_GET['sid']."'";
-	$res3=db_query($sql3) or die("Error : " . db_error());
-	header("Location:library_book_category.php?msg=3");
-	}else
-	{
-		header("Location:library_edit_book_category.php?error=2&&sid=".$_GET['sid']);
-	}
+
+// Enable error reporting to catch database mismatches
+ini_set('display_errors', '1');
+ini_set('display_startup_errors', '1');
+error_reporting(E_ALL);
+
+require_once("includes/bootstrap.php");
+include_once("includes/header.php");
+include_once("includes/sidebar.php");
+include_once("includes/library_setting_sidebar.php");
+
+$conn = Database::connection();
+$sid = isset($_GET['sid']) ? mysqli_real_escape_string($conn, (string)$_GET['sid']) : '';
+$msg = "";
+
+// Process Update Logic
+if (isset($_POST['submit'])) {
+    $category_name = mysqli_real_escape_string($conn, trim((string)$_POST['category_name']));
+
+    // Check for duplicates (excluding the current record)
+    $sql_check = "SELECT * FROM library_categories WHERE category_name = '$category_name' AND category_id != '$sid'";
+    $res_check = mysqli_query($conn, $sql_check);
+    
+    if ($res_check && mysqli_num_rows($res_check) == 0) {
+        $sql_update = "UPDATE library_categories SET `category_name` = '$category_name' WHERE category_id = '$sid'";
+        
+        if (mysqli_query($conn, $sql_update)) {
+            // JS redirect prevents the blank page "headers already sent" issue
+            echo "<script>window.location.href='library_book_category.php?msg=3';</script>";
+            exit;
+        } else {
+            $msg = "<div class='alert alert-danger'>Update Error: " . htmlspecialchars(mysqli_error($conn)) . "</div>";
+        }
+    } else {
+        $msg = "<div class='alert alert-danger'>Category name already exists.</div>";
+    }
 }
 
-	if($_GET['error']==2)
-	{
-		$msg = "<span style='color:#FF0000;'><h4>Category Detail Already Exists  </h4></span>";
-	}
-		
-	$sql2="SELECT * FROM library_category WHERE `library_category_id` = '" . $_GET['sid'] . "';";
-	$res2=db_query($sql2);	
-	$row2=db_fetch_array($res2);
-		
-  ?>
-<div class="page_title">
-	<!--	
-		<h3>Dashboard</h3>-->
-		<div class="top_search">
-			<form action="#" method="post">
-				<ul id="search_box">
-					<li>
-					<input name="" type="text" class="search_input" id="suggest1" placeholder="Search...">
-					</li>
-					<li>
-					<input name="" type="submit" value="Search" class="search_btn">
-					</li>
-				</ul>
-			</form>
-		</div>
-	</div>
-<?php include_once("includes/library_setting_sidebar.php");?>
+// Fetch existing data
+if (empty($sid)) {
+    echo "<script>window.location.href='library_book_category.php';</script>";
+    exit;
+}
+
+$sql_fetch = "SELECT * FROM library_categories WHERE category_id = '$sid'";
+$res_fetch = mysqli_query($conn, $sql_fetch);
+$row = mysqli_fetch_array($res_fetch);
+
+if (!$row) {
+    echo "<script>window.location.href='library_book_category.php?error=notfound';</script>";
+    exit;
+}
+?>
 
 <div id="container">
-	
-	
-	
-	<div id="content">
-		<div class="grid_container">
+    <div id="content">
+        <div class="grid_container">
+            <h3 style="padding:10px 0 0 20px; color:#1c75bc">Library Management</h3>
+            <div class="grid_12">
+                <div class="widget_wrap">
+                    <div class="widget_top">
+                        <h6>Edit Category Detail</h6>
+                    </div>
+                    <div class="widget_content" style="padding: 20px;">
+                        <?php if ($msg != "") echo $msg; ?>
+                        
+                        <form action="library_edit_book_category.php?sid=<?php echo htmlspecialchars($sid); ?>" method="post">
+                            <div class="row mb-3">
+                                <div class="col-md-6">
+                                    <label style="display:block; margin-bottom:5px; font-weight:bold;">Category Name <span style="color:red;">*</span></label>
+                                    <input name="category_name" type="text" style="width:100%;" value="<?php echo htmlspecialchars((string)$row['category_name']); ?>" required />
+                                </div>
+                            </div>
 
-          
-			<div class="grid_12">
-				<div class="widget_wrap">
-					<h3 style="padding-left:20px; color:#0078D4">Edit Category Detail</h3>
-                    
-                    <?php if($msg!=""){echo $msg; } ?>
-					<form action="" method="post" class="form_container left_label" enctype="multipart/form-data">
-							<ul>
-								<li>
-								<div class="form_grid_12 multiline">
-									<label class="field_title"> Category  Name</label>
-                                    <div class="form_input">
-										<div class="form_grid_5 alpha">
-											<input name="category_name" type="text" value="<?php echo $row2['category_name'];?>"/>
-											<span class=" label_intro">Class name</span>
-										</div>
-									
-										<span class="clear"></span>
-									</div>
-
-									
-									<div class="form_input">
-
-										<span class="clear"></span>
-									</div>
-								</div>
-								</li>
-                                
-                                
-                                
-                                
-								<li>
-								<div class="form_grid_12">
-									<div class="form_input">
-										
-										<button type="submit" class="btn_small btn_blue" name="submit"><span>Save</span></button>
-										
-										<a href="library_category_manager.php"><button type="button" class="btn_small btn_orange"><span>Back</span></button></a>
-										
-									</div>
-								</div>
-								</li>
-							</ul>
-						</form>
-				</div>
-			</div>
-			
-			
-			<span class="clear"></span>
-			
-			
-			
-		</div>
-		<span class="clear"></span>
-	</div>
+                            <div style="margin-top: 20px; padding-top: 20px; border-top: 1px solid #eee;">
+                                <button type="submit" name="submit" class="btn_small btn_blue">
+                                    <span>Update Category</span>
+                                </button>
+                                <a href="library_book_category.php" class="btn_small btn_orange" style="margin-left:10px;">
+                                    <span>Cancel</span>
+                                </a>
+                            </div>
+                        </form>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
 </div>
-<?php include_once("includes/footer.php");?>
+
+<?php include_once("includes/footer.php"); ?>

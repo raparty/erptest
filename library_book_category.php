@@ -1,125 +1,72 @@
 <?php
-
 declare(strict_types=1);
-include_once("includes/header.php");?>
-<?php include_once("includes/sidebar.php"); ?>
-<div class="page_title">
-	
-	<h3>Book Categories</h3>
-	<div class="top_search">
-			<form action="#" method="post">
-				<ul id="search_box">
-					<li>
-					<input name="" type="text" class="search_input" id="suggest1" placeholder="Search...">
-					</li>
-					<li>
-					<input name="" type="submit" value="Search" class="search_btn">
-					</li>
-				</ul>
-			</form>
-		</div>
-	</div>
-<?php include_once("includes/library_setting_sidebar.php");?>
+require_once("includes/bootstrap.php");
+include_once("includes/header.php");
+include_once("includes/sidebar.php");
+
+$conn = Database::connection();
+?>
 
 <div id="container">
-	
-	
-	
-	<div id="content">
-		<div class="grid_container">
-<h3 style="padding-left:20px; color:#0078D4">Book Category Detail</h3>
-          <div class="grid_12">
+    <div id="content">
+        <div class="grid_container">
+            <h3 style="padding:10px 0 0 20px; color:#1c75bc">Library Management</h3>
+            
+            <?php include_once("includes/library_setting_sidebar.php"); ?>
 
- 
-
-           <div class="btn_30_blue float-right">
-								<a href="library_add_book_category.php"><span style="width:140px">Add Category  </span></a>
-							</div>
-                            
-                            
-                            
-                            </div>
-			<div class="grid_12">
-				<div class="widget_wrap">
-					<div class="widget_top">
-						
-						<h6>Book Category detail</h6>
-					</div>
-					<div class="widget_content">
-						
-						<table class="display data_tbl" >
-						<thead>
-						<tr>
-							
-							<th>
-								S.No.
-							</th>
-							<th>
-								Category Name
-							</th>
-                                                    
-							<th>
-								 Action
-							</th>
-						</tr>
-						</thead>
-						<tbody>
-                        <?php 
-						$i=1;
-					$sql="SELECT * FROM library_category";
-					$res=db_query($sql);
-				
-							while($row=db_fetch_array($res))
-							{?>		
-						<tr>
-							
-							<td class="center">
-								<a href="#"><?php echo $i;?></a>
-							</td>
-						
-                            <td class="center">
-								<?php echo $row['category_name']; ?>
-							</td>
-							
-							
-							
-							<td class="center">
-								<span><a class="action-icons c-edit" href="library_edit_book_category.php?sid=<?php echo $row[0]; ?>" title="Edit">Edit</a></span><span><a class="action-icons c-delete" href="library_delete_book_category.php?sid=<?php echo $row[0]; ?>" title="delete" onClick="return checkform1()">Delete</a></span>
-							</td>
-						</tr>
-						
-						<?php $i++;} ?>
-						
-						</tbody>
-						
-						</table>
-                        
-                        <script type="text/javascript" language="javascript">
-									frm2=document.del;
-									function checkform1()
-									{
-										if(confirm("Are you sure you want to delete"))
-										{
-											return true;
-										}else
-										{
-											return false;
-											
-											}
-									}
-								</script>
-                        
-					</div>
-				</div>
-			</div>
-			
-			
-			<span class="clear"></span>
-			
-			
-			
-		</div>
-		<span class="clear"></span>
-	</div>
+            <div class="grid_12">
+                <div class="widget_wrap">
+                    <div class="widget_top">
+                        <h6>Book Category Detail</h6>
+                        <div style="float:right; padding: 5px;">
+                            <a href="library_add_book_category.php" class="btn_small btn_blue">
+                                <span>+ Add Category</span>
+                            </a>
+                        </div>
+                    </div>
+                    <div class="widget_content" style="padding: 20px;">
+                        <table class="display data_tbl">
+                            <thead>
+                                <tr>
+                                    <th style="width: 50px;">S.No.</th>
+                                    <th>Category Name</th>
+                                    <th style="text-align: center;">Action</th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                <?php 
+                                $i = 1;
+                                // Updated to use pluralized table name 'library_categories'
+                                $sql = "SELECT * FROM library_categories ORDER BY category_name ASC";
+                                $res = mysqli_query($conn, $sql);
+                                
+                                if ($res && mysqli_num_rows($res) > 0) {
+                                    while($row = mysqli_fetch_assoc($res)) { ?>		
+                                    <tr>
+                                        <td class="center"><?php echo $i; ?></td>
+                                        <td class="center"><strong><?php echo htmlspecialchars((string)$row['category_name']); ?></strong></td>
+                                        <td class="center">
+                                            <span>
+                                                <a class="action-icons c-edit" href="library_edit_book_category.php?sid=<?php echo $row['category_id']; ?>" title="Edit">Edit</a>
+                                            </span>
+                                            <span>
+                                                <a class="action-icons c-delete" href="library_delete_book_category.php?sid=<?php echo $row['category_id']; ?>" title="Delete" onClick="return confirm('Are you sure you want to delete this category?')">Delete</a>
+                                            </span>
+                                        </td>
+                                    </tr>
+                                    <?php $i++; } 
+                                } else { ?>
+                                    <tr>
+                                        <td colspan="3" class="center" style="padding: 30px; color: #888;">No categories found. Click "Add Category" to get started.</td>
+                                    </tr>
+                                <?php } ?>
+                            </tbody>
+                        </table>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
 </div>
-<?php include_once("includes/footer.php");?>
+
+<?php include_once("includes/footer.php"); ?>

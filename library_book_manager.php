@@ -1,170 +1,95 @@
 <?php
-
 declare(strict_types=1);
-include_once("includes/header.php");?>
-<?php include_once("includes/sidebar.php"); ?>
-<div class="page_title">
-	
-	<h3>Books Manager</h3>
-	<div class="top_search">
-			<form action="#" method="post">
-				<ul id="search_box">
-					<li>
-					<input name="" type="text" class="search_input" id="suggest1" placeholder="Search...">
-					</li>
-					<li>
-					<input name="" type="submit" value="Search" class="search_btn">
-					</li>
-				</ul>
-			</form>
-		</div>
-	</div>
-<?php include_once("includes/library_setting_sidebar.php");?>
+
+// Enable error reporting to identify any hidden SQL mismatches
+ini_set('display_errors', '1');
+ini_set('display_startup_errors', '1');
+error_reporting(E_ALL);
+
+require_once("includes/bootstrap.php");
+include_once("includes/header.php");
+include_once("includes/sidebar.php");
+
+$conn = Database::connection();
+?>
 
 <div id="container">
-	
-	
-	
-	<div id="content">
-		<div class="grid_container">
-<h3 style="padding-left:20px; color:#0078D4">Books Detail</h3>
+    <div id="content">
+        <div class="grid_container">
+            <h3 style="padding:10px 0 0 20px; color:#1c75bc">Library Management</h3>
+            
+            <?php include_once("includes/library_setting_sidebar.php"); ?>
 
-          <div class="grid_12">
-
- 
-
-           <div style="float:right; margin-top:10px;">
-								<a href="library_add_book.php" class="btn-fluent-primary"><span style="padding: 8px 16px; display: inline-block;">+ Add Book Detail</span></a>
-			</div>
-                            
-                            
-                            
-          </div>
-			<div class="grid_12">
-				<div class="widget_wrap">
-					<div class="widget_top">
-						
-						<h6>Books Detail</h6>
-					</div>
-					<div class="widget_content">
-						
-						<table class="display data_tbl" >
-						<thead>
-						<tr>
-							
-							<th>
-								S.No.
-							</th>
-							<th>
-								Book   Name
-							</th>
-                          <th>
-								Author  Name
-							</th>
-                          <th>
-								Book Number
-							</th>
-                               
-                          <th>
-								 Category
-							</th>
-                            <th>
-								Description
-							</th>
-                           
-							<th>
-								 Action
-							</th>
-						</tr>
-						</thead>
-						<tbody>
-                        <?php 
-					
-					$sql="SELECT * FROM book_manager";
-					$res=db_query($sql);
-					      //$mytablename="student_fees_detail";
-				          //include_once("fees_manager_pagination.php");
-						  	$i=1;
-							/*if($_GET['page']=="")
-							{
-								$_GET['page']=1;
-								
-								}
-								*/
-								//$i=($_GET['page']-1)*$limit+1;
-							while($row=db_fetch_array($res))
-							{
-								
-								/*$sql="SELECT * FROM student_info where registration_no='".$row[1]."' ";
-	                           $student_info=db_fetch_array(db_query($sql));
-							   
-							   $sql1="SELECT * FROM class where class_id='".$student_info['class']."'";
-					$class=db_fetch_array(db_query($sql1));*/
-							   $sql1="SELECT * FROM library_category where library_category_id ='".$row['book_category_id']."' ";
-	                           $book_category_name=db_fetch_array(db_query($sql1));
-								
-								
-								?>
-						<tr>
-							
-							<td class="center">
-								<a href="#"><?php echo $i;?></a>
-							</td>
-						
-                            <td class="center">
-								<?php echo $row['book_name']; ?>
-							</td>
-                             <td class="center">
-								<?php echo $row['book_author']; ?>
-							</td>
-                             <td class="center">
-								<?php echo $row['book_number']; ?>
-							</td>
-							<td class="center">
-								<?php echo $book_category_name['category_name']; ?>
-							</td>
-                            <td class="center">
-								<?php echo $row['book_description']; ?>
-							</td>
-							
-                          
-							<td class="center">
-								<span><a class="action-icons c-edit" href="library_edit_book.php?sid=<?php echo $row[0]; ?>" title="Edit"><svg style="width:16px; height:16px; fill:currentColor; vertical-align:middle; margin-right:4px;" viewBox="0 0 24 24"><path d="M3 17.25V21h3.75L17.81 9.94l-3.75-3.75L3 17.25zM20.71 7.04c.39-.39.39-1.02 0-1.41l-2.34-2.34c-.39-.39-1.02-.39-1.41 0l-1.83 1.83 3.75 3.75 1.83-1.83z"/></svg>Edit</a></span><span><a class="action-icons c-delete" href="library_delete_book.php?sid=<?php echo $row[0]; ?>" title="delete" onClick="return checkform1()"><svg style="width:16px; height:16px; fill:currentColor; vertical-align:middle; margin-right:4px;" viewBox="0 0 24 24"><path d="M6 19c0 1.1.9 2 2 2h8c1.1 0 2-.9 2-2V7H6v12zM19 4h-3.5l-1-1h-5l-1 1H5v2h14V4z"/></svg>Delete</a></span>
-							</td>
-						</tr>
-						
-						<?php $i++;} ?>
-                       
-						</tbody>
-						
-						</table>
-                        
-                      <script type="text/javascript" language="javascript">
-									frm2=document.del;
-									function checkform1()
-									{
-										if(confirm("Are you sure you want to delete"))
-										{
-											return true;
-										}else
-										{
-											return false;
-											
-											}
-									}
-								</script>
-                        
-					</div>
-				</div>
-			</div>
-			
-			
-			<span class="clear"></span>
-			
-			
-			
-		</div>
-		<span class="clear"></span>
-	</div>
+            <div class="grid_12">
+                <div class="widget_wrap">
+                    <div class="widget_top">
+                        <h6>Books Detail</h6>
+                        <div style="float:right; padding: 5px;">
+                            <a href="library_add_book.php" class="btn_small btn_blue">
+                                <span>+ Add Book Detail</span>
+                            </a>
+                        </div>
+                    </div>
+                    <div class="widget_content" style="padding: 20px;">
+                        <table class="display data_tbl">
+                            <thead>
+                                <tr>
+                                    <th style="width: 50px;">S.No.</th>
+                                    <th>Book Name</th>
+                                    <th>Author</th>
+                                    <th>Book No.</th>
+                                    <th>Category</th>
+                                    <th style="text-align: center;">Action</th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                <?php 
+                                $i = 1;
+                                // Querying the modernized pluralized table
+                                $sql = "SELECT * FROM book_managers ORDER BY book_name ASC";
+                                $res = mysqli_query($conn, $sql);
+                                
+                                if ($res && mysqli_num_rows($res) > 0) {
+                                    while($row = mysqli_fetch_assoc($res)) {
+                                        // FETCH CATEGORY: Updated to use 'category_id' instead of 'library_category_id'
+                                        $cat_id = (int)$row['book_category_id'];
+                                        $sql_cat = "SELECT category_name FROM library_categories WHERE category_id = '$cat_id'";
+                                        $res_cat = mysqli_query($conn, $sql_cat);
+                                        $cat_data = mysqli_fetch_assoc($res_cat);
+                                        
+                                        // Display the name or a fallback if the ID doesn't exist
+                                        $category_display = $cat_data['category_name'] ?? "Uncategorized";
+                                ?>
+                                <tr>
+                                    <td class="center"><?php echo $i; ?></td>
+                                    <td class="center"><strong><?php echo htmlspecialchars((string)$row['book_name']); ?></strong></td>
+                                    <td class="center"><?php echo htmlspecialchars((string)$row['book_author']); ?></td>
+                                    <td class="center"><?php echo htmlspecialchars((string)$row['book_number']); ?></td>
+                                    <td class="center">
+                                        <span class="badge" style="background:#e3f2fd; color:#1976d2; padding:2px 8px; border-radius:4px;">
+                                            <?php echo htmlspecialchars($category_display); ?>
+                                        </span>
+                                    </td>
+                                    <td class="center">
+                                        <span><a class="action-icons c-edit" href="library_edit_book.php?sid=<?php echo $row['book_id']; ?>" title="Edit">Edit</a></span>
+                                        <span><a class="action-icons c-delete" href="library_delete_book.php?sid=<?php echo $row['book_id']; ?>" title="Delete" onClick="return confirm('Delete this book record?')">Delete</a></span>
+                                    </td>
+                                </tr>
+                                <?php 
+                                        $i++; 
+                                    } 
+                                } else { ?>
+                                    <tr>
+                                        <td colspan="6" class="center" style="padding: 40px; color: #999;">No books found.</td>
+                                    </tr>
+                                <?php } ?>
+                            </tbody>
+                        </table>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
 </div>
-<?php include_once("includes/footer.php");?>
+
+<?php include_once("includes/footer.php"); ?>

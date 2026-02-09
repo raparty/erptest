@@ -1,41 +1,32 @@
 <?php
-
 declare(strict_types=1);
-include_once("includes/header.php");?>
-<?php include_once("includes/sidebar.php"); ?>
-	<div class="page_title">
-		
-		<h3>Library Settings</h3>
-		<div class="top_search">
-			<form action="#" method="post">
-				<ul id="search_box">
-					<li>
-					<input name="" type="text" class="search_input" id="suggest1" placeholder="Search...">
-					</li>
-					<li>
-					<input name="" type="submit" value="Search" class="search_btn">
-					</li>
-				</ul>
-			</form>
-		</div>
-	</div>
-     <?php include_once("includes/library_setting_sidebar.php");?>
+require_once("includes/bootstrap.php");
+include_once("includes/header.php");
+include_once("includes/sidebar.php");
+?>
 
-	<div id="container">
-	
-	<div id="content">
-		<div class="grid_container">
-			<div class="grid_12 full_block">
-				<div class="widget_wrap">
-					<div class="widget_content settings-dashboard">
-						<h2>Library Settings Dashboard</h2>
-						<p>Use the navigation above to manage library books, categories, fines, and student book records.</p>
-					</div>
-				</div>
-			</div>
-		</div>
-       <h1>&nbsp;</h1>
-		  <h6 align="center" >Copyright © 2013 </h6>
-	</div>
+<div id="container">
+    <div id="content">
+        <div class="grid_container">
+            <h3 style="padding:10px 0 0 20px; color:#1c75bc">Library Management</h3>
+            
+            <?php include_once("includes/library_setting_sidebar.php"); ?>
+
+            <div class="grid_12">
+                <div class="widget_wrap">
+                    <div class="widget_top">
+                        <h6>Library Settings Dashboard</h6>
+                    </div>
+                    <div class="widget_content settings-dashboard" style="padding: 30px; text-align: center;">
+                        <h2 style="margin-bottom: 15px;">Welcome to Library Settings</h2>
+                        <p style="color: #666; font-size: 14px;">
+                            Use the navigation sidebar to manage library books, categories, fines, and student book records.
+                        </p>
+                    </div>
+                </div>
+            </div>
+        </div>
     </div>
-  <?php include_once("includes/footer.php");?>
+</div>
+
+<?php include_once("includes/footer.php"); ?>

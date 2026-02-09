@@ -1,219 +1,136 @@
 <?php
-
 declare(strict_types=1);
-include_once("includes/header.php");?>
-<?php include_once("includes/sidebar.php"); ?>
-<?php 
-if(isset($_POST['submit']))
-{
-	$book_number = $_POST['book_number'];
-	 $book_category_id = $_POST['book_category_id'];
-	 $book_name=$_POST['book_name'];
-	 $book_description=$_POST['book_description'];
-	 $book_author=$_POST['book_author'];
-	//$school_logo = $_POST['school_logo'];
-	
-	 $sql1="SELECT * FROM book_manager where book_number='".$book_number."' and `book_id` != '" . $_GET['sid'] . "'";
-	$res1=db_query($sql1) or die("Error : " . db_error());
-	$num=db_num_rows($res1);
-	if($num==0)
-	{
-	  $sql3="UPDATE book_manager SET `book_number` = '".$book_number."',book_category_id='".$book_category_id."',`book_name` = '".$book_name."',book_description='".$book_description."',`book_author` = '".$book_author."'   WHERE `book_id` = '" . $_GET['sid'] . "'";
-	$res3=db_query($sql3) or die("Error : " . db_error());
-	header("Location:library_book_manager.php?msg=3");
-	}else
-		{    header("location:library_edit_book.php?error=2&&sid=".$_GET['sid']);
-			
-		}
+
+// Enable error reporting to diagnose database mismatches immediately
+ini_set('display_errors', '1');
+ini_set('display_startup_errors', '1');
+error_reporting(E_ALL);
+
+require_once("includes/bootstrap.php");
+include_once("includes/header.php");
+include_once("includes/sidebar.php");
+include_once("includes/library_setting_sidebar.php");
+
+$conn = Database::connection();
+$sid = isset($_GET['sid']) ? mysqli_real_escape_string($conn, (string)$_GET['sid']) : '';
+$msg = "";
+
+// Process Update Logic
+if (isset($_POST['submit'])) {
+    $book_number = mysqli_real_escape_string($conn, trim((string)$_POST['book_number']));
+    $book_category_id = (int)$_POST['book_category_id'];
+    $book_name = mysqli_real_escape_string($conn, trim((string)$_POST['book_name']));
+    $book_description = mysqli_real_escape_string($conn, trim((string)$_POST['book_description']));
+    $book_author = mysqli_real_escape_string($conn, trim((string)$_POST['book_author']));
+
+    // Check for existing book number excluding current record - using pluralized 'book_managers'
+    $sql_check = "SELECT * FROM book_managers WHERE book_number = '$book_number' AND book_id != '$sid'";
+    $res_check = mysqli_query($conn, $sql_check);
+
+    if ($res_check && mysqli_num_rows($res_check) == 0) {
+        $sql_update = "UPDATE book_managers SET 
+                       `book_number` = '$book_number', 
+                       `book_category_id` = '$book_category_id', 
+                       `book_name` = '$book_name', 
+                       `book_description` = '$book_description', 
+                       `book_author` = '$book_author' 
+                       WHERE `book_id` = '$sid'";
+        
+        if (mysqli_query($conn, $sql_update)) {
+            // JS redirect prevents blank page issues from header conflicts
+            echo "<script>window.location.href='library_book_manager.php?msg=3';</script>";
+            exit;
+        } else {
+            $msg = "<div class='alert alert-danger'>Update Error: " . htmlspecialchars(mysqli_error($conn)) . "</div>";
+        }
+    } else {
+        $msg = "<div class='alert alert-danger'>Book Number '$book_number' already exists.</div>";
+    }
 }
-if($_GET['error']==2)
-	{
-		$msg = "<span style='color:#FF0000;'><h4> Book Detail Already Exists  </h4></span>";
-	}
-	
-		
-	$sql2="SELECT * FROM book_manager WHERE `book_id` = '" . $_GET['sid'] . "'";
-	$res2=db_query($sql2);	
-	$row2=db_fetch_array($res2);
-		
-  ?>
-<div class="page_title">
-	<!--	
-		<h3>Dashboard</h3>-->
-		<div class="top_search">
-			<form action="#" method="post">
-				<ul id="search_box">
-					<li>
-					<input name="" type="text" class="search_input" id="suggest1" placeholder="Search...">
-					</li>
-					<li>
-					<input name="" type="submit" value="Search" class="search_btn">
-					</li>
-				</ul>
-			</form>
-		</div>
-	</div>
-<?php include_once("includes/library_setting_sidebar.php");?>
+
+// Fetch existing data
+if (empty($sid)) {
+    echo "<script>window.location.href='library_book_manager.php';</script>";
+    exit;
+}
+
+$sql_fetch = "SELECT * FROM book_managers WHERE `book_id` = '$sid'";
+$res_fetch = mysqli_query($conn, $sql_fetch);
+$row2 = mysqli_fetch_assoc($res_fetch);
+
+if (!$row2) {
+    echo "<script>window.location.href='library_book_manager.php?error=notfound';</script>";
+    exit;
+}
+?>
 
 <div id="container">
-	
-	
-	
-	<div id="content">
-		<div class="grid_container">
+    <div id="content">
+        <div class="grid_container">
+            <h3 style="padding:10px 0 0 20px; color:#1c75bc">Library Management</h3>
+            <div class="grid_12">
+                <div class="widget_wrap">
+                    <div class="widget_top">
+                        <h6>Edit Book Detail</h6>
+                    </div>
+                    <div class="widget_content" style="padding: 20px;">
+                        <?php if ($msg != "") echo $msg; ?>
+                        
+                        <form action="library_edit_book.php?sid=<?php echo htmlspecialchars($sid); ?>" method="post">
+                            <div class="row mb-3">
+                                <div class="col-md-6">
+                                    <label style="display:block; margin-bottom:5px; font-weight:bold;">Category <span style="color:red;">*</span></label>
+                                    <select name="book_category_id" style="width:100%;" required>
+                                        <option value="">-- Select Category --</option>
+                                        <?php
+                                        // Fetching from your modernized 'library_categories' table
+                                        $sql_cat = "SELECT * FROM library_categories ORDER BY category_name ASC";
+                                        $res_cat = mysqli_query($conn, $sql_cat);
+                                        while ($row_cat = mysqli_fetch_assoc($res_cat)) {
+                                            $selected = ($row2['book_category_id'] == $row_cat['category_id']) ? 'selected' : '';
+                                            echo '<option value="' . $row_cat['category_id'] . '" ' . $selected . '>' . htmlspecialchars($row_cat['category_name']) . '</option>';
+                                        }
+                                        ?>
+                                    </select>
+                                </div>
+                                <div class="col-md-6">
+                                    <label style="display:block; margin-bottom:5px; font-weight:bold;">Book Number <span style="color:red;">*</span></label>
+                                    <input name="book_number" type="text" style="width:100%;" value="<?php echo htmlspecialchars((string)$row2['book_number']); ?>" required />
+                                </div>
+                            </div>
 
-          
-			<div class="grid_12">
-				<div class="widget_wrap">
-					<h3 style="padding-left:20px; color:#0078D4">Edit book detail</h3>
-                    
-                    <?php if($msg!=""){echo $msg; } ?>
-					<form action="" method="post" class="form_container left_label" enctype="multipart/form-data">
-							<ul>
-								<li>
-								<div class="form_grid_12 multiline">
-									<label class="field_title"> Category   Name</label>
-                                    <div class="form_input">
-										<div class="form_grid_5 alpha">
-											<select name="book_category_id" >
-								<option value="" selected="selected"> - Select ctegory - </option>
-							<?php
-							 $sql="SELECT * FROM library_category  ";
-	                           $res=db_query($sql);
-								while($row=db_fetch_array($res))
-								{
-									
-									if($row2['book_category_id']==$row['library_category_id']){
-										$select_sel='selected="selected"';
-										}
-									else{
-										$select_sel='';
-										
-										}
-									?>
-									<option <?php echo $select_sel; ?> value="<?php echo $row['library_category_id']; ?>"><?php echo $row['category_name']; ?></option>
-									<?php
-								}
-							?>
-							</select>
-											<span class=" label_intro">Category name</span>
-										</div>
-									
-										<span class="clear"></span>
-									</div>
+                            <div class="row mb-3">
+                                <div class="col-md-6">
+                                    <label style="display:block; margin-bottom:5px; font-weight:bold;">Book Name <span style="color:red;">*</span></label>
+                                    <input name="book_name" type="text" style="width:100%;" value="<?php echo htmlspecialchars((string)$row2['book_name']); ?>" required />
+                                </div>
+                                <div class="col-md-6">
+                                    <label style="display:block; margin-bottom:5px; font-weight:bold;">Author Name</label>
+                                    <input name="book_author" type="text" style="width:100%;" value="<?php echo htmlspecialchars((string)$row2['book_author']); ?>" />
+                                </div>
+                            </div>
 
-									
-									<div class="form_input">
+                            <div class="row mb-3">
+                                <div class="col-md-12">
+                                    <label style="display:block; margin-bottom:5px; font-weight:bold;">Description</label>
+                                    <textarea name="book_description" rows="4" style="width:100%;"><?php echo htmlspecialchars((string)$row2['book_description']); ?></textarea>
+                                </div>
+                            </div>
 
-										<span class="clear"></span>
-									</div>
-								</div>
-								</li>
-                                
-                                <li>
-								<div class="form_grid_12 multiline">
-									<label class="field_title"> Book Name</label>
-                                    <div class="form_input">
-										<div class="form_grid_5 alpha">
-											<input name="book_name" type="text" value="<?php echo $row2['book_name'];?>" />
-											
-											<span class=" label_intro">book name</span>
-										</div>
-									
-										<span class="clear"></span>
-									</div>
-
-									
-									<div class="form_input">
-
-										<span class="clear"></span>
-									</div>
-								</div>
-								</li>
-                                
-                                <li>
-								<div class="form_grid_12 multiline">
-									<label class="field_title"> Author Name</label>
-                                    <div class="form_input">
-										<div class="form_grid_5 alpha">
-											<input name="book_author" type="text" value="<?php echo $row2['book_author'];?>" />
-											
-											<span class=" label_intro">Author name</span>
-										</div>
-									
-										<span class="clear"></span>
-									</div>
-
-									
-									<div class="form_input">
-
-										<span class="clear"></span>
-									</div>
-								</div>
-								</li>
-                                <li>
-								<div class="form_grid_12 multiline">
-									<label class="field_title"> Book number</label>
-                                    <div class="form_input">
-										<div class="form_grid_5 alpha">
-											<input name="book_number" type="text"  value="<?php echo $row2['book_number'];?>" />
-											
-											<span class=" label_intro">Book number</span>
-										</div>
-									
-										<span class="clear"></span>
-									</div>
-
-									
-									<div class="form_input">
-
-										<span class="clear"></span>
-									</div>
-								</div>
-								</li>
-                                <li>
-								<div class="form_grid_12 multiline">
-									<label class="field_title"> Book Description</label>
-                                     <div class="form_input">
-										<div class="form_grid_5 alpha">
-											<textarea  name="book_description" rows="4" cols="20"><?php echo $row2['book_description'];?></textarea>
-											
-											<span class=" label_intro"> Book Description</span>
-										</div>
-									
-										<span class="clear"></span>
-									</div>
-
-									
-									<div class="form_input">
-
-										<span class="clear"></span>
-									</div>
-								</div>
-								</li>
-								<li>
-								<div class="form_grid_12">
-									<div class="form_input">
-										
-										<button type="submit" class="btn_small btn_blue" name="submit"><span>Save</span></button>
-										
-										<a href="library_book_manager.php"><button type="button" class="btn_small btn_orange"><span>Back</span></button></a>
-										
-									</div>
-								</div>
-								</li>
-							</ul>
-						</form>
-				</div>
-			</div>
-			
-			
-			<span class="clear"></span>
-			
-			
-			
-		</div>
-		<span class="clear"></span>
-	</div>
+                            <div style="margin-top: 20px; padding-top: 20px; border-top: 1px solid #eee;">
+                                <button type="submit" name="submit" class="btn_small btn_blue">
+                                    <span>Update Book</span>
+                                </button>
+                                <a href="library_book_manager.php" class="btn_small btn_orange" style="margin-left:10px;">
+                                    <span>Cancel</span>
+                                </a>
+                            </div>
+                        </form>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
 </div>
-<?php include_once("includes/footer.php");?>
+
+<?php include_once("includes/footer.php"); ?>

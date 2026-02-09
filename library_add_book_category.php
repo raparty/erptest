@@ -1,139 +1,79 @@
 <?php
-
 declare(strict_types=1);
-include_once("includes/header.php");?>
-<?php include_once("includes/sidebar.php"); ?>
-<?php 
-if(isset($_POST['submit']))
-{
-	 $category_name = $_POST['category_name'];
-	
-	
-	 $sql1="SELECT * FROM library_category where category_name='".$category_name."' ";
-	$res1=db_query($sql1) or die("Error : " . db_error());
-	$num=db_num_rows($res1);
-	if($num==0)
-	{
-		
-		
-		if($_POST['category_name']!="")
-		{
-		 $sql3="INSERT INTO library_category(category_name) VALUES ('".$category_name."')";
-		$res3=db_query($sql3) or die("Error : " . db_error());
-		header("Location:library_book_category.php?msg=1");
-		}else
-		{    header("location:library_add_book_category.php?error=2");
-			
-			}
-		
-	}
-	else
-	{
-		header("location:library_add_book_category.php?error=1");
-	}
-}
-else
-{
-	if($_GET['msg']==1)
-	{
-		$msg = "<span style='color:#009900;'><h4> Category Detail Added Successfully </h4></span>";
-	}
-	if($_GET['msg']==2)
-	{
-		$msg = "<span style='color:#009900;'><h4> Category Detail Deleted Successfully </h4></span>";
-	}
-	if($_GET['msg']==3)
-	{
-		$msg = "<span style='color:#009900;'><h4> Category Detail Updated Successfully </h4></span>";
-	}
-	else if($_GET['error']==1)
-	{
-		$msg = "<span style='color:#FF0000;'><h4> Category Detail Already Exists </h4></span>";
-	}
-	else if($_GET['error']==2)
-	{
-		$msg = "<span style='color:#FF0000;'><h4> Please fill all detail </h4></span>";
-	}
+
+// Enable error reporting to catch database connectivity issues
+ini_set('display_errors', '1');
+ini_set('display_startup_errors', '1');
+error_reporting(E_ALL);
+
+require_once("includes/bootstrap.php");
+include_once("includes/header.php");
+include_once("includes/sidebar.php");
+include_once("includes/library_setting_sidebar.php");
+
+$conn = Database::connection();
+$msg = "";
+
+if (isset($_POST['submit'])) {
+    $category_name = mysqli_real_escape_string($conn, trim((string)$_POST['category_name']));
+
+    if (!empty($category_name)) {
+        // Updated to pluralized table name 'library_categories'
+        $sql_check = "SELECT * FROM library_categories WHERE category_name = '$category_name'";
+        $res_check = mysqli_query($conn, $sql_check);
+
+        if ($res_check && mysqli_num_rows($res_check) == 0) {
+            $sql_ins = "INSERT INTO library_categories (category_name) VALUES ('$category_name')";
+            if (mysqli_query($conn, $sql_ins)) {
+                // JS redirect prevents blank pages from header conflicts
+                echo "<script>window.location.href='library_book_category.php?msg=1';</script>";
+                exit;
+            } else {
+                $msg = "<div class='alert alert-danger'>Database Error: " . htmlspecialchars(mysqli_error($conn)) . "</div>";
+            }
+        } else {
+            $msg = "<div class='alert alert-danger'>Category '$category_name' already exists.</div>";
+        }
+    } else {
+        $msg = "<div class='alert alert-danger'>Please enter a Category Name.</div>";
+    }
 }
 ?>
-<div class="page_title">
-	<!--	
-		<h3>Dashboard</h3>-->
-		<div class="top_search">
-			<form action="#" method="post">
-				<ul id="search_box">
-					<li>
-					<input name="" type="text" class="search_input" id="suggest1" placeholder="Search...">
-					</li>
-					<li>
-					<input name="" type="submit" value="Search" class="search_btn">
-					</li>
-				</ul>
-			</form>
-		</div>
-	</div>
-<?php include_once("includes/library_setting_sidebar.php");?>
 
 <div id="container">
-	
-	
-	
-	<div id="content">
-		<div class="grid_container">
+    <div id="content">
+        <div class="grid_container">
+            <h3 style="padding:10px 0 0 20px; color:#1c75bc">Library Management</h3>
+            <div class="grid_12">
+                <div class="widget_wrap">
+                    <div class="widget_top">
+                        <h6>Add Book Category</h6>
+                    </div>
+                    <div class="widget_content" style="padding: 20px;">
+                        <?php if ($msg != "") echo $msg; ?>
+                        
+                        <form action="library_add_book_category.php" method="post">
+                            <div class="row mb-3">
+                                <div class="col-md-6">
+                                    <label style="display:block; margin-bottom:5px; font-weight:bold;">Category Name <span style="color:red;">*</span></label>
+                                    <input name="category_name" type="text" style="width:100%;" placeholder="e.g. Reference, Fiction, Science" required />
+                                </div>
+                            </div>
 
-          
-			<div class="grid_12">
-				<div class="widget_wrap">
-					<h3 style="padding-left:20px; color:#0078D4">Add Book Category </h3>
-                    
-                    <?php if($msg!=""){echo $msg; } ?>
-					<form action="" method="post" class="form_container left_label" enctype="multipart/form-data">
-							<ul>
-								<li>
-								<div class="form_grid_12 multiline">
-									<label class="field_title"> Category Name</label>
-                                    <div class="form_input">
-										<div class="form_grid_5 alpha">
-											<input name="category_name" type="text"/>
-											<span class=" label_intro">Category  name</span>
-										</div>
-									
-										<span class="clear"></span>
-									</div>
-
-									
-									<div class="form_input">
-
-										<span class="clear"></span>
-									</div>
-								</div>
-								</li>
-                                
-                                
-                                
-								<li>
-								<div class="form_grid_12">
-									<div class="form_input">
-										
-										<button type="submit" class="btn_small btn_blue" name="submit"><span>Save</span></button>
-										
-										<a href="library_book_category.php"><button type="button" class="btn_small btn_orange"><span>Back</span></button></a>
-										
-									</div>
-								</div>
-								</li>
-							</ul>
-						</form>
-				</div>
-			</div>
-			
-			
-			<span class="clear"></span>
-			
-			
-			
-		</div>
-		<span class="clear"></span>
-	</div>
+                            <div style="margin-top: 20px; padding-top: 20px; border-top: 1px solid #eee;">
+                                <button type="submit" name="submit" class="btn_small btn_blue">
+                                    <span>Save Category</span>
+                                </button>
+                                <a href="library_book_category.php" class="btn_small btn_orange" style="margin-left:10px;">
+                                    <span>Cancel</span>
+                                </a>
+                            </div>
+                        </form>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
 </div>
-<?php include_once("includes/footer.php");?>
+
+<?php include_once("includes/footer.php"); ?>

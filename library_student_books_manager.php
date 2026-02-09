@@ -1,178 +1,104 @@
 <?php
-
 declare(strict_types=1);
-include_once("includes/header.php");?>
-<?php include_once("includes/sidebar.php"); ?>
-<div class="page_title">
-	
-	<h3>Student Books Manager</h3>
-	<div class="top_search">
-			<form action="#" method="post">
-				<ul id="search_box">
-					<li>
-					<input name="" type="text" class="search_input" id="suggest1" placeholder="Search...">
-					</li>
-					<li>
-					<input name="" type="submit" value="Search" class="search_btn">
-					</li>
-				</ul>
-			</form>
-		</div>
-	</div>
-<?php include_once("includes/library_setting_sidebar.php");?>
+
+// Enable error reporting for debugging pluralization issues
+ini_set('display_errors', '1');
+ini_set('display_startup_errors', '1');
+error_reporting(E_ALL);
+
+require_once("includes/bootstrap.php");
+include_once("includes/header.php");
+include_once("includes/sidebar.php");
+
+$conn = Database::connection();
+?>
 
 <div id="container">
-	
-	
-	
-	<div id="content">
-		<div class="grid_container">
-<h3 style="padding-left:20px; color:#0078D4">Student books Detail</h3>
+    <div id="content">
+        <div class="grid_container">
+            <h3 style="padding:10px 0 0 20px; color:#1c75bc">Library Management</h3>
+            
+            <?php include_once("includes/library_setting_sidebar.php"); ?>
 
-          <div class="grid_12">
+            <div class="grid_12">
+                <div class="widget_wrap">
+                    <div class="widget_top">
+                        <h6>Issued Student Books</h6>
+                        <div style="float:right; padding: 5px;">
+                            <a href="library_entry_add_student_books.php" class="btn_small btn_blue">
+                                <span>+ Issue New Book</span>
+                            </a>
+                        </div>
+                    </div>
+                    <div class="widget_content" style="padding: 20px;">
+                        <table class="display data_tbl">
+                            <thead>
+                                <tr>
+                                    <th style="width: 50px;">S.No.</th>
+                                    <th>Student Name</th>
+                                    <th>Class</th>
+                                    <th>Book Name</th>
+                                    <th>Book No.</th>
+                                    <th>Issue Date</th>
+                                    <th>Session</th>
+                                    <th style="text-align: center;">Action</th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                <?php 
+                                $i = 1;
+                                $current_session = mysqli_real_escape_string($conn, (string)($_SESSION['session'] ?? ''));
+                                
+                                // Updated to check pluralized student_books_details table
+                                $sql = "SELECT * FROM student_books_details WHERE session = '$current_session' AND booking_status = '1'";
+                                $res = mysqli_query($conn, $sql);
+                                
+                                if ($res && mysqli_num_rows($res) > 0) {
+                                    while($row = mysqli_fetch_assoc($res)) {
+                                        // Fetch Student Info
+                                        $reg_no = mysqli_real_escape_string($conn, (string)$row['registration_no']);
+                                        $sql_std = "SELECT name, class FROM student_info WHERE registration_no = '$reg_no'";
+                                        $res_std = mysqli_query($conn, $sql_std);
+                                        $student_info = mysqli_fetch_assoc($res_std);
+                                        
+                                        // Fetch Class Info
+                                        $class_id = (string)($student_info['class'] ?? '');
+                                        $sql_cls = "SELECT class_name FROM classes WHERE class_id = '$class_id'";
+                                        $res_cls = mysqli_query($conn, $sql_cls);
+                                        $class_info = mysqli_fetch_assoc($res_cls);
 
- 
-
-           <div class="btn_30_blue float-right">
-								<a href="library_entry_add_student_books.php"><span style="width:140px">Add Student Books  </span></a>
-			</div>
-                            
-                            
-                            
-          </div>
-			<div class="grid_12">
-				<div class="widget_wrap">
-					<div class="widget_top">
-						
-						<h6>Student Books Detail</h6>
-					</div>
-					<div class="widget_content">
-						
-						<table class="display data_tbl" >
-						<thead>
-						<tr>
-							
-							<th>
-								S.No.
-							</th>
-							<th>
-								Student   Name
-							</th>
-                          <th>
-								Class
-							</th>
-                          <th>
-								Book Name
-							</th>
-                               
-                          <th>
-								Book number
-							</th>
-                            <th>
-								Issue date
-							</th>
-                             
-                            <th>
-								Session  
-							</th>
-							<th>
-								 Action
-							</th>
-						</tr>
-						</thead>
-						<tbody>
-                        <?php 
-					
-					$sql="SELECT * FROM student_books_detail where session='".$_SESSION['session']."' and booking_status='1' ";
-					$res=db_query($sql);
-					    //  $mytablename="student_fees_detail";
-				          //include_once("fees_manager_pagination.php");
-						  	$i=1;
-							/*if($_GET['page']=="")
-							{
-								$_GET['page']=1;
-								
-								}
-								
-								$i=($_GET['page']-1)*$limit+1;*/
-							while($row=db_fetch_array($res))
-							{
-								
-								$sql="SELECT * FROM student_info where registration_no='".$row[1]."' ";
-	                           $student_info=db_fetch_array(db_query($sql));
-							   
-							   $sql1="SELECT * FROM class where class_id='".$student_info['class']."'";
-					$class=db_fetch_array(db_query($sql1));
-							   $sql1="SELECT * FROM book_manager where book_number='".$row['book_number']."' ";
-	                           $book_detail=db_fetch_array(db_query($sql1));
-								
-								
-								?>
-						<tr>
-							
-							<td class="center">
-								<a href="#"><?php echo $i;?></a>
-							</td>
-						
-                            <td class="center">
-								<?php echo $student_info['name']; ?>
-							</td>
-                             <td class="center">
-								<?php echo $class['class_name']; ?>
-							</td>
-							<td class="center">
-								<?php echo $book_detail['book_name']; ?>
-							</td>
-                            <td class="center">
-								<?php echo $book_detail['book_number']; ?>
-							</td>
-							
-                            <td class="center">
-								<?php echo date('d-m-Y',strtotime($row['issue_date'])); ?>
-							</td>
-							
-                            <td class="center">
-								<?php echo $row['session']; ?>
-							</td>
-							
-							
-							<td class="center">
-							<span><a class="action-icons c-edit" href="library_edit_student_books.php?sid=<?php echo $row[0]; ?>" title="Edit">Edit</a></span><span><a class="action-icons c-delete" href="library_delete_student_books.php?sid=<?php echo $row[0]; ?>" title="delete" onClick="return checkform1()">Delete</a></span>
-							</td>
-						</tr>
-						
-						<?php $i++;} ?>
-                       
-						</tbody>
-						
-						</table>
-                        
-                      <script type="text/javascript" language="javascript">
-									frm2=document.del;
-									function checkform1()
-									{
-										if(confirm("Are you sure you want to delete"))
-										{
-											return true;
-										}else
-										{
-											return false;
-											
-											}
-									}
-								</script>
-                        
-					</div>
-				</div>
-			</div>
-			
-			
-			<span class="clear"></span>
-			
-			
-			
-		</div>
-		<span class="clear"></span>
-	</div>
+                                        // Fetch Book Details from pluralized book_managers
+                                        $book_num = mysqli_real_escape_string($conn, (string)$row['book_number']);
+                                        $sql_bk = "SELECT book_name FROM book_managers WHERE book_number = '$book_num'";
+                                        $res_bk = mysqli_query($conn, $sql_bk);
+                                        $book_detail = mysqli_fetch_assoc($res_bk);
+                                ?>
+                                <tr>
+                                    <td class="center"><?php echo $i; ?></td>
+                                    <td class="center"><strong><?php echo htmlspecialchars((string)($student_info['name'] ?? 'N/A')); ?></strong></td>
+                                    <td class="center"><?php echo htmlspecialchars((string)($class_info['class_name'] ?? 'N/A')); ?></td>
+                                    <td class="center"><?php echo htmlspecialchars((string)($book_detail['book_name'] ?? 'N/A')); ?></td>
+                                    <td class="center"><?php echo htmlspecialchars($book_num); ?></td>
+                                    <td class="center"><?php echo !empty($row['issue_date']) ? date('d-m-Y', strtotime((string)$row['issue_date'])) : ''; ?></td>
+                                    <td class="center"><?php echo htmlspecialchars((string)$row['session']); ?></td>
+                                    <td class="center">
+                                        <span><a class="action-icons c-edit" href="library_edit_student_books.php?sid=<?php echo $row['id']; ?>" title="Edit">Edit</a></span>
+                                        <span><a class="action-icons c-delete" href="library_delete_student_books.php?sid=<?php echo $row['id']; ?>" title="Delete" onClick="return confirm('Confirm Delete?')">Delete</a></span>
+                                    </td>
+                                </tr>
+                                <?php $i++; } 
+                                } else { ?>
+                                    <tr>
+                                        <td colspan="8" class="center" style="padding: 40px; color: #999;">No issued book records found.</td>
+                                    </tr>
+                                <?php } ?>
+                            </tbody>
+                        </table>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
 </div>
-<?php include_once("includes/footer.php");?>
+
+<?php include_once("includes/footer.php"); ?>
