@@ -12,9 +12,11 @@ $msg = "";
 if(isset($_POST['submit'])) {
     $vechile_number = db_escape($_POST['vechile_number']);
     $seats = db_escape($_POST['seat']);
-    $route_id_str = isset($_POST['route_id']) ? implode(",", $_POST['route_id']) : "";
+    // Escape each route ID before joining
+    $route_ids = isset($_POST['route_id']) ? array_map('db_escape', $_POST['route_id']) : [];
+    $route_id_str = implode(",", $route_ids);
     
-    $sql_update = "UPDATE transport_add_vechile SET vechile_no='$vechile_number', route_id='$route_id_str', no_of_seats='$seats' WHERE vechile_id='$sid'";
+    $sql_update = "UPDATE transport_add_vechile SET vechile_no='$vechile_number', route_id='$route_id_str', no_of_seats='$seats' WHERE vechile_id='" . db_escape($sid) . "'";
     
     if(db_query($sql_update)) {
         header("Location: transport_vechile_detail.php?msg=3");
@@ -30,7 +32,7 @@ if(empty($sid)) {
     exit;
 }
 
-$sql_fetch = "SELECT * FROM transport_add_vechile WHERE vechile_id='$sid'";
+$sql_fetch = "SELECT * FROM transport_add_vechile WHERE vechile_id='" . db_escape($sid) . "'";
 $res_fetch = db_query($sql_fetch);
 
 if(!$res_fetch || db_num_rows($res_fetch) == 0) {
@@ -82,11 +84,9 @@ $display_seats = $row['no_of_seats'] ?? $row['seat'] ?? '';
                                         $current_routes = explode(",", (string)$row['route_id']);
                                         $sql_r = "SELECT * FROM transport_add_route ORDER BY route_name ASC";
                                         $res_r = db_query($sql_r);
-                                        $route_count = 0;
                                         
                                         if($res_r && db_num_rows($res_r) > 0) {
                                             while($row_r = db_fetch_array($res_r)) {
-                                                $route_count++;
                                                 $checked = in_array($row_r['route_id'], $current_routes) ? 'checked' : '';
                                                 echo '<div class="form-check mb-2">';
                                                 echo '<input class="form-check-input" type="checkbox" name="route_id[]" value="'.$row_r['route_id'].'" id="route_'.$row_r['route_id'].'" '.$checked.'>';
