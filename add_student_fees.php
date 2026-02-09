@@ -31,7 +31,7 @@ if (isset($_POST['submit'])) {
             exit;
         }
     } else {
-        $msg = "<div style='color:red; font-weight:bold; margin-bottom:20px;'>Error: Amount exceeds pending balance or is zero.</div>";
+        $msg = "<div class='alert alert-danger'>Error: Amount exceeds pending balance or is zero.</div>";
     }
 }
 
@@ -61,71 +61,99 @@ if (!empty($reg_no)) {
 }
 ?>
 
-<div style="margin-left: 280px !important; padding: 40px !important; display: block !important;">
-    <div class="page_title" style="margin-bottom: 25px;">
-        <h3 style="color: #1c75bc; font-size: 26px;">Fee Collection Form</h3>
-    </div>
-
-    <?php echo $msg; ?>
-
-    <?php if (!$student): ?>
-        <div class="azure-card" style="padding: 30px; border: 1px solid #ffcc00; background: #fffdf2;">
-            <strong>No student selected.</strong> Please search for a student first.
-        </div>
-    <?php else: ?>
-        <div class="azure-card" style="background: #fff; border: 1px solid #e0e0e0; border-radius: 8px; padding: 30px;">
-            <form action="add_student_fees.php" method="post">
-                <input type="hidden" name="registration_no" value="<?php echo htmlspecialchars($reg_no); ?>">
-                <input type="hidden" name="pending_amount" value="<?php echo $pending_balance; ?>">
-
-                <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 20px; margin-bottom: 30px;">
-                    <div>
-                        <label style="font-weight:600; display:block; margin-bottom:5px;">Registration No</label>
-                        <input type="text" class="form-control" value="<?php echo htmlspecialchars($reg_no); ?>" readonly style="background:#f1f5f9;">
-                    </div>
-                    <div>
-                        <label style="font-weight:600; display:block; margin-bottom:5px;">Student Name</label>
-                        <input type="text" class="form-control" value="<?php echo htmlspecialchars($student['student_name']); ?>" readonly style="background:#f1f5f9;">
-                    </div>
-                    <div>
-                        <label style="font-weight:600; display:block; margin-bottom:5px;">Class</label>
-                        <input type="text" class="form-control" value="<?php echo htmlspecialchars($student['class_name'] ?? 'N/A'); ?>" readonly style="background:#f1f5f9;">
-                    </div>
-                    <div>
-                        <label style="font-weight:600; color:red; display:block; margin-bottom:5px;">Pending Balance</label>
-                        <input type="text" class="form-control" value="<?php echo number_format($pending_balance, 2); ?>" readonly style="background:#fff5f5; border-color:#feb2b2; font-weight:700;">
-                    </div>
-                </div>
-
-                <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 20px; border-top: 1px solid #eee; padding-top: 25px;">
-                    <div class="form_group">
-                        <label style="font-weight:600; display:block; margin-bottom:5px;">Fee Term <span style="color:red;">*</span></label>
-                        <select name="fees_term" class="form-control" required>
-                            <option value="">-- Select Term --</option>
-                            <?php
-                            $terms = mysqli_query($conn, "SELECT * FROM fees_term");
-                            while ($t = mysqli_fetch_assoc($terms)) {
-                                echo "<option value='{$t['id']}'>{$t['term_name']}</option>";
-                            }
-                            ?>
-                        </select>
-                    </div>
-                    <div class="form_group">
-                        <label style="font-weight:600; display:block; margin-bottom:5px;">Amount to Pay <span style="color:red;">*</span></label>
-                        <input type="number" name="fees_amount" step="0.01" class="form-control" placeholder="0.00" required>
-                    </div>
-                </div>
-
-                <div style="margin-top: 40px; text-align: right;">
-                    <button type="submit" name="submit" class="btn-fluent-primary" style="padding: 12px 40px;">Post Payment</button>
-                </div>
-            </form>
-        </div>
-    <?php endif; ?>
+<div class="page_title">
+    <span class="title_icon"><span class="money_dollar"></span></span>
+    <h3>Fee Collection Form</h3>
 </div>
 
-<style>
-    .form-control { width: 100%; padding: 10px; border: 1px solid #ccc; border-radius: 4px; box-sizing: border-box; }
-</style>
+<div id="container">
+    <div id="content">
+        <div class="grid_container">
+            <?php echo $msg; ?>
+
+            <?php if (!$student): ?>
+            <div class="grid_12">
+                <div class="widget_wrap enterprise-card">
+                    <div class="widget_content p-4">
+                        <div class="alert alert-warning">
+                            <strong>No student selected.</strong> Please search for a student first.
+                            <a href="fees_searchby_name.php" class="btn-fluent-primary mt-2">Search Student</a>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <?php else: ?>
+            <div class="grid_12">
+                <div class="widget_wrap enterprise-card">
+                    <div class="widget_top">
+                        <h6>Fee Collection</h6>
+                    </div>
+                    <div class="widget_content p-4">
+                        <form action="add_student_fees.php" method="post">
+                            <input type="hidden" name="registration_no" value="<?php echo htmlspecialchars($reg_no); ?>">
+                            <input type="hidden" name="pending_amount" value="<?php echo $pending_balance; ?>">
+
+                            <div class="row g-3 mb-4">
+                                <div class="col-md-6">
+                                    <label class="form-label fw-bold">Registration No</label>
+                                    <input type="text" class="form-control" value="<?php echo htmlspecialchars($reg_no); ?>" readonly style="background:#f1f5f9;">
+                                </div>
+                                <div class="col-md-6">
+                                    <label class="form-label fw-bold">Student Name</label>
+                                    <input type="text" class="form-control" value="<?php echo htmlspecialchars($student['student_name']); ?>" readonly style="background:#f1f5f9;">
+                                </div>
+                                <div class="col-md-6">
+                                    <label class="form-label fw-bold">Class</label>
+                                    <input type="text" class="form-control" value="<?php echo htmlspecialchars($student['class_name'] ?? 'N/A'); ?>" readonly style="background:#f1f5f9;">
+                                </div>
+                                <div class="col-md-6">
+                                    <label class="form-label fw-bold text-danger">Pending Balance</label>
+                                    <input type="text" class="form-control fw-bold" value="<?php echo number_format($pending_balance, 2); ?>" readonly style="background:#fff5f5; border-color:#feb2b2;">
+                                </div>
+                            </div>
+
+                            <hr class="my-4">
+
+                            <div class="row g-3 mb-4">
+                                <div class="col-md-6">
+                                    <label class="form-label fw-bold">Fee Term <span class="text-danger">*</span></label>
+                                    <select name="fees_term" class="form-control" required>
+                                        <option value="">-- Select Term --</option>
+                                        <?php
+                                        $terms = mysqli_query($conn, "SELECT * FROM fees_term");
+                                        while ($t = mysqli_fetch_assoc($terms)) {
+                                            echo "<option value='{$t['id']}'>{$t['term_name']}</option>";
+                                        }
+                                        ?>
+                                    </select>
+                                </div>
+                                <div class="col-md-6">
+                                    <label class="form-label fw-bold">Amount to Pay <span class="text-danger">*</span></label>
+                                    <input type="number" name="fees_amount" step="0.01" class="form-control" placeholder="0.00" required>
+                                </div>
+                            </div>
+
+                            <div class="d-flex gap-2">
+                                <button type="submit" name="submit" class="btn-fluent-primary">
+                                    <svg width="16" height="16" viewBox="0 0 24 24" fill="none" style="vertical-align:middle;margin-right:6px;">
+                                        <path d="M11.8 10.9c-2.27-.59-3-1.2-3-2.15 0-1.09 1.01-1.85 2.7-1.85 1.78 0 2.44.85 2.5 2.1h2.21c-.07-1.72-1.12-3.3-3.21-3.81V3h-3v2.16c-1.94.42-3.5 1.68-3.5 3.61 0 2.31 1.91 3.46 4.7 4.13 2.5.6 3 1.48 3 2.41 0 .69-.49 1.79-2.7 1.79-2.06 0-2.87-.92-2.98-2.1h-2.2c.12 2.19 1.76 3.42 3.68 3.83V21h3v-2.15c1.95-.37 3.5-1.5 3.5-3.55 0-2.84-2.43-3.81-4.7-4.4z" fill="currentColor"/>
+                                    </svg>
+                                    Post Payment
+                                </button>
+                                <a href="fees_manager.php" class="btn-fluent-secondary">
+                                    <svg width="16" height="16" viewBox="0 0 24 24" fill="none" style="vertical-align:middle;margin-right:6px;">
+                                        <path d="M20 11H7.83l5.59-5.59L12 4l-8 8 8 8 1.41-1.41L7.83 13H20v-2z" fill="currentColor"/>
+                                    </svg>
+                                    Back
+                                </a>
+                            </div>
+                        </form>
+                    </div>
+                </div>
+            </div>
+            <?php endif; ?>
+        </div>
+    </div>
+</div>
 
 <?php require_once("includes/footer.php"); ?>
