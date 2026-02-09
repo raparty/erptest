@@ -76,8 +76,8 @@ if(isset($_GET['msg'])) {
                                             foreach($route_ids as $id) {
                                                 $id = trim($id);
                                                 if(!empty($id)) {
-                                                    $id_safe = mysqli_real_escape_string($conn, $id);
-                                                    $res_r = mysqli_query($conn, "SELECT route_name FROM transport_add_route WHERE route_id='$id_safe'");
+                                                    $safe_id = mysqli_real_escape_string($conn, $id);
+                                                    $res_r = mysqli_query($conn, "SELECT route_name FROM transport_add_route WHERE route_id='$safe_id'");
                                                     if($r_data = mysqli_fetch_assoc($res_r)) {
                                                         $route_names[] = $r_data['route_name'];
                                                     }
