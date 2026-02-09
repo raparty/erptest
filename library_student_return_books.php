@@ -1,213 +1,94 @@
 <?php
-
 declare(strict_types=1);
-include_once("includes/header.php");?>
-<?php include_once("includes/sidebar.php"); ?>
-<div class="page_title">
-	
-	<h3>Student Return Books</h3>
-	<div class="top_search">
-			<form action="#" method="post">
-				<ul id="search_box">
-					<li>
-					<input name="" type="text" class="search_input" id="suggest1" placeholder="Search...">
-					</li>
-					<li>
-					<input name="" type="submit" value="Search" class="search_btn">
-					</li>
-				</ul>
-			</form>
-		</div>
-	</div>
-<?php include_once("includes/library_setting_sidebar.php");?>
+require_once("includes/bootstrap.php");
+include_once("includes/header.php");
+include_once("includes/sidebar.php");
+
+$conn = Database::connection();
+// Support both 'registration_no' and 'reg_no' from URL
+$reg_no = mysqli_real_escape_string($conn, trim((string)($_GET['registration_no'] ?? $_GET['reg_no'] ?? '')));
+
+// 1. Fetch Student Details from Admissions
+$student_name = "Unknown Student";
+if ($reg_no) {
+    $sql_std = "SELECT student_name FROM admissions WHERE reg_no = '$reg_no'";
+    $res_std = mysqli_query($conn, $sql_std);
+    if ($row_std = mysqli_fetch_assoc($res_std)) {
+        $student_name = $row_std['student_name'];
+    }
+}
+?>
 
 <div id="container">
-	
-	
-	
-	<div id="content">
-		<div class="grid_container">
-<h3 style="padding-left:20px; color:#0078D4">Student return books Detail</h3>
+    <div id="content">
+        <div class="grid_container">
+            <h3 style="padding:15px 0 0 20px; color:#0078D4">Student Return Books Detail</h3>
+            
+            <div class="grid_12">
+                <div class="widget_wrap">
+                    <div class="widget_top">
+                        <h6>Currently Issued Books for: <?php echo htmlspecialchars($student_name); ?> (<?php echo htmlspecialchars($reg_no); ?>)</h6>
+                    </div>
+                    <div class="widget_content">
+                        <table class="display data_tbl">
+                            <thead>
+                                <tr>
+                                    <th>S.No.</th>
+                                    <th>Student Name</th>
+                                    <th>Book Name</th>
+                                    <th>Book Number</th>
+                                    <th>Issue Date</th>
+                                    <th>Session</th>
+                                    <th>Action</th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                <?php 
+                                $i = 1;
+                                // 2. Querying confirmed plural table
+                                $sql = "SELECT * FROM student_books_details 
+                                        WHERE registration_no = '$reg_no' 
+                                        AND booking_status = '1'";
+                                
+                                $res = mysqli_query($conn, $sql);
 
-          <div class="grid_12">
-
- 
-
-           <div class="btn_30_blue float-right">
-								
-			</div>
-                            
-                            
-                            
-          </div>
-			<div class="grid_12">
-				<div class="widget_wrap">
-					<div class="widget_top">
-						
-						<h6>Student Books Detail</h6>
-					</div>
-					<div class="widget_content">
-						
-						<table class="display data_tbl" >
-						<thead>
-						<tr>
-							
-							<th>
-								S.No.
-							</th>
-							<th>
-								Student   Name
-							</th>
-                          <th>
-								Class
-							</th>
-                          <th>
-								Book Name
-							</th>
-                               
-                          <th>
-								Book number
-							</th>
-                            <th>
-								Issue date
-							</th>
-                              <th>
-								 Fine Amount
-							</th>
-                            <th>
-								Session  
-							</th>
-							<th>
-								 Action
-							</th>
-						</tr>
-						</thead>
-						<tbody>
-                        <?php 
-					if($_GET['registration_no']!="")
-					{
-						$_SESSION['registration_no']=$_GET['registration_no'];
-						
-					}
-						
-						if($_POST['registration_no']!="")
-						{
-							$_SESSION['registration_no']=$_POST['registration_no'];
-							}
-					
-					$sql="SELECT * FROM student_books_detail where session='".$_SESSION['session']."' and registration_no='".$_SESSION['registration_no']."' and booking_status='1'";
-					$res=db_query($sql);
-					    //  $mytablename="student_fees_detail";
-				          //include_once("fees_manager_pagination.php");
-						  	$i=1;
-							/*if($_GET['page']=="")
-							{
-								$_GET['page']=1;
-								
-								}
-								
-								$i=($_GET['page']-1)*$limit+1;*/
-							while($row=db_fetch_array($res))
-							{
-								
-								$select_fine_days="select * from library_fine_manager where session='".$_SESSION['session']."'";
-$res_select=db_query($select_fine_days);
-$row_fine=db_fetch_array($res_select);
-
-$row_fine_days=$row_fine['no_of_days']-1;
-$row_fine_rate=$row_fine['fine_rate'];
-
- $return_date=date('Y-m-d',strtotime($row['issue_date']."+".$row_fine_days."days"));
-
-$now = time(); // or your date as well
-     $your_date = strtotime($return_date);
-     $datediff = $now - $your_date;
-      $number_of_days=floor($datediff/(60*60*24));
-	 
-				
-				if($number_of_days>0)
-				{
-					$total_fine=$number_of_days*$row_fine_rate;
-				}else
-				{
-					$total_fine=0;
-				}
-								
-								$sql="SELECT * FROM student_info where registration_no='".$row[1]."' ";
-	                           $student_info=db_fetch_array(db_query($sql));
-							   
-							   $sql1="SELECT * FROM class where class_id='".$student_info['class']."'";
-					$class=db_fetch_array(db_query($sql1));
-							   $sql1="SELECT * FROM book_manager where book_number='".$row['book_number']."' ";
-	                           $book_detail=db_fetch_array(db_query($sql1));
-								
-								
-								?>
-						<tr>
-							
-							<td class="center">
-								<a href="#"><?php echo $i;?></a>
-							</td>
-						
-                            <td class="center">
-								<?php echo $student_info['name']; ?>
-							</td>
-                             <td class="center">
-								<?php echo $class['class_name']; ?>
-							</td>
-							<td class="center">
-								<?php echo $book_detail['book_name']; ?>
-							</td>
-                            <td class="center">
-								<?php echo $book_detail['book_number']; ?>
-							</td>
-							
-                            <td class="center">
-								<?php echo date('d-m-Y',strtotime($row['issue_date'])); ?>
-							</td>
-							<td class="center"><?php echo $total_fine;?></td>
-                            <td class="center">
-								<?php echo $row['session']; ?>
-							</td>
-							
-							
-							<td class="center">
-							<span><a class="action-icons c-edit" href="library_return_student_books_page.php?sid=<?php echo $row[0]; ?>" onClick="return checkform1()" title="Return Book">Return Book</a></span>
-							</td>
-						</tr>
-						
-						<?php $i++;} ?>
-                       
-						</tbody>
-						
-						</table>
-                        
-                      <script type="text/javascript" language="javascript">
-									frm2=document.del;
-									function checkform1()
-									{
-										if(confirm("Are you sure you want to return book"))
-										{
-											return true;
-										}else
-										{
-											return false;
-											
-											}
-									}
-								</script>
-                        
-					</div>
-				</div>
-			</div>
-			
-			
-			<span class="clear"></span>
-			
-			
-			
-		</div>
-		<span class="clear"></span>
-	</div>
+                                if ($res && mysqli_num_rows($res) > 0) {
+                                    while($row = mysqli_fetch_assoc($res)) {
+                                ?>
+                                <tr>
+                                    <td class="center"><?php echo $i++; ?></td>
+                                    <td class="center"><?php echo htmlspecialchars($student_name); ?></td>
+                                    <td class="center">
+                                        <?php 
+                                        // Fetch book name from book_managers
+                                        $bn = mysqli_query($conn, "SELECT book_name FROM book_managers WHERE book_number='".$row['book_number']."'");
+                                        $b_data = mysqli_fetch_assoc($bn);
+                                        echo htmlspecialchars($b_data['book_name'] ?? 'N/A');
+                                        ?>
+                                    </td>
+                                    <td class="center"><?php echo htmlspecialchars($row['book_number']); ?></td>
+                                    <td class="center"><?php echo date('d-m-Y', strtotime($row['issue_date'])); ?></td>
+                                    <td class="center"><?php echo htmlspecialchars($row['session']); ?></td>
+                                    <td class="center">
+                                        <a href="library_process_return.php?id=<?php echo $row['id']; ?>" class="btn_small btn_blue" onclick="return confirm('Confirm book return?')">
+                                            <span>Return</span>
+                                        </a>
+                                    </td>
+                                </tr>
+                                <?php } } else { ?>
+                                    <tr>
+                                        <td colspan="7" class="center" style="padding:20px; color:red;">
+                                            No issued books found for this student.
+                                        </td>
+                                    </tr>
+                                <?php } ?>
+                            </tbody>
+                        </table>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
 </div>
-<?php include_once("includes/footer.php");?>
+
+<?php include_once("includes/footer.php"); ?>
