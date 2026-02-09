@@ -25,8 +25,19 @@ if(isset($_POST['submit'])) {
 }
 
 // Fetch Data
+if(empty($sid)) {
+    header("Location: transport_vechile_detail.php");
+    exit;
+}
+
 $sql_fetch = "SELECT * FROM transport_add_vechile WHERE vechile_id='$sid'";
 $res_fetch = db_query($sql_fetch);
+
+if(!$res_fetch || db_num_rows($res_fetch) == 0) {
+    header("Location: transport_vechile_detail.php?msg=error");
+    exit;
+}
+
 $row = db_fetch_array($res_fetch);
 
 // Handle potential column name differences
@@ -66,18 +77,30 @@ $display_seats = $row['no_of_seats'] ?? $row['seat'] ?? '';
                             <div class="row g-3 mb-4">
                                 <div class="col-md-12">
                                     <label class="form-label fw-bold">Select Route(s)</label>
-                                    <select name="route_id[]" class="form-control" multiple size="5" style="height: auto;">
+                                    <div class="border rounded p-3 bg-light" style="max-height: 250px; overflow-y: auto;">
                                         <?php 
                                         $current_routes = explode(",", (string)$row['route_id']);
                                         $sql_r = "SELECT * FROM transport_add_route ORDER BY route_name ASC";
                                         $res_r = db_query($sql_r);
-                                        while($row_r = db_fetch_array($res_r)) {
-                                            $selected = in_array($row_r['route_id'], $current_routes) ? 'selected' : '';
-                                            echo "<option $selected value='".$row_r['route_id']."'>".htmlspecialchars($row_r['route_name'])."</option>";
+                                        $route_count = 0;
+                                        
+                                        if($res_r && db_num_rows($res_r) > 0) {
+                                            while($row_r = db_fetch_array($res_r)) {
+                                                $route_count++;
+                                                $checked = in_array($row_r['route_id'], $current_routes) ? 'checked' : '';
+                                                echo '<div class="form-check mb-2">';
+                                                echo '<input class="form-check-input" type="checkbox" name="route_id[]" value="'.$row_r['route_id'].'" id="route_'.$row_r['route_id'].'" '.$checked.'>';
+                                                echo '<label class="form-check-label" for="route_'.$row_r['route_id'].'">';
+                                                echo htmlspecialchars($row_r['route_name']);
+                                                echo '</label>';
+                                                echo '</div>';
+                                            }
+                                        } else {
+                                            echo '<p class="text-muted mb-0">No routes available. Please add routes first.</p>';
                                         }
                                         ?>
-                                    </select>
-                                    <small class="form-text text-muted">Hold Ctrl (or Cmd) to select multiple routes.</small>
+                                    </div>
+                                    <small class="form-text text-muted">Select one or more routes for this vehicle.</small>
                                 </div>
                             </div>
 
