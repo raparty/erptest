@@ -62,7 +62,7 @@ if (!empty($reg_no)) {
 ?>
 
 <div class="page_title">
-    <span class="title_icon"><span class="money_dollar"></span></span>
+    
     <h3>Fee Collection Form</h3>
 </div>
 

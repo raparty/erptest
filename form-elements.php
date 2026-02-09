@@ -265,7 +265,7 @@ include_once("includes/header.php"); ?>
 		</div>
 	</div>
 	<div class="page_title">
-		<span class="title_icon"><span class="coverflow"></span></span>
+		
 		<h3>Form Elements</h3>
 		<div class="top_search">
 			<form action="#" method="post">

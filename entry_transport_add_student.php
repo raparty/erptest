@@ -37,11 +37,9 @@ if(isset($_POST['submit']))
 		header("location:exam_add_maximum_marks.php?error=1");
 	}
 }
-
-
 ?>
 <div class="page_title">
-	<!--	<span class="title_icon"><span class="computer_imac"></span></span>
+	<!--	
 	<script>
 									function subcat()
 									{
@@ -127,8 +125,6 @@ xmlhttp.send();
 										
 											<input name="registration_no"   onBlur="getCheckreg('checkregno.php?registration_no='+this.value)" type="text" id="suba" />
                                             
-
-
 
 											<span class=" label_intro">Registration number</span>
 										</div>

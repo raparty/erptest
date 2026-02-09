@@ -74,8 +74,6 @@ if($_GET['registration_no']!="")
 {
 $_SESSION['registration_no']=$_GET['registration_no'];
 }
-
-
 if($_POST['registration_no']!="")
 {
 $_SESSION['registration_no']=$_POST['registration_no'];
@@ -83,7 +81,7 @@ $_SESSION['registration_no']=$_POST['registration_no'];
  $registration_no=$_SESSION['registration_no'];
 ?>
 <div class="page_title">
-	<!--	<span class="title_icon"><span class="computer_imac"></span></span>
+	<!--	
 		<h3>Dashboard</h3>-->
 		<div class="top_search">
 			<form action="#" method="post">
@@ -99,8 +97,6 @@ $_SESSION['registration_no']=$_POST['registration_no'];
 		</div>
 	</div>
 <?php include_once("includes/fees_setting_sidebar.php");?>
-
-
     
 <div id="container">
 	
@@ -146,14 +142,10 @@ $_SESSION['registration_no']=$_POST['registration_no'];
 //$fees_term=$_GET['fees_term'];
 			 $studentinfo="select * from student_info where registration_no='".$registration_no."' and session='".$_SESSION['session']."'";
 			 $row=db_fetch_array(db_query($studentinfo));
-
-
 	         $sql_pending="select sum(fees_amount) from student_transport_fees_detail where registration_no='".$registration_no."'  and session='".$_SESSION['session']."'";
 	         $deposit_amount=db_fetch_array(db_query($sql_pending));
 	
 	
-
-
 //$student_fees_detail="select ";
 ?>
 

@@ -67,14 +67,10 @@ else
 		$msg = "<span style='color:#FF0000;'><h4> Please fill all detail </h4></span>";
 	}
 }
-
-
 if($_GET['registration_no']!="")
 {
 $_SESSION['registration_no']=$_GET['registration_no'];
 }
-
-
 if($_POST['registration_no']!="")
 {
 $_SESSION['registration_no']=$_POST['registration_no'];
@@ -83,7 +79,7 @@ $registration_no=$_SESSION['registration_no'];
 
 ?>
 <div class="page_title">
-	<!--	<span class="title_icon"><span class="computer_imac"></span></span>
+	<!--	
 	<script>
 									function subcat()
 									{

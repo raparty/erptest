@@ -4,7 +4,7 @@ declare(strict_types=1);
 include_once("includes/header.php");?>
 <?php include_once("includes/sidebar.php"); ?>
     <div class="page_title">
-	<!--	<span class="title_icon"><span class="computer_imac"></span></span>
+	<!--	
 		<h3>Dashboard</h3>-->
 		<div class="top_search">
 			<form action="#" method="post">
@@ -120,8 +120,6 @@ include_once("includes/header.php");?>
                
            <br>
 <br>
-
-
     <div class="grid_12">
 
  <div class="btn_30_light float-right">
@@ -356,8 +354,6 @@ include_once("includes/header.php");?>
                                            
 
 <option>Other</option>
-
-
 										</select>
 									</div>
 								</div>
@@ -424,8 +420,6 @@ include_once("includes/header.php");?>
                                            
 
 <option>Other</option>
-
-
 										</select>
 									</div>
 								</div>
@@ -494,8 +488,6 @@ include_once("includes/header.php");?>
 								</div>
 								</li>
                                 
-
-
 
                 </form>  
 

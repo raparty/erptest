@@ -23,8 +23,6 @@ if(isset($_POST['submit']))
 		header("Location:edit_term.php?error=2&&sid=".$sid);
 	}
 }
-
-
 if(($_GET['error'] ?? null)==2)
 	{
 		$msg = "<span style='color:#FF0000;'><h4>Term Detail Already Exists  </h4></span>";
@@ -38,7 +36,7 @@ if(($_GET['error'] ?? null)==2)
 		
   ?>
 <div class="page_title">
-	<!--	<span class="title_icon"><span class="computer_imac"></span></span>
+	<!--	
 		<h3>Dashboard</h3>-->
 		<div class="top_search">
 			<form action="#" method="post">

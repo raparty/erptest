@@ -74,11 +74,9 @@ else
 		$msg = "<span style='color:#FF0000;'><h4> Deposit fees amount is greater than  pending amount.</h4></span>";
 	}
 }
-
-
 ?>
 <div class="page_title">
-	<!--	<span class="title_icon"><span class="computer_imac"></span></span>
+	<!--	
 		<h3>Dashboard</h3>-->
 		<div class="top_search">
 			<form action="#" method="post">

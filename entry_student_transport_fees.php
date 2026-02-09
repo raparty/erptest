@@ -65,7 +65,7 @@ else
 ?>
 
 <div class="page_title">
-	<span class="title_icon"><span class="money_dollar"></span></span>
+	
 	<h3>Add Student Transport Fees</h3>
 </div>
 

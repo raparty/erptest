@@ -5,7 +5,6 @@ require_once("includes/sidebar.php");
 ?>
 
 <div class="page_title">
-    <div class="title_icon"><span class="computer_imac"></span></div>
     <h3>Institutional Dashboard</h3>
     <div class="top_search">
         <form action="#" method="post">

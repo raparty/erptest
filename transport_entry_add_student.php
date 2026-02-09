@@ -40,7 +40,7 @@ $msgs='';
 */
 ?>
 <div class="page_title">
-	<!--	<span class="title_icon"><span class="computer_imac"></span></span>
+	<!--	
 	<script>
 									function subcat()
 									{

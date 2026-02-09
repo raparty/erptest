@@ -1,7 +1,6 @@
 <?php include_once("includes/header.php");?>
 <?php include_once("includes/sidebar.php"); ?>
 <div class="page_title">
-	<span class="title_icon"><span class="computer_imac"></span></span>
 	<h3>Transport Settings</h3>
 	<div class="top_search">
 			<form action="#" method="post">

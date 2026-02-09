@@ -23,8 +23,6 @@ if(isset($_POST['submit']))
 		header("Location:edit_fees_package.php?error=2&&sid=".$_GET['sid']);
 	}
 }
-
-
 if($_GET['error']==2)
 	{
 		$msg = "<span style='color:#FF0000;'><h4>Fees Package Detail Already Exists  </h4></span>";
@@ -38,7 +36,7 @@ if($_GET['error']==2)
 		
   ?>
 <div class="page_title">
-	<!--	<span class="title_icon"><span class="computer_imac"></span></span>
+	<!--	
 		<h3>Dashboard</h3>-->
 		<div class="top_search">
 			<form action="#" method="post">

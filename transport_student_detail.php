@@ -4,7 +4,7 @@ declare(strict_types=1);
 include_once("includes/header.php");?>
 <?php include_once("includes/sidebar.php"); ?>
 <div class="page_title">
-	<span class="title_icon"><span class="computer_imac"></span></span>
+	
 	<h3>Transport Students</h3>
 	<div class="top_search">
 			<form action="#" method="post">
@@ -26,8 +26,6 @@ db_query("delete from transport_student_detail where transport_id='".$_GET['sid'
 }
 
 ?>
-
-
 <div id="container">
 	
 	
@@ -113,8 +111,6 @@ db_query("delete from transport_student_detail where transport_id='".$_GET['sid'
 								</li>
                                 
 </ul>
-
-
                 </form>  
 
 					

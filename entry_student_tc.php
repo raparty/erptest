@@ -6,7 +6,7 @@ include_once("includes/sidebar.php");
 ?>
 
 <div class="page_title">
-    <span class="title_icon"><span class="users_mm"></span></span>
+    
     <h3>Student Transfer Certificate</h3>
 </div>
 <div id="container">

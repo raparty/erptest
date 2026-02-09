@@ -63,7 +63,7 @@ $row_detail=db_fetch_array($result);
 $registration_no=$row_detail['registration_no'];
 ?>
 <div class="page_title">
-	<!--	<span class="title_icon"><span class="computer_imac"></span></span>
+	<!--	
 		<h3>Dashboard</h3>-->
 		<div class="top_search">
 			<form action="#" method="post">
@@ -124,14 +124,10 @@ $registration_no=$row_detail['registration_no'];
 //$fees_term=$_GET['fees_term'];
  $studentinfo="select * from student_info where registration_no='".$registration_no."' and session='".$_SESSION['session']."'";
 $row=db_fetch_array(db_query($studentinfo));
-
-
 	      $sql_pending="select sum(fees_amount) from student_fees_detail where registration_no='".$registration_no."'  and session='".$_SESSION['session']."'";
 	$deposit_amount=db_fetch_array(db_query($sql_pending));
 	
 	
-
-
 //$student_fees_detail="select ";
 ?>
 

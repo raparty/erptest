@@ -39,7 +39,7 @@ if(isset($_POST['submit']))
 		
   ?>
     <div class="page_title">
-	<!--	<span class="title_icon"><span class="computer_imac"></span></span>
+	<!--	
 		<h3>Dashboard</h3>-->
 		<div class="top_search">
 			<form action="#" method="post">
@@ -56,8 +56,6 @@ if(isset($_POST['submit']))
 	</div>
 
 <?php include_once("includes/account_setting_sidebar.php");?>
-
-
 <div id="container">
 	
 	

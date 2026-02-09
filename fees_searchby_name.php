@@ -38,7 +38,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
 ?>
 
 <div class="page_title">
-    <span class="title_icon"><span class="money_dollar"></span></span>
+    
     <h3>Fee Management: Student Search</h3>
 </div>
 

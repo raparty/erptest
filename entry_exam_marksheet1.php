@@ -39,8 +39,6 @@ if($_GET['registration_no']!="")
 {
 $_SESSION['registration_no']=$_GET['registration_no'];
 }
-
-
 if($_POST['registration_no']!="")
 {
 $_SESSION['registration_no']=$_POST['registration_no'];
@@ -49,11 +47,9 @@ $registration_no=$_SESSION['registration_no'];
 
  $studentinfo="select * from student_info where registration_no='".$registration_no."' and session='".$_SESSION['session']."'";
 $row_value=db_fetch_array(db_query($studentinfo));
-
-
 ?>
 <div class="page_title">
-	<!--	<span class="title_icon"><span class="computer_imac"></span></span>
+	<!--	
 	<script>
 									function subcat()
 									{

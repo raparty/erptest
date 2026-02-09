@@ -2,7 +2,7 @@
 declare(strict_types=1);
 include_once("includes/header.php");?>
     <div class="page_title">
-	<!--	<span class="title_icon"><span class="computer_imac"></span></span>
+	<!--	
 		<h3>Dashboard</h3>-->
 		<div class="top_search">
 			<form action="#" method="post">
@@ -105,8 +105,6 @@ include_once("includes/header.php");?>
 								</li>
                                 
 </ul>
-
-
                 </form>  
 
 					

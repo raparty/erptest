@@ -5,7 +5,7 @@ include_once("includes/sidebar.php");
 ?>
 
 <div class="page_title">
-    <span class="title_icon"><span class="money_dollar"></span></span>
+    
     <h3>Student Pending Fees Detail</h3>
 </div>
 

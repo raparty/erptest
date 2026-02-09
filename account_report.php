@@ -13,7 +13,7 @@ if(isset($_POST['category_type']) && $_POST['category_type']!="")
 	}
 ?>
     <div class="page_title">
-	<!--	<span class="title_icon"><span class="computer_imac"></span></span>
+	<!--	
 		<h3>Dashboard</h3>-->
 		<div class="top_search">
 			<form action="#" method="post">
@@ -106,8 +106,6 @@ if(isset($_POST['category_type']) && $_POST['category_type']!="")
 								</li>
                                 
 </ul>
-
-
               </form>  
 
 					
