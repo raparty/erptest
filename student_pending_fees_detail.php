@@ -91,29 +91,40 @@ include_once("includes/sidebar.php");
                                 if ($num != 0) {
                                     $i = 1;
                                     while ($row = db_fetch_array($student_info11)) {
-                                        $sql = "SELECT * FROM student_info where registration_no='" . $row[1] . "'";
+                                        // Sanitize and escape values
+                                        $registration_no = db_escape_string($row[1]);
+                                        $sql = "SELECT * FROM student_info where registration_no='" . $registration_no . "'";
                                         $student_info = db_fetch_array(db_query($sql));
                                         
-                                        $sql_pending = "select sum(fees_amount) from student_fees_detail where registration_no='" . $student_info['registration_no'] . "' and session='" . $_SESSION['session'] . "'";
+                                        $session = db_escape_string($_SESSION['session']);
+                                        $sql_pending = "select COALESCE(sum(fees_amount), 0) from student_fees_detail where registration_no='" . db_escape_string($student_info['registration_no']) . "' and session='" . $session . "'";
                                         $deposit_amount = db_fetch_array(db_query($sql_pending));
                                         
-                                        $sql3 = "SELECT * FROM fees_package where package_id='" . $row['admission_fee'] . "'";
-                                        $row3 = db_fetch_array(db_query($sql3));
+                                        $admission_fee = db_escape_string($row['admission_fee']);
+                                        $sql_package = "SELECT * FROM fees_package where package_id='" . $admission_fee . "'";
+                                        $row3 = db_fetch_array(db_query($sql_package));
                                         
-                                        $sql1 = "SELECT * FROM class where class_id='" . $student_info['class'] . "'";
-                                        $class = db_fetch_array(db_query($sql1));
+                                        $class_id = db_escape_string($student_info['class']);
+                                        $sql_class = "SELECT * FROM class where class_id='" . $class_id . "'";
+                                        $class = db_fetch_array(db_query($sql_class));
                                         
-                                        $sql1 = "SELECT * FROM fees_term where fees_term_id='" . $_POST['fees_term'] . "'";
-                                        $fees_term = db_fetch_array(db_query($sql1));
+                                        $fees_term_id = db_escape_string($_POST['fees_term']);
+                                        $sql_fees_term = "SELECT * FROM fees_term where fees_term_id='" . $fees_term_id . "'";
+                                        $fees_term = db_fetch_array(db_query($sql_fees_term));
+                                        
+                                        // Calculate pending amount safely
+                                        $total_fees = floatval($row3['package_fees'] ?? 0);
+                                        $deposited = floatval($deposit_amount[0] ?? 0);
+                                        $pending_amount = $total_fees - $deposited;
                                 ?>
                                 <tr>
                                     <td class="center"><?php echo $i; ?></td>
-                                    <td class="center"><?php echo $student_info['name']; ?></td>
-                                    <td class="center"><?php echo $class['class_name']; ?></td>
-                                    <td class="center"><?php echo $fees_term['term_name']; ?></td>
-                                    <td class="center">₹<?php echo number_format($row3['package_fees'], 2); ?></td>
-                                    <td class="center">₹<?php echo $pending_amount = number_format($row3['package_fees'] - $deposit_amount[0], 2); ?></td>
-                                    <td class="center"><?php echo $row['session']; ?></td>
+                                    <td class="center"><?php echo htmlspecialchars($student_info['name']); ?></td>
+                                    <td class="center"><?php echo htmlspecialchars($class['class_name']); ?></td>
+                                    <td class="center"><?php echo htmlspecialchars($fees_term['term_name']); ?></td>
+                                    <td class="center">₹<?php echo number_format($total_fees, 2); ?></td>
+                                    <td class="center">₹<?php echo number_format($pending_amount, 2); ?></td>
+                                    <td class="center"><?php echo htmlspecialchars($row['session']); ?></td>
                                 </tr>
                                 <?php
                                         $i++;
