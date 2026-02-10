@@ -54,7 +54,7 @@ $conn = Database::connection();
                                         /* FIX: We check for multiple possible ID column names to ensure 
                                            the URL is never empty
                                         */
-                                        $did = $row['staff_department_id'] ?? $row['id'] ?? $row['staff_dept_id'] ?? 0;
+                                        $did = $row['id'] ?? $row['staff_department_id'] ?? $row['staff_dept_id'] ?? 0;
                                 ?>
                                 <tr>
                                     <td class="center"><?php echo $i++; ?></td>
@@ -62,12 +62,12 @@ $conn = Database::connection();
                                     <td class="center">
                                         <span>
                                             <a class="action-icons c-edit" 
-                                               href="edit_staff_department.php?staff_department_id=<?php echo (int)$did; ?>" 
+                                               href="edit_staff_department.php?id=<?php echo (int)$did; ?>" 
                                                title="Edit">Edit</a>
                                         </span> 
                                         <span>
                                             <a class="action-icons c-delete" 
-                                               href="delete_staff_department.php?staff_department_id=<?php echo (int)$did; ?>" 
+                                               href="delete_staff_department.php?id=<?php echo (int)$did; ?>" 
                                                title="Delete" 
                                                onclick="return confirm('Are you sure you want to delete this department?')">Delete</a>
                                         </span>

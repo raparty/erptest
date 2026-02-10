@@ -12,7 +12,7 @@ $conn = Database::connection();
 $msg = "";
 
 // 2. Capture and validate ID
-$dept_id = isset($_GET['staff_department_id']) ? (int)$_GET['staff_department_id'] : 0;
+$dept_id = isset($_GET['id']) ? (int)$_GET['id'] : 0;
 
 if ($dept_id <= 0) {
     die("<h1 style='color:red;'>Error: No Department ID found in URL.</h1><p>Please return to the list and click edit again.</p>");
@@ -23,7 +23,7 @@ if (isset($_POST['update_dept'])) {
     $new_name = mysqli_real_escape_string($conn, trim((string)$_POST['dept_name']));
     
     if (!empty($new_name)) {
-        $update_sql = "UPDATE staff_department SET staff_department = '$new_name' WHERE staff_department_id = $dept_id";
+        $update_sql = "UPDATE staff_department SET staff_department = '$new_name' WHERE id = $dept_id";
         
         if (mysqli_query($conn, $update_sql)) {
             $msg = "<div style='background:#d4edda; color:#155724; padding:15px; border:1px solid #c3e6cb; border-radius:5px; margin-bottom:20px;'>
@@ -38,7 +38,7 @@ if (isset($_POST['update_dept'])) {
 }
 
 // 4. Fetch the data
-$fetch_sql = "SELECT * FROM staff_department WHERE staff_department_id = $dept_id";
+$fetch_sql = "SELECT * FROM staff_department WHERE id = $dept_id";
 $res = mysqli_query($conn, $fetch_sql);
 
 if (!$res) {
@@ -76,7 +76,7 @@ if (!$data) {
     
     <?php echo $msg; ?>
 
-    <form action="edit_staff_department.php?staff_department_id=<?php echo $dept_id; ?>" method="post">
+    <form action="edit_staff_department.php?id=<?php echo $dept_id; ?>" method="post">
         <label>Department Name</label>
         <input type="text" name="dept_name" value="<?php echo htmlspecialchars((string)$data['staff_department']); ?>" required>
         
