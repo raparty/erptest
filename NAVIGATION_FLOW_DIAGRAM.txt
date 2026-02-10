@@ -1,0 +1,379 @@
+================================================================================
+                    SCHOOL ERP - SIMPLE NAVIGATION FLOW
+================================================================================
+
+┏━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━┓
+┃                          🔐 LOGIN PROCESS                               ┃
+┗━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━┛
+
+                            ┌──────────────┐
+                            │  index.php   │ ← ENTRY POINT (Login Page)
+                            │ (Login Form) │
+                            └──────┬───────┘
+                                   │ Submit credentials
+                                   ↓
+                        ┌──────────────────────┐
+                        │  login_process.php   │ ← Verify username/password
+                        └──────────┬───────────┘
+                                   │
+                   ┌───────────────┼───────────────┐
+                   │               │               │
+                   ↓ [FAIL]        ↓ [SUCCESS]     │
+            index.php?errormsg=1   │               │
+            (Back to login)        │               │
+                                   ↓               │
+                        ┌──────────────────┐       │
+                        │   session.php    │ ← Select School Year
+                        │ (Select Session) │       │
+                        └──────────┬───────┘       │
+                                   │ Submit        │
+                                   ↓               │
+                        ┌──────────────────┐       │
+                        │  dashboard.php   │ ← MAIN DASHBOARD
+                        │ (Control Panel)  │       │
+                        └──────────────────┘       │
+                                                    │
+                                                    │
+                                              ┌─────┴──────┐
+                                              │ logout.php │ ← Sign Out
+                                              └────────────┘
+
+================================================================================
+
+┏━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━┓
+┃                  📊 MAIN DASHBOARD → 10 MODULES                         ┃
+┗━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━┛
+
+                            dashboard.php
+                                  │
+        ┌─────────┬───────┬───────┼───────┬───────┬─────────┬─────────┐
+        │         │       │       │       │       │         │         │
+        ↓         ↓       ↓       ↓       ↓       ↓         ↓         ↓
+        
+    [1]         [2]     [3]     [4]     [5]     [6]       [7]       [8]
+  School      Admission Student Fees   Account  Exam    Transport  Staff
+  Settings      .php   Detail  Setting Setting Setting  Setting   Setting
+   .php                 .php    .php    .php    .php     .php      .php
+        
+        │         │       │       │       │       │         │         │
+        └─────────┴───────┴───────┴───────┴───────┴─────────┴─────────┘
+                                  │
+                        ┌─────────┴─────────┐
+                        │                   │
+                        ↓                   ↓
+                      [9]                 [10]
+                   Library            Student TC
+                  Setting             entry_student
+                   .php                  _tc.php
+
+================================================================================
+
+┏━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━┓
+┃                      [1] SCHOOL SETTINGS MODULE                         ┃
+┗━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━┛
+
+school_setting.php
+        │
+        ├─→ school_detail.php → add_school_detail.php / edit_school_detail.php
+        ├─→ class.php → add_class.php / edit_class.php / delete_class.php
+        ├─→ section.php → add_section.php / edit_section.php / delete_section.php
+        ├─→ stream.php → add_stream.php / edit_stream.php / delete_stream.php
+        ├─→ subject.php → add_subject.php / edit_subject.php / delete_subject.php
+        └─→ allocate_section.php / allocate_stream.php / allocate_subject.php
+
+================================================================================
+
+┏━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━┓
+┃                      [2] ADMISSION MODULE                               ┃
+┗━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━┛
+
+admission.php
+        │
+        ├─→ add_admission.php → admission_process.php → [Save to DB]
+        ├─→ edit_admission.php → process_edit_admission.php → [Update DB]
+        ├─→ delete_admission.php → [Delete from DB]
+        └─→ student_detail.php → view_student_detail.php
+
+================================================================================
+
+┏━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━┓
+┃                      [3] STUDENT DETAILS MODULE                         ┃
+┗━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━┛
+
+student_detail.php
+        │
+        ├─→ view_student_detail.php (Full profile)
+        ├─→ searchby_name.php → student_search_result.php
+        ├─→ student_fees_reports.php (Fee history)
+        ├─→ student_pending_fees_detail.php (Outstanding fees)
+        └─→ student_transport_fees_reports.php (Transport fees)
+
+================================================================================
+
+┏━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━┓
+┃                      [4] FEES MANAGEMENT MODULE                         ┃
+┗━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━┛
+
+fees_setting.php
+        │
+        ├─→ fees_package.php
+        │       ├─→ add_fees_package.php
+        │       ├─→ edit_fees_package.php
+        │       └─→ delete_fees_package.php
+        │
+        ├─→ term_manager.php
+        │       ├─→ add_term.php
+        │       ├─→ edit_term.php
+        │       └─→ delete_term.php
+        │
+        ├─→ fees_manager.php (Main fee collection)
+        │       ├─→ add_student_fees.php
+        │       ├─→ edit_student_fees.php
+        │       ├─→ fees_searchby_name.php → fees_search_result.php
+        │       ├─→ entry_fees_reciept.php
+        │       ├─→ fees_reciept.php (Print receipt)
+        │       └─→ fees_reciept_byterm.php
+        │
+        ├─→ student_pending_fees_detail.php (Who hasn't paid)
+        │       └─→ student_pending_fees_pagination.php
+        │
+        └─→ student_transport_fees.php (Bus fees)
+                ├─→ add_student_transport_fees.php
+                ├─→ edit_student_transport_fees.php
+                ├─→ entry_transport_fees_reciept.php
+                └─→ transport_fees_reciept.php
+
+================================================================================
+
+┏━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━┓
+┃                      [5] ACCOUNTS MODULE                                ┃
+┗━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━┛
+
+account_setting.php
+        │
+        ├─→ income_manager.php
+        │       ├─→ add_income.php
+        │       ├─→ edit_income.php
+        │       └─→ delete_income.php
+        │
+        ├─→ expense_manager.php
+        │       ├─→ add_expense.php
+        │       ├─→ edit_expense.php
+        │       └─→ delete_expense.php
+        │
+        ├─→ account_category_manager.php
+        │       ├─→ add_account_category_manager.php
+        │       ├─→ edit_account_category_manager.php
+        │       └─→ delete_account_category_manager.php
+        │
+        └─→ account_report.php → entry_account_report.php → daily_report.php
+
+================================================================================
+
+┏━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━┓
+┃                      [6] EXAMINATIONS MODULE                            ┃
+┗━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━┛
+
+exam_setting.php
+        │
+        ├─→ exam_show_maximum_marks.php (Set max marks)
+        │       ├─→ exam_add_maximum_marks.php
+        │       └─→ exam_edit_maximum_marks.php
+        │
+        ├─→ exam_time_table_detail.php (Exam schedule)
+        │       └─→ exam_edit_time_table.php
+        │
+        ├─→ exam_show_student_marks.php (Enter marks)
+        │       ├─→ exam_marks_add_student.php
+        │       ├─→ entry_exam_add_student_marks.php
+        │       └─→ exam_select_exam_term.php
+        │
+        ├─→ entry_exam_marksheet.php (Generate report card)
+        │       ├─→ exam_marksheet_student_selector.php
+        │       └─→ exam_final_marksheet.php (Print)
+        │
+        └─→ exam_result.php (View results)
+                └─→ exam_searchby_name.php
+
+================================================================================
+
+┏━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━┓
+┃                      [7] TRANSPORT MODULE                               ┃
+┗━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━┛
+
+transport_setting.php
+        │
+        ├─→ transport_route_detail.php (Bus routes)
+        │       ├─→ transport_add_route.php
+        │       └─→ transport_route_edit.php
+        │
+        ├─→ transport_vechile_detail.php (Buses/Vehicles)
+        │       ├─→ transport_add_vechile.php
+        │       └─→ transport_edit_vehicle.php
+        │
+        ├─→ transport_student_detail.php (Students using transport)
+        │       ├─→ transport_add_student.php
+        │       ├─→ transport_entry_add_student.php
+        │       └─→ transport_edit_student.php
+        │
+        └─→ Transport Fees Management
+                ├─→ entry_add_student_transport_fees.php
+                ├─→ entry_transport_fees_reciept.php
+                ├─→ transport_fees_reciept.php (Print)
+                ├─→ transport_fees_reciept_byterm.php
+                ├─→ transport_searchby_name.php
+                └─→ transport_student_fee_detail.php
+
+================================================================================
+
+┏━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━┓
+┃                      [8] STAFF RECORDS MODULE                           ┃
+┗━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━┛
+
+staff_setting.php
+        │
+        ├─→ view_staff_department.php
+        │       ├─→ add_staff_department.php
+        │       ├─→ edit_staff_department.php
+        │       └─→ delete_staff_department.php
+        │
+        ├─→ view_staff_category.php
+        │       ├─→ add_staff_category.php
+        │       ├─→ edit_staff_category.php
+        │       └─→ delete_staff_category.php
+        │
+        ├─→ view_staff_qualification.php
+        │       ├─→ add_staff_qualification.php
+        │       ├─→ edit_staff_qualification.php
+        │       └─→ delete_staff_qualification.php
+        │
+        ├─→ view_staff_position.php
+        │       ├─→ add_staff_position.php
+        │       ├─→ edit_staff_position.php
+        │       └─→ delete_staff_position.php
+        │
+        └─→ view_staff.php (All employees)
+                ├─→ add_new_staff_detail.php
+                ├─→ edit_staf_employee_detail.php
+                ├─→ view_staff_employee.php
+                ├─→ delete_staff.php
+                └─→ employee_profile.php
+
+================================================================================
+
+┏━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━┓
+┃                      [9] LIBRARY MODULE                                 ┃
+┗━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━┛
+
+library_setting.php
+        │
+        ├─→ library_book_category.php (Categories: Fiction, Science, etc.)
+        │       ├─→ library_add_book_category.php
+        │       ├─→ library_edit_book_category.php
+        │       └─→ library_delete_book_category.php
+        │
+        ├─→ library_book_manager.php (All books)
+        │       ├─→ library_add_book.php
+        │       ├─→ library_edit_book.php
+        │       └─→ library_delete_book.php
+        │
+        ├─→ library_student_books_manager.php (Issue books to students)
+        │       ├─→ library_add_student_books.php
+        │       │       └─→ library_entry_add_student_books.php
+        │       ├─→ library_edit_student_books.php
+        │       ├─→ library_delete_student_books.php
+        │       └─→ library_student_searchby_name.php
+        │
+        ├─→ library_entry_student_return_books.php (Return books)
+        │       ├─→ library_return_student_books_page.php
+        │       ├─→ library_student_return_books.php
+        │       ├─→ library_process_return.php
+        │       └─→ library_student_returnbook_searchby_name.php
+        │
+        └─→ library_fine_manager.php (Late return fines)
+                ├─→ library_add_fine.php
+                ├─→ library_edit_fine.php
+                ├─→ library_delete_fine.php
+                ├─→ student_fine_detail.php
+                └─→ library_student_fine_entry.php
+
+================================================================================
+
+┏━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━┓
+┃                   [10] STUDENT TC (Transfer Certificate)                ┃
+┗━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━┛
+
+entry_student_tc.php (Generate TC)
+        │
+        ├─→ student_tc.php (View all TCs)
+        ├─→ student_tc_show.php (Display TC)
+        ├─→ student_tc_search_by_name.php (Find student)
+        └─→ student_tc_backup.php (Backup records)
+
+================================================================================
+
+┏━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━┓
+┃                    🔄 COMMON REDIRECT PATTERNS                          ┃
+┗━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━┛
+
+ADD OPERATION:
+    manager_page.php → add_*.php → [Fill form] → [Submit] → [Save to DB] 
+        → header("Location: manager_page.php?msg=1") → Success message
+
+EDIT OPERATION:
+    manager_page.php → edit_*.php?id=123 → [Edit form] → [Submit] 
+        → [Update DB] → header("Location: manager_page.php?msg=3") 
+        → Updated message
+
+DELETE OPERATION:
+    manager_page.php → delete_*.php?id=123 → [Delete from DB] 
+        → header("Location: manager_page.php?msg=2") → Deleted message
+
+SEARCH OPERATION:
+    searchby_name.php → [Enter name] → [Submit] 
+        → *_search_result.php → [Display results]
+
+================================================================================
+
+┏━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━┓
+┃                    📋 SIMPLIFIED LINEAR FLOW                            ┃
+┗━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━┛
+
+index.php → login_process.php → session.php → dashboard.php → 
+    → admission.php → fees_setting.php → exam_setting.php → 
+    → library_setting.php → transport_setting.php → staff_setting.php → 
+    → account_setting.php → student_detail.php → logout.php
+
+================================================================================
+
+┏━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━┓
+┃                    🔐 AUTHENTICATION & SECURITY                         ┃
+┗━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━┛
+
+Every page follows this structure:
+
+    includes/bootstrap.php (Start session, connect database)
+            ↓
+    includes/header.php (Check if user is logged in)
+            ↓ [If not logged in]
+    header("Location: index.php") [Redirect to login]
+            ↓ [If logged in]
+    [Page content loads normally]
+
+================================================================================
+
+┏━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━┓
+┃                    🎯 KEY TAKEAWAYS                                     ┃
+┗━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━┛
+
+✓ ENTRY POINT: index.php (login page)
+✓ MAIN HUB: dashboard.php (after login)
+✓ 10 MODULES accessible from dashboard
+✓ Each module has *_setting.php as entry point
+✓ CRUD operations: add_*, edit_*, delete_*, view_*
+✓ All pages protected by authentication guard in includes/header.php
+✓ Logout: logout.php destroys session and returns to index.php
+
+================================================================================
+                              END OF FLOW DIAGRAM
+================================================================================
