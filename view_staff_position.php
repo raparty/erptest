@@ -51,10 +51,10 @@ $conn = Database::connection();
                                     </td>
                                     <td class="center">
                                         <span>
-                                            <a class="action-icons c-edit" href="edit_staff_position.php?staff_position_id=<?php echo $row['staff_pos_id']; ?>" title="Edit">Edit</a>
+                                            <a class="action-icons c-edit" href="edit_staff_position.php?id=<?php echo $row['id']; ?>" title="Edit">Edit</a>
                                         </span> 
                                         <span>
-                                            <a class="action-icons c-delete" href="delete_staff_position.php?staff_position_id=<?php echo $row['staff_pos_id']; ?>" title="Delete" onclick="return confirm('Delete this staff position?')">Delete</a>
+                                            <a class="action-icons c-delete" href="delete_staff_position.php?id=<?php echo $row['id']; ?>" title="Delete" onclick="return confirm('Delete this staff position?')">Delete</a>
                                         </span>
                                     </td>
                                 </tr>

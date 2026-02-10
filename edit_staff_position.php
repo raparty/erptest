@@ -36,15 +36,15 @@ include_once("includes/header.php");?>
                 include_once('config/config.inc.php');
 				?>
                 <?php
-				$get=$_GET['staff_position_id'];
+				$get=$_GET['id'];
 								if(isset($_POST['submit']))
 				{
 					$staff=$_POST['staff_position'];
 			   
-                $sql="update staff_position set staff_position='".$staff."' where staff_pos_id='".$get."'";
+                $sql="update staff_position set staff_position='".$staff."' where id='".$get."'";
 				$res=db_query($sql);
 				}
-			$select_sql="select * from staff_position where staff_pos_id='".$get."'";	
+			$select_sql="select * from staff_position where id='".$get."'";	
 			$select_res=db_query($select_sql);
 		$row=db_fetch_array($select_res)
 		
