@@ -10,12 +10,12 @@ if(isset($_POST['submit']))
 	$package_fees = $_POST['package_fees'];
 	// $class_id = $_POST['class_id'];
 	
-		$sql1="SELECT * FROM fees_package where package_name='".$package_name."' and package_id!='".$_GET['sid']."'";
+		$sql1="SELECT * FROM fees_package where package_name='".$package_name."' and id!='".$_GET['sid']."'";
 	$res1=db_query($sql1) or die("Error : " . db_error());
 	$num=db_num_rows($res1);
 	if($num==0)
 	{
-	  $sql3="UPDATE fees_package SET package_name='".$package_name."',package_fees='".$package_fees."'  where package_id='".$_GET['sid']."'";
+	  $sql3="UPDATE fees_package SET package_name='".$package_name."',total_amount='".$package_fees."'  where id='".$_GET['sid']."'";
 	$res3=db_query($sql3) or die("Error : " . db_error());
 	header("Location:fees_package.php?msg=3");
 	}else
@@ -30,7 +30,7 @@ if($_GET['error']==2)
 
 	
 		
-	$sql2="SELECT * FROM fees_package WHERE `package_id` = '" . $_GET['sid'] . "';";
+	$sql2="SELECT * FROM fees_package WHERE `id` = '" . $_GET['sid'] . "';";
 	$res2=db_query($sql2);	
 	$row2=db_fetch_array($res2);
 		
@@ -95,7 +95,7 @@ if($_GET['error']==2)
 									<label class="field_title"> Package  Fees</label>
                                     <div class="form_input">
 										<div class="form_grid_5 alpha">
-											<input name="package_fees" type="text" value="<?php echo $row2['package_fees'];?>"/>
+											<input name="package_fees" type="text" value="<?php echo $row2['total_amount'];?>"/>
 											<span class=" label_intro">Package fees</span>
 										</div>
 									

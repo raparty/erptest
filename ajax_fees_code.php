@@ -90,11 +90,11 @@ $row=db_fetch_array(db_query($studentinfo));
                                     <div class="form_input">
 										<div class="form_grid_5 alpha">
                                         <?php
-							 $sql="SELECT * FROM fees_package where package_id='".$row['admission_fee']."' ";
+							 $sql="SELECT * FROM fees_package where id='".$row['admission_fee']."' ";
 	                           $res=db_query($sql);
 								$row3=db_fetch_array($res);?>
 											<input name="fees_amount" type="text"/>
-											<span class=" label_intro" style="color:#F00;">pending fees amount is:<?php echo $pending_amount=$row3['package_fees']-$deposit_amount[0];?> <input name="pending_amount" type="hidden" value="<?php echo $pending_amount=$row3['package_fees']-$deposit_amount[0];?>"/></span>
+											<span class=" label_intro" style="color:#F00;">pending fees amount is:<?php echo $pending_amount=$row3['total_amount']-$deposit_amount[0];?> <input name="pending_amount" type="hidden" value="<?php echo $pending_amount=$row3['total_amount']-$deposit_amount[0];?>"/></span>
 										</div>
 									
 										<span class="clear"></span>

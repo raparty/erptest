@@ -227,9 +227,9 @@ color:#ffffff;
 
 </tr>
 <tr>
-<td><?php echo $row3['package_fees'];?></td>
+<td><?php echo $row3['total_amount'];?></td>
 <td><?php echo $deposit_amount[0];?></td>
-<td><?php echo $pending_amount=$row3['package_fees']-$deposit_amount[0];?></td>
+<td><?php echo $pending_amount=$row3['total_amount']-$deposit_amount[0];?></td>
 
 </tr>
 </table>-->

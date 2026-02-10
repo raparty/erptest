@@ -8,17 +8,17 @@ if(isset($_POST['submit']))
 {
 	$fee_id = (int)($_GET['fee_id'] ?? 0);
 	$package_name = $_POST['package_name'];
-	$package_fees = $_POST['package_fees'];
+	$total_amount = $_POST['total_amount'];
 	// $class_id = $_POST['class_id'];
 	
 		if($_POST['pending_amount']>=$_POST['fees_amount'])
 	{
-	 $sql1="SELECT * FROM student_fees_detail where registration_no='".$_POST['registration_no']."' and fees_term='".$_POST['fees_term']."' and session='".$_SESSION['session']."' and student_fees_id!='$fee_id'";
+	 $sql1="SELECT * FROM student_fees_detail where registration_no='".$_POST['registration_no']."' and fees_term='".$_POST['fees_term']."' and session='".$_SESSION['session']."' and id!='$fee_id'";
 	$res1=db_query($sql1) or die("Error : " . db_error());
 	$num=db_num_rows($res1);
 	if($num==0)
 	{
-	  $sql3="UPDATE student_fees_detail SET registration_no='".$_POST['registration_no']."',fees_term='".$_POST['fees_term']."',fees_amount='".$_POST['fees_amount']."' where student_fees_id='$fee_id'";
+	  $sql3="UPDATE student_fees_detail SET registration_no='".$_POST['registration_no']."',fees_term='".$_POST['fees_term']."',fees_amount='".$_POST['fees_amount']."' where id='$fee_id'";
 	$res3=db_query($sql3) or die("Error : " . db_error());
 	header("Location:fees_manager.php?msg=3");
 	}else
@@ -44,7 +44,7 @@ if($_GET['error']==3)
 	
 		
 	$fee_id = (int)($_GET['fee_id'] ?? 0);
-	$sql2="SELECT * FROM student_fees_detail WHERE `student_fees_id` = '$fee_id'";	
+	$sql2="SELECT * FROM student_fees_detail WHERE `id` = '$fee_id'";	
 	$res2=db_query($sql2);	
 	$row2=db_fetch_array($res2);
 		
@@ -179,11 +179,11 @@ $row=db_fetch_array(db_query($studentinfo));
                                     <div class="form_input">
 										<div class="form_grid_5 alpha">
                                         <?php
-							 $sql="SELECT * FROM fees_package where package_id='".$row['admission_fee']."' ";
+							 $sql="SELECT * FROM fees_package where id='".$row['admission_fee']."' ";
 	                           $res=db_query($sql);
 								$row3=db_fetch_array($res);?>
 											<input name="fees_amount" type="text" value="<?php echo $row2['fees_amount'];?>"/>
-											<span class=" label_intro" style="color:#F00;">pending fees amount is:<?php echo $pending_amount=$row3['package_fees']-$deposit_amount[0];?> <input name="pending_amount" type="hidden" value="<?php echo $pending_amount=$row3['package_fees']-$deposit_amount[0];?>"/></span>
+											<span class=" label_intro" style="color:#F00;">pending fees amount is:<?php echo $pending_amount=$row3['total_amount']-$deposit_amount[0];?> <input name="pending_amount" type="hidden" value="<?php echo $pending_amount=$row3['total_amount']-$deposit_amount[0];?>"/></span>
 										</div>
 									
 										<span class="clear"></span>

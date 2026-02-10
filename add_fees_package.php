@@ -17,7 +17,7 @@ if(isset($_POST['submit'])) {
     $check = db_query("SELECT * FROM fees_package WHERE package_name='$package_name'");
     if(db_num_rows($check) == 0) {
         if(!empty($package_name) && $package_fees > 0) {
-            db_query("INSERT INTO fees_package(package_name, package_fees) VALUES ('$package_name', '$package_fees')");
+            db_query("INSERT INTO fees_package(package_name, total_amount) VALUES ('$package_name', '$package_fees')");
             header("Location: fees_package.php?msg=1");
             exit;
         }

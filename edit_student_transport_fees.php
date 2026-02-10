@@ -7,17 +7,17 @@ include_once("includes/header.php");?>
 if(isset($_POST['submit']))
 {
 	$package_name = $_POST['package_name'];
-	$package_fees = $_POST['package_fees'];
+	$total_amount = $_POST['total_amount'];
 	// $class_id = $_POST['class_id'];
 	
 		if($_POST['pending_amount']>=$_POST['fees_amount'])
 	{
-	 $sql1="SELECT * FROM student_transport_fees_detail where registration_no='".$_POST['registration_no']."' and fees_term='".$_POST['fees_term']."' and session='".$_SESSION['session']."' and student_fees_id!='".$_GET['sid']."'";
+	 $sql1="SELECT * FROM student_transport_fees_detail where registration_no='".$_POST['registration_no']."' and fees_term='".$_POST['fees_term']."' and session='".$_SESSION['session']."' and id!='".$_GET['sid']."'";
 	$res1=db_query($sql1) or die("Error : " . db_error());
 	$num=db_num_rows($res1);
 	if($num==0)
 	{
-	  $sql3="UPDATE student_transport_fees_detail SET registration_no='".$_POST['registration_no']."',fees_term='".$_POST['fees_term']."',fees_amount='".$_POST['fees_amount']."' where student_fees_id='".$_GET['sid']."'";
+	  $sql3="UPDATE student_transport_fees_detail SET registration_no='".$_POST['registration_no']."',fees_term='".$_POST['fees_term']."',fees_amount='".$_POST['fees_amount']."' where id='".$_GET['sid']."'";
 	$res3=db_query($sql3) or die("Error : " . db_error());
 	header("Location:student_transport_fees.php?msg=3");
 	}else
@@ -42,7 +42,7 @@ if($_GET['error']==3)
 	}
 	
 		
-	$sql2="SELECT * FROM student_transport_fees_detail WHERE `student_fees_id` = '" . $_GET['sid'] . "';";
+	$sql2="SELECT * FROM student_transport_fees_detail WHERE `id` = '" . $_GET['sid'] . "';";
 	$res2=db_query($sql2);	
 	$row22=db_fetch_array($res2);
 		

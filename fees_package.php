@@ -43,7 +43,7 @@ require_once("includes/sidebar.php");
                     <tr>
                         <td class="center"><?php echo $i;?></td>
                         <td style="font-weight: 600;"><?php echo htmlspecialchars($row['package_name']); ?></td>
-                        <td class="center">₹<?php echo number_format((float)$row['package_fees'], 2); ?></td>
+                        <td class="center">₹<?php echo number_format((float)$row['total_amount'], 2); ?></td>
                         <td class="center">
                             <div class="fluent-action-group">
                                 <a href="edit_fees_package.php?sid=<?php echo $row[0]; ?>" class="fluent-btn-icon" title="Edit Package">

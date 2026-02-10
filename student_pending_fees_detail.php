@@ -113,7 +113,7 @@ include_once("includes/sidebar.php");
                                         $fees_term = db_fetch_array(db_query($sql_fees_term));
                                         
                                         // Calculate pending amount safely
-                                        $total_fees = floatval($row3['package_fees'] ?? 0);
+                                        $total_fees = floatval($row3['total_amount'] ?? 0);
                                         $deposited = floatval($deposit_amount[0] ?? 0);
                                         $pending_amount = $total_fees - $deposited;
                                 ?>

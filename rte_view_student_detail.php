@@ -158,7 +158,7 @@ Admission Date <span style="color:#F00"> *</span>
 										<?php
 							 $sql="SELECT * FROM fees_package where package_id='".$row_value['admission_fee']."' ";
 	                           $admission_fee=db_fetch_array(db_query($sql));
-							   echo $admission_fee['package_fees'];
+							   echo $admission_fee['total_amount'];
 								?>
 									</div>
 								</div>
