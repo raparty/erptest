@@ -36,7 +36,11 @@ include_once("includes/header.php");?>
                 include_once('config/config.inc.php');
 				?>
                 <?php
-				$get=$_GET['id'];
+				$get=(int)($_GET['id'] ?? 0);
+				if ($get <= 0) {
+					header('location:view_staff_position.php');
+					exit;
+				}
 								if(isset($_POST['submit']))
 				{
 					$staff=db_escape($_POST['staff_position']);
