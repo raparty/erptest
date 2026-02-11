@@ -50,6 +50,9 @@ try {
     error_log('Database connection failed: ' . $e->getMessage());
 }
 
+// Load RBAC (Role-Based Access Control) system
+require_once __DIR__ . '/rbac.php';
+
 // =========================================================================
 // MASTER COMPATIBILITY LAYER
 // This translates legacy GitHub code functions to modern mysqli.

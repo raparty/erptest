@@ -1,0 +1,363 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>School ERP - RBAC Structure Diagram</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+        
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            min-height: 100vh;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            padding: 40px 20px;
+        }
+        
+        .container {
+            background: white;
+            border-radius: 12px;
+            box-shadow: 0 20px 60px rgba(0, 0, 0, 0.3);
+            max-width: 1400px;
+            width: 100%;
+            padding: 50px;
+        }
+        
+        h1 {
+            text-align: center;
+            color: #2c3e50;
+            margin-bottom: 15px;
+            font-size: 36px;
+            font-weight: 700;
+        }
+        
+        .subtitle {
+            text-align: center;
+            color: #7f8c8d;
+            margin-bottom: 50px;
+            font-size: 18px;
+        }
+        
+        .diagram {
+            display: flex;
+            justify-content: space-around;
+            gap: 40px;
+            margin-bottom: 60px;
+            flex-wrap: wrap;
+        }
+        
+        .role-column {
+            flex: 1;
+            min-width: 300px;
+            max-width: 400px;
+        }
+        
+        .role-header {
+            padding: 25px;
+            border-radius: 12px;
+            text-align: center;
+            color: white;
+            margin-bottom: 25px;
+            box-shadow: 0 8px 20px rgba(0, 0, 0, 0.15);
+            position: relative;
+        }
+        
+        .role-header h2 {
+            font-size: 28px;
+            margin-bottom: 8px;
+            font-weight: 600;
+        }
+        
+        .role-header .role-icon {
+            font-size: 48px;
+            margin-bottom: 10px;
+        }
+        
+        .role-header .permissions-count {
+            font-size: 14px;
+            opacity: 0.9;
+            text-transform: uppercase;
+            letter-spacing: 1px;
+        }
+        
+        .admin-header {
+            background: linear-gradient(135deg, #FF6B6B 0%, #EE5A52 100%);
+        }
+        
+        .teacher-header {
+            background: linear-gradient(135deg, #0078D4 0%, #005A9E 100%);
+        }
+        
+        .student-header {
+            background: linear-gradient(135deg, #4CAF50 0%, #45A049 100%);
+        }
+        
+        .permissions-list {
+            background: #f8f9fa;
+            border-radius: 8px;
+            padding: 20px;
+        }
+        
+        .permission-module {
+            margin-bottom: 20px;
+        }
+        
+        .module-title {
+            font-weight: 700;
+            color: #2c3e50;
+            margin-bottom: 10px;
+            font-size: 16px;
+            text-transform: uppercase;
+            letter-spacing: 0.5px;
+            border-bottom: 2px solid #e0e0e0;
+            padding-bottom: 8px;
+        }
+        
+        .permission-item {
+            padding: 8px 15px;
+            margin: 5px 0;
+            background: white;
+            border-radius: 6px;
+            display: flex;
+            align-items: center;
+            font-size: 14px;
+            color: #555;
+            box-shadow: 0 2px 4px rgba(0, 0, 0, 0.05);
+        }
+        
+        .permission-item::before {
+            content: "✓";
+            display: inline-block;
+            width: 20px;
+            height: 20px;
+            background: #4CAF50;
+            color: white;
+            border-radius: 50%;
+            text-align: center;
+            line-height: 20px;
+            margin-right: 10px;
+            font-size: 12px;
+            font-weight: bold;
+        }
+        
+        .permission-denied::before {
+            content: "✗";
+            background: #e0e0e0;
+        }
+        
+        .legend {
+            background: #f8f9fa;
+            padding: 30px;
+            border-radius: 12px;
+            margin-top: 40px;
+        }
+        
+        .legend h3 {
+            color: #2c3e50;
+            margin-bottom: 20px;
+            font-size: 24px;
+        }
+        
+        .legend-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+            gap: 20px;
+        }
+        
+        .legend-item {
+            display: flex;
+            align-items: flex-start;
+            gap: 15px;
+        }
+        
+        .legend-icon {
+            width: 40px;
+            height: 40px;
+            border-radius: 8px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-weight: bold;
+            color: white;
+            flex-shrink: 0;
+        }
+        
+        .legend-text h4 {
+            color: #2c3e50;
+            margin-bottom: 5px;
+            font-size: 16px;
+        }
+        
+        .legend-text p {
+            color: #7f8c8d;
+            font-size: 13px;
+            line-height: 1.5;
+        }
+        
+        @media (max-width: 768px) {
+            .container {
+                padding: 30px 20px;
+            }
+            
+            h1 {
+                font-size: 28px;
+            }
+            
+            .diagram {
+                flex-direction: column;
+            }
+            
+            .role-column {
+                max-width: 100%;
+            }
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <h1>🔐 School ERP - RBAC Structure</h1>
+        <p class="subtitle">Role-Based Access Control System - Visual Overview</p>
+        
+        <div class="diagram">
+            <!-- Admin Role -->
+            <div class="role-column">
+                <div class="role-header admin-header">
+                    <div class="role-icon">👑</div>
+                    <h2>Admin</h2>
+                    <p class="permissions-count">Full System Access</p>
+                </div>
+                <div class="permissions-list">
+                    <div class="permission-module">
+                        <div class="module-title">All Modules</div>
+                        <div class="permission-item">View all records</div>
+                        <div class="permission-item">Add new entries</div>
+                        <div class="permission-item">Edit existing data</div>
+                        <div class="permission-item">Delete records</div>
+                    </div>
+                    <div class="permission-module">
+                        <div class="module-title">Special Access</div>
+                        <div class="permission-item">Manage users & roles</div>
+                        <div class="permission-item">System configuration</div>
+                        <div class="permission-item">Financial reports</div>
+                        <div class="permission-item">Complete audit trail</div>
+                    </div>
+                </div>
+            </div>
+            
+            <!-- Teacher Role -->
+            <div class="role-column">
+                <div class="role-header teacher-header">
+                    <div class="role-icon">👨‍🏫</div>
+                    <h2>Teacher</h2>
+                    <p class="permissions-count">Academic Operations</p>
+                </div>
+                <div class="permissions-list">
+                    <div class="permission-module">
+                        <div class="module-title">View Access</div>
+                        <div class="permission-item">Student details</div>
+                        <div class="permission-item">Classes & sections</div>
+                        <div class="permission-item">Exam settings</div>
+                        <div class="permission-item">Library records</div>
+                    </div>
+                    <div class="permission-module">
+                        <div class="module-title">Add/Edit Access</div>
+                        <div class="permission-item">Exam marks entry</div>
+                        <div class="permission-item">Attendance marking</div>
+                        <div class="permission-item">Library book issue</div>
+                        <div class="permission-item">Generate results</div>
+                    </div>
+                    <div class="permission-module">
+                        <div class="module-title">Restricted</div>
+                        <div class="permission-item permission-denied">Financial data</div>
+                        <div class="permission-item permission-denied">Staff management</div>
+                        <div class="permission-item permission-denied">System settings</div>
+                    </div>
+                </div>
+            </div>
+            
+            <!-- Student Role -->
+            <div class="role-column">
+                <div class="role-header student-header">
+                    <div class="role-icon">🎓</div>
+                    <h2>Student</h2>
+                    <p class="permissions-count">Personal Records Only</p>
+                </div>
+                <div class="permissions-list">
+                    <div class="permission-module">
+                        <div class="module-title">View Access</div>
+                        <div class="permission-item">Own dashboard</div>
+                        <div class="permission-item">Exam results</div>
+                        <div class="permission-item">Library status</div>
+                        <div class="permission-item">Fee records</div>
+                    </div>
+                    <div class="permission-module">
+                        <div class="module-title">Restricted</div>
+                        <div class="permission-item permission-denied">Other student data</div>
+                        <div class="permission-item permission-denied">Staff information</div>
+                        <div class="permission-item permission-denied">Financial reports</div>
+                        <div class="permission-item permission-denied">Exam marks entry</div>
+                        <div class="permission-item permission-denied">System settings</div>
+                        <div class="permission-item permission-denied">Any modifications</div>
+                    </div>
+                </div>
+            </div>
+        </div>
+        
+        <!-- Legend -->
+        <div class="legend">
+            <h3>📋 Access Control Principles</h3>
+            <div class="legend-grid">
+                <div class="legend-item">
+                    <div class="legend-icon" style="background: #4CAF50;">✓</div>
+                    <div class="legend-text">
+                        <h4>Granted Permission</h4>
+                        <p>User role has access to this feature or action</p>
+                    </div>
+                </div>
+                <div class="legend-item">
+                    <div class="legend-icon" style="background: #e0e0e0; color: #999;">✗</div>
+                    <div class="legend-text">
+                        <h4>Denied Permission</h4>
+                        <p>User role cannot access this feature</p>
+                    </div>
+                </div>
+                <div class="legend-item">
+                    <div class="legend-icon" style="background: #FF6B6B;">A</div>
+                    <div class="legend-text">
+                        <h4>Admin Role</h4>
+                        <p>Complete system control with all permissions</p>
+                    </div>
+                </div>
+                <div class="legend-item">
+                    <div class="legend-icon" style="background: #0078D4;">T</div>
+                    <div class="legend-text">
+                        <h4>Teacher Role</h4>
+                        <p>Academic operations and student management</p>
+                    </div>
+                </div>
+                <div class="legend-item">
+                    <div class="legend-icon" style="background: #4CAF50;">S</div>
+                    <div class="legend-text">
+                        <h4>Student Role</h4>
+                        <p>View-only access to personal records</p>
+                    </div>
+                </div>
+                <div class="legend-item">
+                    <div class="legend-icon" style="background: #9C27B0;">🔒</div>
+                    <div class="legend-text">
+                        <h4>Database-Driven</h4>
+                        <p>All permissions stored in database tables</p>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</body>
+</html>
