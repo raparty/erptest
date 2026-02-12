@@ -15,7 +15,7 @@ include_once("includes/school_setting_sidebar.php");
                     <div class="widget_top">
                         
                         <h6 style="display:inline-block">Existing Streams</h6>
-                        <div style="float:right; padding: 5px;">
+                        <div class="float-end">
                             <a href="add_stream.php" class="btn_small btn_blue"><span>+ Add New Stream</span></a>
                         </div>
                     </div>

@@ -1,10 +1,23 @@
 <?php
 declare(strict_types=1);
 require_once("includes/bootstrap.php");
+require_once("includes/pagination_helper.php");
 include_once("includes/header.php");
 include_once("includes/sidebar.php");
 
 $conn = Database::connection();
+
+// Pagination settings
+$items_per_page = 20;
+$current_page = (int)($_GET['page'] ?? 1);
+$current_page = max(1, $current_page);
+$offset = ($current_page - 1) * $items_per_page;
+
+// Get total count
+$count_sql = "SELECT COUNT(*) as total FROM library_categories";
+$count_res = mysqli_query($conn, $count_sql);
+$count_row = mysqli_fetch_assoc($count_res);
+$total_items = (int)$count_row['total'];
 ?>
 
 <div id="container">
@@ -18,7 +31,7 @@ $conn = Database::connection();
                 <div class="widget_wrap">
                     <div class="widget_top">
                         <h6>Book Category Detail</h6>
-                        <div style="float:right; padding: 5px;">
+                        <div class="float-end" style=" padding: 5px;">
                             <a href="library_add_book_category.php" class="btn_small btn_blue">
                                 <span>+ Add Category</span>
                             </a>
@@ -35,23 +48,21 @@ $conn = Database::connection();
                             </thead>
                             <tbody>
                                 <?php 
-                                $i = 1;
-                                // Updated to use pluralized table name 'library_categories'
-                                $sql = "SELECT * FROM library_categories ORDER BY category_name ASC";
+                                // Query with pagination
+                                $sql = "SELECT * FROM library_categories ORDER BY category_name ASC LIMIT $offset, $items_per_page";
                                 $res = mysqli_query($conn, $sql);
                                 
                                 if ($res && mysqli_num_rows($res) > 0) {
+                                    $i = $offset + 1;
                                     while($row = mysqli_fetch_assoc($res)) { ?>		
                                     <tr>
                                         <td class="center"><?php echo $i; ?></td>
                                         <td class="center"><strong><?php echo htmlspecialchars((string)$row['category_name']); ?></strong></td>
                                         <td class="center">
-                                            <span>
+                                            <div style="display: flex; gap: 5px; justify-content: center;">
                                                 <a class="action-icons c-edit" href="library_edit_book_category.php?sid=<?php echo $row['category_id']; ?>" title="Edit">Edit</a>
-                                            </span>
-                                            <span>
                                                 <a class="action-icons c-delete" href="library_delete_book_category.php?sid=<?php echo $row['category_id']; ?>" title="Delete" onClick="return confirm('Are you sure you want to delete this category?')">Delete</a>
-                                            </span>
+                                            </div>
                                         </td>
                                     </tr>
                                     <?php $i++; } 
@@ -62,6 +73,11 @@ $conn = Database::connection();
                                 <?php } ?>
                             </tbody>
                         </table>
+                        
+                        <?php 
+                        // Display pagination
+                        echo generate_pagination($current_page, $total_items, $items_per_page, 'library_book_category.php');
+                        ?>
                     </div>
                 </div>
             </div>

@@ -6,12 +6,19 @@ include_once("includes/header.php");?>
 <?php 
 if(isset($_POST['submit']))
 {
+	// Sanitize POST inputs to prevent SQL injection
+	$safe_registration_no = db_escape($_POST['registration_no'] ?? '');
+	$safe_class_id = db_escape($_POST['class_id'] ?? '');
+	$safe_stream_id = db_escape($_POST['stream_id'] ?? '');
+	$safe_route_id = db_escape($_POST['route_id'] ?? '');
+	$safe_vechile_id = db_escape($_POST['vechile_id'] ?? '');
+	$safe_session = db_escape($_SESSION['session'] ?? '');
 	
-	 $sql1="SELECT * FROM transport_student_detail where registration_no='".$_POST['registration_no']."' and class_id='".$_POST['class_id']."' and session='".$_SESSION['session']."'";
-	if($_POST['stream_id']!="")
+	 $sql1="SELECT * FROM transport_student_detail where registration_no='$safe_registration_no' and class_id='$safe_class_id' and session='$safe_session'";
+	if($safe_stream_id != "")
 	{
 		
-		$sql1.="and stream_id='".$_POST['stream_id']."'";
+		$sql1.=" and stream_id='$safe_stream_id'";
 		
 	}
 	
@@ -19,19 +26,19 @@ if(isset($_POST['submit']))
 	$res1=db_query($sql1) or die("Error : " . db_error());
 	$num=db_num_rows($res1);
 	
-	$student_detail="select * from student_info where registration_no='".$_POST['registration_no']."' and class='".$_POST['class_id']."' and session='".$_SESSION['session']."'";
-	if($_POST['stream_id']!="")
+	$student_detail="select * from student_info where registration_no='$safe_registration_no' and class='$safe_class_id' and session='$safe_session'";
+	if($safe_stream_id != "")
 	{
 		
-		$student_detail.="and stream='".$_POST['stream_id']."'";
+		$student_detail.=" and stream='$safe_stream_id'";
 		
 	}
 	$admission_no=db_fetch_array(db_query($student_detail));
 	if($num==0)
 	{
-		$route_id=$_POST['route_id'];
+		$safe_admission_no = db_escape($admission_no['student_admission_no'] ?? '');
 		
-		 $sql3="INSERT INTO transport_student_detail(registration_no,class_id,stream_id,vechile_id,route_id,session) VALUES ('".$admission_no['student_admission_no']."','".$_POST['class_id']."','".$_POST['stream_id']."','".$route_id."','".$_POST['vechile_id']."','".$_SESSION['session']."')";
+		 $sql3="INSERT INTO transport_student_detail(registration_no,class_id,stream_id,vechile_id,route_id,session) VALUES ('$safe_admission_no','$safe_class_id','$safe_stream_id','$safe_route_id','$safe_vechile_id','$safe_session')";
 		$res3=db_query($sql3) or die("Error : " . db_error());
 		header("Location:transport_add_student.php?msg=1");
 		

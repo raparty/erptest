@@ -7,10 +7,23 @@ ini_set('display_startup_errors', '1');
 error_reporting(E_ALL);
 
 require_once("includes/bootstrap.php");
+require_once("includes/pagination_helper.php");
 include_once("includes/header.php");
 include_once("includes/sidebar.php");
 
 $conn = Database::connection();
+
+// Pagination settings
+$items_per_page = 20;
+$current_page = (int)($_GET['page'] ?? 1);
+$current_page = max(1, $current_page);
+$offset = ($current_page - 1) * $items_per_page;
+
+// Get total count
+$count_sql = "SELECT COUNT(*) as total FROM book_managers";
+$count_res = mysqli_query($conn, $count_sql);
+$count_row = mysqli_fetch_assoc($count_res);
+$total_items = (int)$count_row['total'];
 ?>
 
 <div id="container">
@@ -24,7 +37,7 @@ $conn = Database::connection();
                 <div class="widget_wrap">
                     <div class="widget_top">
                         <h6>Books Detail (Catalog)</h6>
-                        <div style="float:right; padding: 5px;">
+                        <div class="float-end" style=" padding: 5px;">
                             <a href="library_add_book.php" class="btn_small btn_blue">
                                 <span>+ Add Book Detail</span>
                             </a>
@@ -44,12 +57,12 @@ $conn = Database::connection();
                             </thead>
                             <tbody>
                                 <?php 
-                                $i = 1;
-                                // FIX: Querying the modernized pluralized table 'book_managers'
-                                $sql = "SELECT * FROM book_managers ORDER BY book_name ASC";
+                                // Query with pagination
+                                $sql = "SELECT * FROM book_managers ORDER BY book_name ASC LIMIT $offset, $items_per_page";
                                 $res = mysqli_query($conn, $sql);
                                 
                                 if ($res && mysqli_num_rows($res) > 0) {
+                                    $i = $offset + 1;
                                     while($row = mysqli_fetch_assoc($res)) {
                                         // FETCH CATEGORY: Updated to plural 'library_categories'
                                         $cat_id = (int)$row['book_category_id'];
@@ -86,6 +99,11 @@ $conn = Database::connection();
                                 <?php } ?>
                             </tbody>
                         </table>
+                        
+                        <?php 
+                        // Display pagination
+                        echo generate_pagination($current_page, $total_items, $items_per_page, 'library_book_manager.php');
+                        ?>
                     </div>
                 </div>
             </div>

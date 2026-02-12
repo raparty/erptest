@@ -5,14 +5,22 @@ include_once("includes/header.php");?>
 <?php include_once("includes/sidebar.php"); ?>
 <?php 
 $msgs='';
-$id_get=$_GET['sid'];
+$id_get = (int)($_GET['sid'] ?? 0);
 
 if(isset($_POST['submit']))
 {
-	 	if($_POST['marks']!='')
+	// Sanitize POST inputs to prevent SQL injection
+	$safe_class_id = db_escape($_POST['class_id'] ?? '');
+	$safe_stream = db_escape($_POST['stream'] ?? '');
+	$safe_subject_id = db_escape($_POST['subject_id'] ?? '');
+	$safe_term_id = db_escape($_POST['term_id'] ?? '');
+	$safe_marks = db_escape($_POST['marks'] ?? '');
+	$safe_session = db_escape($_SESSION['session'] ?? '');
+	
+	 	if($safe_marks != '')
 		{
 			
-	 $sql3="update exam_add_maximum_marks set class_id='".$_POST['class_id']."', stream_id='".$_POST['stream']."', subject_id='".$_POST['subject_id']."',term_id='".$_POST['term_id']."',max_marks='".$_POST['marks']."',session='".$_SESSION['session']."' where exam_max_marks_id='$id_get'";
+	 $sql3="update exam_add_maximum_marks set class_id='$safe_class_id', stream_id='$safe_stream', subject_id='$safe_subject_id',term_id='$safe_term_id',max_marks='$safe_marks',session='$safe_session' where exam_max_marks_id='$id_get'";
 		$res3=db_query($sql3) or die("Error : " . db_error());
 	//header("Location:exam_show_maximum_marks.php?msg=1");
 			

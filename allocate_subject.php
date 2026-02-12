@@ -14,7 +14,7 @@ include_once("includes/school_setting_sidebar.php");
                 <div class="widget_wrap">
                     <div class="widget_top">
                         <h6 style="display:inline-block">Class-Subject Links</h6>
-                        <div style="float:right; padding: 5px;">
+                        <div class="float-end">
                             <a href="add_allocate_subject.php" class="btn_small btn_blue"><span>+ Allocate Subject</span></a>
                         </div>
                     </div>

@@ -24,8 +24,8 @@ require_once("includes/sidebar.php");
         <div class="widget_content" style="padding: 25px;">
             <form action="" method="post">
                 <div style="background: #f8fafc; padding: 15px; border-radius: 8px; margin-bottom: 25px; display: flex; gap: 30px;">
-                    <span><strong>Class:</strong> <?php echo $_POST['class_id']; ?></span>
-                    <span><strong>Term:</strong> <?php echo $_POST['term_id']; ?></span>
+                    <span><strong>Class:</strong> <?php echo htmlspecialchars($_POST['class_id'] ?? '', ENT_QUOTES, 'UTF-8'); ?></span>
+                    <span><strong>Term:</strong> <?php echo htmlspecialchars($_POST['term_id'] ?? '', ENT_QUOTES, 'UTF-8'); ?></span>
                 </div>
 
                 <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 20px;">

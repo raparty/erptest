@@ -174,14 +174,17 @@ db_query("delete from transport_student_detail where transport_id='".$_GET['sid'
 						//$arr=array("ram","shyam","kamlesh","joshi");
 						//echo $strng=implode(",",$arr);
 						$i=0;
-						$sql="select * from transport_student_detail where session='".$_SESSION['session']."'";
+						$safe_session = db_escape($_SESSION['session'] ?? '');
+						$sql="select * from transport_student_detail where session='$safe_session'";
 						$sql_value=db_query($sql);
 						while($sql_row=db_fetch_array($sql_value)){
 						$i++;
-                       $qq="select * from student_info where registration_no='".$sql_row['registration_no']."'  and session='".$_SESSION['session']."'";
+						$safe_reg_no = db_escape($sql_row['registration_no']);
+                       $qq="select * from student_info where registration_no='$safe_reg_no'  and session='$safe_session'";
 						$student_info=db_fetch_array(db_query($qq));
 						
-						$sql_route="select * from transport_add_route where route_id='".$sql_row['route_id']."'";
+						$safe_route_id = db_escape($sql_row['route_id']);
+						$sql_route="select * from transport_add_route where route_id='$safe_route_id'";
 						$sql_value_route=db_query($sql_route);
 						$sql_transport_row=db_fetch_array($sql_value_route);
 						

@@ -11,6 +11,9 @@ require_once("config/config.inc.php");
 	// How many adjacent pages should be shown on each side?
 	$adjacents = 3;
 	
+	// Sanitize SESSION to prevent SQL injection
+	$safe_session = db_escape($_SESSION['session'] ?? '');
+	
 	/* 
 	   First get total number of rows in data table. 
 	   If you have a WHERE clause in your query, make sure you mirror it here.
@@ -18,7 +21,7 @@ require_once("config/config.inc.php");
 	
 							  
 								  
-	 $query = "SELECT COUNT(*) as num FROM $tbl_name  where session='".$_SESSION['session']."'";
+	 $query = "SELECT COUNT(*) as num FROM $tbl_name  where session='$safe_session'";
                                
 	$total_pages = db_fetch_array(db_query($query));
 	$total_pages = $total_pages['num'];
@@ -35,7 +38,7 @@ require_once("config/config.inc.php");
 		$page_no=$start;								//if no page var is given, set start to 0
 	
 	/* Get data. */
-	 $sql10 = "SELECT * FROM $tbl_name where session='".$_SESSION['session']."'  LIMIT $start, $limit";
+	 $sql10 = "SELECT * FROM $tbl_name where session='$safe_session'  LIMIT $start, $limit";
 	$result_res = db_query($sql10);
 	//$row_value=db_fetch_array($result);
 	//print_r($row_value);

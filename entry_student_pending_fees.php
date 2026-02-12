@@ -50,7 +50,7 @@
 								<div class="form_grid_12">
 									<label class="field_title"> Fees term </label>
 									<div class="form_input">
-										<select style=" width:300px" name="fees_term" class="chzn-select" tabindex="13" onChange="getForm('ajax_stream_code.php?class_id='+this.value)">
+										<select style=" width:300px" name="fees_term" class="chzn-select" tabindex="13" data-action="load-form" data-url="ajax_stream_code.php" data-param="class_id">
 											<option value="" selected="selected"> - Select fees term - </option>
 							<?php
 							 $sql="SELECT * FROM fees_term ";
@@ -70,7 +70,7 @@
 								<div class="form_grid_12">
 									<label class="field_title"> Class Name </label>
 									<div class="form_input">
-										<select style=" width:300px" name="class" class="chzn-select" tabindex="13" onChange="getForm('ajax_stream_code.php?class_id='+this.value)">
+										<select style=" width:300px" name="class" class="chzn-select" tabindex="13" data-action="load-form" data-url="ajax_stream_code.php" data-param="class_id">
 											<option value="" selected="selected"> - Select Class - </option>
 							<?php
 							 $sql="SELECT * FROM class ";

@@ -11,14 +11,21 @@ if(isset($_POST['submit']))
 	$total_amount = $_POST['total_amount'];
 	// $class_id = $_POST['class_id'];
 	
-		if($_POST['pending_amount']>=$_POST['fees_amount'])
+	// Sanitize POST inputs to prevent SQL injection
+	$safe_registration_no = db_escape($_POST['registration_no'] ?? '');
+	$safe_fees_term = db_escape($_POST['fees_term'] ?? '');
+	$safe_fees_amount = db_escape($_POST['fees_amount'] ?? '');
+	$safe_pending_amount = db_escape($_POST['pending_amount'] ?? '');
+	$safe_session = db_escape($_SESSION['session'] ?? '');
+	
+		if($safe_pending_amount >= $safe_fees_amount)
 	{
-	 $sql1="SELECT * FROM student_fees_detail where registration_no='".$_POST['registration_no']."' and fees_term='".$_POST['fees_term']."' and session='".$_SESSION['session']."' and id!='$fee_id'";
+	 $sql1="SELECT * FROM student_fees_detail where registration_no='$safe_registration_no' and fees_term='$safe_fees_term' and session='$safe_session' and id!='$fee_id'";
 	$res1=db_query($sql1) or die("Error : " . db_error());
 	$num=db_num_rows($res1);
 	if($num==0)
 	{
-	  $sql3="UPDATE student_fees_detail SET registration_no='".$_POST['registration_no']."',fees_term='".$_POST['fees_term']."',fees_amount='".$_POST['fees_amount']."' where id='$fee_id'";
+	  $sql3="UPDATE student_fees_detail SET registration_no='$safe_registration_no',fees_term='$safe_fees_term',fees_amount='$safe_fees_amount' where id='$fee_id'";
 	$res3=db_query($sql3) or die("Error : " . db_error());
 	header("Location:fees_manager.php?msg=3");
 	}else
@@ -49,10 +56,12 @@ if($_GET['error']==3)
 	$row2=db_fetch_array($res2);
 		
 		
-		 $studentinfo="select * from student_info where registration_no='".$row2['registration_no']."' and session='".$_SESSION['session']."'";
+		 $safe_reg_no = db_escape($row2['registration_no']);
+		 $safe_session = db_escape($_SESSION['session'] ?? '');
+		 $studentinfo="select * from student_info where registration_no='$safe_reg_no' and session='$safe_session'";
 $row=db_fetch_array(db_query($studentinfo));
 
- $sql_pending="select sum(fees_amount) from student_fees_detail where registration_no='".$row2['registration_no']."'  and session='".$_SESSION['session']."'";
+ $sql_pending="select sum(fees_amount) from student_fees_detail where registration_no='$safe_reg_no'  and session='$safe_session'";
 	$deposit_amount=db_fetch_array(db_query($sql_pending));
 
   ?>
@@ -137,7 +146,8 @@ $row=db_fetch_array(db_query($studentinfo));
 										<select style=" width:300px" name="class" class="chzn-select" tabindex="13">
 											
 							<?php
-							 $sql="SELECT * FROM class  where class_id='".$row['class']."'";
+							 $safe_class_id = db_escape($row['class']);
+							 $sql="SELECT * FROM class  where class_id='$safe_class_id'";
 	                           $res=db_query($sql);
 								while($row1=db_fetch_array($res))
 								{
@@ -158,7 +168,8 @@ $row=db_fetch_array(db_query($studentinfo));
 										<select style=" width:300px" name="stream" class="chzn-select" tabindex="13">
 										
                                         	<?php
-							 $sql="SELECT * FROM stream where stream_id='".$row['stream']."' ";
+							 $safe_stream_id = db_escape($row['stream']);
+							 $sql="SELECT * FROM stream where stream_id='$safe_stream_id' ";
 	                           $res=db_query($sql);
 								while($row2=db_fetch_array($res))
 								{
@@ -179,7 +190,8 @@ $row=db_fetch_array(db_query($studentinfo));
                                     <div class="form_input">
 										<div class="form_grid_5 alpha">
                                         <?php
-							 $sql="SELECT * FROM fees_package where id='".$row['admission_fee']."' ";
+							 $safe_admission_fee = db_escape($row['admission_fee']);
+							 $sql="SELECT * FROM fees_package where id='$safe_admission_fee' ";
 	                           $res=db_query($sql);
 								$row3=db_fetch_array($res);?>
 											<input name="fees_amount" type="text" value="<?php echo $row2['fees_amount'];?>"/>

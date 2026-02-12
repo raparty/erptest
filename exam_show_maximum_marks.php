@@ -6,13 +6,29 @@ declare(strict_types=1);
  * Group 4: Examinations
  */
 require_once("includes/bootstrap.php");
+require_once("includes/pagination_helper.php");
 require_once("includes/header.php");
 require_once("includes/sidebar.php");
+
+$conn = Database::connection();
 
 // Handle Deletion logic
 if(isset($_GET['sid'])) {
     db_query("DELETE FROM exam_add_maximum_marks WHERE exam_max_marks_id='".(int)$_GET['sid']."'");	
 }
+
+// Pagination settings
+$items_per_page = 20;
+$current_page = (int)($_GET['page'] ?? 1);
+$current_page = max(1, $current_page);
+$offset = ($current_page - 1) * $items_per_page;
+
+// Get total count
+$session = mysqli_real_escape_string($conn, (string)($_SESSION['session'] ?? ''));
+$count_sql = "SELECT COUNT(*) as total FROM exam_add_maximum_marks WHERE session = '$session'";
+$count_res = mysqli_query($conn, $count_sql);
+$count_row = mysqli_fetch_assoc($count_res);
+$total_items = (int)$count_row['total'];
 ?>
 
 <div class="grid_container">
@@ -41,15 +57,17 @@ if(isset($_GET['sid'])) {
                 </thead>
                 <tbody>
                     <?php 
-                    $i=1;
+                    // Query with pagination
                     $sql = "SELECT m.*, c.class_name, s.subject_name, t.term_name 
                             FROM exam_add_maximum_marks m
                             JOIN classes c ON m.class_id = c.id
                             JOIN subjects s ON m.subject_id = s.subject_id
                             JOIN exam_nuber_of_term t ON m.term_id = t.term_id
-                            WHERE m.session = '".$_SESSION['session']."'
-                            ORDER BY c.class_name ASC, t.term_name ASC";
+                            WHERE m.session = '$session'
+                            ORDER BY c.class_name ASC, t.term_name ASC
+                            LIMIT $offset, $items_per_page";
                     $res = db_query($sql);
+                    $i = $offset + 1;
                     while($row = db_fetch_array($res)) { ?>
                     <tr>
                         <td class="center"><?php echo $i; ?></td>
@@ -71,6 +89,11 @@ if(isset($_GET['sid'])) {
                     <?php $i++; } ?>
                 </tbody>
             </table>
+            
+            <?php 
+            // Display pagination
+            echo generate_pagination($current_page, $total_items, $items_per_page, 'exam_show_maximum_marks.php');
+            ?>
         </div>
     </div>
 </div>

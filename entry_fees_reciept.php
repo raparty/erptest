@@ -66,13 +66,13 @@ if(isset($_POST['submit']))
                                     <div class="form_input" >
 										
                                         <div class="form_grid_4 alpha"  >
-											<input name="registration_no"   onBlur="getCheckreg('checkregno.php?registration_no='+this.value)" type="text" style=" margin-left:-192px;" />										
+											<input name="registration_no" data-action="check-reg" data-url="checkregno.php" type="text" />										
 										</div>
                                         
-                                        <label class="field_title" style=" margin-left:110px; width:16%">
+                                        <label class="field_title" style="width:16%">
 OR <span style="color:#F00"> *</span>
 </label>
-                                        <div class="form_grid_4" style="margin-left:-25px;">
+                                        <div class="form_grid_4">
 											<a  href="fees_reciept_searchby_name.php" class="btn_small btn_blue" style="text-decoration:none; display:inline-block; padding: 8px 15px;"><span>Search by Name</span></a>
 								</div>
 									

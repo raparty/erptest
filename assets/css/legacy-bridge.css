@@ -595,3 +595,240 @@ svg.nav-icon-svg {
 .title_icon span {
     color: var(--fluent-white);
 }
+
+/* Action Icons and Buttons */
+.action-icons {
+    display: flex;
+    gap: 8px;
+    align-items: center;
+    justify-content: center;
+    flex-wrap: wrap;
+}
+
+.c-add, .c-edit, .c-delete {
+    display: inline-flex;
+    align-items: center;
+    gap: 4px;
+    padding: 6px 12px;
+    border-radius: 4px;
+    text-decoration: none;
+    font-size: 14px;
+    font-weight: 500;
+    transition: all 0.2s ease;
+    border: none;
+    cursor: pointer;
+}
+
+.c-add {
+    background: #10893E;
+    color: white;
+}
+
+.c-add:hover {
+    background: #0E7535;
+    color: white;
+    transform: translateY(-1px);
+    box-shadow: 0 2px 4px rgba(16, 137, 62, 0.3);
+}
+
+.c-edit {
+    background: var(--fluent-azure);
+    color: white;
+}
+
+.c-edit:hover {
+    background: #006CBE;
+    color: white;
+    transform: translateY(-1px);
+    box-shadow: 0 2px 4px rgba(0, 120, 212, 0.3);
+}
+
+.c-delete {
+    background: #D13438;
+    color: white;
+}
+
+.c-delete:hover {
+    background: #B52E32;
+    color: white;
+    transform: translateY(-1px);
+    box-shadow: 0 2px 4px rgba(209, 52, 56, 0.3);
+}
+
+/* Chosen Select Plugin Styling */
+.chzn-select {
+    width: 100%;
+    padding: 8px 12px;
+    border: 1px solid var(--app-border);
+    border-radius: var(--app-radius);
+    background: var(--fluent-white);
+    font-size: 14px;
+    line-height: 1.5;
+    color: var(--fluent-slate);
+    transition: border-color 0.2s ease;
+}
+
+.chzn-select:focus {
+    outline: none;
+    border-color: var(--app-primary);
+    box-shadow: 0 0 0 3px rgba(0, 120, 212, 0.1);
+}
+
+.chzn-container {
+    width: 100% !important;
+    font-size: 14px;
+}
+
+.chzn-container-single .chzn-single {
+    background: var(--fluent-white);
+    border: 1px solid var(--app-border);
+    border-radius: var(--app-radius);
+    padding: 8px 12px;
+    line-height: 1.5;
+    box-shadow: none;
+}
+
+.chzn-container-single .chzn-single:hover {
+    border-color: var(--app-primary);
+}
+
+/* Center Text Utility */
+.center {
+    text-align: center;
+}
+
+/* Flex Row with Gap Utility */
+.flex-row-gap {
+    display: flex;
+    gap: 15px;
+    align-items: center;
+    flex-wrap: wrap;
+}
+
+.flex-row-gap-sm {
+    display: flex;
+    gap: 10px;
+    align-items: center;
+    flex-wrap: wrap;
+}
+
+/* Card Spacing Utility */
+.card-spacing {
+    margin-bottom: 24px;
+}
+
+/* Float End Replacement */
+.float-end {
+    display: flex;
+    justify-content: flex-end;
+    align-items: center;
+    gap: 8px;
+}
+
+/* Legacy Grid System Support */
+.form_grid_12,
+.form_grid_5,
+.form_grid_4 {
+    width: 100%;
+    margin-bottom: 16px;
+}
+
+.form_grid_5 {
+    width: 41.66%;
+    display: inline-block;
+    vertical-align: top;
+    padding-right: 12px;
+}
+
+.form_grid_4 {
+    width: 33.33%;
+    display: inline-block;
+    vertical-align: top;
+    padding-right: 12px;
+}
+
+.form_grid_5.alpha,
+.form_grid_4.alpha {
+    padding-left: 0;
+}
+
+/* Clear Float Utility */
+.clear {
+    clear: both;
+    height: 0;
+    line-height: 0;
+    font-size: 0;
+}
+
+/* Form Container Legacy Support */
+.form_container.left_label {
+    display: block;
+    margin-bottom: 16px;
+}
+
+.form_container.left_label label {
+    display: inline-block;
+    width: 180px;
+    vertical-align: top;
+    padding-top: 8px;
+    font-weight: 500;
+    color: var(--fluent-slate);
+}
+
+.form_container.left_label .form_input {
+    display: inline-block;
+    width: calc(100% - 200px);
+}
+
+.form_input input[type="text"],
+.form_input input[type="email"],
+.form_input input[type="number"],
+.form_input input[type="date"],
+.form_input select,
+.form_input textarea {
+    width: 100%;
+    padding: 8px 12px;
+    border: 1px solid var(--app-border);
+    border-radius: var(--app-radius);
+    font-size: 14px;
+    line-height: 1.5;
+}
+
+/* Datepicker Styling */
+.datepicker {
+    border: 1px solid var(--app-border);
+    border-radius: var(--app-radius);
+    padding: 8px 12px;
+    font-size: 14px;
+    width: 100%;
+}
+
+.datepicker:focus {
+    outline: none;
+    border-color: var(--app-primary);
+    box-shadow: 0 0 0 3px rgba(0, 120, 212, 0.1);
+}
+
+/* Responsive Adjustments */
+@media (max-width: 768px) {
+    .form_grid_5,
+    .form_grid_4 {
+        width: 100%;
+        display: block;
+        padding-right: 0;
+    }
+    
+    .form_container.left_label label {
+        width: 100%;
+        padding-top: 0;
+        margin-bottom: 4px;
+    }
+    
+    .form_container.left_label .form_input {
+        width: 100%;
+    }
+    
+    .action-icons {
+        justify-content: flex-start;
+    }
+}

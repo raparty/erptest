@@ -165,47 +165,56 @@ include_once("includes/header.php");?>
 						<tbody>
                         <?php 
 						$i=1;
-						if($_POST['name']!=""&&$_POST['class']==""&&$_POST['stream']=="")
+						
+						// Sanitize all POST inputs to prevent SQL injection
+						// Note: db_escape() provides basic protection. For stronger security,
+						// consider migrating to prepared statements with parameterized queries
+						$safe_name = isset($_POST['name']) ? db_escape($_POST['name']) : '';
+						$safe_class = isset($_POST['class']) ? db_escape($_POST['class']) : '';
+						$safe_stream = isset($_POST['stream']) ? db_escape($_POST['stream']) : '';
+						$safe_session = db_escape($_SESSION['session'] ?? '');
+						
+						if($safe_name != "" && $safe_class == "" && $safe_stream == "")
 						{
-							 $sql10="SELECT * FROM student_info where name like '%".$_POST['name']."%' and session='".$_SESSION['session']."'";
+							 $sql10="SELECT * FROM student_info where name like '%$safe_name%' and session='$safe_session'";
 							                                                                         
 						}
-						else if($_POST['name']==""&&$_POST['class']!=""&&$_POST['stream']=="")
+						else if($safe_name == "" && $safe_class != "" && $safe_stream == "")
 						{
-							$sql10="SELECT * FROM student_info where class ='".$_POST['class']."' and session='".$_SESSION['session']."'";
+							$sql10="SELECT * FROM student_info where class ='$safe_class' and session='$safe_session'";
 							                                                                         
 						}
 						
-						else if($_POST['name']==""&&$_POST['class']==""&&$_POST['stream']!="")
+						else if($safe_name == "" && $safe_class == "" && $safe_stream != "")
 						{
-								$sql10="SELECT * FROM student_info where stream ='".$_POST['stream']."' and session='".$_SESSION['session']."'";
+								$sql10="SELECT * FROM student_info where stream ='$safe_stream' and session='$safe_session'";
 							                                                                         
 						}
-						else if($_POST['name']!=""&&$_POST['class']!=""&&$_POST['stream']=="")
+						else if($safe_name != "" && $safe_class != "" && $safe_stream == "")
 						{
-							$sql10="SELECT * FROM student_info where name like '%".$_POST['name']."%' and  class ='".$_POST['class']."' and session='".$_SESSION['session']."'";
+							$sql10="SELECT * FROM student_info where name like '%$safe_name%' and  class ='$safe_class' and session='$safe_session'";
 							                                                                         
 						}
-						else if($_POST['name']==""&&$_POST['class']!=""&&$_POST['stream']!="")
+						else if($safe_name == "" && $safe_class != "" && $safe_stream != "")
 						{
-								$sql10="SELECT * FROM student_info where stream ='".$_POST['stream']."'  and  class ='".$_POST['class']."' and session='".$_SESSION['session']."'";
-							                                                                         
-						}
-						
-						else if($_POST['name']!=""&&$_POST['class']==""&&$_POST['stream']!="")
-						{
-							$sql10="SELECT * FROM student_info where name like '%".$_POST['name']."%' and  stream ='".$_POST['stream']."' and session='".$_SESSION['session']."'";
+								$sql10="SELECT * FROM student_info where stream ='$safe_stream'  and  class ='$safe_class' and session='$safe_session'";
 							                                                                         
 						}
 						
-						else if($_POST['name']!=""&&$_POST['class']!=""&&$_POST['stream']!="")
+						else if($safe_name != "" && $safe_class == "" && $safe_stream != "")
+						{
+							$sql10="SELECT * FROM student_info where name like '%$safe_name%' and  stream ='$safe_stream' and session='$safe_session'";
+							                                                                         
+						}
+						
+						else if($safe_name != "" && $safe_class != "" && $safe_stream != "")
 						{
 							
-							     $sql10="SELECT * FROM student_info where name like '%".$_POST['name']."%' and  stream ='".$_POST['stream']."' and  class ='".$_POST['class']."' and session='".$_SESSION['session']."'";                                                                    
+							     $sql10="SELECT * FROM student_info where name like '%$safe_name%' and  stream ='$safe_stream' and  class ='$safe_class' and session='$safe_session'";                                                                    
 						}
 						else
 					    {
-						   $sql10="SELECT * FROM student_info where  session='".$_SESSION['session']."'";
+						   $sql10="SELECT * FROM student_info where  session='$safe_session'";
 						}
 						$res=db_query($sql10);
 						$num=db_num_rows($res);

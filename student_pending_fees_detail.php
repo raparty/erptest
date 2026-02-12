@@ -35,7 +35,7 @@ include_once("includes/sidebar.php");
                                 </div>
                                 <div class="col-md-4">
                                     <label class="form-label fw-bold">Class Name</label>
-                                    <select name="class" class="form-control" required onChange="getForm('ajax_stream_code.php?class_id='+this.value)">
+                                    <select name="class" class="form-control" required data-action="load-form" data-url="ajax_stream_code.php" data-param="class_id">
                                         <option value="">- Select Class -</option>
                                         <?php
                                         $sql = "SELECT * FROM class";

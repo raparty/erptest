@@ -9,18 +9,26 @@ if(isset($_POST['submit']))
 	// $package_name = $_POST['package_name'];
 	 //$class_id = $_POST['class_id'];
 	//$school_logo = $_POST['school_logo'];
-	if($_POST['pending_amount']>=$_POST['fees_amount'])
+	
+	// Sanitize POST inputs to prevent SQL injection
+	$safe_registration_no = db_escape($_POST['registration_no'] ?? '');
+	$safe_fees_term = db_escape($_POST['fees_term'] ?? '');
+	$safe_fees_amount = db_escape($_POST['fees_amount'] ?? '');
+	$safe_pending_amount = db_escape($_POST['pending_amount'] ?? '');
+	$safe_session = db_escape($_SESSION['session'] ?? '');
+	
+	if($safe_pending_amount >= $safe_fees_amount)
 	{
-	 $sql1="SELECT * FROM student_fees_detail where registration_no='".$_POST['registration_no']."' and fees_term='".$_POST['fees_term']."' and session='".$_SESSION['session']."'";
+	 $sql1="SELECT * FROM student_fees_detail where registration_no='$safe_registration_no' and fees_term='$safe_fees_term' and session='$safe_session'";
 	$res1=db_query($sql1) or die("Error : " . db_error());
 	$num=db_num_rows($res1);
 	if($num==0)
 	{
 		
 		
-		if($_POST['registration_no']!=""&&$_POST['fees_term']!=""&&$_POST['fees_amount']!="")
+		if($safe_registration_no != "" && $safe_fees_term != "" && $safe_fees_amount != "")
 		{
-		 $sql3="INSERT INTO student_fees_detail(registration_no,fees_term,fees_amount,session) VALUES ('".$_POST['registration_no']."','".$_POST['fees_term']."','".$_POST['fees_amount']."','".$_SESSION['session']."')";
+		 $sql3="INSERT INTO student_fees_detail(registration_no,fees_term,fees_amount,session) VALUES ('$safe_registration_no','$safe_fees_term','$safe_fees_amount','$safe_session')";
 		$res3=db_query($sql3) or die("Error : " . db_error());
 		header("Location:fees_manager.php?msg=1");
 		}else
@@ -113,13 +121,13 @@ else
                                     <div class="form_input" >
 										
                                         <div class="form_grid_4 alpha"  >
-											<input name="registration_no"   onBlur="getCheckreg('checkregno.php?registration_no='+this.value)" type="text" style=" margin-left:-192px;" />										
+											<input name="registration_no" data-action="check-reg" data-url="checkregno.php" type="text" />										
 										</div>
                                         
-                                        <label class="field_title" style=" margin-left:110px; width:16%">
+                                        <label class="field_title" style="width:16%">
 OR <span style="color:#F00"> *</span>
 </label>
-                                        <div class="form_grid_4" style="margin-left:-25px;">
+                                        <div class="form_grid_4">
 											<a  href="fees_searchby_name.php" style="text-decoration:underline"><input type="button" name="search" value="search by name" class="btn_small btn_orange"></a>
 								</div>
 									
