@@ -5,13 +5,20 @@ include_once("includes/header.php");?>
 <?php include_once("includes/sidebar.php"); ?>
 <?php 
 $msgs='';
+$sid = (int)($sid ?? 0);
+
+	// Sanitize POST inputs to prevent SQL injection
+	$safe_class = db_escape($_POST['class'] ?? '');
+	$safe_stream = db_escape($_POST['stream'] ?? '');
+	$safe_subject_id = db_escape($_POST['subject_id'] ?? '');
+	$safe_date = db_escape($_POST['date'] ?? '');
 if(isset($_POST['submit']))
 {
 	
-		if($_POST['subject_id']!='')
+		if($safe_subject_id!='')
 		{
 			
-	 $sql3="update exam_time_table set class_id='".$_POST['class']."', stream_id='".$_POST['stream']."', subject_id='".$_POST['subject_id']."',date='".$_POST['date']."' where time_table_id='".$_GET['sid']."'";
+	 $sql3="update exam_time_table set class_id='".$safe_class."', stream_id='".$safe_stream."', subject_id='".$safe_subject_id."',date='".$safe_date."' where time_table_id='".$sid."'";
 		$res3=db_query($sql3) or die("Error : " . db_error());
 		//header("Location:exam_time_table_detail.php?msg=1");
 			
@@ -22,7 +29,7 @@ if(isset($_POST['submit']))
 	}
 	
 	}
-	$sql_edit=db_fetch_array(db_query("select * from exam_time_table where time_table_id='".$_GET['sid']."'"));
+	$sql_edit=db_fetch_array(db_query("select * from exam_time_table where time_table_id='".$sid."'"));
 
 ?>
 <div class="page_title">
