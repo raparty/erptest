@@ -110,11 +110,7 @@ include_once("includes/header.php"); ?>
 		  <li style=" border-bottom:1px solid #F7630C; list-style:none">
 					<h3 style=" color:#0078D4">Library management</h3></li>
                    
-<br>
-<br>
-<br>
-<br>
-<br>
+<div class="mb-4"></div>
 
                     
 					<div class="item_widget" style="width:835px;">
@@ -206,14 +202,7 @@ include_once("includes/header.php"); ?>
                 
                 
 			</div>
-<br>
-<br>
-<br>
-<br>
-<br>
-<br>
-<br>
-<br>
+<div class="mb-5"></div>
 
 				
 		  </div>
