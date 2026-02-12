@@ -15,19 +15,25 @@ require_once("config/config.inc.php");
 	   If you have a WHERE clause in your query, make sure you mirror it here.
 	*/
 	
+	// Sanitize POST inputs to prevent SQL injection
+	$safe_fees_term = db_escape($_POST['fees_term'] ?? '');
+	$safe_class = db_escape($_POST['class'] ?? '');
+	$safe_stream = db_escape($_POST['stream'] ?? '');
+	$safe_name = db_escape($_POST['name'] ?? '');
+	$safe_session = db_escape($_SESSION['session'] ?? '');
 							  
 								  
-	 $query = "SELECT COUNT(*) as num FROM $tbl_name  where (registration_no not in (SELECT registration_no FROM student_fees_detail where session='".$_SESSION['session']."' and fees_term='".$_POST['fees_term']."') and class='".$_POST['class']."' )";
-         if($_POST['stream']!="")
+	 $query = "SELECT COUNT(*) as num FROM $tbl_name  where (registration_no not in (SELECT registration_no FROM student_fees_detail where session='".$safe_session."' and fees_term='".$safe_fees_term."') and class='".$safe_class."' )";
+         if($safe_stream!="")
 						{
-							 $query.=" and stream='".$_POST['stream']."'";
+							 $query.=" and stream='".$safe_stream."'";
 							
 							}
-							if($_POST['name']!="")
+							if($safe_name!="")
 							{
-								 $query.=" and name like '%".$_POST['name']."%'";
+								 $query.=" and name like '%".$safe_name."%'";
 								}
-								 $query.="and session='".$_SESSION['session']."'";
+								 $query.="and session='".$safe_session."'";
 							                      
 	$total_pages = db_fetch_array(db_query($query));
 	$total_pages = $total_pages['num'];
@@ -45,17 +51,17 @@ require_once("config/config.inc.php");
 	
 	/* Get data. */
 	
-      $sql10 = "SELECT * FROM $tbl_name where (registration_no not in (SELECT registration_no FROM student_fees_detail where session='".$_SESSION['session']."' and fees_term='".$_POST['fees_term']."') and class='".$_POST['class']."' )";
-	 if($_POST['stream']!="")
+      $sql10 = "SELECT * FROM $tbl_name where (registration_no not in (SELECT registration_no FROM student_fees_detail where session='".$safe_session."' and fees_term='".$safe_fees_term."') and class='".$safe_class."' )";
+	 if($safe_stream!="")
 						{
-							$sql10.=" and stream='".$_POST['stream']."'";
+							$sql10.=" and stream='".$safe_stream."'";
 							
 							}
-							if($_POST['name']!="")
+							if($safe_name!="")
 							{
-								$sql10.=" and name like '%".$_POST['name']."%'";
+								$sql10.=" and name like '%".$safe_name."%'";
 								}
-							 $sql10.="and session='".$_SESSION['session']."' LIMIT $start, $limit";
+							 $sql10.="and session='".$safe_session."' LIMIT $start, $limit";
 	$student_info11 = db_query($sql10);
 	//$row_value=db_fetch_array($result);
 	//print_r($row_value);
