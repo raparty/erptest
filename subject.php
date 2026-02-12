@@ -13,7 +13,7 @@ include_once("includes/school_setting_sidebar.php");
                 <div class="widget_wrap">
                     <div class="widget_top">
                         <h6 style="display:inline-block">Subject Management</h6>
-                        <div style="float:right; padding: 5px;">
+                        <div class="float-end">
                             <a href="add_subject.php" class="btn_small btn_blue"><span>+ Add New Subject</span></a>
                         </div>
                     </div>
